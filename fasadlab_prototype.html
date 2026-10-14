@@ -186,7 +186,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 .left-scroll,.right-scroll{scrollbar-color:#aaa295 #e6e1d7}
 @media(max-width:1200px){.app{grid-template-columns:minmax(270px,290px) minmax(280px,1fr) minmax(240px,260px)}.brand{min-width:190px}.templates{grid-template-columns:repeat(2,minmax(0,1fr))}.templates-strip{height:102px}.view-tabs button{padding:6px 5px}}
 @media(max-width:940px){header{gap:6px;padding:0 8px}.brand{min-width:155px}.brand-mark{width:38px;height:38px}.brand-mark svg{width:33px;height:33px}.header-tabs button{padding:5px 4px;font-size:10px}.header-actions{gap:2px}.header-actions button{padding:6px 4px;font-size:10px}}
-.pocket-select-area{fill:#5d9b91;fill-opacity:.001;pointer-events:fill;cursor:pointer}
+.pocket-select-area{fill:#5d9b91;fill-opacity:.001;pointer-events:none}
 .pocket-select-area:hover{fill-opacity:.12}
 .pocket-select-area.active{fill:#5d9b91;fill-opacity:.2}
 .pocket-select-area.configured{fill:#c58c55;fill-opacity:.2}
@@ -768,6 +768,44 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   }
   function getPocketForRegion(region) {
     return region&&state.pockets.find(item=>item.parentId===region.parentId&&item.islandId===region.islandId&&(item.regionType||'ring')===region.regionType);
+  }
+  function pointInClosedPath(d,point) {
+    let inside=false;
+    flattenSvgPath(d).filter(path=>path.closed).forEach(path=>{
+      let pathInside=false;
+      for(let index=0,previous=path.points.length-1;index<path.points.length;previous=index++){
+        const first=path.points[index],second=path.points[previous];
+        if((first.y>point.y)!==(second.y>point.y)&&point.x<(second.x-first.x)*(point.y-first.y)/(second.y-first.y)+first.x)pathInside=!pathInside;
+      }
+      if(pathInside)inside=!inside;
+    });
+    return inside;
+  }
+  function contourContainsPoint(contour,point) {
+    return pointInClosedPath(contourPath(contour,1,0,0,getContourBounds(contour.id)),point);
+  }
+  function selectPocketAtPoint(point) {
+    if(point.x<0||point.y<0||point.x>state.width||point.y>state.height)return false;
+    const contains=new Set(state.contours.filter(contour=>contour.direction==='in'&&contourContainsPoint(contour,point)).map(contour=>contour.id));
+    const depthOf=contour=>{
+      let depth=0,parentId=contour.parentId,visited=new Set();
+      while(parentId!==0&&!visited.has(parentId)){
+        visited.add(parentId);depth++;
+        parentId=state.contours.find(item=>item.id===parentId)?.parentId??0;
+      }
+      return depth;
+    };
+    const deepest=[...state.contours].filter(contour=>contains.has(contour.id)).sort((a,b)=>depthOf(b)-depthOf(a))[0];
+    if(!deepest){
+      const first=state.contours.find(contour=>contour.parentId===0&&contour.direction==='in'&&!contains.has(contour.id));
+      if(!first)return false;
+      selectPocketRegion(0,first.id);return true;
+    }
+    const child=state.contours.find(contour=>contour.parentId===deepest.id&&contour.direction==='in'&&!contains.has(contour.id));
+    if(child){selectPocketRegion(deepest.id,child.id);return true;}
+    const hasInnerContour=state.contours.some(contour=>contour.parentId===deepest.id&&contour.direction==='in');
+    if(hasInnerContour)return false;
+    selectPocketRegion(deepest.id,deepest.id,'inside');return true;
   }
   function horizontalPathIntervals(path,y) {
     const crossings=[];
