@@ -131,10 +131,12 @@ footer{gap:6px}footer button{padding-inline:8px;white-space:nowrap;font-size:11p
 .print-document{display:none}
 @media print{
   @page{size:A4 portrait;margin:12mm}
+  @page operationsPage{size:A4 landscape;margin:10mm}
   body{width:auto;min-width:0;height:auto;min-height:0;overflow:visible;background:#fff;color:#1f2528;font:10pt/1.35 "Segoe UI",Arial,sans-serif}
   body>:not(#printDocument){display:none!important}
   #printDocument{display:block!important}
   .print-page{min-height:273mm;break-after:page;page-break-after:always}
+  .print-spec-page{page:operationsPage;min-height:190mm}
   .print-page:last-child{break-after:auto;page-break-after:auto}
   .print-heading{height:auto;margin:0 0 6mm;padding:0 0 3mm;display:block;border:0;border-bottom:1px solid #9da4a5;background:#fff}
   .print-heading h1{margin:0 0 2mm;font-size:18pt}
@@ -143,10 +145,19 @@ footer{gap:6px}footer button{padding-inline:8px;white-space:nowrap;font-size:11p
   .print-note{margin-top:3mm;color:#50585c;font-size:8pt}
   .print-spec-table{width:100%;border-collapse:collapse;font-size:9pt}
   .print-spec-table th,.print-spec-table td{padding:2.2mm 2.5mm;border:1px solid #c5cacc;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+  .print-spec-page .print-spec-table{font-size:8pt}
+  .print-spec-page .print-spec-table th,.print-spec-page .print-spec-table td{padding:1.8mm}
   .print-spec-table th{background:#e9eceb;font-weight:650}
   .print-spec-table .print-section th{padding-top:3mm;background:#dce3e1}
   .print-spec-table tr{break-inside:avoid;page-break-inside:avoid}
   .print-spec-table thead{display:table-header-group}
+  .print-spec-page .print-operations-table th:nth-child(1){width:7%}
+  .print-spec-page .print-operations-table th:nth-child(2){width:17%}
+  .print-spec-page .print-operations-table th:nth-child(3){width:18%}
+  .print-spec-page .print-operations-table th:nth-child(4){width:18%}
+  .print-spec-page .print-operations-table th:nth-child(5){width:20%}
+  .print-spec-page .print-operations-table th:nth-child(6){width:20%}
+  .print-spec-summary-title{margin:7mm 0 3mm;font-size:12pt}
   .print-spec-intro{margin:0 0 5mm;color:#495257}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
@@ -317,7 +328,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 <input id="artcamToolPicker" type="file" accept=".tdb" multiple hidden>
 <div id="stylesOverlay" class="modal-overlay hidden"><section class="modal-card styles-dialog" role="dialog" aria-modal="true" aria-labelledby="stylesDialogTitle"><button class="modal-close" id="closeStyles" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="stylesDialogTitle">Шаблоны изделий</h2><p>Выберите тип шаблона и примените сохранённые настройки к изделию.</p></div><div class="styles-dialog-controls"><label class="field" for="styleTypeFilter">Тип изделия<select id="styleTypeFilter"><option value="facade">Фасад</option><option value="profile">Профиль</option><option value="comb">Гребёнка</option></select></label><div class="field"><label for="styleName">Название нового шаблона</label><input id="styleName" aria-label="Название сохраняемого шаблона" maxlength="48" value="Мой шаблон" placeholder="Название шаблона"></div></div><button id="saveTemplate" class="primary" type="button">＋ Сохранить текущие настройки как шаблон</button><div id="stylesList" class="styles-list" aria-live="polite"></div><button class="primary" id="closeStylesFooter" type="button">Готово</button></section></div>
 <div id="cutterLibraryOverlay" class="modal-overlay hidden"><section class="modal-card cutter-library-card" role="dialog" aria-modal="true" aria-labelledby="cutterLibraryTitle"><button class="modal-close" id="closeCutterLibrary" aria-label="Закрыть">×</button><div class="cutter-library-heading"><div><strong id="cutterLibraryTitle">Библиотека фрез</strong><p>Стандартные типы и фрезы, импортированные из ArtCAM. Сечение паза строится по профилю операции.</p></div><button id="importArtcamCutters" type="button">Импорт ArtCAM .TDB</button></div><div id="customCutterEditor" class="cutter-library-form hidden"><strong>Редактирование импортированной фрезы</strong><div class="field"><label for="customCutterName">Название</label><input id="customCutterName" maxlength="40"></div><div class="fields"><div class="field"><label for="customCutterShape">Тип профиля</label><select id="customCutterShape"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="wave">Волновая / другая</option></select></div><div class="field"><label for="customCutterWidth">Диаметр / ширина, мм</label><input id="customCutterWidth" type="number" min="0.1" step="0.1"></div></div><div class="cutter-card-actions"><button id="saveCustomCutter" class="primary" type="button">Сохранить изменения</button><button id="cancelCutterEdit" type="button">Отмена</button></div></div><h3 class="cutter-catalog-title">Стандартные и импортированные фрезы</h3><div id="customCutterList" class="cutter-catalog"></div><div class="notice">Из .TDB распознаются названия и размеры из имени; импорт не гарантирует точную геометрию режущей кромки.</div><button class="primary" id="closeCutterLibraryFooter">Готово</button></section></div>
-<div id="aboutOverlay" class="modal-overlay hidden"><section class="modal-card"><button class="modal-close" id="closeAbout" aria-label="Закрыть">×</button><div class="brand-name"><span>Фасад</span>Лаб</div><p>Редактор фасадов, профилей и карт раскроя.</p><div class="about-credit"><b>Программист</b><span>L3xik0</span><b>Дополнительный агент</b><span>Евгений Жуков</span><b>Версия</b><span>0.7.0</span></div><button class="primary" id="aboutOk">Закрыть</button></section></div>
+<div id="aboutOverlay" class="modal-overlay hidden"><section class="modal-card"><button class="modal-close" id="closeAbout" aria-label="Закрыть">×</button><div class="brand-name"><span>Фасад</span>Лаб</div><p>Редактор фасадов, профилей и карт раскроя.</p><div class="about-credit"><b>Программист</b><span>L3xik0</span><b>Дополнительный агент</b><span>Евгений Жуков</span><b>Версия</b><span>0.7.1</span></div><button class="primary" id="aboutOk">Закрыть</button></section></div>
 <script src="node_modules/dxf-parser/dist/dxf-parser.js"></script>
 <script>
 (() => {
@@ -1284,34 +1295,76 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     const typeName=({facade:'Фасад',profile:'Профиль',comb:'Гребёнка'})[state.objectType]||'Изделие';
     const measure=value=>`${Number(value).toLocaleString('ru-RU',{maximumFractionDigits:2})} мм`;
     const rows=[['Изделие',state.name||typeName],['Тип',typeName],['Габариты заготовки',`${measure(state.width)} × ${measure(state.height)} × ${measure(state.thickness)}`],['Чертёж',activeView==='nest'?'Карта раскроя':activeView==='profile'?'Поперечный разрез':$('viewTitle').textContent]];
+    const operations=[];
+    const addOperation=(name,start,position,tool,spacing='—')=>operations.push({name,start,position,tool,spacing});
     if(activeView==='nest'){
       rows.push(['Лист раскроя',`${measure(state.sheetWidth)} × ${measure(state.sheetHeight)} × ${measure(state.sheetThickness)}`],['Отступ / зазор',`${measure(state.sheetMargin)} / ${measure(state.partGap)}`]);
       rows.push(['Деталей в заказе',String(state.cuttingItems.reduce((sum,item)=>sum+Math.max(0,Math.floor(Number(item.quantity)||0)),0))]);
       state.cuttingItems.forEach((item,index)=>rows.push([`Заказ ${index+1} · ${item.name||'Изделие'}`,`${({facade:'Фасад',profile:'Профиль',comb:'Гребёнка'})[item.objectType]||'Изделие'} · ${measure(item.width)} × ${measure(item.height)} × ${measure(item.thickness)} · ${item.quantity} шт.`]));
       if(cuttingLayout.unplaced.length)rows.push(['Внимание',`Не размещены: ${cuttingLayout.unplaced.join('; ')}`]);
     }else if(state.objectType==='facade'){
-      rows.push(['Толщина материала',measure(state.thickness)],['Углы фасада',`Радиус ${measure(state.outerCornerRadius||0)}`],['Фреза основного контура',state.outerCutter==='none'?'Не используется':`${cutterLabel(state.outerCutter)} · Ø ${measure(state.outerDiameter)} · глубина ${measure(state.outerDepth)}`]);
+      rows.push(['Углы фасада',`Радиус ${measure(state.outerCornerRadius||0)}`]);
+      const basePath=pathRect(0,0,state.width,state.height,state.outerCornerRadius||0),baseStart=/^M\s+([-\d.]+)\s+([-\d.]+)/.exec(basePath);
+      addOperation('Основной контур',baseStart?`X ${measure(baseStart[1])} · Y ${measure(state.height-Number(baseStart[2]))}`:'—','Вектор по наружному краю заготовки',state.outerCutter==='none'?'Фреза не задана':`${cutterLabel(state.outerCutter)} · ширина ${measure(state.outerDiameter)} · глубина ${measure(state.outerDepth)}`);
       state.contours.forEach((contour,index)=>{
-        const cutter=contour.cutter==='none'?'без фрезеровки':`${cutterLabel(contour.cutter)} · ${measure(contour.diameter)} × ${measure(contour.depth)}`;
-        rows.push([`Вектор ${index+2} · ${contour.name||'Без названия'}`,`${contour.direction==='out'?'Наружу':'Внутрь'} · отступ ${measure(contour.offset)} · углы ${measure(contour.corner||0)} · ${cutter}`]);
+        const bounds=getContourBounds(contour.id),path=contourPath(contour,1,0,0,bounds),start=/^M\s+([-\d.]+)\s+([-\d.]+)/.exec(path);
+        const point=start?`X ${measure(start[1])} · Y ${measure(state.height-Number(start[2]))}`:'—';
+        const parent=contour.parentId===0?{cutter:state.outerCutter,width:Number(state.outerDiameter)||0}:state.contours.find(item=>item.id===contour.parentId);
+        const parentWidth=parent?(parent.cutter==='none'?0:Number(parent.diameter??parent.width)||0):0;
+        const centerDistance=Number(contour.offset),edgeGap=parentWidth&&contour.cutter!=='none'?centerDistance-(parentWidth+Number(contour.diameter))/2:null;
+        const cutter=contour.cutter==='none'?'Фреза не задана':`${cutterLabel(contour.cutter)} · ширина ${measure(contour.diameter)} · глубина ${measure(contour.depth)}`;
+        const spacing=`От родителя ${measure(centerDistance)}${edgeGap===null?'':` · между краями резов ${measure(edgeGap)}`}`;
+        addOperation(`Вектор ${contour.name||index+2}`,point,`Вектор ${bounds.width.toLocaleString('ru-RU')} × ${bounds.height.toLocaleString('ru-RU')} мм · ${contour.direction==='out'?'наружу':'внутрь'} · углы ${measure(contour.corner||0)}`,cutter,spacing);
       });
     }else if(state.objectType==='profile'){
-      rows.push(['Направление профилей',state.profileAxis==='horizontal'?'Горизонтальные':'Вертикальные']);
-      state.profileBands.forEach((band,index)=>rows.push([`Вектор профиля ${index+1}`,`${({left:'слева',right:'справа',top:'сверху',bottom:'снизу'})[band.side]||band.side} · отступ ${measure(band.offset)} · ${cutterLabel(band.cutter)} · ширина ${measure(band.cutterWidth)} · глубина ${measure(band.depth)}`]));
+      const vertical=state.profileAxis==='vertical',axis=vertical?'X':'Y',across=vertical?state.width:state.height;
+      const profilePasses=state.profileBands.map((band,index)=>({band,index,coordinate:band.side==='right'||band.side==='bottom'?across-Number(band.offset):Number(band.offset)}));
+      const ordered=[...profilePasses].sort((a,b)=>a.coordinate-b.coordinate);
+      rows.push(['Направление векторов',vertical?'Вертикальные · координата по X':'Горизонтальные · координата по Y от нижнего края']);
+      profilePasses.forEach(({band,index,coordinate})=>{
+        const orderedIndex=ordered.findIndex(item=>item.index===index),previous=ordered[orderedIndex-1],next=ordered[orderedIndex+1];
+        const priorDistance=previous?coordinate-previous.coordinate:null,nextDistance=next?next.coordinate-coordinate:null;
+        const start=vertical?`X ${measure(coordinate)} · от Y ${measure(0)} до ${measure(state.height)}`:`Y ${measure(coordinate)} · от X ${measure(0)} до ${measure(state.width)}`;
+        const side=({left:'от левого края',right:'от правого края',top:'от верхнего края',bottom:'от нижнего края'})[band.side]||`от ${band.side}`;
+        const edgeDistance=Number(band.offset)-Number(band.cutterWidth)/2;
+        const previousEdgeGap=previous?priorDistance-(Number(band.cutterWidth)+Number(previous.band.cutterWidth))/2:null;
+        const nextEdgeGap=next?nextDistance-(Number(band.cutterWidth)+Number(next.band.cutterWidth))/2:null;
+        const spacing=[`От края до центра ${measure(band.offset)} · до края реза ${measure(edgeDistance)}`,previous?`До пред. центра ${measure(priorDistance)} · между краями резов ${measure(previousEdgeGap)}`:null,next?`До след. центра ${measure(nextDistance)} · между краями резов ${measure(nextEdgeGap)}`:null].filter(Boolean).join(' · ');
+        addOperation(`Вектор профиля ${index+1}`,start,`${axis}=${measure(coordinate)} · ${side}`,`${cutterLabel(band.cutter)} · ширина ${measure(band.cutterWidth)} · глубина ${measure(band.depth)}`,spacing);
+      });
     }else if(state.objectType==='comb'){
       const direction=state.combDirection==='both'?'Вертикальное и горизонтальное':state.combDirection==='horizontal'?'Горизонтальное':'Вертикальное';
-      rows.push(['Направление проходов',direction],['Шаг',measure(state.combPitch)],['Начальный / конечный отступ',`${measure(state.combStart)} / ${measure(state.combEnd)}`],['Проходов всего',String(combOperationPaths(state.width,state.height).length)],['Дополнительные проходы',`До: ${state.combBeforeStep?'1':'0'} · после: ${state.combAfterStep?'1':'0'}`],['Фреза гребёнки',`${cutterLabel(state.combCutter)} · ширина ${measure(state.combCutWidth)} · глубина ${measure(state.combCutDepth)}`]);
+      const passes=combOperationPaths(state.width,state.height),priorByAxis={vertical:null,horizontal:null};
+      rows.push(['Направление проходов',direction],['Основной шаг / отступы',`${measure(state.combPitch)} · ${measure(state.combStart)} / ${measure(state.combEnd)}`],['Дополнительные проходы',`До начала: ${state.combBeforeStep?'1':'0'} шага · после конца: ${state.combAfterStep?'1':'0'} шага`]);
+      passes.forEach((pass,index)=>{
+        const axis=pass.axis==='vertical'?'X':'Y',coordinate=pass.axis==='vertical'?pass.position:state.height-pass.position;
+        const previous=priorByAxis[pass.axis],centerDistance=previous===null?null:Math.abs(coordinate-previous),edgeGap=centerDistance===null?null:centerDistance-Number(state.combCutWidth);
+        const edgeName=pass.axis==='vertical'?'левого':'нижнего';
+        const spacing=previous===null?`От ${edgeName} края до центра ${measure(coordinate)} · до края реза ${measure(coordinate-Number(state.combCutWidth)/2)}`:`Между центрами ${measure(centerDistance)} · между краями резов ${measure(edgeGap)}`;
+        priorByAxis[pass.axis]=coordinate;
+        const start=pass.axis==='vertical'?`X ${measure(pass.position)} · Y ${measure(0)}–${measure(state.height)}`:`Y ${measure(coordinate)} · X ${measure(0)}–${measure(state.width)}`;
+        addOperation(`${pass.extra?'Дополнительный проход':'Проход'} (${pass.axis==='vertical'?'вертикальный':'горизонтальный'})`,start,`${axis}=${measure(coordinate)}${pass.extra?' · за краем заготовки':''}`,`${cutterLabel(state.combCutter)} · ширина ${measure(state.combCutWidth)} · глубина ${measure(state.combCutDepth)}`,spacing);
+      });
     }
     const svg=$('drawing').cloneNode(true);
     svg.removeAttribute('id');svg.removeAttribute('style');svg.setAttribute('class','print-drawing');svg.setAttribute('preserveAspectRatio','xMidYMid meet');
     const tableRows=rows.map(([label,value],index)=>`<tr${index===0||label==='Лист раскроя'?' class="print-section"':''}><th scope="row">${esc(label)}</th><td>${esc(value)}</td></tr>`).join('');
+    const operationRows=operations.map((operation,index)=>`<tr><td>${String(index+1).padStart(2,'0')}</td><th scope="row">${esc(operation.name)}</th><td>${esc(operation.start)}</td><td>${esc(operation.position)}</td><td>${esc(operation.spacing)}</td><td>${esc(operation.tool)}</td></tr>`).join('');
     const safeName=(state.name||typeName).replace(/[<>:"/\\|?*]/g,'_');
     const drawingSize=activeView==='nest'?`${measure(state.sheetWidth)} × ${measure(state.sheetHeight)} · лист ${measure(state.sheetThickness)}`:`${measure(state.width)} × ${measure(state.height)} × ${measure(state.thickness)}`;
-    $('printDocument').innerHTML=`<article class="print-page"><header class="print-heading"><h1>${esc(state.name||typeName)} — ${esc(typeName)}</h1><p>${esc($('viewTitle').textContent)} · ${esc(drawingSize)}</p><p>Документ подготовлен ${esc(new Date().toLocaleString('ru-RU'))}</p></header>${svg.outerHTML}<p class="print-note">Чертёж показан с вписыванием в лист. Размеры и масштабная сетка подписаны в миллиметрах.</p></article><article class="print-page print-spec-page"><header class="print-heading"><h1>Спецификация</h1><p>${esc(state.name||typeName)} · ${esc(typeName)}</p></header><p class="print-spec-intro">Данные изделия и обработки. Полный перечень вынесен на отдельную страницу, чтобы сохранить читаемость чертежа.</p><table class="print-spec-table"><thead><tr><th scope="col">Параметр</th><th scope="col">Значение</th></tr></thead><tbody>${tableRows}</tbody></table></article>`;
+    $('printDocument').innerHTML=`<article class="print-page"><header class="print-heading"><h1>${esc(state.name||typeName)} — ${esc(typeName)}</h1><p>${esc($('viewTitle').textContent)} · ${esc(drawingSize)}</p><p>Документ подготовлен ${esc(new Date().toLocaleString('ru-RU'))}</p></header>${svg.outerHTML}<p class="print-note">Миллиметровая сетка и подпись «Линейка 50 мм» служат только для визуального масштаба. Это не шаг обработки и не настройка фрезы.</p></article><article class="print-page print-spec-page"><header class="print-heading"><h1>Спецификация для настройки в ArtCAM</h1><p>${esc(state.name||typeName)} · ${esc(typeName)}</p></header><p class="print-spec-intro"><b>Система координат DXF:</b> миллиметры; начало X=0, Y=0 — левый нижний угол заготовки; X направлена вправо, Y вверх. «Начало линии» показывает старт координат вектора, а не обязательную точку начала резания станка.</p><p class="print-spec-intro"><b>Центральная линия:</b> центр фрезы идёт точно по вектору/оси, указанным в таблице. Не смещайте вектор на половину диаметра: ширина фрезы указана отдельно и определяет ширину канавки. «До предыдущего центра» — расстояние между осями траекторий; зазор между кромками резов зависит от ширины обеих фрез.</p><table class="print-spec-table print-operations-table"><thead><tr><th scope="col">№</th><th scope="col">Вектор / проход</th><th scope="col">Начало линии DXF</th><th scope="col">Положение центра</th><th scope="col">От края / расстояние между центрами</th><th scope="col">Фреза и глубина</th></tr></thead><tbody>${operationRows||`<tr><td colspan="6">Для этого вида отдельные траектории обработки не перечисляются.</td></tr>`}</tbody></table><h2 class="print-spec-summary-title">Размеры изделия и обработки</h2><table class="print-spec-table"><thead><tr><th scope="col">Параметр</th><th scope="col">Значение</th></tr></thead><tbody>${tableRows}</tbody></table></article>`;
     $('footerStatus').textContent='Открыта печать документа: выберите принтер или «Сохранить как PDF»';
     const previousTitle=document.title,restoreTitle=()=>{document.title=previousTitle;window.removeEventListener('afterprint',restoreTitle);};
     document.title=`${safeName} — Спецификация`;
     window.addEventListener('afterprint',restoreTitle,{once:true});
+    if(window.fasadlab?.savePdfDocument){
+      window.fasadlab.savePdfDocument({suggestedName:`${safeName}-specification.pdf`}).then(result=>{
+        restoreTitle();
+        if(result.canceled){$('footerStatus').textContent='Сохранение PDF отменено';return;}
+        $('footerStatus').textContent=`PDF сохранён: ${result.filePath}`;
+      }).catch(error=>{restoreTitle();$('footerStatus').textContent=`PDF не сохранён: ${error.message}`;alert(`Не удалось сохранить PDF: ${error.message}`);});
+      return;
+    }
     try{window.print();}
     catch(error){restoreTitle();$('footerStatus').textContent='Не удалось открыть печать документа';alert(`Не удалось подготовить документ к печати: ${error.message}`);}
   }

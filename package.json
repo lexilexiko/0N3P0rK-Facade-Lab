@@ -1,6 +1,6 @@
 {
   "name": "fasadlab",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": true,
   "author": "ФасадЛаб",
   "description": "Генератор векторов мебельных фасадов",
@@ -22,6 +22,7 @@
     "productName": "ФасадЛаб",
     "files": [
       "main.js",
+      "preload.js",
       "fasadlab_prototype.html",
       "node_modules/dxf-parser/dist/dxf-parser.js",
       "node_modules/dxf-parser/LICENSE"
