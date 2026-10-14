@@ -118,6 +118,7 @@ button.active,.primary,.footer-primary{background:#356761;border-color:#356761;c
 .cutter-preview{display:grid;grid-template-columns:96px minmax(0,1fr);align-items:center;gap:10px;padding:7px 9px;border:1px solid var(--line);border-radius:7px;background:#e8e3d9}
 .cutter-preview svg{width:96px;height:70px}
 .cutter-preview-label{font-size:11px;line-height:1.4;color:var(--muted)}
+.vector-extra-cutter{display:grid;gap:8px;padding:9px;margin:9px 0;border:1px solid var(--line);border-radius:8px;background:#faf8f2}
 .about-credit{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 0;border-block:1px solid var(--line)}
 .about-credit b{font-weight:600;color:#666257}
 .modal-overlay:not(.hidden){display:grid}
@@ -185,6 +186,11 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 .left-scroll,.right-scroll{scrollbar-color:#aaa295 #e6e1d7}
 @media(max-width:1200px){.app{grid-template-columns:minmax(270px,290px) minmax(280px,1fr) minmax(240px,260px)}.brand{min-width:190px}.templates{grid-template-columns:repeat(2,minmax(0,1fr))}.templates-strip{height:102px}.view-tabs button{padding:6px 5px}}
 @media(max-width:940px){header{gap:6px;padding:0 8px}.brand{min-width:155px}.brand-mark{width:38px;height:38px}.brand-mark svg{width:33px;height:33px}.header-tabs button{padding:5px 4px;font-size:10px}.header-actions{gap:2px}.header-actions button{padding:6px 4px;font-size:10px}}
+.pocket-select-area{fill:#5d9b91;fill-opacity:.001;pointer-events:fill;cursor:pointer}
+.pocket-select-area:hover{fill-opacity:.12}
+.pocket-select-area.active{fill:#5d9b91;fill-opacity:.2}
+.pocket-select-area.configured{fill:#c58c55;fill-opacity:.2}
+.pocket-select-area.configured.active{fill-opacity:.32}
 </style>
 </head>
 <body>
@@ -246,8 +252,8 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       <div id="canvas" class="canvas"><svg id="drawing" viewBox="0 0 800 800" role="img" aria-label="Чертёж фасада"></svg></div>
       <div class="canvas-bottom"><span id="canvasHint">Выберите инструмент, чтобы добавить вектор</span><span class="zoom"><button class="icon-button" id="zoomOut" aria-label="Уменьшить">−</button><span id="zoomValue">100%</span><button class="icon-button" id="zoomIn" aria-label="Увеличить">＋</button><button class="icon-button" id="zoomReset" aria-label="Сбросить масштаб">⛶</button></span></div>
     </section>
-    <section class="panel templates-strip" aria-label="Инструменты ручного редактирования"><div class="panel-title">Редактирование векторов <span class="sub">Инструменты появятся позже</span></div><div class="manual-tool-grid">
-      <button class="manual-tool" type="button" disabled title="Выбор вектора — появится позже" aria-label="Выбор вектора (скоро)"><svg viewBox="0 0 32 32"><path d="M8 4 25 18l-8 1-4 8Z"/><path d="m17 19 5 8"/></svg><span>Выбор</span></button>
+    <section class="panel templates-strip" aria-label="Инструменты ручного редактирования"><div class="panel-title">Редактирование векторов <span class="sub">Выбор и выборка</span></div><div class="manual-tool-grid">
+      <button class="manual-tool active" type="button" data-tool="select" title="Выбрать вектор или область между вложенными контурами" aria-label="Выбор вектора"><svg viewBox="0 0 32 32"><path d="M8 4 25 18l-8 1-4 8Z"/><path d="m17 19 5 8"/></svg><span>Выбор</span></button>
       <button class="manual-tool" type="button" disabled title="Перемещение вектора — появится позже" aria-label="Перемещение вектора (скоро)"><svg viewBox="0 0 32 32"><path d="M16 3v26M3 16h26M16 3l-4 4m4-4 4 4m9 9-4-4m4 4-4 4M16 29l-4-4m4 4 4-4M3 16l4-4m-4 4 4 4"/></svg><span>Переместить</span></button>
       <button class="manual-tool" type="button" disabled title="Разделение вектора — появится позже" aria-label="Разделение вектора (скоро)"><svg viewBox="0 0 32 32"><path d="M5 7h8l14 18h-8Z"/><path d="m16 5-3 22"/></svg><span>Разделить</span></button>
       <button class="manual-tool" type="button" disabled title="Добавление узла — появится позже" aria-label="Добавление узла (скоро)"><svg viewBox="0 0 32 32"><path d="M5 24 15 7l12 17Z"/><path d="M15 3v8m-4-4h8"/></svg><span>Узел</span></button>
@@ -286,8 +292,30 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
           <div class="field"><label for="vectorDiameter">Диаметр, мм</label><input id="vectorDiameter" type="number" min="1" max="80" step="0.5" value="6"></div>
           <div class="field"><label for="vectorDepth">Глубина реза, мм</label><input id="vectorDepth" type="number" min="0.1" max="18" step="0.1" value="3"></div>
         </div>
+        <div id="additionalVectorCutters"></div>
+        <button type="button" id="addVectorCutter">＋ Добавить фрезу к вектору</button>
         <div class="notice vector-note">Эскиз сечения рассчитывается по выбранному типу фрезы и размерам. Сверьте форму режущей кромки с чертежом вашей фрезы перед обработкой.</div>
         <button class="primary" id="applyVectorSettings">Применить к вектору</button>
+      </div>
+    </section>
+    <section class="panel hidden" id="pocketSettingsPanel">
+      <div class="panel-title">Площадная выборка</div>
+      <div class="vector-settings">
+        <div class="notice" id="pocketRegionInfo">Выберите на чертеже промежуток между соседними векторами или центральную область внутри последнего.</div>
+        <div class="field"><label for="pocketCutter">Прямая фреза</label><select id="pocketCutter"><option value="flat">Прямая фреза · Ø 6 мм</option></select></div>
+        <div class="cutter-preview" id="pocketCutterPreview" aria-live="polite"></div>
+        <div class="fields">
+          <div class="field"><label for="pocketDiameter">Диаметр, мм</label><input id="pocketDiameter" type="number" min="1" step="0.5" value="6"></div>
+          <div class="field"><label for="pocketDepth">Глубина выборки, мм</label><input id="pocketDepth" type="number" min="0.1" step="0.1" value="3"></div>
+        </div>
+        <div class="fields">
+          <div class="field"><label for="pocketStepover">Шаг в ArtCAM, % Ø</label><input id="pocketStepover" type="number" min="5" max="90" step="5" value="40"></div>
+          <div class="field"><label for="pocketPassDepth">Глубина прохода, мм</label><input id="pocketPassDepth" type="number" min="0.1" step="0.1" value="2"></div>
+        </div>
+        <div class="notice hidden" id="pocketWarning" role="alert"></div>
+        <div class="notice">Указанная граница определяет область кармана, а вложенный вектор сохраняет роль острова. В ArtCAM проверьте предварительный просмотр; подачи и обороты подбираются по фрезе, материалу и станку. ФасадЛаб не создаёт G-code.</div>
+        <button class="primary" id="applyPocket">Создать выборку</button>
+        <button id="removePocket" class="hidden">Удалить выборку</button>
       </div>
     </section>
     <section class="panel hidden" id="typeSettingsPanel">
@@ -327,7 +355,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 <input id="vectorPicker" type="file" accept=".svg,.dxf,image/svg+xml,application/dxf">
 <input id="artcamToolPicker" type="file" accept=".tdb" multiple hidden>
 <div id="stylesOverlay" class="modal-overlay hidden"><section class="modal-card styles-dialog" role="dialog" aria-modal="true" aria-labelledby="stylesDialogTitle"><button class="modal-close" id="closeStyles" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="stylesDialogTitle">Шаблоны изделий</h2><p>Выберите тип шаблона и примените сохранённые настройки к изделию.</p></div><div class="styles-dialog-controls"><label class="field" for="styleTypeFilter">Тип изделия<select id="styleTypeFilter"><option value="facade">Фасад</option><option value="profile">Профиль</option><option value="comb">Гребёнка</option></select></label><div class="field"><label for="styleName">Название нового шаблона</label><input id="styleName" aria-label="Название сохраняемого шаблона" maxlength="48" value="Мой шаблон" placeholder="Название шаблона"></div></div><button id="saveTemplate" class="primary" type="button">＋ Сохранить текущие настройки как шаблон</button><div id="stylesList" class="styles-list" aria-live="polite"></div><button class="primary" id="closeStylesFooter" type="button">Готово</button></section></div>
-<div id="cutterLibraryOverlay" class="modal-overlay hidden"><section class="modal-card cutter-library-card" role="dialog" aria-modal="true" aria-labelledby="cutterLibraryTitle"><button class="modal-close" id="closeCutterLibrary" aria-label="Закрыть">×</button><div class="cutter-library-heading"><div><strong id="cutterLibraryTitle">Библиотека фрез</strong><p>Стандартные типы и фрезы, импортированные из ArtCAM. Сечение паза строится по профилю операции.</p></div><button id="importArtcamCutters" type="button">Импорт ArtCAM .TDB</button></div><div id="customCutterEditor" class="cutter-library-form hidden"><strong>Редактирование импортированной фрезы</strong><div class="field"><label for="customCutterName">Название</label><input id="customCutterName" maxlength="40"></div><div class="fields"><div class="field"><label for="customCutterShape">Тип профиля</label><select id="customCutterShape"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="wave">Волновая / другая</option></select></div><div class="field"><label for="customCutterWidth">Диаметр / ширина, мм</label><input id="customCutterWidth" type="number" min="0.1" step="0.1"></div></div><div class="cutter-card-actions"><button id="saveCustomCutter" class="primary" type="button">Сохранить изменения</button><button id="cancelCutterEdit" type="button">Отмена</button></div></div><h3 class="cutter-catalog-title">Стандартные и импортированные фрезы</h3><div id="customCutterList" class="cutter-catalog"></div><div class="notice">Из .TDB распознаются названия и размеры из имени; импорт не гарантирует точную геометрию режущей кромки.</div><button class="primary" id="closeCutterLibraryFooter">Готово</button></section></div>
+<div id="cutterLibraryOverlay" class="modal-overlay hidden"><section class="modal-card cutter-library-card" role="dialog" aria-modal="true" aria-labelledby="cutterLibraryTitle"><button class="modal-close" id="closeCutterLibrary" aria-label="Закрыть">×</button><div class="cutter-library-heading"><div><strong id="cutterLibraryTitle">Библиотека фрез</strong><p>Для стандартных типов показывается расчётный эскиз. Геометрия фигурной режущей кромки из ArtCAM .TDB не извлекается.</p></div><button id="importArtcamCutters" type="button">Импорт ArtCAM .TDB</button></div><div id="customCutterEditor" class="cutter-library-form hidden"><strong>Редактирование импортированной фрезы</strong><div class="field"><label for="customCutterName">Название</label><input id="customCutterName" maxlength="40"></div><div class="fields"><div class="field"><label for="customCutterShape">Тип профиля</label><select id="customCutterShape"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="wave">Волновая / другая</option></select></div><div class="field"><label for="customCutterWidth">Диаметр / ширина, мм</label><input id="customCutterWidth" type="number" min="0.1" step="0.1"></div></div><div class="cutter-card-actions"><button id="saveCustomCutter" class="primary" type="button">Сохранить изменения</button><button id="cancelCutterEdit" type="button">Отмена</button></div></div><h3 class="cutter-catalog-title">Стандартные и импортированные фрезы</h3><div id="customCutterList" class="cutter-catalog"></div><div class="notice">Из .TDB распознаются поддерживаемые типы и размеры из названия. Фрезы с неизвестной фигурной кромкой пропускаются, а не отображаются условной прямой или неточным силуэтом.</div><button class="primary" id="closeCutterLibraryFooter">Готово</button></section></div>
 <div id="aboutOverlay" class="modal-overlay hidden"><section class="modal-card"><button class="modal-close" id="closeAbout" aria-label="Закрыть">×</button><div class="brand-name"><span>Фасад</span>Лаб</div><p>Редактор фасадов, профилей и карт раскроя.</p><div class="about-credit"><b>Программист</b><span>L3xik0</span><b>Дополнительный агент</b><span>Евгений Жуков</span><b>Версия</b><span>0.7.1</span></div><button class="primary" id="aboutOk">Закрыть</button></section></div>
 <script src="node_modules/dxf-parser/dist/dxf-parser.js"></script>
 <script>
@@ -359,13 +387,13 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     profileAxis:'vertical',profileBands:[{id:1,side:'left',offset:10,cutter:'round',cutterWidth:6,depth:4.4}],selectedProfileBand:1,
     combDirection:'vertical',combStart:25,combEnd:25,combPitch:12,combCutter:'round',combCutWidth:3,combCutDepth:2,combBeforeStep:false,combAfterStep:false,outerCornerRadius:0,
     facadeTexture:'paper',
-    outerCutter:'none',outerDiameter:6,outerDepth:3,
-    customVectors:[], contours:[], selectedContour:0, importedPaths:[], selectedVector:-1, zoom:100,
+    outerCutter:'none',outerDiameter:6,outerDepth:3,outerAdditionalCutters:[],
+    customVectors:[], contours:[], pockets:[], selectedContour:0, importedPaths:[], selectedVector:-1, zoom:100,
     layers:{outer:true,inner:true,details:true,dimensions:true,text:true,underlay:true},
     sheetWidth:2440,sheetHeight:1220,sheetThickness:19,sheetMargin:10,partGap:5,cuttingItems:[]
   };
   let state = {...initialState,profileBands:initialState.profileBands.map(band=>({...band})),customVectors:[],contours:[],importedPaths:[],layers:{...initialState.layers}};
-  let activeView='2d', activeTool='select', pendingPoint=null, undoStack=[], redoStack=[], panX=0, panY=0, draggingCanvas=null, suppressCanvasClick=false, cuttingLayout={placements:[],unplaced:[]};
+  let activeView='2d', activeTool='select', pendingPoint=null, selectedPocketRegion=null, undoStack=[], redoStack=[], panX=0, panY=0, draggingCanvas=null, suppressCanvasClick=false, cuttingLayout={placements:[],unplaced:[]};
   let lastGeometry={x:120,y:105,scale:1,width:560,height:650};
   const readStored = (key, fallback) => { try { const value=JSON.parse(localStorage.getItem(key)||'null'); return value ?? fallback; } catch { return fallback; } };
   let savedStyles = readStored('fasadlab-styles', []);
@@ -385,6 +413,13 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     if(builtinCutterShapes.includes(value))return value;
     const match=/^custom:(\d+)$/.exec(String(value));
     return match?customCutters.find(item=>item.id===Number(match[1]))?.shape:null;
+  }
+  function contourCutterPasses(contour) {
+    return[{cutter:contour.cutter,diameter:Number(contour.diameter),depth:Number(contour.depth)},...(Array.isArray(contour.additionalCutters)?contour.additionalCutters:[])]
+      .filter(pass=>pass.cutter!=='none'&&cutterShape(pass.cutter)&&Number.isFinite(Number(pass.diameter))&&Number(pass.diameter)>0&&Number.isFinite(Number(pass.depth))&&Number(pass.depth)>0);
+  }
+  function outerContourCutterPasses() {
+    return contourCutterPasses({cutter:state.outerCutter,diameter:state.outerDiameter,depth:state.outerDepth,additionalCutters:state.outerAdditionalCutters});
   }
   function cutterLabel(value) {
     if(value==='none')return 'Не выбрана';
@@ -422,6 +457,29 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   function renderVectorCutterPreview() {
     $('vectorCutterPreview').innerHTML=cutterSelectionPreview($('vectorCutter').value,$('vectorDiameter').value,$('vectorDepth').value);
   }
+  function additionalCutterOptions() {
+    return `<option value="v90">V-фреза 90°</option><option value="flat">Прямая фреза</option><option value="round">Радиусная фреза</option><option value="wave">Волновой профиль (эскиз)</option>${customCutters.map(item=>`<option value="custom:${item.id}">${esc(item.name)} · ${esc(item.width)} мм</option>`).join('')}`;
+  }
+  function renderAdditionalVectorCutters(contour,isBase=false) {
+    const host=$('additionalVectorCutters');
+    const passes=isBase?(Array.isArray(state.outerAdditionalCutters)?state.outerAdditionalCutters:[]):Array.isArray(contour?.additionalCutters)?contour.additionalCutters:[];
+    host.innerHTML=passes.map((pass,index)=>`<div class="vector-extra-cutter" data-extra-cutter="${index}"><div class="vector-band-heading"><strong>Дополнительная фреза ${index+2}</strong><button type="button" data-remove-extra-cutter="${index}" aria-label="Удалить дополнительную фрезу ${index+2}">×</button></div><div class="field"><label>Тип фрезы</label><select data-extra-shape>${additionalCutterOptions(pass.cutter)}</select></div><div data-extra-preview class="cutter-preview">${cutterSelectionPreview(pass.cutter,pass.diameter,pass.depth)}</div><div class="fields"><div class="field"><label>Диаметр / ширина, мм</label><input data-extra-diameter type="number" min="0.1" step="0.1" value="${esc(pass.diameter)}"></div><div class="field"><label>Глубина, мм</label><input data-extra-depth type="number" min="0.1" step="0.1" value="${esc(pass.depth)}"></div></div></div>`).join('');
+    [...host.querySelectorAll('.vector-extra-cutter')].forEach((row,index)=>{
+      const pass=passes[index];
+      row.querySelector('[data-extra-shape]').value=pass.cutter;
+      const tool=customCutters.find(item=>item.id===Number(/^custom:(\d+)$/.exec(pass.cutter)?.[1]));
+      if(tool)row.querySelector('[data-extra-diameter]').value=tool.width;
+    });
+    $('addVectorCutter').disabled=!contour&&!isBase||passes.length>=9;
+    $('addVectorCutter').classList.toggle('hidden',!contour&&!isBase);
+  }
+  function readAdditionalVectorCutters() {
+    return [...$('additionalVectorCutters').querySelectorAll('.vector-extra-cutter')].map(row=>({
+      cutter:row.querySelector('[data-extra-shape]').value,
+      diameter:Number(row.querySelector('[data-extra-diameter]').value),
+      depth:Number(row.querySelector('[data-extra-depth]').value)
+    }));
+  }
   function normalizeOuterCutter() {
     if(typeof state.outerCutter!=='string'||!['none','v90','flat','round','wave',...customCutters.map(item=>`custom:${item.id}`)].includes(state.outerCutter))state.outerCutter='none';
     state.outerDiameter=Number.isFinite(Number(state.outerDiameter))&&Number(state.outerDiameter)>0?Number(state.outerDiameter):6;
@@ -429,9 +487,11 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   }
   function renderCutterOptions() {
     const customOptions=customCutters.map(item=>`<option value="custom:${item.id}">${esc(item.name)} · ${esc(item.width)} мм</option>`).join('');
+    const pocketCustomOptions=customCutters.filter(item=>item.shape==='flat').map(item=>`<option value="custom:${item.id}">${esc(item.name)} · Ø ${esc(item.width)} мм</option>`).join('');
     const options={
       vectorCutter:`<option value="none">Не выбрана</option><option value="v90">V-фреза 90°</option><option value="flat">Прямая фреза</option><option value="round">Радиусная фреза</option><option value="wave">Волновой профиль</option>${customOptions}`,
-      combCutter:`<option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option>${customOptions}`
+      combCutter:`<option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option>${customOptions}`,
+      pocketCutter:`<option value="flat">Прямая фреза · Ø 6 мм</option>${pocketCustomOptions}`
     };
     Object.entries(options).forEach(([id,markup])=>{const select=$(id),value=select.value;select.innerHTML=markup;if([...select.options].some(option=>option.value===value))select.value=value;});
     const builtinCards=builtinCutterShapes.map(shape=>`<article class="cutter-card"><div class="cutter-card-preview">${cutterIllustration(shape)}</div><div><div class="cutter-card-name">${esc(cutterLabel(shape))}</div><div class="cutter-card-meta">Разрез паза по профилю типа</div></div></article>`).join('');
@@ -446,40 +506,38 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       const value=imperial[1].includes('/')?imperial[1].split('/').reduce((numerator,denominator)=>Number(numerator)/Number(denominator)):Number(imperial[1]);
       return value*25.4;
     }
-    if(/conical/i.test(name)){
-      const conicalSize=name.match(/\b(?:flat|rad)\s*[- ]?\s*(\d+(?:[.,]\d+)?|\.\d+)\b/i)||name.match(/\b(\d+(?:[.,]\d+)?|\.\d+)\s+(?:flat|rad)\b/i);
-      if(conicalSize)return Number(conicalSize[1].replace(',','.'));
-    }
     return null;
   }
   function artcamCutterShape(name) {
     if(/ball\s*nose|ballnose/i.test(name))return'round';
-    if(/v[\s-]?bit|v[\s-]?groov|conical/i.test(name))return'v90';
-    if(/ogee|roundover|raiser|veining|burr/i.test(name))return'wave';
-    return'flat';
+    if(/v[\s-]?bit|v[\s-]?groov/i.test(name)&&/\b90\s*(?:deg(?:ree)?s?|°)/i.test(name))return'v90';
+    if(/flat|end\s*mill|slot\s*drill/i.test(name))return'flat';
+    return null;
   }
   function parseArtcamToolDatabase(buffer) {
     const bytes=new Uint8Array(buffer);
     if(bytes.length<16||bytes.length>20*1024*1024)throw new Error('Размер .TDB должен быть от 16 байт до 20 МБ.');
     const raw=new TextDecoder('latin1').decode(bytes);
-    if(!/tpmDB_(?:GroupStart|SlotDrillTool|BallnoseTool|FlatConicalTool|RadiusedConicalTool|VBitTool)/.test(raw))throw new Error('Формат ArtCAM .TDB не распознан.');
-    const decoder=new TextDecoder('utf-16le'),tools=[],seen=new Set();let skipped=0;
+    if(!/tpmDB_(?:GroupStart|[A-Za-z]+Tool)/.test(raw))throw new Error('Формат ArtCAM .TDB не распознан.');
+    const decoder=new TextDecoder('utf-16le'),tools=[],seen=new Set();let skipped=0,unsupported=0;
     for(let offset=0;offset+4<=bytes.length;offset++){
       if(bytes[offset]!==255||bytes[offset+1]!==254||bytes[offset+2]!==255)continue;
       const length=bytes[offset+3],end=offset+4+length*2;
       if(!length||end>bytes.length)continue;
       const name=decoder.decode(bytes.subarray(offset+4,end)).replace(/\0+$/g,'').trim();
       if(name.length<2||name.length>100)continue;
-      const hasSize=/\d+(?:[.,]\d+)?\s*(?:mm|мм|deg(?:ree)?s?|inches?\b|["″])/i.test(name)||/conical/i.test(name)&&/\b(?:flat|rad)\b/i.test(name);
-      if(!hasSize)continue;
+      const hasSize=/\d+(?:[.,]\d+)?\s*(?:mm|мм|deg(?:ree)?s?|inches?\b|["″])/i.test(name);
+      if(!hasSize){if(/\d/.test(name)&&/[-_ ]/.test(name))skipped++;continue;}
       const width=parseArtcamToolWidth(name);
       if(!Number.isFinite(width)||width<=0||width>500){skipped++;continue;}
-      const shape=artcamCutterShape(name),key=`${name.toLocaleLowerCase()}|${shape}|${width.toFixed(4)}`;
+      const shape=artcamCutterShape(name);
+      if(!shape){unsupported++;continue;}
+      const key=`${name.toLocaleLowerCase()}|${shape}|${width.toFixed(4)}`;
       if(seen.has(key))continue;
       seen.add(key);tools.push({name:name.slice(0,80),shape,width:Number(width.toFixed(4)),source:'ArtCAM TDB'});
     }
-    if(!tools.length)throw new Error('В .TDB не найдены фрезы с распознанными размерами в названии.');
-    return{tools,skipped};
+    if(!tools.length)throw new Error(`Не найдены стандартные фрезы с читаемым размером.${unsupported?` Не поддерживаются фрезы со специальным профилем: ${unsupported}.`:''}`);
+    return{tools,skipped,unsupported};
   }
   function persistCustomCutters() {
     try{localStorage.setItem('fasadlab-cutters',JSON.stringify(customCutters));}
@@ -587,13 +645,26 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     if(state.objectType==='facade'&&(!Number.isFinite(state.outerCornerRadius)||state.outerCornerRadius<0||state.outerCornerRadius>Math.min(state.width,state.height)/2))issues.push('Радиус внешних углов должен быть от 0 до половины меньшего размера фасада.');
     if(state.objectType==='facade'&&state.outerCutter!=='none'&&!cutterShape(state.outerCutter))issues.push('Не найдена фреза для основного контура.');
     if(state.objectType==='facade'&&state.outerCutter!=='none'&&(!Number.isFinite(state.outerDepth)||state.outerDepth<=0||state.outerDepth>state.thickness))issues.push('Глубина фрезеровки основного контура должна быть больше нуля и не превышать толщину плиты.');
+    if(state.objectType==='facade')(Array.isArray(state.outerAdditionalCutters)?state.outerAdditionalCutters:[]).forEach((pass,index)=>{
+      if(!cutterShape(pass.cutter)||!Number.isFinite(pass.diameter)||pass.diameter<=0||!Number.isFinite(pass.depth)||pass.depth<=0||pass.depth>state.thickness)issues.push(`Проверьте дополнительную фрезу ${index+2} основного контура; глубина не должна превышать толщину плиты.`);
+    });
     if(state.objectType==='facade')state.contours.forEach((contour,index)=>{
       if(!Number.isFinite(contour.offset)||contour.offset<=0)issues.push(`У вектора ${index+2} отступ должен быть больше нуля.`);
       if(contour.cutter!=='none'&&!cutterShape(contour.cutter))issues.push(`Не найдена фреза для вектора ${index+2}.`);
       if(contour.cutter!=='none'&&(!Number.isFinite(contour.depth)||contour.depth<=0||contour.depth>state.thickness))issues.push(`Глубина фрезеровки вектора ${index+2} должна быть больше нуля и не превышать толщину плиты.`);
+      (Array.isArray(contour.additionalCutters)?contour.additionalCutters:[]).forEach((pass,passIndex)=>{
+        if(!cutterShape(pass.cutter)||!Number.isFinite(pass.diameter)||pass.diameter<=0||!Number.isFinite(pass.depth)||pass.depth<=0||pass.depth>state.thickness)issues.push(`Проверьте фрезу ${passIndex+2} вектора ${index+2}; глубина не должна превышать толщину плиты.`);
+      });
       const bounds=getContourBounds(contour.id);
       if(bounds.width<2||bounds.height<2)issues.push(`Вектор ${index+2} не помещается внутри выбранного контура.`);
       if(bounds.x<0||bounds.y<0||bounds.x+bounds.width>state.width||bounds.y+bounds.height>state.height)issues.push(`Вектор ${index+2} выходит за границы фасада.`);
+    });
+    if(state.objectType==='facade')state.pockets.forEach((pocket,index)=>{
+      const region=getPocketRegion(pocket.parentId,pocket.islandId,pocket.regionType||'ring');
+      if(!region){issues.push(`Область выборки ${index+1} больше не соответствует вложенным векторам.`);return;}
+      if(cutterShape(pocket.cutter)!=='flat'||!Number.isFinite(pocket.diameter)||pocket.diameter<=0||pocket.diameter>=region.gapWidth)issues.push(`Проверьте прямую фрезу и её диаметр для выборки «${region.islandName}».`);
+      if(!Number.isFinite(pocket.depth)||pocket.depth<=0||pocket.depth>state.thickness)issues.push(`Глубина выборки «${region.islandName}» должна быть больше нуля и не превышать толщину плиты.`);
+      if(!Number.isFinite(pocket.stepover)||pocket.stepover<5||pocket.stepover>90||!Number.isFinite(pocket.passDepth)||pocket.passDepth<=0||pocket.passDepth>pocket.depth)issues.push(`Проверьте шаг фрезы и глубину прохода выборки «${region.islandName}».`);
     });
     if(state.objectType==='profile'){
       const vertical=state.profileAxis==='vertical',limit=vertical?state.width:state.height,edges=vertical?['left','right']:['top','bottom'];
@@ -673,6 +744,137 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     }
     return contour.shape==='concave'?pathConcaveRect(x,y,w,h,r):pathRect(x,y,w,h,contour.shape==='round'?r:0);
   }
+  function getPocketRegion(parentId,islandId,regionType='ring') {
+    parentId=Number(parentId);islandId=Number(islandId);
+    const island=state.contours.find(item=>item.id===Number(islandId));
+    const inside=regionType==='inside';
+    if(!island||island.direction!=='in')return null;
+    if(inside?(parentId!==islandId||state.contours.some(item=>item.parentId===islandId&&item.direction==='in')):island.parentId!==parentId)return null;
+    const parent=inside?island:parentId===0?null:state.contours.find(item=>item.id===Number(parentId));
+    if(parentId!==0&&!parent)return null;
+    const outerBounds=parent?getContourBounds(parent.id):{x:0,y:0,width:state.width,height:state.height};
+    const innerBounds=inside?null:getContourBounds(island.id);
+    if(outerBounds.width<=0||outerBounds.height<=0||!inside&&(innerBounds.width<=0||innerBounds.height<=0))return null;
+    if(!inside&&(innerBounds.x<outerBounds.x-1e-6||innerBounds.y<outerBounds.y-1e-6||innerBounds.x+innerBounds.width>outerBounds.x+outerBounds.width+1e-6||innerBounds.y+innerBounds.height>outerBounds.y+outerBounds.height+1e-6))return null;
+    const islandBounds=inside?outerBounds:innerBounds;
+    return{
+      parentId:Number(parentId),islandId:Number(islandId),regionType:inside?'inside':'ring',parent,island,
+      outerName:inside?`Внутри «${island.name||`Вектор ${state.contours.indexOf(island)+2}`}»`:parent?.name||'Фасад',
+      islandName:island.name||`Вектор ${state.contours.indexOf(island)+2}`,
+      outerPath:inside?contourPath(island,1,0,0,outerBounds):parent?contourPath(parent,1,0,0,outerBounds):pathRect(0,0,state.width,state.height,state.outerCornerRadius||0),
+      innerPath:inside?'':contourPath(island,1,0,0,innerBounds),
+      gapWidth:inside?Math.min(islandBounds.width,islandBounds.height):Number(island.offset)||0
+    };
+  }
+  function getPocketForRegion(region) {
+    return region&&state.pockets.find(item=>item.parentId===region.parentId&&item.islandId===region.islandId&&(item.regionType||'ring')===region.regionType);
+  }
+  function horizontalPathIntervals(path,y) {
+    const crossings=[];
+    flattenSvgPath(path).filter(item=>item.closed).forEach(item=>{
+      const points=item.points;
+      for(let index=0;index<points.length;index++){
+        const first=points[index],second=points[(index+1)%points.length];
+        if((first.y<=y&&second.y>y)||(second.y<=y&&first.y>y)){
+          crossings.push(first.x+(y-first.y)*(second.x-first.x)/(second.y-first.y));
+        }
+      }
+    });
+    crossings.sort((a,b)=>a-b);
+    const unique=crossings.filter((value,index)=>index===0||Math.abs(value-crossings[index-1])>1e-6),intervals=[];
+    for(let index=0;index+1<unique.length;index+=2){
+      if(unique[index+1]>unique[index])intervals.push([unique[index],unique[index+1]]);
+    }
+    return intervals;
+  }
+  function subtractIntervals(outerIntervals,innerIntervals) {
+    const result=[];
+    outerIntervals.forEach(([start,end])=>{
+      let cursor=start;
+      innerIntervals.forEach(([innerStart,innerEnd])=>{
+        if(innerEnd<=cursor||innerStart>=end)return;
+        if(innerStart>cursor)result.push([cursor,Math.min(innerStart,end)]);
+        cursor=Math.max(cursor,innerEnd);
+      });
+      if(cursor<end)result.push([cursor,end]);
+    });
+    return result;
+  }
+  function updatePocketCutterPreview() {
+    const tool=$('pocketCutter').value,custom=/^custom:(\d+)$/.exec(tool);
+    const customCutter=customCutters.find(item=>item.id===Number(custom?.[1]));
+    if(customCutter)$('pocketDiameter').value=customCutter.width;
+    $('pocketDiameter').disabled=!!customCutter;
+    const diameter=customCutter?.width||Number($('pocketDiameter').value),depth=Number($('pocketDepth').value);
+    $('pocketCutterPreview').innerHTML=cutterSelectionPreview(tool,diameter,depth);
+  }
+  function renderPocketSettings() {
+    const region=selectedPocketRegion&&getPocketRegion(selectedPocketRegion.parentId,selectedPocketRegion.islandId,selectedPocketRegion.regionType);
+    if(!region)return;
+    const pocket=getPocketForRegion(region);
+    $('pocketRegionInfo').textContent=region.regionType==='inside'?`Выбрана центральная область внутри замкнутого вектора «${region.islandName}» (${region.gapWidth} мм).`:`Выборка шириной ${region.gapWidth} мм: область между «${region.outerName}» и внутренним вектором «${region.islandName}».`;
+    $('pocketCutter').value=pocket?.cutter||'flat';
+    if(![...$('pocketCutter').options].some(option=>option.value===$('pocketCutter').value))$('pocketCutter').value='flat';
+    const customMatch=/^custom:(\d+)$/.exec($('pocketCutter').value);
+    const customCutter=customMatch&&customCutters.find(item=>item.id===Number(customMatch[1]));
+    $('pocketDiameter').value=customCutter?.width||pocket?.diameter||6;
+    $('pocketDepth').value=pocket?.depth||Math.min(3,Math.max(.1,Number(state.thickness)/2));
+    $('pocketStepover').value=pocket?.stepover||40;
+    $('pocketPassDepth').value=pocket?.passDepth||Math.min(2,Number($('pocketDepth').value));
+    $('applyPocket').textContent=pocket?'Обновить параметры выборки':'Создать выборку';
+    $('removePocket').classList.toggle('hidden',!pocket);
+    $('pocketSettingsPanel').classList.remove('hidden');
+    updatePocketCutterPreview();
+    const warning=$('pocketWarning');
+    const message=customMatch&&!customCutter?'Фреза удалена из каталога. Выберите прямую фрезу из доступных.':region.gapWidth<Number($('pocketDiameter').value)?`${region.regionType==='inside'?'Область':'Зазор'} ${region.gapWidth} мм меньше диаметра фрезы.`:'';
+    warning.textContent=message;warning.classList.toggle('hidden',!message);
+  }
+  function updatePocketInputPreview() {
+    updatePocketCutterPreview();
+    const region=selectedPocketRegion&&getPocketRegion(selectedPocketRegion.parentId,selectedPocketRegion.islandId,selectedPocketRegion.regionType);
+    const customMatch=/^custom:(\d+)$/.exec($('pocketCutter').value);
+    const customCutter=customMatch&&customCutters.find(item=>item.id===Number(customMatch[1]));
+    const diameter=customCutter?.width||Number($('pocketDiameter').value);
+    const message=customMatch&&!customCutter?'Фреза удалена из каталога. Выберите прямую фрезу из доступных.':region&&diameter>=region.gapWidth?`Зазор ${region.gapWidth} мм уже диаметра фрезы. Для этого промежутка нужна фреза меньшего диаметра.`:'';
+    $('pocketWarning').textContent=message;$('pocketWarning').classList.toggle('hidden',!message);
+  }
+  function selectPocketRegion(parentId,islandId,regionType='ring') {
+    const region=getPocketRegion(parentId,islandId,regionType);
+    if(!region)return;
+    selectedPocketRegion={parentId:region.parentId,islandId:region.islandId,regionType:region.regionType};
+    state.selectedContour=region.islandId;state.selectedVector=-1;
+    renderTemplateButtons();renderPocketSettings();drawView();setObjectInfoVisible(true);
+    $('footerStatus').textContent=region.regionType==='inside'?`Выбрана центральная область внутри «${region.islandName}»`:`Выбрана область между «${region.outerName}» и «${region.islandName}»`;
+  }
+  function applyPocketSettings() {
+    const region=selectedPocketRegion&&getPocketRegion(selectedPocketRegion.parentId,selectedPocketRegion.islandId,selectedPocketRegion.regionType);
+    if(!region){$('footerStatus').textContent='Выберите область между двумя замкнутыми векторами';return;}
+    const cutter=$('pocketCutter').value,customMatch=/^custom:(\d+)$/.exec(cutter);
+    const customCutter=customMatch&&customCutters.find(item=>item.id===Number(customMatch[1]));
+    const diameter=customCutter?Number(customCutter.width):Number($('pocketDiameter').value);
+    const depth=Number($('pocketDepth').value),stepover=Number($('pocketStepover').value),passDepth=Number($('pocketPassDepth').value);
+    let error='';
+    if(cutterShape(cutter)!=='flat')error='Для площадной выборки выберите прямую фрезу.';
+    else if(!Number.isFinite(diameter)||diameter<=0||diameter>=region.gapWidth)error=`Диаметр фрезы должен быть меньше доступной ширины области ${region.gapWidth} мм.`;
+    else if(!Number.isFinite(depth)||depth<=0||depth>Number(state.thickness))error=`Глубина выборки должна быть больше 0 и не превышать толщину заготовки ${state.thickness} мм.`;
+    else if(!Number.isFinite(stepover)||stepover<5||stepover>90)error='Шаг фрезы задайте от 5 до 90 % диаметра.';
+    else if(!Number.isFinite(passDepth)||passDepth<=0||passDepth>depth)error='Глубина прохода должна быть больше 0 и не больше общей глубины выборки.';
+    if(error){$('pocketWarning').textContent=error;$('pocketWarning').classList.remove('hidden');$('footerStatus').textContent=error;return;}
+    const pocket={parentId:region.parentId,islandId:region.islandId,regionType:region.regionType,cutter,diameter,depth,stepover,passDepth};
+    const existingIndex=state.pockets.findIndex(item=>item.parentId===region.parentId&&item.islandId===region.islandId&&(item.regionType||'ring')===region.regionType);
+    snapshot();
+    if(existingIndex<0)state.pockets.push(pocket);else state.pockets[existingIndex]=pocket;
+    renderPocketSettings();drawView();
+    $('footerStatus').textContent=`Выборка настроена: ${cutterLabel(cutter)} Ø ${diameter} мм, глубина ${depth} мм`;
+  }
+  function deletePocket() {
+    const region=selectedPocketRegion&&getPocketRegion(selectedPocketRegion.parentId,selectedPocketRegion.islandId,selectedPocketRegion.regionType);
+    if(!region)return;
+    const remaining=state.pockets.filter(item=>item.parentId!==region.parentId||item.islandId!==region.islandId||(item.regionType||'ring')!==region.regionType);
+    if(remaining.length===state.pockets.length)return;
+    snapshot();state.pockets=remaining;renderPocketSettings();drawView();
+    $('footerStatus').textContent='Выборка удалена; контуры сохранены';
+  }
   function syncContourControls() {
     const contour=state.contours.find(item=>item.id===state.selectedContour);
     const isBase=!contour&&state.objectType==='facade';
@@ -682,17 +884,19 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     $('vectorSettingsTitle').textContent=isBase?'Фасад':'Вектор';
     $('selectedVectorLabel').textContent=isBase?'':(contour?.name||'');
     if(isBase){
+      renderAdditionalVectorCutters(null,true);
       $('vectorCutter').previousElementSibling.textContent='Фреза основного контура';
       $('applyVectorSettings').textContent='Применить к основному контуру';
       $('vectorCutter').value=state.outerCutter||'none';$('vectorDiameter').value=state.outerDiameter||6;$('vectorDepth').value=state.outerDepth||3;
       return;
     }
-    if(!contour)return;
+    if(!contour){renderAdditionalVectorCutters(null);return;}
     $('vectorCutter').previousElementSibling.textContent='Фреза / профиль';
     $('applyVectorSettings').textContent='Применить к вектору';
     $('vectorShape').value=contour.shape;$('vectorDirection').value=contour.direction;
     $('vectorOffset').value=contour.offset;$('vectorCorner').value=contour.corner;
     $('vectorCutter').value=contour.cutter;$('vectorDiameter').value=contour.diameter;$('vectorDepth').value=contour.depth;
+    renderAdditionalVectorCutters(contour);
   }
   function updateObjectTypeView() {
     const type=$('objectType').value;
@@ -702,6 +906,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     $('combSettings').classList.toggle('hidden',type!=='comb');
     $('typeSettingsPanel').classList.toggle('hidden',type==='facade'||activeView==='nest');
     $('vectorSettingsPanel').classList.toggle('hidden',type!=='facade'||activeView!=='2d');
+    $('pocketSettingsPanel').classList.toggle('hidden',type!=='facade'||activeView!=='2d'||!selectedPocketRegion);
     $('outerRadiusSetting').classList.toggle('hidden',type!=='facade');
     $('quickOffsetControls').classList.toggle('hidden',type!=='facade');
     $('vectorListPanel').style.display=type==='facade'||type==='profile'?'':'none';
@@ -743,12 +948,23 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     const dimensionGroup=visible.dimensions?`<g fill="none" stroke="#147af3" stroke-width="1.7"><path d="M ${x} ${y-22} V ${y-4} M ${x+dw} ${y-22} V ${y-4} M ${x} ${y-16} H ${x+dw}" marker-start="url(#arrow)" marker-end="url(#arrow)"/><path d="M ${x-22} ${y} H ${x-4} M ${x-22} ${y+dh} H ${x-4} M ${x-16} ${y} V ${y+dh}" marker-start="url(#arrow)" marker-end="url(#arrow)"/></g>`:'';
     const labels=visible.text?`<g fill="#0872df" font-size="16" font-weight="700" text-anchor="middle"><text x="${x+dw/2}" y="${y-25}">${esc(W)} мм</text><text transform="translate(${x-29} ${y+dh/2}) rotate(-90)">${esc(H)} мм</text></g><g fill="#425064" font-size="12"><text x="18" y="28">${esc(state.name)}</text><text x="18" y="47">${esc(objectLabel)} · ${shownCount} ${state.objectType==='comb'?'проходов':state.objectType==='profile'?'полос':'векторов'}</text></g>`:'';
     const contours=state.contours.map((contour,index)=>{
-      const path=contourPath(contour,scale,x,y),selected=contour.id===state.selectedContour,groove=contour.cutter==='none'?0:Math.max(1,Math.min(16,Number(contour.diameter||6)*scale));
+      const path=contourPath(contour,scale,x,y),selected=contour.id===state.selectedContour,passes=contourCutterPasses(contour);
       const pencil=selected?'#a45f40':'#625f57';
-      return `<g data-contour="${contour.id}">${groove?`<path d="${path}" fill="none" stroke="#77736b" stroke-width="${groove}" stroke-opacity="${Math.min(.24,.1+Number(contour.depth||0)/Math.max(state.thickness,1)*.14)}" stroke-dasharray="2 1.5"/><path d="${path}" fill="none" stroke="#f8f5eb" stroke-width="${Math.max(.65,groove*.38)}" stroke-opacity=".6" transform="translate(.7 -.7)"/>`:''}<path d="${path}" fill="none" stroke="#656159" stroke-width="${selected?1.7:1.2}" stroke-opacity=".34" stroke-dasharray="5 1 1 1" transform="translate(.8 -.7)" vector-effect="non-scaling-stroke"/><path d="${path}" fill="none" stroke="${pencil}" stroke-width="${selected?1.9:1.35}" stroke-opacity="${selected?.95:.66}" stroke-dasharray="5 1 1 1" stroke-linecap="round" vector-effect="non-scaling-stroke"/><title>${esc(contour.name)} · ${esc(cutterLabel(contour.cutter))} · глубина ${esc(contour.depth)} мм</title></g>`;
+      const grooves=passes.map(pass=>`<path d="${path}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,Math.min(16,pass.diameter*scale))}" stroke-opacity="${Math.min(.2,.08+pass.depth/Math.max(state.thickness,1)*.1)}" stroke-dasharray="2 1.5"/>`).join('');
+      return `<g data-contour="${contour.id}">${grooves}<path d="${path}" fill="none" stroke="#656159" stroke-width="${selected?1.7:1.2}" stroke-opacity=".34" stroke-dasharray="5 1 1 1" transform="translate(.8 -.7)" vector-effect="non-scaling-stroke"/><path d="${path}" fill="none" stroke="${pencil}" stroke-width="${selected?1.9:1.35}" stroke-opacity="${selected?.95:.66}" stroke-dasharray="5 1 1 1" stroke-linecap="round" vector-effect="non-scaling-stroke"/><title>${esc(contour.name)} · ${passes.map(pass=>`${cutterLabel(pass.cutter)} · ${pass.diameter} × ${pass.depth} мм`).join('; ')||'без фрезеровки'}</title></g>`;
     }).join('');
-    const outerCutterShape=cutterShape(state.outerCutter||'none');
-    const outerGroove=visible.outer&&outerCutterShape?`<path d="${outer}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,Number(state.outerDiameter||6)*scale)}" stroke-opacity=".16"/>`:'';
+    const outerGroove=visible.outer?outerContourCutterPasses().map(pass=>`<path d="${outer}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,pass.diameter*scale)}" stroke-opacity=".14"/>`).join(''):'';
+    const pocketRegions=state.objectType==='facade'?state.contours.flatMap(contour=>{
+      const candidates=[getPocketRegion(contour.parentId,contour.id)];
+      if(!state.contours.some(item=>item.parentId===contour.id&&item.direction==='in'))candidates.push(getPocketRegion(contour.id,contour.id,'inside'));
+      return candidates.filter(Boolean).map(region=>{
+        const configured=!!getPocketForRegion(region),selected=selectedPocketRegion?.parentId===region.parentId&&selectedPocketRegion?.islandId===region.islandId&&(selectedPocketRegion?.regionType||'ring')===region.regionType;
+        const parentPath=region.regionType==='inside'?contourPath(contour,scale,x,y,getContourBounds(contour.id)):region.parent?contourPath(region.parent,scale,x,y,getContourBounds(region.parent.id)):outer;
+        const islandPath=region.regionType==='inside'?'':contourPath(contour,scale,x,y,getContourBounds(contour.id));
+        const description=region.regionType==='inside'?`Центральная область внутри «${region.islandName}»`:`Область между «${region.outerName}» и «${region.islandName}»`;
+        return `<path class="pocket-select-area${configured?' configured':''}${selected?' active':''}" data-pocket-region="${region.parentId}:${region.islandId}:${region.regionType}" d="${parentPath}${islandPath?` ${islandPath}`:''}" fill-rule="evenodd" aria-label="${esc(description)}"><title>${esc(description)} · доступная ширина ${region.gapWidth} мм</title></path>`;
+      });
+    }).join(''):'';
     let operation='';
     if(state.objectType==='profile'){
       operation=state.profileBands.map(band=>{
@@ -777,12 +993,12 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       <pattern id="graphMajor" width="${majorCell}" height="${majorCell}" x="${x}" y="${y}" patternUnits="userSpaceOnUse"><path d="M ${majorCell} 0 H 0 V ${majorCell}" fill="none" stroke="#75766e" stroke-width="1" opacity=".36"/></pattern>
       <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M 0 0 L 6 3 L 0 6 Z" fill="#625f57"/></marker></defs>
       <rect width="800" height="800" fill="#f8f6ef"/><rect width="800" height="800" fill="url(#graphMinor)"/><rect width="800" height="800" fill="url(#graphMajor)"/>
-      ${outerGroove}${visible.outer?`<path data-contour="0" d="${outer}" fill="${textureFill}" stroke="#625f57" stroke-opacity="${state.selectedContour===0?'.95':'.75'}" stroke-width="${state.selectedContour===0?2.2:1.8}" stroke-dasharray="6 1 1 1" vector-effect="non-scaling-stroke"/><path d="${outer}" fill="none" stroke="#625f57" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="3 1 1 1" transform="translate(1.1 -1)"/>`:''}
+      ${outerGroove}${visible.outer?`<path data-contour="0" d="${outer}" fill="${textureFill}" stroke="#625f57" stroke-opacity="${state.selectedContour===0?'.95':'.75'}" stroke-width="${state.selectedContour===0?2.2:1.8}" stroke-dasharray="6 1 1 1" vector-effect="non-scaling-stroke"/><path d="${outer}" fill="none" stroke="#625f57" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="3 1 1 1" transform="translate(1.1 -1)"/>`:''}${pocketRegions}
       ${state.objectType==='facade'&&visible.inner?contours:''}${state.objectType==='facade'&&visible.details?extra:''}${imported}${operation}${dimensionGroup}${labels}`;
     $('dimensions').textContent=`${W} × ${H} мм`;
     const operationCount=state.objectType==='facade'?state.contours.length+1:operationVectorPaths().length;
     $('vectorCount').textContent=state.objectType==='comb'?`Проходов: ${operationCount}`:state.objectType==='profile'?`Векторов профиля: ${operationCount}`:`Контуров: ${operationCount}`;
-    $('canvasHint').textContent=state.objectType==='comb'?`Шаг ${state.combPitch} мм · ${operationCount} проходов · дополнительные проходы учитывают отступы`:state.objectType==='profile'?`${operationCount} отдельных векторов профиля · свои фрезы для каждого`:activeView==='profile'?'Разрез фасада показывает все векторы одновременно':activeTool==='select'?'Выберите вектор слева или нажмите «Добавить вектор»':`Инструмент «${toolName(activeTool)}»: укажите точки на чертеже`;
+    $('canvasHint').textContent=state.objectType==='comb'?`Шаг ${state.combPitch} мм · ${operationCount} проходов · дополнительные проходы учитывают отступы`:state.objectType==='profile'?`${operationCount} отдельных векторов профиля · свои фрезы для каждого`:activeView==='profile'?'Разрез фасада показывает все векторы одновременно':activeTool==='select'?'Выберите контур или щёлкните по промежутку между векторами, чтобы настроить выборку':`Инструмент «${toolName(activeTool)}»: укажите точки на чертеже`;
     const issue=geometryIssues().length>0;
     $('validity').textContent=issue?'⚠ Проверьте параметры':'● Проверка пройдена';
     $('validity').className=issue?'warning':'good';
@@ -842,15 +1058,25 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     }):[];
     const operations=[];
     if(isFacade){
-      const baseShape=cutterShape(state.outerCutter||'none'),baseWidth=Number(state.outerDiameter||6),baseDepth=Number(state.outerDepth||3);
-      if(baseShape&&Number.isFinite(baseWidth)&&baseWidth>0&&Number.isFinite(baseDepth)&&baseDepth>0){
+      outerContourCutterPasses().forEach(({cutter,diameter:baseWidth,depth:baseDepth})=>{
+        const baseShape=cutterShape(cutter);
         [0,sectionLength].forEach((center,side)=>operations.push({center,width:baseWidth,depth:baseDepth,shape:baseShape,vector:1,name:'Основной контур',side,base:true}));
-      }
+      });
       state.contours.forEach((contour,index)=>{
-        const bounds=getContourBounds(contour.id),shape=cutterShape(contour.cutter),width=Number(contour.diameter),depth=Number(contour.depth);
-        if(shape&&Number.isFinite(width)&&width>0&&Number.isFinite(depth)&&depth>0){
+        const bounds=getContourBounds(contour.id);
+        contourCutterPasses(contour).forEach(({cutter,diameter:width,depth})=>{
+          const shape=cutterShape(cutter);
           [bounds.x,bounds.x+bounds.width].forEach((center,side)=>operations.push({center,width,depth,shape,vector:index+2,name:contour.name,side}));
-        }
+        });
+      });
+      state.pockets.forEach(pocket=>{
+        const region=getPocketRegion(pocket.parentId,pocket.islandId,pocket.regionType||'ring');
+        if(!region||cutterShape(pocket.cutter)!=='flat')return;
+        const outside=horizontalPathIntervals(region.outerPath,state.height/2),island=region.innerPath?horizontalPathIntervals(region.innerPath,state.height/2):[];
+        (region.innerPath?subtractIntervals(outside,island):outside).forEach(([start,end])=>{
+          const width=end-start;
+          if(width>0)operations.push({center:(start+end)/2,width,depth:Number(pocket.depth),shape:'flat',pocket:true,name:`Выборка ${region.islandName}`});
+        });
       });
     }
     else if(isStrip)profileOperations.forEach(operation=>operations.push(operation));
@@ -884,7 +1110,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     }
     const firstCut=cuts[0],width=firstCut?.width||0,depth=firstCut?.depth||0,position=firstCut?.center??sectionLength/2;
     const x=left+position*scale,half=Math.max(1,width*scale/2),cutDepth=Math.max(1,depth*scale);
-    const cutter=isFacade?`${state.contours.length} внутренних векторов`:isComb?`${cutterLabel(state.combCutter)} · ${state.combCutWidth} × ${state.combCutDepth} мм`:`${cuts.length} фрезерных проходов`;
+    const cutter=isFacade?`${state.contours.length} внутренних векторов · ${state.pockets.length} выборок`:isComb?`${cutterLabel(state.combCutter)} · ${state.combCutWidth} × ${state.combCutDepth} мм`:`${cuts.length} фрезерных проходов`;
     const specification=isComb?[
       ['Направление',state.combDirection==='both'?'Вертикальное и горизонтальное':state.combDirection==='horizontal'?'Горизонтальное':'Вертикальное'],
       ['Шаг / отступы',`${state.combPitch} мм · ${state.combStart} / ${state.combEnd} мм`],
@@ -895,8 +1121,13 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       ...(state.profileBands.length>3?[[`Ещё векторов`,`+${state.profileBands.length-3}`]]:[])
     ]:[
       ['Контуры',`${state.contours.length} внутренних · ${cuts.length} фрезерных резов`],
-      ...state.contours.slice(0,3).map((contour,index)=>[`Вектор ${index+2}`,`${contour.direction==='out'?'наружу':'внутрь'} · ${contour.offset} мм · ${contour.cutter==='none'?'без фрезеровки':`${cutterLabel(contour.cutter)} ${contour.diameter} × ${contour.depth} мм`}`]),
-      ...(state.contours.length>3?[[`Ещё векторов`,`+${state.contours.length-3}`]]:[])
+      ...state.pockets.slice(0,2).map(pocket=>{
+        const region=getPocketRegion(pocket.parentId,pocket.islandId,pocket.regionType||'ring');
+        return[`Выборка ${region?.islandName||''}`,`${region?.regionType==='inside'?'внутри контура':'между векторами'} · ${cutterLabel(pocket.cutter)} Ø ${pocket.diameter} мм · глубина ${pocket.depth} мм`];
+      }),
+      ...state.contours.slice(0,state.pockets.length?1:3).map((contour,index)=>[`Вектор ${index+2}`,`${contour.direction==='out'?'наружу':'внутрь'} · ${contour.offset} мм · ${contourCutterPasses(contour).map(pass=>`${cutterLabel(pass.cutter)} ${pass.diameter} × ${pass.depth} мм`).join(' + ')||'без фрезеровки'}`]),
+      ...(state.pockets.length>2?[[`Ещё выборок`,`+${state.pockets.length-2}`]]:[]),
+      ...(state.contours.length>(state.pockets.length?1:3)?[[`Ещё векторов`,`+${state.contours.length-(state.pockets.length?1:3)}`]]:[])
     ].slice(0,4);
     const specificationMarkup=specification.map(([label,value],index)=>`<text x="82" y="${154+index*16}" font-size="10" fill="#69716f">${esc(label)}</text><text x="190" y="${154+index*16}" font-size="10" fill="#35413f">${esc(value)}</text>`).join('');
     const showSimpleDimensions=cuts.length===1&&x-half>=left-0.01&&x+half<=right+0.01;
@@ -915,7 +1146,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       ${vectorLines.map(line=>`<path d="M ${line} ${y} V ${Math.min(bottom,y+Math.max(8,boardH*.45))}" stroke="#737a7e" stroke-width=".8" stroke-dasharray="3 3" opacity=".55" clip-path="url(#boardClip)"/>`).join('')}
       <path d="M ${left} ${bottom+36} V ${bottom+12} M ${right} ${bottom+36} V ${bottom+12} M ${left} ${bottom+25} H ${right} ${showSimpleDimensions?`M ${x-half} ${bottom+8} V ${bottom+1} M ${x+half} ${bottom+8} V ${bottom+1} M ${x-half} ${bottom+5} H ${x+half} M ${x+half+18} ${y} H ${x+half+5} M ${x+half+18} ${y+cutDepth} H ${x+half+5} M ${x+half+12} ${y} V ${y+cutDepth}`:''}" stroke="#4e5961" stroke-width="1.1" fill="none"/>
       ${showSimpleDimensions?`<path d="M ${x-half} ${bottom+5} H ${x+half} M ${x+half+12} ${y} V ${y+cutDepth}" stroke="#4e5961" stroke-width="1.1" fill="none" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`:''}
-      <g fill="#38434a" font-size="12" font-weight="650" text-anchor="middle"><text x="${(left+right)/2}" y="${bottom+48}">${esc(sectionLength)} мм · длина сечения</text>${showSimpleDimensions?`<text x="${x}" y="${bottom+20}">${esc(width.toFixed(1))} мм</text><text transform="translate(${x+half+29} ${y+cutDepth/2}) rotate(-90)">${esc(depth.toFixed(1))} мм</text>`:''}<text transform="translate(${left-24} ${y+boardH/2}) rotate(-90)">${esc(state.thickness)} мм · толщина</text><text x="${(left+right)/2}" y="${bottom+70}">${isFacade?`Векторов: ${state.contours.length} · резов: ${cuts.length}`:isComb?`Шаг ${state.combPitch} мм · ${allPasses} всего · ${cuts.length} в сечении`:`Векторов профиля: ${cuts.length}`}</text></g>
+      <g fill="#38434a" font-size="12" font-weight="650" text-anchor="middle"><text x="${(left+right)/2}" y="${bottom+48}">${esc(sectionLength)} мм · длина сечения</text>${showSimpleDimensions?`<text x="${x}" y="${bottom+20}">${esc(width.toFixed(1))} мм</text><text transform="translate(${x+half+29} ${y+cutDepth/2}) rotate(-90)">${esc(depth.toFixed(1))} мм</text>`:''}<text transform="translate(${left-24} ${y+boardH/2}) rotate(-90)">${esc(state.thickness)} мм · толщина</text><text x="${(left+right)/2}" y="${bottom+70}">${isFacade?`Векторов: ${state.contours.length} · выборок: ${state.pockets.length} · резов в сечении: ${cuts.length}`:isComb?`Шаг ${state.combPitch} мм · ${allPasses} всего · ${cuts.length} в сечении`:`Векторов профиля: ${cuts.length}`}</text></g>
       <path d="M ${rulerStart} 220 H 760 M ${rulerStart} 216 V 224 M 760 216 V 224" fill="none" stroke="#35413f" stroke-width="1.3"/><text x="760" y="214" text-anchor="end" font-size="9" fill="#35413f">Линейка ${Math.min(50,sectionLength)} мм</text>
       <g fill="#374149" font-size="12"><text x="80" y="67" font-size="19" font-weight="700">Разрез ${isFacade?'фасада':isComb?'гребёнки':'профиля'}</text><text x="80" y="91">${esc(state.width)} × ${esc(state.height)} × ${esc(state.thickness)} мм · ${esc(cutter)}</text><text x="80" y="113">Клетка 10 мм · жирная линия 50 мм · ${esc(scale.toFixed(2))} px/мм</text><text x="80" y="137" font-size="10" font-weight="700" fill="#56615e">СПЕЦИФИКАЦИЯ</text>${specificationMarkup}<text x="80" y="510" font-size="10">Масштабная сетка: малая клетка 10 мм, крупная клетка 50 мм</text></g>`;
     $('viewTitle').textContent=`Разрез: ${isFacade?'фасада':isComb?'гребёнки':'профиля'}`;
@@ -994,7 +1225,9 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     const selected=savedDesigns.find(item=>item.id===id);
     if(!selected)return;
     const order=state.cuttingItems;
+    selectedPocketRegion=null;
     state={...initialState,...JSON.parse(JSON.stringify(selected.state)),layers:{...initialState.layers,...(selected.state.layers||{})}};
+    state.pockets=Array.isArray(state.pockets)?state.pockets:[];
     state.cuttingItems=order;
     normalizeOuterCutter();
     activeDesignId=selected.id;
@@ -1005,6 +1238,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     persistActiveDesign();
     const order=state.cuttingItems;
     const type=$('newObjectType').value;
+    selectedPocketRegion=null;
     state={...initialState,name:type==='profile'?'Профиль':type==='comb'?'Гребёнка':'Фасад',objectType:type,
       profileBands:initialState.profileBands.map(band=>({...band})),customVectors:[],contours:[],importedPaths:[],layers:{...initialState.layers},cuttingItems:order};
     activeDesignId=`design-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
@@ -1117,12 +1351,19 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   }
   function handleCanvasClick(event) {
     if(suppressCanvasClick){suppressCanvasClick=false;return;}
-    const contourElement=event.target.closest('[data-contour]');
+    const hitTarget=event.target.closest('[data-pocket-region],[data-contour],[data-vector]')?event.target:document.elementFromPoint(event.clientX,event.clientY)||event.target;
+    const pocketElement=hitTarget.closest('[data-pocket-region]');
+    if(activeView==='2d'&&activeTool==='select'&&pocketElement){
+      const [parentId,islandId,regionType='ring']=pocketElement.dataset.pocketRegion.split(':');
+      selectPocketRegion(Number(parentId),Number(islandId),regionType);return;
+    }
+    const contourElement=hitTarget.closest('[data-contour]');
     if(activeView==='2d'&&activeTool==='select'&&contourElement){
+      selectedPocketRegion=null;
       state.selectedContour=Number(contourElement.dataset.contour);state.selectedVector=-1;renderTemplateButtons();drawView();setObjectInfoVisible(true);return;
     }
-    const vectorElement=event.target.closest('[data-vector]');
-    if(activeView==='2d'&&activeTool==='select'&&vectorElement){state.selectedVector=Number(vectorElement.dataset.vector);drawView();return;}
+    const vectorElement=hitTarget.closest('[data-vector]');
+    if(activeView==='2d'&&activeTool==='select'&&vectorElement){selectedPocketRegion=null;state.selectedVector=Number(vectorElement.dataset.vector);drawView();return;}
     if(activeView!=='2d'||activeTool==='select')return;
     const svg=$('drawing'),screenPoint=svg.createSVGPoint();screenPoint.x=event.clientX;screenPoint.y=event.clientY;
     const local=screenPoint.matrixTransform(svg.getScreenCTM().inverse()),viewX=local.x,viewY=local.y;
@@ -1305,16 +1546,22 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     }else if(state.objectType==='facade'){
       rows.push(['Углы фасада',`Радиус ${measure(state.outerCornerRadius||0)}`]);
       const basePath=pathRect(0,0,state.width,state.height,state.outerCornerRadius||0),baseStart=/^M\s+([-\d.]+)\s+([-\d.]+)/.exec(basePath);
-      addOperation('Основной контур',baseStart?`X ${measure(baseStart[1])} · Y ${measure(state.height-Number(baseStart[2]))}`:'—','Вектор по наружному краю заготовки',state.outerCutter==='none'?'Фреза не задана':`${cutterLabel(state.outerCutter)} · ширина ${measure(state.outerDiameter)} · глубина ${measure(state.outerDepth)}`);
+      addOperation('Основной контур',baseStart?`X ${measure(baseStart[1])} · Y ${measure(state.height-Number(baseStart[2]))}`:'—','Вектор по наружному краю заготовки',outerContourCutterPasses().map((pass,index)=>`${index+1}. ${cutterLabel(pass.cutter)} · ширина ${measure(pass.diameter)} · глубина ${measure(pass.depth)}`).join('; ')||'Фреза не задана');
       state.contours.forEach((contour,index)=>{
         const bounds=getContourBounds(contour.id),path=contourPath(contour,1,0,0,bounds),start=/^M\s+([-\d.]+)\s+([-\d.]+)/.exec(path);
         const point=start?`X ${measure(start[1])} · Y ${measure(state.height-Number(start[2]))}`:'—';
         const parent=contour.parentId===0?{cutter:state.outerCutter,width:Number(state.outerDiameter)||0}:state.contours.find(item=>item.id===contour.parentId);
         const parentWidth=parent?(parent.cutter==='none'?0:Number(parent.diameter??parent.width)||0):0;
         const centerDistance=Number(contour.offset),edgeGap=parentWidth&&contour.cutter!=='none'?centerDistance-(parentWidth+Number(contour.diameter))/2:null;
-        const cutter=contour.cutter==='none'?'Фреза не задана':`${cutterLabel(contour.cutter)} · ширина ${measure(contour.diameter)} · глубина ${measure(contour.depth)}`;
+        const cutter=contourCutterPasses(contour).map((pass,passIndex)=>`${passIndex+1}. ${cutterLabel(pass.cutter)} · ширина ${measure(pass.diameter)} · глубина ${measure(pass.depth)}`).join('; ')||'Фреза не задана';
         const spacing=`От родителя ${measure(centerDistance)}${edgeGap===null?'':` · между краями резов ${measure(edgeGap)}`}`;
         addOperation(`Вектор ${contour.name||index+2}`,point,`Вектор ${bounds.width.toLocaleString('ru-RU')} × ${bounds.height.toLocaleString('ru-RU')} мм · ${contour.direction==='out'?'наружу':'внутрь'} · углы ${measure(contour.corner||0)}`,cutter,spacing);
+      });
+      state.pockets.forEach((pocket,index)=>{
+        const region=getPocketRegion(pocket.parentId,pocket.islandId,pocket.regionType||'ring');
+        if(!region)return;
+        const area=region.regionType==='inside'?`Внутри «${region.islandName}»`:`Между «${region.outerName}» и «${region.islandName}»`;
+        addOperation(`Выборка ${index+1}`,'—',area,`${cutterLabel(pocket.cutter)} · Ø ${measure(pocket.diameter)} · глубина ${measure(pocket.depth)}`,`Доступная ширина ${measure(region.gapWidth)} · шаг ${pocket.stepover}% Ø · глубина прохода ${measure(pocket.passDepth)}`);
       });
     }else if(state.objectType==='profile'){
       const vertical=state.profileAxis==='vertical',axis=vertical?'X':'Y',across=vertical?state.width:state.height;
@@ -1352,7 +1599,8 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     const operationRows=operations.map((operation,index)=>`<tr><td>${String(index+1).padStart(2,'0')}</td><th scope="row">${esc(operation.name)}</th><td>${esc(operation.start)}</td><td>${esc(operation.position)}</td><td>${esc(operation.spacing)}</td><td>${esc(operation.tool)}</td></tr>`).join('');
     const safeName=(state.name||typeName).replace(/[<>:"/\\|?*]/g,'_');
     const drawingSize=activeView==='nest'?`${measure(state.sheetWidth)} × ${measure(state.sheetHeight)} · лист ${measure(state.sheetThickness)}`:`${measure(state.width)} × ${measure(state.height)} × ${measure(state.thickness)}`;
-    $('printDocument').innerHTML=`<article class="print-page"><header class="print-heading"><h1>${esc(state.name||typeName)} — ${esc(typeName)}</h1><p>${esc($('viewTitle').textContent)} · ${esc(drawingSize)}</p><p>Документ подготовлен ${esc(new Date().toLocaleString('ru-RU'))}</p></header>${svg.outerHTML}<p class="print-note">Миллиметровая сетка и подпись «Линейка 50 мм» служат только для визуального масштаба. Это не шаг обработки и не настройка фрезы.</p></article><article class="print-page print-spec-page"><header class="print-heading"><h1>Спецификация для настройки в ArtCAM</h1><p>${esc(state.name||typeName)} · ${esc(typeName)}</p></header><p class="print-spec-intro"><b>Система координат DXF:</b> миллиметры; начало X=0, Y=0 — левый нижний угол заготовки; X направлена вправо, Y вверх. «Начало линии» показывает старт координат вектора, а не обязательную точку начала резания станка.</p><p class="print-spec-intro"><b>Центральная линия:</b> центр фрезы идёт точно по вектору/оси, указанным в таблице. Не смещайте вектор на половину диаметра: ширина фрезы указана отдельно и определяет ширину канавки. «До предыдущего центра» — расстояние между осями траекторий; зазор между кромками резов зависит от ширины обеих фрез.</p><table class="print-spec-table print-operations-table"><thead><tr><th scope="col">№</th><th scope="col">Вектор / проход</th><th scope="col">Начало линии DXF</th><th scope="col">Положение центра</th><th scope="col">От края / расстояние между центрами</th><th scope="col">Фреза и глубина</th></tr></thead><tbody>${operationRows||`<tr><td colspan="6">Для этого вида отдельные траектории обработки не перечисляются.</td></tr>`}</tbody></table><h2 class="print-spec-summary-title">Размеры изделия и обработки</h2><table class="print-spec-table"><thead><tr><th scope="col">Параметр</th><th scope="col">Значение</th></tr></thead><tbody>${tableRows}</tbody></table></article>`;
+    const pocketInstructions=state.pockets.length?'<p class="print-spec-intro"><b>Площадная выборка:</b> для зоны между векторами в ArtCAM задайте внешний контур границей, а внутренний — островом; для центральной области выберите замкнутый внутренний контур как границу кармана. Используйте указанные параметры фрезы и проходов, проверьте симуляцию, оснастку, материал и станок. ФасадЛаб экспортирует геометрию и параметры, но не рассчитывает траекторию станка или G-code.</p>':'';
+    $('printDocument').innerHTML=`<article class="print-page"><header class="print-heading"><h1>${esc(state.name||typeName)} — ${esc(typeName)}</h1><p>${esc($('viewTitle').textContent)} · ${esc(drawingSize)}</p><p>Документ подготовлен ${esc(new Date().toLocaleString('ru-RU'))}</p></header>${svg.outerHTML}<p class="print-note">Миллиметровая сетка и подпись «Линейка 50 мм» служат только для визуального масштаба. Это не шаг обработки и не настройка фрезы.</p></article><article class="print-page print-spec-page"><header class="print-heading"><h1>Спецификация для настройки в ArtCAM</h1><p>${esc(state.name||typeName)} · ${esc(typeName)}</p></header><p class="print-spec-intro"><b>Система координат DXF:</b> миллиметры; начало X=0, Y=0 — левый нижний угол заготовки; X направлена вправо, Y вверх. «Начало линии» показывает старт координат вектора, а не обязательную точку начала резания станка.</p><p class="print-spec-intro"><b>Центральная линия:</b> центр фрезы идёт точно по вектору/оси, указанным в таблице. Не смещайте вектор на половину диаметра: ширина фрезы указана отдельно и определяет ширину канавки. «До предыдущего центра» — расстояние между осями траекторий; зазор между кромками резов зависит от ширины обеих фрез.</p>${pocketInstructions}<table class="print-spec-table print-operations-table"><thead><tr><th scope="col">№</th><th scope="col">Вектор / проход</th><th scope="col">Начало линии DXF</th><th scope="col">Положение центра</th><th scope="col">От края / расстояние между центрами</th><th scope="col">Фреза и глубина</th></tr></thead><tbody>${operationRows||`<tr><td colspan="6">Для этого вида отдельные траектории обработки не перечисляются.</td></tr>`}</tbody></table><h2 class="print-spec-summary-title">Размеры изделия и обработки</h2><table class="print-spec-table"><thead><tr><th scope="col">Параметр</th><th scope="col">Значение</th></tr></tbody>${tableRows}</table></article>`;
     $('footerStatus').textContent='Открыта печать документа: выберите принтер или «Сохранить как PDF»';
     const previousTitle=document.title,restoreTitle=()=>{document.title=previousTitle;window.removeEventListener('afterprint',restoreTitle);};
     document.title=`${safeName} — Спецификация`;
@@ -1371,7 +1619,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   function saveProject() {stateFromInputs();download(`${state.name.replace(/[<>:"/\\|?*]/g,'_')||'fasad'}.json`,JSON.stringify(state,null,2),'application/json');$('footerStatus').textContent='Проект сохранён в файл JSON';}
   function applyProject(project) {
     if(!project||typeof project!=='object'||Array.isArray(project))throw new Error('Файл проекта повреждён или имеет неверный формат.');
-    const allowed=['name','template','width','height','thickness','inset','secondInset','panelInset','radius','profileDepth','profilePitch','profileLand','profileRadius','material','grain','symmetry','profileType','toolPreset','roughDiameter','roughPass','roughRpm','roughFeed','finishDiameter','finishPass','finishRpm','finishFeed','objectType','profileAxis','profileBands','selectedProfileBand','profileCutter','profileSide','profileOffset','profileBandWidth','profileCutWidth','profileCutDepth','outerCornerRadius','outerCutter','outerDiameter','outerDepth','combDirection','combCutter','combStart','combEnd','combPitch','combCutWidth','combCutDepth','combBeforeStep','combAfterStep','facadeTexture','sheetWidth','sheetHeight','sheetThickness','sheetMargin','partGap','cuttingItems','customVectors','contours','importedPaths','layers'];
+    const allowed=['name','template','width','height','thickness','inset','secondInset','panelInset','radius','profileDepth','profilePitch','profileLand','profileRadius','material','grain','symmetry','profileType','toolPreset','roughDiameter','roughPass','roughRpm','roughFeed','finishDiameter','finishPass','finishRpm','finishFeed','objectType','profileAxis','profileBands','selectedProfileBand','profileCutter','profileSide','profileOffset','profileBandWidth','profileCutWidth','profileCutDepth','outerCornerRadius','outerCutter','outerDiameter','outerDepth','outerAdditionalCutters','combDirection','combCutter','combStart','combEnd','combPitch','combCutWidth','combCutDepth','combBeforeStep','combAfterStep','facadeTexture','sheetWidth','sheetHeight','sheetThickness','sheetMargin','partGap','cuttingItems','customVectors','contours','pockets','importedPaths','layers'];
     snapshot();allowed.forEach(key=>{if(project[key]!==undefined)state[key]=project[key];});
     state.combBeforeStep=project.combBeforeStep===true;state.combAfterStep=project.combAfterStep===true;
     state.facadeTexture=['paper','mdf','veneer','plain'].includes(project.facadeTexture)?project.facadeTexture:'paper';
@@ -1382,10 +1630,28 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     }).filter(Boolean):[];
     state.importedPaths=Array.isArray(state.importedPaths)?state.importedPaths.filter(item=>typeof item?.d==='string'&&/^[MmLlHhVvCcSsQqTtAaZzEe0-9,.\s+\-]+$/.test(item.d)&&Number.isFinite(item.viewBox?.x)&&Number.isFinite(item.viewBox?.y)&&Number.isFinite(item.viewBox?.width)&&item.viewBox.width>0&&Number.isFinite(item.viewBox?.height)&&item.viewBox.height>0):[];
     const validContourTypes=['rect','round','concave','circle','chamfer'],validCutters=['none','v90','flat','round','wave',...customCutters.map(item=>`custom:${item.id}`)];
-    state.contours=Array.isArray(state.contours)?state.contours.filter(contour=>Number.isInteger(contour?.id)&&Number.isInteger(contour?.parentId)&&validContourTypes.includes(contour?.shape)&&['in','out'].includes(contour?.direction)&&Number.isFinite(Number(contour?.offset))&&Number.isFinite(Number(contour?.corner))&&validCutters.includes(contour?.cutter)).map(contour=>({...contour,offset:Number(contour.offset),corner:Number(contour.corner),diameter:Number(contour.diameter)||6,depth:Number(contour.depth)||3})):[]; 
+    state.contours=Array.isArray(state.contours)?state.contours
+      .filter(contour=>Number.isInteger(contour?.id)&&Number.isInteger(contour?.parentId)&&validContourTypes.includes(contour?.shape)&&['in','out'].includes(contour?.direction)&&Number.isFinite(Number(contour?.offset))&&Number.isFinite(Number(contour?.corner))&&validCutters.includes(contour?.cutter))
+      .map(contour=>({...contour,offset:Number(contour.offset),corner:Number(contour.corner),diameter:Number(contour.diameter)||6,depth:Number(contour.depth)||3,
+        additionalCutters:Array.isArray(contour.additionalCutters)?contour.additionalCutters
+          .filter(pass=>typeof pass?.cutter==='string'&&cutterShape(pass.cutter)&&Number.isFinite(Number(pass?.diameter))&&Number(pass.diameter)>0&&Number.isFinite(Number(pass?.depth))&&Number(pass.depth)>0)
+          .map(pass=>({...pass,diameter:Number(pass.diameter),depth:Number(pass.depth)})).slice(0,9):[]})):[];
     const ids=new Set([0]);state.contours=state.contours.filter(contour=>{if(ids.has(contour.id)||!ids.has(contour.parentId))return false;ids.add(contour.id);return true;});
     if(state.objectType==='molding')state.objectType='profile';
     if(!['facade','profile','comb'].includes(state.objectType))state.objectType='facade';
+    state.outerAdditionalCutters=Array.isArray(state.outerAdditionalCutters)?state.outerAdditionalCutters.filter(pass=>typeof pass?.cutter==='string'&&cutterShape(pass.cutter)&&Number.isFinite(Number(pass?.diameter))&&Number(pass.diameter)>0&&Number.isFinite(Number(pass?.depth))&&Number(pass.depth)>0).map(pass=>({...pass,diameter:Number(pass.diameter),depth:Number(pass.depth)})).slice(0,9):[];
+    state.pockets=state.objectType==='facade'&&Array.isArray(project.pockets)?project.pockets.filter(pocket=>
+      Number.isInteger(pocket?.parentId)&&Number.isInteger(pocket?.islandId)&&
+      (pocket.regionType===undefined||['ring','inside'].includes(pocket.regionType))&&
+      Number.isFinite(Number(pocket?.diameter))&&Number(pocket.diameter)>0&&
+      Number.isFinite(Number(pocket?.depth))&&Number(pocket.depth)>0&&
+      Number.isFinite(Number(pocket?.stepover))&&Number(pocket.stepover)>=5&&Number(pocket.stepover)<=90&&
+      Number.isFinite(Number(pocket?.passDepth))&&Number(pocket.passDepth)>0&&
+      cutterShape(pocket?.cutter)==='flat'
+    ).map(pocket=>({...pocket,regionType:pocket.regionType||'ring',diameter:Number(pocket.diameter),depth:Number(pocket.depth),stepover:Number(pocket.stepover),passDepth:Number(pocket.passDepth)})).filter(pocket=>{
+      const region=getPocketRegion(pocket.parentId,pocket.islandId,pocket.regionType);
+      return region&&pocket.diameter<region.gapWidth&&pocket.depth<=Number(state.thickness)&&pocket.passDepth<=pocket.depth;
+    }):[];
     normalizeOuterCutter();
     if(!['vertical','horizontal'].includes(state.profileAxis))state.profileAxis='vertical';
     if(!Array.isArray(project.profileBands)){
@@ -1409,6 +1675,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       objectType:['facade','profile','comb'].includes(item.objectType)?item.objectType:'facade',
       outerCornerRadius:Number(item.outerCornerRadius)||0,quantity:Math.min(1000,Number(item.quantity)),
       contours:item.contours.filter(contour=>Number.isInteger(contour?.id)&&Number.isInteger(contour?.parentId)&&['rect','round','concave','circle','chamfer'].includes(contour.shape)&&['in','out'].includes(contour.direction)&&Number.isFinite(Number(contour.offset))&&Number.isFinite(Number(contour.corner))),
+      pockets:Array.isArray(item.pockets)?item.pockets.filter(pocket=>Number.isInteger(pocket?.parentId)&&Number.isInteger(pocket?.islandId)&&item.contours.some(contour=>contour.id===pocket.islandId&&contour.parentId===pocket.parentId&&contour.direction==='in')&&Number.isFinite(Number(pocket?.diameter))&&Number(pocket.diameter)>0&&Number.isFinite(Number(pocket?.depth))&&Number(pocket.depth)>0&&Number.isFinite(Number(pocket?.stepover))&&Number(pocket.stepover)>=5&&Number(pocket.stepover)<=90&&Number.isFinite(Number(pocket?.passDepth))&&Number(pocket.passDepth)>0&&cutterShape(pocket?.cutter)==='flat').map(pocket=>({...pocket,diameter:Number(pocket.diameter),depth:Number(pocket.depth),stepover:Number(pocket.stepover),passDepth:Number(pocket.passDepth)})):[],
       customVectors:Array.isArray(item.customVectors)?item.customVectors:[],importedPaths:Array.isArray(item.importedPaths)?item.importedPaths:[],
       profileAxis:item.profileAxis==='horizontal'?'horizontal':'vertical',
       profileBands:Array.isArray(item.profileBands)?item.profileBands.filter(band=>['left','right','top','bottom'].includes(band.side)&&Number.isFinite(Number(band.offset))).map(band=>({...band,offset:Number(band.offset)})):[],
@@ -1417,7 +1684,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       combCutter:typeof item.combCutter==='string'?item.combCutter:'round',      combCutWidth:Number(item.combCutWidth)||3,combCutDepth:Number(item.combCutDepth)||2,
       combBeforeStep:item.combBeforeStep===true,combAfterStep:item.combAfterStep===true
     })):[]; 
-    nextContourId=Math.max(1,...state.contours.map(contour=>contour.id+1));state.selectedContour=0;state.layers={...initialState.layers,...(state.layers||{})};state.selectedVector=-1;renderCutterOptions();syncInputs();renderProfileBands();renderCuttingList();updateObjectTypeView();renderTemplateButtons();drawView();
+    selectedPocketRegion=null;nextContourId=Math.max(1,...state.contours.map(contour=>contour.id+1));state.selectedContour=0;state.layers={...initialState.layers,...(state.layers||{})};state.selectedVector=-1;renderCutterOptions();syncInputs();renderProfileBands();renderCuttingList();updateObjectTypeView();renderTemplateButtons();drawView();
   }
   function render() {stateFromInputs();drawView();}
   function renderSavedTemplates() {
@@ -1505,12 +1772,21 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       $('footerStatus').textContent='Проверьте отступ, радиус угла и размеры фрезы';return;
     }
     if(isBase){
-      snapshot();state.outerCutter=$('vectorCutter').value;state.outerDiameter=diameter;state.outerDepth=depth;
+      const additionalCutters=readAdditionalVectorCutters();
+      const invalidCutter=additionalCutters.findIndex(pass=>!cutterShape(pass.cutter)||!Number.isFinite(pass.diameter)||pass.diameter<=0||!Number.isFinite(pass.depth)||pass.depth<=0||pass.depth>state.thickness);
+      if(invalidCutter>=0){const message=`Проверьте дополнительную фрезу ${invalidCutter+2}: задайте корректную ширину и глубину не больше толщины заготовки ${state.thickness} мм.`;$('footerStatus').textContent=message;alert(message);return;}
+      snapshot();state.outerCutter=$('vectorCutter').value;state.outerDiameter=diameter;state.outerDepth=depth;state.outerAdditionalCutters=additionalCutters;
       renderTemplateButtons();drawView();$('footerStatus').textContent='Настройки фрезы применены к основному контуру фасада';return;
+    }
+    const additionalCutters=readAdditionalVectorCutters();
+    const invalidCutter=additionalCutters.findIndex(pass=>!cutterShape(pass.cutter)||!Number.isFinite(pass.diameter)||pass.diameter<=0||!Number.isFinite(pass.depth)||pass.depth<=0||pass.depth>state.thickness);
+    if(invalidCutter>=0){
+      const message=`Проверьте дополнительную фрезу ${invalidCutter+2}: задайте корректную ширину и глубину не больше толщины заготовки ${state.thickness} мм.`;
+      $('footerStatus').textContent=message;alert(message);return;
     }
     const updatedContours=state.contours.map(item=>item.id===contour.id?{
       ...item,shape:$('vectorShape').value,direction:$('vectorDirection').value,offset,corner,
-      cutter:$('vectorCutter').value,diameter,depth
+      cutter:$('vectorCutter').value,diameter,depth,additionalCutters
     }:item);
     const affectedIds=new Set([contour.id]);
     let foundDescendant=true;
@@ -1623,11 +1899,11 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   $('artcamToolPicker').addEventListener('change',async event=>{
     const files=[...event.target.files];if(!files.length)return;
     try{
-      const imported=[],failures=[];let skipped=0;
+      const imported=[],failures=[];let skipped=0,unsupported=0;
       for(const file of files){
         try{
           const parsed=parseArtcamToolDatabase(await file.arrayBuffer());
-          imported.push(...parsed.tools.map(tool=>({...tool,sourceFile:file.name})));skipped+=parsed.skipped;
+          imported.push(...parsed.tools.map(tool=>({...tool,sourceFile:file.name})));skipped+=parsed.skipped;unsupported+=parsed.unsupported;
         }catch(error){failures.push(`${file.name}: ${error.message}`);}
       }
       if(!imported.length)throw new Error(failures.join('\n')||'В выбранных файлах не найдены фрезы.');
@@ -1638,8 +1914,8 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       let nextId=Math.max(0,...customCutters.map(tool=>tool.id));
       const combined=[...customCutters,...added.map(tool=>({...tool,id:++nextId}))];
       localStorage.setItem('fasadlab-cutters',JSON.stringify(combined));
-      customCutters=combined;renderCutterOptions();renderProfileBands();
-      const message=`Импортировано ${added.length} фрез из ${files.length} файлов ArtCAM .TDB${skipped?`; без читаемого размера пропущено ${skipped}`:''}${duplicates?`; повторов пропущено ${duplicates}`:''}`;
+      customCutters=combined;renderCutterOptions();renderProfileBands();renderTemplateButtons();
+      const message=`Импортировано ${added.length} фрез из ${files.length} файлов ArtCAM .TDB${skipped?`; без читаемого размера пропущено ${skipped}`:''}${unsupported?`; специальных профилей без точной геометрии пропущено ${unsupported}`:''}${duplicates?`; повторов пропущено ${duplicates}`:''}`;
       $('footerStatus').textContent=message;
       if(failures.length)alert(`${message}\nНе удалось прочитать:\n${failures.join('\n')}`);
     }catch(error){
@@ -1652,7 +1928,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     if(issues.length){const message=`Изделие не добавлено: ${issues[0]}`;$('footerStatus').textContent=message;alert(message);return;}
     const quantity=Number($('partQuantity').value);
     if(!Number.isInteger(quantity)||quantity<1||quantity>1000){$('footerStatus').textContent='Количество фасадов должно быть от 1 до 1000';alert('Количество фасадов должно быть целым числом от 1 до 1000.');return;}
-    const item={id:`cut-${Date.now()}-${state.cuttingItems.length+1}`,name:state.name,objectType:state.objectType,width:state.width,height:state.height,thickness:state.thickness,outerCornerRadius:state.outerCornerRadius,contours:JSON.parse(JSON.stringify(state.contours)),customVectors:JSON.parse(JSON.stringify(state.customVectors)),importedPaths:JSON.parse(JSON.stringify(state.importedPaths)),profileAxis:state.profileAxis,profileBands:JSON.parse(JSON.stringify(state.profileBands)),combDirection:state.combDirection,combStart:state.combStart,combEnd:state.combEnd,combPitch:state.combPitch,combCutter:state.combCutter,combCutWidth:state.combCutWidth,combCutDepth:state.combCutDepth,combBeforeStep:state.combBeforeStep,combAfterStep:state.combAfterStep,quantity};
+    const item={id:`cut-${Date.now()}-${state.cuttingItems.length+1}`,name:state.name,objectType:state.objectType,width:state.width,height:state.height,thickness:state.thickness,outerCornerRadius:state.outerCornerRadius,contours:JSON.parse(JSON.stringify(state.contours)),pockets:JSON.parse(JSON.stringify(state.pockets)),customVectors:JSON.parse(JSON.stringify(state.customVectors)),importedPaths:JSON.parse(JSON.stringify(state.importedPaths)),profileAxis:state.profileAxis,profileBands:JSON.parse(JSON.stringify(state.profileBands)),combDirection:state.combDirection,combStart:state.combStart,combEnd:state.combEnd,combPitch:state.combPitch,combCutter:state.combCutter,combCutWidth:state.combCutWidth,combCutDepth:state.combCutDepth,combBeforeStep:state.combBeforeStep,combAfterStep:state.combAfterStep,quantity};
     snapshot();state.cuttingItems.push(item);renderCuttingList();drawView();$('footerStatus').textContent=`«${item.name}» добавлен в карту раскроя (${quantity} шт.)`;
   });
   $('cuttingList').addEventListener('click',event=>{
@@ -1678,11 +1954,14 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     if(!tool)return;
     if(editingCutterId===id){editingCutterId=null;$('customCutterEditor').classList.add('hidden');}
     state.contours.forEach(contour=>{if(contour.cutter===value)contour.cutter='round';});
+    state.contours.forEach(contour=>{if(Array.isArray(contour.additionalCutters))contour.additionalCutters.forEach(pass=>{if(pass.cutter===value)pass.cutter='round';});});
     state.profileBands.forEach(band=>{if(band.cutter===value)band.cutter='round';});
+    state.outerAdditionalCutters.forEach(pass=>{if(pass.cutter===value)pass.cutter='round';});
+    state.pockets.forEach(pocket=>{if(pocket.cutter===value){pocket.cutter='flat';pocket.diameter=6;}});
     if(state.combCutter===value)state.combCutter='round';
     if(state.outerCutter===value)state.outerCutter='round';
-    customCutters=customCutters.filter(item=>item.id!==id);persistCustomCutters();renderCutterOptions();syncInputs();renderProfileBands();drawView();
-    $('footerStatus').textContent=`Фреза «${tool.name}» удалена; использовавшиеся настройки заменены круглой фрезой`;
+    customCutters=customCutters.filter(item=>item.id!==id);persistCustomCutters();renderCutterOptions();syncInputs();renderProfileBands();renderTemplateButtons();renderPocketSettings();drawView();
+    $('footerStatus').textContent=`Фреза «${tool.name}» удалена; использовавшиеся настройки заменены стандартными фрезами`;
   });
   [['vectorCutter','vectorDiameter'],['combCutter','combCutWidth']].forEach(([selectorId,widthId])=>{
     $(selectorId).addEventListener('change',event=>{
@@ -1695,6 +1974,46 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   ['vectorDiameter','vectorDepth'].forEach(id=>$(id).addEventListener('input',renderVectorCutterPreview));
   $('toggleInfo').addEventListener('click',()=>setObjectInfoVisible($('objectInfo').classList.contains('hidden')));
   $('applyVectorSettings').addEventListener('click',applyContourSettings);
+  $('addVectorCutter').addEventListener('click',()=>{
+    const contour=state.contours.find(item=>item.id===state.selectedContour);
+    const isBase=!contour&&state.objectType==='facade'&&state.selectedContour===0;
+    if(!contour&&!isBase)return;
+    const passes=isBase?(Array.isArray(state.outerAdditionalCutters)?state.outerAdditionalCutters:[]):Array.isArray(contour.additionalCutters)?contour.additionalCutters:[];
+    if(passes.length>=9)return;
+    snapshot();
+    if(isBase)state.outerAdditionalCutters=[...passes,{cutter:'flat',diameter:6,depth:Math.min(3,Number(state.thickness))}];
+    else contour.additionalCutters=[...passes,{cutter:'flat',diameter:6,depth:Math.min(3,Number(state.thickness))}];
+    renderAdditionalVectorCutters(contour,isBase);drawView();
+  });
+  $('additionalVectorCutters').addEventListener('click',event=>{
+    const button=event.target.closest('[data-remove-extra-cutter]');
+    if(!button)return;
+    const contour=state.contours.find(item=>item.id===state.selectedContour);
+    const isBase=!contour&&state.objectType==='facade'&&state.selectedContour===0;
+    if(!contour&&!isBase)return;
+    const passes=isBase?(Array.isArray(state.outerAdditionalCutters)?state.outerAdditionalCutters:[]):Array.isArray(contour.additionalCutters)?contour.additionalCutters:[];
+    const index=Number(button.dataset.removeExtraCutter);
+    if(!Number.isInteger(index)||index<0||index>=passes.length)return;
+    snapshot();
+    if(isBase)state.outerAdditionalCutters=passes.filter((_,passIndex)=>passIndex!==index);
+    else contour.additionalCutters=passes.filter((_,passIndex)=>passIndex!==index);
+    renderAdditionalVectorCutters(contour,isBase);drawView();
+  });
+  $('additionalVectorCutters').addEventListener('change',event=>{
+    const row=event.target.closest('.vector-extra-cutter');
+    if(!row)return;
+    const tool=customCutters.find(item=>`custom:${item.id}`===row.querySelector('[data-extra-shape]').value);
+    if(tool)row.querySelector('[data-extra-diameter]').value=tool.width;
+    row.querySelector('[data-extra-preview]').innerHTML=cutterSelectionPreview(row.querySelector('[data-extra-shape]').value,row.querySelector('[data-extra-diameter]').value,row.querySelector('[data-extra-depth]').value);
+  });
+  $('additionalVectorCutters').addEventListener('input',event=>{
+    const row=event.target.closest('.vector-extra-cutter');
+    if(row)row.querySelector('[data-extra-preview]').innerHTML=cutterSelectionPreview(row.querySelector('[data-extra-shape]').value,row.querySelector('[data-extra-diameter]').value,row.querySelector('[data-extra-depth]').value);
+  });
+  $('applyPocket').addEventListener('click',applyPocketSettings);
+  $('removePocket').addEventListener('click',deletePocket);
+  $('pocketCutter').addEventListener('change',updatePocketInputPreview);
+  ['pocketDiameter','pocketDepth','pocketStepover','pocketPassDepth'].forEach(id=>$(id).addEventListener('input',updatePocketInputPreview));
   $('vectorShape').addEventListener('change',()=>{if($('vectorShape').value!=='rect'&&Number($('vectorCorner').value)===0)$('vectorCorner').value='12';});
   $('projectName').addEventListener('input',()=>{state.name=$('projectName').value;drawView();});
   $('canvas').addEventListener('click',handleCanvasClick);
@@ -1746,6 +2065,8 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       while(changed){changed=false;state.contours.forEach(item=>{if(removed.has(item.parentId)&&!removed.has(item.id)){removed.add(item.id);changed=true;}});}
       snapshot();
       state.contours=state.contours.filter(item=>!removed.has(item.id));
+      state.pockets=state.pockets.filter(pocket=>!removed.has(pocket.parentId)&&!removed.has(pocket.islandId));
+      if(selectedPocketRegion&&(removed.has(selectedPocketRegion.parentId)||removed.has(selectedPocketRegion.islandId)))selectedPocketRegion=null;
       if(removed.has(state.selectedContour))state.selectedContour=contour.parentId;
       renderTemplateButtons();drawView();
       $('footerStatus').textContent=removed.size>1?'Вектор и вложенные в него контуры удалены':'Вектор удалён';
