@@ -128,6 +128,28 @@ footer{gap:6px}footer button{padding-inline:8px;white-space:nowrap;font-size:11p
 .brand-name span{color:#625e53}
 .design-actions{padding:7px;display:flex;align-items:center;gap:7px}
 .design-actions #newProject{flex:none;width:88px;height:36px;padding:5px 7px;font-size:12px;font-weight:700;letter-spacing:0;white-space:nowrap}
+.print-document{display:none}
+@media print{
+  @page{size:A4 portrait;margin:12mm}
+  body{width:auto;min-width:0;height:auto;min-height:0;overflow:visible;background:#fff;color:#1f2528;font:10pt/1.35 "Segoe UI",Arial,sans-serif}
+  body>:not(#printDocument){display:none!important}
+  #printDocument{display:block!important}
+  .print-page{min-height:273mm;break-after:page;page-break-after:always}
+  .print-page:last-child{break-after:auto;page-break-after:auto}
+  .print-heading{height:auto;margin:0 0 6mm;padding:0 0 3mm;display:block;border:0;border-bottom:1px solid #9da4a5;background:#fff}
+  .print-heading h1{margin:0 0 2mm;font-size:18pt}
+  .print-heading p{margin:1mm 0;color:#495257}
+  .print-drawing{width:100%;height:228mm;display:block;border:1px solid #c5cacc;background:#fff}
+  .print-note{margin-top:3mm;color:#50585c;font-size:8pt}
+  .print-spec-table{width:100%;border-collapse:collapse;font-size:9pt}
+  .print-spec-table th,.print-spec-table td{padding:2.2mm 2.5mm;border:1px solid #c5cacc;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+  .print-spec-table th{background:#e9eceb;font-weight:650}
+  .print-spec-table .print-section th{padding-top:3mm;background:#dce3e1}
+  .print-spec-table tr{break-inside:avoid;page-break-inside:avoid}
+  .print-spec-table thead{display:table-header-group}
+  .print-spec-intro{margin:0 0 5mm;color:#495257}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 .design-actions .mode-select{flex:1;min-width:0}
 .design-actions .mode-select select{width:100%;height:40px;font-size:14px}
 .design-items{max-height:185px;overflow:auto;padding-top:0}
@@ -288,7 +310,8 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     </section>
   </aside>
 </main>
-<footer><span>●</span><span class="footer-status" id="footerStatus">Готово к работе</span><span class="footer-spacer"></span><button id="importFile">＋ Импорт SVG / DXF</button><button id="exportFile">⇩ SVG</button><button id="checkGeometry">✓ Проверить</button><button id="exportCuttingPanel">▤ Карта DXF</button><button class="footer-primary" id="exportFooter">⇩ Экспорт DXF</button></footer>
+<footer><span>●</span><span class="footer-status" id="footerStatus">Готово к работе</span><span class="footer-spacer"></span><button id="importFile">＋ Импорт SVG / DXF</button><button id="exportFile">⇩ SVG</button><button id="exportDocument" type="button" title="Печать чертежа и спецификации или сохранение в PDF">▤ PDF</button><button id="checkGeometry">✓ Проверить</button><button id="exportCuttingPanel">▤ Карта DXF</button><button class="footer-primary" id="exportFooter">⇩ Экспорт DXF</button></footer>
+<section id="printDocument" class="print-document" aria-hidden="true"></section>
 <input id="projectPicker" type="file" accept=".json,application/json">
 <input id="vectorPicker" type="file" accept=".svg,.dxf,image/svg+xml,application/dxf">
 <input id="artcamToolPicker" type="file" accept=".tdb" multiple hidden>
@@ -1254,6 +1277,44 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     const link=document.createElement('a'),url=URL.createObjectURL(new Blob([content],{type}));
     link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
+  function exportDocument() {
+    stateFromInputs();
+    if(activeView==='nest'){arrangeCuttingItems();renderCuttingView();}
+    else drawView();
+    const typeName=({facade:'Фасад',profile:'Профиль',comb:'Гребёнка'})[state.objectType]||'Изделие';
+    const measure=value=>`${Number(value).toLocaleString('ru-RU',{maximumFractionDigits:2})} мм`;
+    const rows=[['Изделие',state.name||typeName],['Тип',typeName],['Габариты заготовки',`${measure(state.width)} × ${measure(state.height)} × ${measure(state.thickness)}`],['Чертёж',activeView==='nest'?'Карта раскроя':activeView==='profile'?'Поперечный разрез':$('viewTitle').textContent]];
+    if(activeView==='nest'){
+      rows.push(['Лист раскроя',`${measure(state.sheetWidth)} × ${measure(state.sheetHeight)} × ${measure(state.sheetThickness)}`],['Отступ / зазор',`${measure(state.sheetMargin)} / ${measure(state.partGap)}`]);
+      rows.push(['Деталей в заказе',String(state.cuttingItems.reduce((sum,item)=>sum+Math.max(0,Math.floor(Number(item.quantity)||0)),0))]);
+      state.cuttingItems.forEach((item,index)=>rows.push([`Заказ ${index+1} · ${item.name||'Изделие'}`,`${({facade:'Фасад',profile:'Профиль',comb:'Гребёнка'})[item.objectType]||'Изделие'} · ${measure(item.width)} × ${measure(item.height)} × ${measure(item.thickness)} · ${item.quantity} шт.`]));
+      if(cuttingLayout.unplaced.length)rows.push(['Внимание',`Не размещены: ${cuttingLayout.unplaced.join('; ')}`]);
+    }else if(state.objectType==='facade'){
+      rows.push(['Толщина материала',measure(state.thickness)],['Углы фасада',`Радиус ${measure(state.outerCornerRadius||0)}`],['Фреза основного контура',state.outerCutter==='none'?'Не используется':`${cutterLabel(state.outerCutter)} · Ø ${measure(state.outerDiameter)} · глубина ${measure(state.outerDepth)}`]);
+      state.contours.forEach((contour,index)=>{
+        const cutter=contour.cutter==='none'?'без фрезеровки':`${cutterLabel(contour.cutter)} · ${measure(contour.diameter)} × ${measure(contour.depth)}`;
+        rows.push([`Вектор ${index+2} · ${contour.name||'Без названия'}`,`${contour.direction==='out'?'Наружу':'Внутрь'} · отступ ${measure(contour.offset)} · углы ${measure(contour.corner||0)} · ${cutter}`]);
+      });
+    }else if(state.objectType==='profile'){
+      rows.push(['Направление профилей',state.profileAxis==='horizontal'?'Горизонтальные':'Вертикальные']);
+      state.profileBands.forEach((band,index)=>rows.push([`Вектор профиля ${index+1}`,`${({left:'слева',right:'справа',top:'сверху',bottom:'снизу'})[band.side]||band.side} · отступ ${measure(band.offset)} · ${cutterLabel(band.cutter)} · ширина ${measure(band.cutterWidth)} · глубина ${measure(band.depth)}`]));
+    }else if(state.objectType==='comb'){
+      const direction=state.combDirection==='both'?'Вертикальное и горизонтальное':state.combDirection==='horizontal'?'Горизонтальное':'Вертикальное';
+      rows.push(['Направление проходов',direction],['Шаг',measure(state.combPitch)],['Начальный / конечный отступ',`${measure(state.combStart)} / ${measure(state.combEnd)}`],['Проходов всего',String(combOperationPaths(state.width,state.height).length)],['Дополнительные проходы',`До: ${state.combBeforeStep?'1':'0'} · после: ${state.combAfterStep?'1':'0'}`],['Фреза гребёнки',`${cutterLabel(state.combCutter)} · ширина ${measure(state.combCutWidth)} · глубина ${measure(state.combCutDepth)}`]);
+    }
+    const svg=$('drawing').cloneNode(true);
+    svg.removeAttribute('id');svg.removeAttribute('style');svg.setAttribute('class','print-drawing');svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+    const tableRows=rows.map(([label,value],index)=>`<tr${index===0||label==='Лист раскроя'?' class="print-section"':''}><th scope="row">${esc(label)}</th><td>${esc(value)}</td></tr>`).join('');
+    const safeName=(state.name||typeName).replace(/[<>:"/\\|?*]/g,'_');
+    const drawingSize=activeView==='nest'?`${measure(state.sheetWidth)} × ${measure(state.sheetHeight)} · лист ${measure(state.sheetThickness)}`:`${measure(state.width)} × ${measure(state.height)} × ${measure(state.thickness)}`;
+    $('printDocument').innerHTML=`<article class="print-page"><header class="print-heading"><h1>${esc(state.name||typeName)} — ${esc(typeName)}</h1><p>${esc($('viewTitle').textContent)} · ${esc(drawingSize)}</p><p>Документ подготовлен ${esc(new Date().toLocaleString('ru-RU'))}</p></header>${svg.outerHTML}<p class="print-note">Чертёж показан с вписыванием в лист. Размеры и масштабная сетка подписаны в миллиметрах.</p></article><article class="print-page print-spec-page"><header class="print-heading"><h1>Спецификация</h1><p>${esc(state.name||typeName)} · ${esc(typeName)}</p></header><p class="print-spec-intro">Данные изделия и обработки. Полный перечень вынесен на отдельную страницу, чтобы сохранить читаемость чертежа.</p><table class="print-spec-table"><thead><tr><th scope="col">Параметр</th><th scope="col">Значение</th></tr></thead><tbody>${tableRows}</tbody></table></article>`;
+    $('footerStatus').textContent='Открыта печать документа: выберите принтер или «Сохранить как PDF»';
+    const previousTitle=document.title,restoreTitle=()=>{document.title=previousTitle;window.removeEventListener('afterprint',restoreTitle);};
+    document.title=`${safeName} — Спецификация`;
+    window.addEventListener('afterprint',restoreTitle,{once:true});
+    try{window.print();}
+    catch(error){restoreTitle();$('footerStatus').textContent='Не удалось открыть печать документа';alert(`Не удалось подготовить документ к печати: ${error.message}`);}
+  }
   function saveProject() {stateFromInputs();download(`${state.name.replace(/[<>:"/\\|?*]/g,'_')||'fasad'}.json`,JSON.stringify(state,null,2),'application/json');$('footerStatus').textContent='Проект сохранён в файл JSON';}
   function applyProject(project) {
     if(!project||typeof project!=='object'||Array.isArray(project))throw new Error('Файл проекта повреждён или имеет неверный формат.');
@@ -1652,6 +1713,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   $('aboutOk').addEventListener('click',()=>$('aboutOverlay').classList.add('hidden'));
   $('aboutOverlay').addEventListener('click',event=>{if(event.target===$('aboutOverlay'))$('aboutOverlay').classList.add('hidden');});
   $('exportFile').addEventListener('click',exportSvg);
+  $('exportDocument').addEventListener('click',exportDocument);
   $('exportCuttingPanel').addEventListener('click',exportCuttingDxf);
   $('exportFooter').addEventListener('click',()=>activeView==='nest'?exportCuttingDxf():exportDxf());
   $('toolPreset').addEventListener('change',()=>{
