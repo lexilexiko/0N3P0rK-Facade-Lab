@@ -1,6 +1,6 @@
 {
   "name": "fasadlab",
-  "version": "0.6.5",
+  "version": "0.7.0",
   "private": true,
   "author": "ФасадЛаб",
   "description": "Генератор векторов мебельных фасадов",
@@ -9,7 +9,9 @@
     "start": "electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder --win nsis",
-    "portable": "electron-builder --win portable --x64"
+    "dist:ia32": "electron-builder --win nsis --ia32 --config.electronVersion=32.3.3",
+    "portable": "electron-builder --win portable --x64 --config.win.artifactName=${productName}-${version}-${arch}-portable.${ext}",
+    "portable:ia32": "electron-builder --win portable --ia32 --config.electronVersion=32.3.3 --config.win.artifactName=${productName}-${version}-${arch}-portable.${ext}"
   },
   "devDependencies": {
     "electron": "^44.7.0",
@@ -20,7 +22,6 @@
     "productName": "ФасадЛаб",
     "files": [
       "main.js",
-      "preload.js",
       "fasadlab_prototype.html",
       "node_modules/dxf-parser/dist/dxf-parser.js",
       "node_modules/dxf-parser/LICENSE"

@@ -16,10 +16,10 @@ header{height:62px;padding:0 16px;display:flex;align-items:center;gap:12px;borde
 .left-scroll,.right-scroll{overflow:auto;min-height:0;display:flex;flex-direction:column;gap:7px;scrollbar-color:#3b4d66 #182334;scrollbar-width:thin}.left-scroll,.right-scroll{min-width:0}.left-scroll>.panel,.right-scroll>.panel{flex:none}
 .templates-panel{flex:1}.templates{padding:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.template{height:84px;text-align:left;padding:4px;position:relative;background:#151e2a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:#dce6f2}.template svg{height:53px;width:52px}.template small{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.template.active{border-color:#1488ff;box-shadow:inset 0 0 0 1px #1488ff;color:#72bdff}.field{min-width:0}.field label{display:block;font-size:11px;color:#c1cddd;margin-bottom:4px}.field input,.field select{width:100%;height:30px;padding:4px 8px;color:var(--text);background:#111925;border:1px solid #304158;border-radius:6px;outline:none}.field input:focus,.field select:focus{border-color:#248dff}.field input[type=checkbox]{width:15px;height:15px;vertical-align:middle;accent-color:var(--blue)}.fields{display:grid;grid-template-columns:1fr 1fr;gap:9px 8px}.fields.single{grid-template-columns:1fr}.check-row{display:flex;align-items:center;gap:7px;color:#c5d2e2;font-size:11px}
 .config-panel .panel-body{display:grid;gap:9px}.config-advanced{border-top:1px solid var(--line);padding-top:8px}.config-advanced summary{cursor:pointer;color:#bdd0e6;font-size:12px}.config-advanced .fields{margin-top:9px}.notice{border:1px solid #394359;border-radius:6px;padding:8px;background:#121b27;color:#9eacc1;font-size:10px}
-.center{display:flex;flex-direction:column;gap:7px;min-width:0;min-height:0}.view-tabs{display:flex;flex:none;padding:3px;background:#111925;border:1px solid var(--line);border-radius:7px}.view-tabs button{border:0;background:transparent;padding:6px 8px}.view-tabs button.active{background:#086adb}.header-tabs{margin-left:auto}.header-tabs button{color:#d4dde7;white-space:nowrap}.header-tabs button.active{color:white}.header-actions{margin-left:0}.profile-preview-panel{height:106px;min-height:106px;flex:none;display:flex;align-items:stretch;padding:5px 10px;gap:12px}.profile-preview{flex:1;min-width:0;display:flex;flex-direction:column}.profile-preview-title{height:19px;color:#625f57;font-size:10px;font-weight:650}.profile-preview svg{width:100%;height:74px;min-height:0}.edit-actions{display:flex;gap:5px;align-items:center;padding-left:8px;border-left:1px solid var(--line)}.edit-actions button{width:36px;height:34px;padding:3px;font-size:17px;line-height:1}.edit-actions button:disabled{opacity:.45;cursor:default}
-.canvas-panel{flex:1;display:flex;flex-direction:column}.canvas-heading{min-height:44px;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line)}.canvas-heading strong{font-size:12px}.stats{display:flex;gap:12px;color:#556478;font-size:10px;flex-wrap:wrap}.canvas{position:relative;flex:1;min-height:270px;overflow:hidden;display:grid;place-items:center;background:radial-gradient(ellipse at 48% 45%,#f1ece4 0%,#e7e0d6 78%,#ddd5ca 100%)}.canvas svg{height:100%;width:100%;min-height:0}.canvas.profile{background:radial-gradient(ellipse at 48% 45%,#e6edf2 0%,#d7e1e8 78%,#c7d3dc 100%)}.canvas.dark{background:#151b25}
+.center{display:flex;flex-direction:column;gap:7px;min-width:0;min-height:0}.view-tabs{display:flex;flex:none;padding:3px;background:#111925;border:1px solid var(--line);border-radius:7px}.view-tabs button{border:0;background:transparent;padding:6px 8px}.view-tabs button.active{background:#086adb}.header-tabs{margin-left:auto}.header-tabs button{color:#d4dde7;white-space:nowrap}.header-tabs button.active{color:white}.header-actions{margin-left:0;gap:4px}.header-actions button{padding-inline:6px}.profile-preview-panel{height:106px;min-height:106px;flex:none;display:flex;align-items:stretch;padding:5px 10px;gap:12px}.profile-preview{flex:1;min-width:0;display:flex;flex-direction:column}.profile-preview-title{height:19px;color:#625f57;font-size:10px;font-weight:650}.profile-preview svg{width:100%;height:74px;min-height:0}.edit-actions{display:flex;gap:5px;align-items:center;padding-left:8px;border-left:1px solid var(--line)}.edit-actions button{width:36px;height:34px;padding:3px;font-size:17px;line-height:1}.edit-actions button:disabled{opacity:.45;cursor:default}
+.canvas-panel{flex:1;display:flex;flex-direction:column}.canvas-heading{min-height:44px;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line)}.canvas-heading strong{font-size:12px}.stats{display:flex;gap:12px;color:#556478;font-size:10px;flex-wrap:wrap}.canvas{position:relative;flex:1;min-height:270px;overflow:hidden;display:grid;place-items:center;background:#f8f6ef;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}.canvas svg{height:100%;width:100%;min-height:0;user-select:none;-webkit-user-select:none}.canvas.grabbing{cursor:grabbing}.canvas.profile{background:#f3f4ed}.canvas.dark{background:#151b25}
 .canvas-bottom{height:25px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;color:#738196;font-size:10px;border-top:1px solid var(--line)}.zoom{display:flex;align-items:center;gap:8px}
-.templates-strip{height:111px;flex:none}.strip-content{height:73px;padding:6px;display:flex;gap:6px;overflow-x:auto}.strip-content .template{flex:none;width:67px;height:65px}.strip-content .template svg{height:41px;width:48px}.strip-content .template small{font-size:9px}.strip-button{flex:none;min-width:52px;display:grid;place-items:center;color:#91a6bf}.vector-list{display:grid;gap:5px;padding:8px}.vector-row{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:#131d2a}.vector-row.active{border-color:#1887ff;background:#123c6e}.vector-row .vector-number{color:#8fbbe8;font-weight:700}.vector-row .vector-meta{margin-left:auto;color:var(--muted);font-size:10px}.style-actions{display:flex;gap:6px;padding:8px}.style-actions button{flex:1}.vector-settings{padding:9px;display:grid;gap:9px}.vector-settings .field label{font-size:10px}.vector-note{font-size:10px;line-height:1.4}
+.templates-strip{height:111px;flex:none}.manual-tool-grid{height:73px;padding:6px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}.manual-tool{min-width:0;display:grid;place-items:center;align-content:center;gap:3px;padding:4px 2px;font-size:9px;line-height:1.1}.manual-tool svg{width:25px;height:25px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}.manual-tool:disabled{opacity:.58;cursor:not-allowed}.templates-strip .panel-title .sub{margin-left:auto;margin-right:8px}.style-actions{display:flex;gap:6px;padding:8px}.style-actions button{flex:1}.vector-list{display:grid;gap:5px;padding:8px}.vector-row{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:#131d2a}.vector-row.active{border-color:#1887ff;background:#123c6e}.vector-row .vector-number{color:#8fbbe8;font-weight:700}.vector-row .vector-meta{margin-left:auto;color:var(--muted);font-size:10px}.vector-settings{padding:9px;display:grid;gap:9px}.vector-settings .field label{font-size:10px}.vector-note{font-size:10px;line-height:1.4}
 .right-preview{height:182px;flex:none;background:#101720;display:grid;place-items:center;padding:8px}.right-preview svg{width:100%;height:100%}.info-list{padding:8px 11px;display:grid;grid-template-columns:1fr auto;gap:4px;font-size:11px}.info-list .value{text-align:right;color:#e3edf8;font-variant-numeric:tabular-nums}.info-list .group{grid-column:1/-1;margin-top:3px;padding-top:5px;border-top:1px solid var(--line);color:#95abc3}.good{color:var(--green)}.warning{color:#ffc767}
 .mode-select{display:flex;align-items:center;gap:7px;color:#9aacc1;font-size:11px;white-space:nowrap}.mode-select select{height:34px;padding:4px 26px 4px 9px;color:var(--text);background:#111925;border:1px solid #304158;border-radius:6px}.canvas-heading-actions{display:flex;align-items:center;gap:8px}.canvas-heading-actions button{padding:5px 9px;font-size:10px}.canvas-heading-actions .style-actions{padding:0}.canvas-heading-actions .style-actions input{width:118px;min-width:90px;height:29px;font-size:10px}.canvas-heading-actions .style-actions button{flex:none}.canvas-top{position:relative;display:flex;min-height:0;flex:1}.canvas-top .canvas{min-width:0}.operation-pill{position:absolute;right:10px;top:10px;border:1px solid #33475e;background:#172131ed;border-radius:6px;padding:5px 8px;color:#d5e0ee;font-size:10px;pointer-events:none}.mode-settings{display:grid;gap:9px;padding:9px}.mode-settings.hidden{display:none!important}
 .template-entry{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 24px;align-items:center;gap:2px}.template-entry .strip-button{min-width:0;width:100%;padding:4px}.template-delete{height:25px;padding:0;color:#ff9aa2;background:#291d27;border-color:#4c333f;font-size:16px;line-height:1}.cut-list{display:grid;gap:6px;padding:8px}.cut-row{display:grid;grid-template-columns:minmax(0,1fr) 64px 28px;align-items:center;gap:5px;font-size:11px}.cut-row .sub{font-size:10px}.cut-row input{height:27px;min-width:0;width:100%;padding:3px 5px;color:var(--text);background:#111925;border:1px solid #304158;border-radius:5px}.cut-row button{padding:3px 6px}.canvas.grab{cursor:grab}.canvas.grabbing{cursor:grabbing}.layer-content.collapsed{display:none}
@@ -52,11 +52,26 @@ button.active,.primary,.footer-primary{background:#356761;border-color:#356761;c
 .cut-list .cut-row button{color:#45443d}
 .template-delete{background:#eee2dc;color:#9c4d43;border-color:#c9b7af}
 .footer-status{color:#39775d}
-.canvas{background-color:#f1eee6;background-image:repeating-linear-gradient(0deg,transparent 0,transparent 31px,#8a817333 32px,#8a817333 33px),repeating-linear-gradient(90deg,transparent 0,transparent 31px,#8a817333 32px,#8a817333 33px),radial-gradient(ellipse at 48% 45%,#faf8f1 0%,#eeeae0 78%,#e4dfd4 100%)}
-.canvas.profile{background-color:#e9ece6;background-image:repeating-linear-gradient(0deg,transparent 0,transparent 31px,#7c858033 32px,#7c858033 33px),repeating-linear-gradient(90deg,transparent 0,transparent 31px,#7c858033 32px,#7c858033 33px),radial-gradient(ellipse at 48% 45%,#f6f6ef 0%,#e4e9e3 78%,#d5ddd7 100%)}
-.app{grid-template-columns:minmax(270px,290px) minmax(340px,1fr) minmax(245px,300px)}
+.canvas,.canvas.profile{background:#f8f6ef}
+.app{grid-template-columns:minmax(270px,290px) minmax(320px,1fr) minmax(260px,310px)}
 .left-scroll,.right-scroll{scrollbar-color:#aaa295 #e6e1d7}
 .panel-title{background:#e8e3d9}
+.panel-title-actions{display:flex;align-items:center;gap:8px}
+.panel-title-actions button,#toggleVectorSettings,#toggleTypeSettings{width:84px;height:34px;padding:6px 10px;font-size:13px}
+.profile-band-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:28px;margin-bottom:2px;font-weight:650}
+.profile-band-heading button{flex:none;width:30px;height:28px;padding:2px 6px}
+#profileSettings{padding:0}
+#profileBands{padding:0;gap:12px}
+.profile-band-fields{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.profile-band-row{display:grid;gap:11px}
+#combSettings{padding:0;gap:12px}
+#combSettings .fields{grid-template-columns:minmax(0,1fr)}
+#vectorSettingsContent .fields{grid-template-columns:minmax(0,1fr)}
+.facade-contour-list{display:grid;gap:5px;max-height:190px;overflow:auto}
+.facade-contour-entry{display:flex;align-items:center;gap:5px}
+.facade-contour-entry .vector-row{flex:1;min-width:0;min-height:34px}
+.facade-contour-entry .contour-delete{flex:none;width:34px;height:34px;padding:3px;color:#8c4e45}
+.facade-contour-entry .contour-delete:hover{background:#eee2dc;border-color:#b88b80}
 .panel-body,.vector-settings,.cut-list,.style-actions{color:#383831}
 .field label{color:#68645b}
 .vector-row{background:#e6e1d7}
@@ -73,6 +88,36 @@ button.active,.primary,.footer-primary{background:#356761;border-color:#356761;c
 .modal-card input{width:100%;height:38px;padding:7px 9px;border:1px solid #bcb4a7;border-radius:6px;background:#faf8f1;color:#302f2a}
 .modal-card .warning{color:#a34942}
 .modal-close{position:absolute;right:14px;top:14px;font-size:18px}
+.cutter-library-card{width:min(920px,100%);max-height:90vh;overflow:auto}
+.cutter-library-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding-right:32px}
+.cutter-library-heading strong{font-size:18px}
+.cutter-library-heading button{flex:none}
+.styles-dialog{width:min(620px,100%);max-height:88vh;overflow:auto}
+.styles-dialog-heading{padding-right:28px}
+.styles-dialog-heading h2{margin:0;font-size:19px}
+.styles-dialog-heading p{margin:4px 0 0;color:var(--muted)}
+.styles-dialog-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:9px}
+.styles-list{display:grid;gap:7px;max-height:42vh;overflow:auto}
+.style-card{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px;border:1px solid var(--line);border-radius:7px;background:#f8f5ed}
+.style-card-apply{text-align:left;display:flex;align-items:center;gap:9px}
+.style-card-apply svg{width:42px;height:42px;flex:none}
+.style-card-delete{color:#8c4e45}
+.styles-empty{padding:14px;border:1px dashed var(--line);border-radius:7px;color:var(--muted);text-align:center}
+.canvas-heading-actions #openStyles{flex:none}
+.is-canvas-dragging,.is-canvas-dragging *{user-select:none!important;-webkit-user-select:none!important}
+.cutter-library-form{display:grid;gap:10px;padding:12px;border:1px solid var(--line);border-radius:8px;background:#e8e3d9}
+.cutter-library-form .fields{grid-template-columns:1fr 1fr}
+.cutter-catalog-title{margin:4px 0 0;font-size:14px}
+.cutter-catalog{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px;max-height:42vh;overflow:auto;padding:2px}
+.cutter-card{min-width:0;display:grid;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:10px;padding:9px;border:1px solid var(--line);border-radius:8px;background:#f8f5ed}
+.cutter-card-preview{width:84px;height:68px}
+.cutter-card-name{font-weight:650;overflow-wrap:anywhere}
+.cutter-card-meta{margin-top:3px;color:var(--muted);font-size:11px}
+.cutter-card-actions{display:flex;gap:5px;margin-top:7px}
+.cutter-card-actions button{padding:4px 7px;font-size:11px}
+.cutter-preview{display:grid;grid-template-columns:96px minmax(0,1fr);align-items:center;gap:10px;padding:7px 9px;border:1px solid var(--line);border-radius:7px;background:#e8e3d9}
+.cutter-preview svg{width:96px;height:70px}
+.cutter-preview-label{font-size:11px;line-height:1.4;color:var(--muted)}
 .about-credit{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 0;border-block:1px solid var(--line)}
 .about-credit b{font-weight:600;color:#666257}
 .modal-overlay:not(.hidden){display:grid}
@@ -105,7 +150,7 @@ body{font-size:14px}
 .templates-panel,.template,.vector-row,.tool-button,.view-tabs,.field input,.field select,.mode-select select,.cut-row input{background:#e6e1d7;color:#302f2a;border-color:#bcb4a7}
 button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 .left-scroll,.right-scroll{scrollbar-color:#aaa295 #e6e1d7}
-@media(max-width:1200px){.app{grid-template-columns:minmax(270px,290px) minmax(300px,1fr) minmax(190px,220px)}.brand{min-width:190px}.templates{grid-template-columns:repeat(2,minmax(0,1fr))}.templates-strip{height:102px}.view-tabs button{padding:6px 5px}}
+@media(max-width:1200px){.app{grid-template-columns:minmax(270px,290px) minmax(280px,1fr) minmax(240px,260px)}.brand{min-width:190px}.templates{grid-template-columns:repeat(2,minmax(0,1fr))}.templates-strip{height:102px}.view-tabs button{padding:6px 5px}}
 @media(max-width:940px){header{gap:6px;padding:0 8px}.brand{min-width:155px}.brand-mark{width:38px;height:38px}.brand-mark svg{width:33px;height:33px}.header-tabs button{padding:5px 4px;font-size:10px}.header-actions{gap:2px}.header-actions button{padding:6px 4px;font-size:10px}}
 </style>
 </head>
@@ -113,7 +158,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 <header>
   <div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9.5 34 7l6 4v29L8 42Z" stroke-width="1.5"/><path d="m12 13 23-2v24l-23 2Z" stroke-width="1.1"/><path d="M17 17 27 16v16l-10 1Z" stroke-width=".9"/><path d="m29 8 3-4 3 2-2 4M30 9l-9 15 3 2 10-14m-13 12-1 4 4-2" stroke-width="1.5"/><path d="m10 11 3-2m24 29 2-2M12 40l2-1" stroke-width=".7"/></g></svg></div><div><div class="brand-name"><span>Фасад</span>Лаб</div><div class="sub">Редактор мебельных фасадов</div></div></div>
   <div class="view-tabs header-tabs" aria-label="Виды чертежа"><button class="active" data-view="2d">Вид сверху</button><button data-view="profile">Разрез</button><button data-view="nest">Карта листа</button></div>
-  <div class="header-actions"><button id="aboutButton">О программе</button><button id="openProject">Открыть</button><button id="saveProject">Сохранить</button></div>
+  <div class="header-actions"><button id="cutterLibraryButton" title="Открыть библиотеку фрез">Фрезы</button><button id="aboutButton">О программе</button><button id="openProject">Открыть</button><button id="saveProject">Сохранить</button></div>
 </header>
 <main class="app">
   <aside class="column left-scroll">
@@ -131,14 +176,12 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
         </div>
         <div id="dimensionHelp" class="notice">Укажите габариты заготовки: ширину, высоту и толщину в миллиметрах.</div>
         <div id="sizeWarning" class="notice hidden" role="alert"></div>
-        <div id="quickOffsetControls" class="vector-create">
-          <div class="field"><label for="quickVectorOffset">Отступ нового вектора, мм</label><input id="quickVectorOffset" type="number" min="1" step="1" value="60"></div>
-        </div>
       </div>
     </section>
     <section class="panel" id="vectorListPanel">
       <div class="panel-title"><span id="vectorListTitle">Контуры фасада</span><span class="sub" id="vectorListCount">1 вектор</span></div>
-      <div class="panel-body"><button id="addOffsetVector" class="primary" style="width:100%">＋ Создать вектор</button></div>
+      <div class="panel-body vector-create" id="facadeVectorControls"><div class="field"><label for="vectorParent">Отступ от вектора</label><select id="vectorParent"></select></div><div id="quickOffsetControls" class="field"><label for="quickVectorOffset">Отступ нового вектора, мм</label><input id="quickVectorOffset" type="number" min="1" step="1" value="60"></div><button id="addOffsetVector" class="primary">＋ Создать вектор</button><div class="facade-contour-list" id="facadeContourList" aria-label="Векторы фасада"></div></div>
+      <div class="panel-body vector-create hidden" id="profileVectorControls"><div class="field"><label for="profileAxis">Направление профилей</label><select id="profileAxis"><option value="vertical">Вертикальные</option><option value="horizontal">Горизонтальные</option></select></div><div class="field"><label for="selectedProfileBand">Выбрать вектор</label><select id="selectedProfileBand"></select></div><div class="field"><label for="newProfileBandOffset">Отступ нового вектора от края, мм</label><input id="newProfileBandOffset" type="number" min="0" step="0.1" value="10"></div><button id="addProfileBand" class="primary">＋ Добавить вектор профиля</button></div>
     </section>
     <section class="panel">
       <div class="panel-title">Имя изделия <span class="sub">Автосохранение</span></div>
@@ -150,6 +193,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     </section>
     <div class="hidden" aria-hidden="true">
       <select id="objectType"><option value="facade">Фасад</option><option value="profile">Профиль</option><option value="comb">Фасад-гребёнка</option></select>
+      <select id="selectedContour"></select>
       <input id="inset" type="number" value="70"><input id="secondInset" type="number" value="18"><input id="panelInset" type="number" value="12">
       <input id="radius" type="number" value="8"><input id="profileDepth" type="number" value="4"><input id="profilePitch" type="number" value="25">
       <input id="profileLand" type="number" value="3"><input id="profileRadius" type="number" value="30">
@@ -162,14 +206,21 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   <section class="center">
     <section class="panel profile-preview-panel" aria-label="Разрез изделия и действия редактирования">
       <div class="profile-preview"><div class="profile-preview-title">Разрез изделия</div><svg id="profilePreview" viewBox="0 0 800 100" role="img" aria-label="Компактный разрез текущего изделия"></svg></div>
-      <div class="edit-actions" aria-label="Действия редактирования"><button id="undo" title="Отменить" aria-label="Назад">↶</button><button id="redo" title="Повторить" aria-label="Вперёд">↷</button><button id="deleteVector" title="Удалить выбранный вектор" aria-label="Удалить">×</button></div>
+      <div class="edit-actions" aria-label="Действия редактирования"><button id="undo" title="Отменить" aria-label="Назад">↶</button><button id="redo" title="Повторить" aria-label="Вперёд">↷</button></div>
     </section>
     <section class="panel canvas-panel">
-      <div class="canvas-heading"><div><strong id="viewTitle">Чертёж фасада</strong><div class="sub" id="viewSubtitle">Размеры в мм · векторы готовы к проверке</div></div><div class="canvas-heading-actions"><div class="stats"><span id="dimensions">596 × 716 мм</span><span id="vectorCount">Контуров: 2</span><span id="validity" class="good">● Проверка пройдена</span></div><div class="style-actions"><input id="styleName" aria-label="Название сохраняемого шаблона" maxlength="48" value="Мой шаблон" placeholder="Название шаблона"><button id="saveTemplate" class="primary">Шаблон +</button></div></div></div>
+      <div class="canvas-heading"><div><strong id="viewTitle">Чертёж фасада</strong><div class="sub" id="viewSubtitle">Размеры в мм · векторы готовы к проверке</div></div><div class="canvas-heading-actions"><div class="stats"><span id="dimensions">596 × 716 мм</span><span id="vectorCount">Контуров: 2</span><span id="validity" class="good">● Проверка пройдена</span></div><button id="openStyles" type="button" title="Шаблоны фасадов, профилей и гребёнок">Стили</button></div></div>
       <div id="canvas" class="canvas"><svg id="drawing" viewBox="0 0 800 800" role="img" aria-label="Чертёж фасада"></svg></div>
       <div class="canvas-bottom"><span id="canvasHint">Выберите инструмент, чтобы добавить вектор</span><span class="zoom"><button class="icon-button" id="zoomOut" aria-label="Уменьшить">−</button><span id="zoomValue">100%</span><button class="icon-button" id="zoomIn" aria-label="Увеличить">＋</button><button class="icon-button" id="zoomReset" aria-label="Сбросить масштаб">⛶</button></span></div>
     </section>
-    <section class="panel templates-strip"><div class="panel-title">Мои стили <span class="sub">Сохранённые варианты векторов</span></div><div class="strip-content" id="templateStrip"></div></section>
+    <section class="panel templates-strip" aria-label="Инструменты ручного редактирования"><div class="panel-title">Редактирование векторов <span class="sub">Инструменты появятся позже</span></div><div class="manual-tool-grid">
+      <button class="manual-tool" type="button" disabled title="Выбор вектора — появится позже" aria-label="Выбор вектора (скоро)"><svg viewBox="0 0 32 32"><path d="M8 4 25 18l-8 1-4 8Z"/><path d="m17 19 5 8"/></svg><span>Выбор</span></button>
+      <button class="manual-tool" type="button" disabled title="Перемещение вектора — появится позже" aria-label="Перемещение вектора (скоро)"><svg viewBox="0 0 32 32"><path d="M16 3v26M3 16h26M16 3l-4 4m4-4 4 4m9 9-4-4m4 4-4 4M16 29l-4-4m4 4 4-4M3 16l4-4m-4 4 4 4"/></svg><span>Переместить</span></button>
+      <button class="manual-tool" type="button" disabled title="Разделение вектора — появится позже" aria-label="Разделение вектора (скоро)"><svg viewBox="0 0 32 32"><path d="M5 7h8l14 18h-8Z"/><path d="m16 5-3 22"/></svg><span>Разделить</span></button>
+      <button class="manual-tool" type="button" disabled title="Добавление узла — появится позже" aria-label="Добавление узла (скоро)"><svg viewBox="0 0 32 32"><path d="M5 24 15 7l12 17Z"/><path d="M15 3v8m-4-4h8"/></svg><span>Узел</span></button>
+      <button class="manual-tool" type="button" disabled title="Удаление вектора — появится позже" aria-label="Удаление вектора (скоро)"><svg viewBox="0 0 32 32"><path d="M7 9h18M12 9V5h8v4m3 0-1 18H10L9 9m4 4v10m6-10v10"/></svg><span>Удалить</span></button>
+      <button class="manual-tool" type="button" disabled title="Преобразование вектора — появится позже" aria-label="Преобразование вектора (скоро)"><svg viewBox="0 0 32 32"><path d="M6 23 12 8l14 5-6 15Z"/><path d="M4 6h8M4 6l3-3M4 6l3 3"/></svg><span>Преобразовать</span></button>
+    </div></section>
   </section>
   <aside class="column right-scroll">
     <section class="panel"><div class="panel-title">Слои <button id="toggleLayers" aria-expanded="true">Скрыть</button></div><div class="layers layer-content" id="layerContent">
@@ -186,19 +237,18 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       <span class="group">ВЕКТОРЫ И ПРОВЕРКА</span><span>Контуры</span><span class="value" id="infoContours">2</span><span>Элементы</span><span class="value" id="infoElements">2</span><span>Скругления</span><span class="value" id="infoRounds">4</span><span>Статус</span><span class="value good" id="infoStatus">Без ошибок</span>
     </div></section>
     <section class="panel" id="vectorSettingsPanel">
-      <div class="panel-title">Настройки выбранного вектора <span class="sub" id="selectedVectorLabel">Основа фасада</span></div>
-      <div class="vector-settings">
-        <div class="field"><label for="selectedContour">Выбрать вектор для настройки</label><select id="selectedContour"></select></div>
-        <div class="field"><label for="vectorParent">Создать относительно контура</label><select id="vectorParent"></select></div>
+      <div class="panel-title"><span id="vectorSettingsTitle">Вектор</span><span class="panel-title-actions"><span class="sub" id="selectedVectorLabel"></span><button id="toggleVectorSettings" type="button" aria-expanded="true">Скрыть</button></span></div>
+      <div class="vector-settings" id="vectorSettingsContent">
         <div class="fields">
-          <div class="field"><label for="vectorShape">Форма углов вектора</label><select id="vectorShape"><option value="rect">Прямоугольник</option><option value="round">Скруглённый наружу</option><option value="concave">Скруглённый внутрь</option><option value="circle">Овал</option><option value="chamfer">Скошенные углы</option></select></div>
-          <div class="field"><label for="vectorDirection">Направление</label><select id="vectorDirection"><option value="in">Внутрь</option><option value="out">Наружу</option></select></div>
+          <div class="field"><label for="vectorShape">Форма вектора</label><select id="vectorShape"><option value="rect">Прямоугольник</option><option value="round">Скруглённые углы</option><option value="concave">Вогнутые углы</option><option value="circle">Овал</option><option value="chamfer">Скошенные углы</option></select></div>
+          <div class="field"><label for="vectorDirection">Смещение относительно родителя</label><select id="vectorDirection"><option value="in">Внутрь родителя</option><option value="out">Наружу от родителя</option></select></div>
         </div>
         <div class="fields">
           <div class="field"><label for="vectorOffset">Отступ от контура, мм</label><input id="vectorOffset" type="number" min="1" max="1000" step="1" value="100"></div>
           <div class="field"><label for="vectorCorner">Радиус угла, мм</label><input id="vectorCorner" type="number" min="0" max="200" step="1" value="0"></div>
         </div>
         <div class="field"><label for="vectorCutter">Фреза / профиль</label><select id="vectorCutter"><option value="none">Не выбрана</option><option value="v90">V-фреза 90°</option><option value="flat">Прямая фреза</option><option value="round">Радиусная фреза</option><option value="wave">Волновой профиль</option></select></div>
+        <div id="vectorCutterPreview" class="cutter-preview" aria-live="polite"></div>
         <div class="fields">
           <div class="field"><label for="vectorDiameter">Диаметр, мм</label><input id="vectorDiameter" type="number" min="1" max="80" step="0.5" value="6"></div>
           <div class="field"><label for="vectorDepth">Глубина реза, мм</label><input id="vectorDepth" type="number" min="0.1" max="18" step="0.1" value="3"></div>
@@ -208,12 +258,10 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       </div>
     </section>
     <section class="panel hidden" id="typeSettingsPanel">
-      <div class="panel-title">Параметры проходов <span class="sub">Профиль / гребёнка</span></div>
-      <div class="vector-settings">
+      <div class="panel-title"><span id="typeSettingsTitle">Параметры</span><button id="toggleTypeSettings" type="button" aria-expanded="true">Скрыть</button></div>
+      <div class="vector-settings" id="typeSettingsContent">
         <div id="profileSettings" class="mode-settings hidden">
-          <div class="field"><label for="profileAxis">Направление профилей</label><select id="profileAxis"><option value="vertical">Вертикальные</option><option value="horizontal">Горизонтальные</option></select></div>
           <div id="profileBands" class="mode-settings"></div>
-          <button id="addProfileBand" class="primary">＋ Добавить вектор профиля</button>
         </div>
         <div id="combSettings" class="mode-settings hidden">
           <div class="field"><label for="combDirection">Направление проходов</label><select id="combDirection"><option value="vertical">Вертикальные</option><option value="horizontal">Горизонтальные</option><option value="both">В обоих направлениях</option></select></div>
@@ -223,25 +271,8 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
           <label class="check-row"><input id="combAfterStep" type="checkbox">Дополнительный шаг после фасада</label>
           <div class="field"><label for="combCutter">Тип фрезы</label><select id="combCutter"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option></select></div>
           <div class="fields"><div class="field"><label for="combCutWidth">Диаметр фрезы, мм</label><input id="combCutWidth" type="number" min="1" value="3"></div><div class="field"><label for="combCutDepth">Глубина, мм</label><input id="combCutDepth" type="number" min="0.1" value="2"></div></div>
-          <div class="notice">При конечном отступе 0 проходы за пределами детали сохраняют заданный шаг. Вход и выход траектории учитывают радиус фрезы.</div>
+          <div class="notice">Основные проходы идут с заданным шагом от начального отступа до последней позиции внутри конечного отступа. Дополнительные проходы продолжают ряд ещё на один шаг до первого и после последнего прохода.</div>
         </div>
-      </div>
-    </section>
-    <section class="panel">
-      <div class="panel-title">Библиотека фрез <span class="sub">Локально</span></div>
-      <div class="vector-settings">
-        <button id="importArtcamCutters" class="primary">Импортировать библиотеку ArtCAM (.TDB)</button>
-        <details>
-          <summary>Управление библиотекой</summary>
-          <div class="field"><label for="customCutterName">Название</label><input id="customCutterName" maxlength="40" placeholder="Например, фасочная 45°"></div>
-          <div class="fields">
-            <div class="field"><label for="customCutterShape">Форма для эскиза</label><select id="customCutterShape"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="wave">Волновая / другая</option></select></div>
-            <div class="field"><label for="customCutterWidth">Диаметр / ширина, мм</label><input id="customCutterWidth" type="number" min="0.1" step="0.1" value="6"></div>
-          </div>
-          <div class="fields"><button id="addCustomCutter" class="primary">＋ Добавить фрезу</button></div>
-          <div id="customCutterList" class="layers"></div>
-          <div class="notice">Из .TDB импортируются названия, размеры из имени и тип формы. Точные профили, режимы резания и геометрия фрезы в эскизе не гарантируются.</div>
-        </details>
       </div>
     </section>
     <section class="panel" id="cuttingPanel">
@@ -261,9 +292,9 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 <input id="projectPicker" type="file" accept=".json,application/json">
 <input id="vectorPicker" type="file" accept=".svg,.dxf,image/svg+xml,application/dxf">
 <input id="artcamToolPicker" type="file" accept=".tdb" multiple hidden>
-<input id="templatePicker" type="file" accept=".json,application/json">
-<div id="loginOverlay" class="modal-overlay"><form id="loginForm" class="modal-card"><div class="brand-name"><span>Фасад</span>Лаб</div><p>Введите пароль, чтобы открыть редактор.</p><label class="field" for="loginPassword">Пароль<input id="loginPassword" type="password" autocomplete="current-password" autofocus></label><div id="loginError" class="warning" role="alert"></div><button class="primary" type="submit">Войти</button><div class="sub">Это экран блокировки; данные приложения не шифруются.</div></form></div>
-<div id="aboutOverlay" class="modal-overlay hidden"><section class="modal-card"><button class="modal-close" id="closeAbout" aria-label="Закрыть">×</button><div class="brand-name"><span>Фасад</span>Лаб</div><p>Редактор мебельных фасадов, профилей и карт раскроя.</p><div class="about-credit"><b>Программист</b><span>L3xik0</span><b>Дополнительный агент</b><span>Евгений Жуков</span><b>Версия</b><span>0.6.2</span></div><button class="primary" id="aboutOk">Закрыть</button></section></div>
+<div id="stylesOverlay" class="modal-overlay hidden"><section class="modal-card styles-dialog" role="dialog" aria-modal="true" aria-labelledby="stylesDialogTitle"><button class="modal-close" id="closeStyles" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="stylesDialogTitle">Шаблоны изделий</h2><p>Выберите тип шаблона и примените сохранённые настройки к изделию.</p></div><div class="styles-dialog-controls"><label class="field" for="styleTypeFilter">Тип изделия<select id="styleTypeFilter"><option value="facade">Фасад</option><option value="profile">Профиль</option><option value="comb">Гребёнка</option></select></label><div class="field"><label for="styleName">Название нового шаблона</label><input id="styleName" aria-label="Название сохраняемого шаблона" maxlength="48" value="Мой шаблон" placeholder="Название шаблона"></div></div><button id="saveTemplate" class="primary" type="button">＋ Сохранить текущие настройки как шаблон</button><div id="stylesList" class="styles-list" aria-live="polite"></div><button class="primary" id="closeStylesFooter" type="button">Готово</button></section></div>
+<div id="cutterLibraryOverlay" class="modal-overlay hidden"><section class="modal-card cutter-library-card" role="dialog" aria-modal="true" aria-labelledby="cutterLibraryTitle"><button class="modal-close" id="closeCutterLibrary" aria-label="Закрыть">×</button><div class="cutter-library-heading"><div><strong id="cutterLibraryTitle">Библиотека фрез</strong><p>Стандартные типы и фрезы, импортированные из ArtCAM. Сечение паза строится по профилю операции.</p></div><button id="importArtcamCutters" type="button">Импорт ArtCAM .TDB</button></div><div id="customCutterEditor" class="cutter-library-form hidden"><strong>Редактирование импортированной фрезы</strong><div class="field"><label for="customCutterName">Название</label><input id="customCutterName" maxlength="40"></div><div class="fields"><div class="field"><label for="customCutterShape">Тип профиля</label><select id="customCutterShape"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="wave">Волновая / другая</option></select></div><div class="field"><label for="customCutterWidth">Диаметр / ширина, мм</label><input id="customCutterWidth" type="number" min="0.1" step="0.1"></div></div><div class="cutter-card-actions"><button id="saveCustomCutter" class="primary" type="button">Сохранить изменения</button><button id="cancelCutterEdit" type="button">Отмена</button></div></div><h3 class="cutter-catalog-title">Стандартные и импортированные фрезы</h3><div id="customCutterList" class="cutter-catalog"></div><div class="notice">Из .TDB распознаются названия и размеры из имени; импорт не гарантирует точную геометрию режущей кромки.</div><button class="primary" id="closeCutterLibraryFooter">Готово</button></section></div>
+<div id="aboutOverlay" class="modal-overlay hidden"><section class="modal-card"><button class="modal-close" id="closeAbout" aria-label="Закрыть">×</button><div class="brand-name"><span>Фасад</span>Лаб</div><p>Редактор фасадов, профилей и карт раскроя.</p><div class="about-credit"><b>Программист</b><span>L3xik0</span><b>Дополнительный агент</b><span>Евгений Жуков</span><b>Версия</b><span>0.7.0</span></div><button class="primary" id="aboutOk">Закрыть</button></section></div>
 <script src="node_modules/dxf-parser/dist/dxf-parser.js"></script>
 <script>
 (() => {
@@ -291,7 +322,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     panelInset:12, radius:8, profileDepth:4, profilePitch:25, profileLand:3, profileRadius:30, material:'МДФ грунтованный', grain:'Вертикальное',
     symmetry:true, profileType:'none', toolPreset:'manual', roughDiameter:6, roughPass:2, roughRpm:18000, roughFeed:2400,
     finishDiameter:3, finishPass:1.5, finishRpm:20000, finishFeed:1600, objectType:'facade',
-    profileAxis:'vertical',profileBands:[{id:1,side:'left',offset:10,cutter:'round',cutterWidth:6,depth:4.4}],
+    profileAxis:'vertical',profileBands:[{id:1,side:'left',offset:10,cutter:'round',cutterWidth:6,depth:4.4}],selectedProfileBand:1,
     combDirection:'vertical',combStart:25,combEnd:25,combPitch:12,combCutter:'round',combCutWidth:3,combCutDepth:2,combBeforeStep:false,combAfterStep:false,outerCornerRadius:0,
     facadeTexture:'paper',
     outerCutter:'none',outerDiameter:6,outerDepth:3,
@@ -327,6 +358,36 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     if(match)return customCutters.find(item=>item.id===Number(match[1]))?.name||'Фреза удалена';
     return ({round:'Круглая / радиусная',flat:'Прямая',v90:'V-фреза 90°',wave:'Волновой профиль'})[value]||String(value);
   }
+  function cutterReliefDepth(shape,normalized,depth) {
+    if(!Number.isFinite(normalized)||Math.abs(normalized)>=1)return 0;
+    const remaining=1-Math.abs(normalized);
+    if(shape==='flat')return depth;
+    if(shape==='v90')return depth*remaining;
+    if(shape==='round')return depth*Math.sqrt(1-normalized*normalized);
+    return depth*(1-normalized*normalized);
+  }
+  function cutterIllustration(shape,width=2,depth=1) {
+    const scale=Math.min(84/width,30/depth),centerX=60,top=25,bottom=70;
+    const half=width*scale/2,stepCount=96,points=[];
+    for(let index=0;index<=stepCount;index++){
+      const normalized=-1+index*2/stepCount;
+      const relief=cutterReliefDepth(shape,normalized,depth);
+      points.push(`${(centerX+normalized*half).toFixed(2)} ${(top+relief*scale).toFixed(2)}`);
+    }
+    const surface=`M 8 ${top} H ${(centerX-half).toFixed(2)} L ${points.join(' L ')} H 112`;
+    return `<svg viewBox="0 0 120 78" role="img" aria-label="${esc(cutterLabel(shape))} — разрез получаемого паза"><path d="${surface} V ${bottom} H 8 Z" fill="#e6e1d7" stroke="#8d887e" stroke-width="1.5"/><path d="${surface}" fill="none" stroke="#8f5545" stroke-width="2"/></svg>`;
+  }
+  function cutterSelectionPreview(value,width,depth) {
+    const shape=cutterShape(value);
+    if(!shape)return '<div class="cutter-preview-label">Выберите фрезу, чтобы увидеть разрез получаемого паза.</div>';
+    const size=Number(width),cutDepth=Number(depth);
+    if(!Number.isFinite(size)||size<=0||!Number.isFinite(cutDepth)||cutDepth<=0)return '<div class="cutter-preview-label">Задайте ширину фрезы и глубину, чтобы увидеть разрез.</div>';
+    const materialDepth=Math.min(cutDepth,state.thickness);
+    return `${cutterIllustration(shape,size,materialDepth)}<div class="cutter-preview-label"><strong>${esc(cutterLabel(value))}</strong><br>Разрез паза · ${esc(size)} × ${esc(cutDepth)} мм${materialDepth<cutDepth?' · ограничен толщиной заготовки':''}</div>`;
+  }
+  function renderVectorCutterPreview() {
+    $('vectorCutterPreview').innerHTML=cutterSelectionPreview($('vectorCutter').value,$('vectorDiameter').value,$('vectorDepth').value);
+  }
   function normalizeOuterCutter() {
     if(typeof state.outerCutter!=='string'||!['none','v90','flat','round','wave',...customCutters.map(item=>`custom:${item.id}`)].includes(state.outerCutter))state.outerCutter='none';
     state.outerDiameter=Number.isFinite(Number(state.outerDiameter))&&Number(state.outerDiameter)>0?Number(state.outerDiameter):6;
@@ -339,7 +400,9 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       combCutter:`<option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option>${customOptions}`
     };
     Object.entries(options).forEach(([id,markup])=>{const select=$(id),value=select.value;select.innerHTML=markup;if([...select.options].some(option=>option.value===value))select.value=value;});
-    $('customCutterList').innerHTML=customCutters.map(item=>`<div class="layer"><span title="${esc(item.sourceFile||'')}">${esc(item.name)} · ${esc(item.width)} мм</span><button type="button" data-edit-cutter="${item.id}" aria-label="Редактировать фрезу ${esc(item.name)}">Изменить</button><button type="button" data-delete-cutter="${item.id}" aria-label="Удалить фрезу ${esc(item.name)}">Удалить</button></div>`).join('')||'<span class="muted">Своих фрез пока нет</span>';
+    const builtinCards=builtinCutterShapes.map(shape=>`<article class="cutter-card"><div class="cutter-card-preview">${cutterIllustration(shape)}</div><div><div class="cutter-card-name">${esc(cutterLabel(shape))}</div><div class="cutter-card-meta">Разрез паза по профилю типа</div></div></article>`).join('');
+    const customCards=customCutters.map(item=>`<article class="cutter-card"><div class="cutter-card-preview">${cutterIllustration(item.shape,item.width,Math.min(item.width/2,1))}</div><div><div class="cutter-card-name" title="${esc(item.sourceFile||'')}">${esc(item.name)}</div><div class="cutter-card-meta">${esc(cutterLabel(item.shape))} · ${esc(item.width)} мм</div><div class="cutter-card-actions"><button type="button" data-edit-cutter="${item.id}" aria-label="Редактировать фрезу ${esc(item.name)}">Изменить</button><button type="button" data-delete-cutter="${item.id}" aria-label="Удалить фрезу ${esc(item.name)}">Удалить</button></div></div></article>`).join('');
+    $('customCutterList').innerHTML=builtinCards+customCards;
   }
   function parseArtcamToolWidth(name) {
     const metric=name.match(/(\d+(?:[.,]\d+)?)\s*(?:mm|мм)\b/i);
@@ -427,21 +490,35 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     });
   }
   function readProfileBands() {
-    return [...$('profileBands').querySelectorAll('.profile-band-row')].map(row=>({
-      id:Number(row.dataset.bandId),side:row.querySelector('[data-band-side]').value,
+    const row=$('profileBands').querySelector('.profile-band-row');
+    if(!row)return state.profileBands;
+    const id=Number(row.dataset.bandId);
+    return state.profileBands.map(band=>band.id===id?{
+      ...band,side:row.querySelector('[data-band-side]').value,
       offset:Number(row.querySelector('[data-band-offset]').value),cutter:row.querySelector('[data-band-cutter]').value,
       cutterWidth:Number(row.querySelector('[data-band-width]').value),depth:Number(row.querySelector('[data-band-depth]').value)
-    }));
+    }:band);
   }
   function renderProfileBands() {
     const horizontal=$('profileAxis').value==='horizontal',edges=horizontal?['top','bottom']:['left','right'];
-    $('profileBands').innerHTML=state.profileBands.map((band,index)=>{
-      const side=edges.includes(band.side)?band.side:edges[0];
-      const first=horizontal?'Сверху':'Слева',second=horizontal?'Снизу':'Справа';
-      const cutterOptions=`<option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="wave">Волновая / другая</option>${customCutters.map(item=>`<option value="custom:${item.id}">${esc(item.name)} · ${esc(item.width)} мм</option>`).join('')}`;
-      return `<div class="profile-band-row" data-band-id="${band.id}"><div class="panel-title">Вектор профиля ${index+1}<button type="button" data-remove-band="${band.id}" aria-label="Удалить вектор профиля ${index+1}">×</button></div><div class="fields"><div class="field"><label>Сторона</label><select data-band-side><option value="${edges[0]}" ${side===edges[0]?'selected':''}>${first}</option><option value="${edges[1]}" ${side===edges[1]?'selected':''}>${second}</option></select></div><div class="field"><label>Отступ от края, мм</label><input data-band-offset type="number" min="0" step="0.1" value="${esc(band.offset)}"></div></div><div class="field"><label>Своя фреза</label><select data-band-cutter>${cutterOptions}</select></div><div class="fields"><div class="field"><label>Ширина фрезы, мм</label><input data-band-width type="number" min="0.1" step="0.1" value="${esc(band.cutterWidth)}"></div><div class="field"><label>Глубина, мм</label><input data-band-depth type="number" min="0.1" step="0.1" value="${esc(band.depth)}"></div></div></div>`;
-    }).join('')||'<div class="notice">Добавьте вектор и задайте ему отступ, фрезу и глубину.</div>';
-    state.profileBands.forEach((band,index)=>{const select=$('profileBands').querySelectorAll('[data-band-cutter]')[index];if(select)select.value=band.cutter;});
+    const selectedIndex=state.profileBands.findIndex(band=>band.id===Number(state.selectedProfileBand));
+    if(selectedIndex<0)state.selectedProfileBand=state.profileBands[0]?.id||0;
+    $('vectorListCount').textContent=`${state.profileBands.length} ${state.profileBands.length===1?'вектор':state.profileBands.length>1&&state.profileBands.length<5?'вектора':'векторов'}`;
+    $('selectedProfileBand').innerHTML=state.profileBands.map((band,index)=>`<option value="${band.id}">Вектор ${index+1} · ${esc(band.offset)} мм</option>`).join('');
+    $('selectedProfileBand').value=String(state.selectedProfileBand||'');
+    const band=state.profileBands.find(item=>item.id===Number(state.selectedProfileBand));
+    if(!band){$('profileBands').innerHTML='<div class="notice">Добавьте вектор профиля слева.</div>';return;}
+    const index=state.profileBands.indexOf(band),side=edges.includes(band.side)?band.side:edges[0];
+    const first=horizontal?'Сверху':'Слева',second=horizontal?'Снизу':'Справа';
+    const cutterOptions=`<option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="wave">Волновая / другая</option>${customCutters.map(item=>`<option value="custom:${item.id}">${esc(item.name)} · ${esc(item.width)} мм</option>`).join('')}`;
+    $('profileBands').innerHTML=`<div class="profile-band-row" data-band-id="${band.id}"><div class="profile-band-heading"><span>Вектор ${index+1}</span><button type="button" data-remove-band="${band.id}" aria-label="Удалить вектор ${index+1}">×</button></div><div class="profile-band-fields"><div class="field"><label>Сторона</label><select data-band-side><option value="${edges[0]}" ${side===edges[0]?'selected':''}>${first}</option><option value="${edges[1]}" ${side===edges[1]?'selected':''}>${second}</option></select></div><div class="field"><label>Отступ от края, мм</label><input data-band-offset type="number" min="0" step="0.1" value="${esc(band.offset)}"></div><div class="field"><label>Своя фреза</label><select data-band-cutter>${cutterOptions}</select></div><div data-profile-cutter-preview class="cutter-preview"></div><div class="field"><label>Ширина фрезы, мм</label><input data-band-width type="number" min="0.1" step="0.1" value="${esc(band.cutterWidth)}"></div><div class="field"><label>Глубина, мм</label><input data-band-depth type="number" min="0.1" step="0.1" value="${esc(band.depth)}"></div></div></div>`;
+    $('profileBands').querySelector('[data-band-cutter]').value=band.cutter;
+    $('profileBands').querySelector('[data-profile-cutter-preview]').innerHTML=cutterSelectionPreview(band.cutter,band.cutterWidth,band.depth);
+  }
+  function updateProfileCutterPreview(row=$('profileBands').querySelector('.profile-band-row')) {
+    if(!row)return;
+    const preview=row.querySelector('[data-profile-cutter-preview]');
+    preview.innerHTML=cutterSelectionPreview(row.querySelector('[data-band-cutter]').value,row.querySelector('[data-band-width]').value,row.querySelector('[data-band-depth]').value);
   }
   function setObjectInfoVisible(visible) {
     $('objectInfo').classList.toggle('hidden',!visible);
@@ -503,13 +580,24 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     return issues;
   }
   function combPositions(size,settings=state) {
-    const start=Number(settings.combStart),end=Number(settings.combEnd),pitch=Number(settings.combPitch),span=size-start-end;
+    const start=Number(settings.combStart),end=Number(settings.combEnd),pitch=Number(settings.combPitch),endPosition=size-end,span=endPosition-start;
     if(!Number.isFinite(span)||span<0||!Number.isFinite(pitch)||pitch<1)return[];
     const count=Math.floor(span/pitch+1e-9)+1;
     const positions=Array.from({length:count},(_,index)=>Number((start+index*pitch).toFixed(4)));
-    if(settings.combBeforeStep)positions.unshift(Number((-pitch).toFixed(4)));
-    if(settings.combAfterStep)positions.push(Number((size+pitch).toFixed(4)));
+    if(settings.combBeforeStep)positions.unshift(Number((positions[0]-pitch).toFixed(4)));
+    if(settings.combAfterStep)positions.push(Number((positions[positions.length-1]+pitch).toFixed(4)));
     return positions;
+  }
+  function combOperationPaths(width,height,settings=state) {
+    const paths=[],lead=Math.max(0,Number(settings.combCutWidth)||0)/2;
+    const append=(size,axis)=>combPositions(size,settings).forEach((position,index,positions)=>{
+      const isBefore=settings.combBeforeStep&&index===0,isAfter=settings.combAfterStep&&index===positions.length-1;
+      const d=axis==='vertical'?`M ${position} ${-lead} V ${height+lead}`:`M ${-lead} ${position} H ${width+lead}`;
+      paths.push({d,axis,position,extra:isBefore||isAfter});
+    });
+    if(settings.combDirection!=='horizontal')append(width,'vertical');
+    if(settings.combDirection!=='vertical')append(height,'horizontal');
+    return paths;
   }
   function iconSvg(style='frame',stroke='#c3d2e4') {
     const inner=style==='plain'?'':`<path d="${style==='arch'?'M 14 47 V 24 Q 32 4 50 24 V 47 Z':style==='diagonal'?'M 13 22 L 48 13 L 53 42 L 20 49 Z':style==='techno'?'M 17 18 H 48 L 53 23 V 46 L 47 51 H 17 L 12 46 V 23 Z':'M 15 15 H 49 V 49 H 15 Z'}"/>`;
@@ -517,15 +605,18 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   }
   function renderTemplateButtons(syncControls=true) {
     const vectorRows=[{id:0,name:'Основа фасада',type:'rect',cutter:'none'},...state.contours];
-    $('vectorListCount').textContent=`${vectorRows.length} ${vectorRows.length===1?'вектор':vectorRows.length>1&&vectorRows.length<5?'вектора':'векторов'}`;
+    const vectorCount=state.objectType==='profile'?state.profileBands.length:vectorRows.length;
+    $('vectorListCount').textContent=`${vectorCount} ${vectorCount===1?'вектор':vectorCount>1&&vectorCount<5?'вектора':'векторов'}`;
     $('selectedContour').innerHTML=vectorRows.map((vector,index)=>`<option value="${vector.id}">${esc(vector.name||`Вектор ${index+1}`)}${index===0?' · основной':''}</option>`).join('');
     if(!vectorRows.some(vector=>vector.id===state.selectedContour))state.selectedContour=0;
     $('selectedContour').value=String(state.selectedContour);
-    const selectedIndex=Math.max(0,vectorRows.findIndex(vector=>vector.id===state.selectedContour));
-    $('vectorParent').innerHTML=vectorRows.filter((vector,index)=>index<Math.max(1,selectedIndex)).map(vector=>`<option value="${vector.id}">${esc(vector.name||`Вектор ${vectorRows.findIndex(item=>item.id===vector.id)+1}`)}</option>`).join('');
-    $('vectorParent').value=String(state.contours.find(item=>item.id===state.selectedContour)?.parentId??state.selectedContour);
-    $('templateStrip').innerHTML=savedStyles.map((style,index)=>`<div class="template-entry"><button class="strip-button" data-style="${index}" title="Применить шаблон ${esc(style.name)}"><span style="font-size:20px">▱</span><small>${esc(style.name)}</small></button><button class="template-delete" data-delete-style="${index}" title="Удалить шаблон ${esc(style.name)}" aria-label="Удалить шаблон ${esc(style.name)}">×</button></div>`).join('')||'<span class="muted" style="padding:12px">Сохранённых шаблонов пока нет</span>';
+    const parentSelect=$('vectorParent'),previousParent=parentSelect.value;
+    parentSelect.innerHTML=vectorRows.map((vector,index)=>`<option value="${vector.id}">${esc(vector.name||`Вектор ${index+1}`)}</option>`).join('');
+    parentSelect.value=vectorRows.some(vector=>String(vector.id)===previousParent)?previousParent:String(state.selectedContour);
+    $('facadeContourList').innerHTML=`<div class="facade-contour-entry"><button type="button" class="vector-row${state.selectedContour===0?' active':''}" data-select-contour="0" aria-pressed="${state.selectedContour===0}"><span class="vector-number">1</span><span>Фасад</span><span class="vector-meta">основной контур</span></button></div>${state.contours.map((contour,index)=>`<div class="facade-contour-entry"><button type="button" class="vector-row${contour.id===state.selectedContour?' active':''}" data-select-contour="${contour.id}" aria-pressed="${contour.id===state.selectedContour}"><span class="vector-number">${index+2}</span><span>${esc(contour.name||`Вектор ${index+2}`)}</span><span class="vector-meta">${esc(contour.direction==='out'?'наружу':'внутрь')} · ${esc(contour.offset)} мм</span></button><button type="button" class="contour-delete" data-delete-contour="${contour.id}" title="Удалить ${esc(contour.name||`Вектор ${index+2}`)} и вложенные векторы" aria-label="Удалить ${esc(contour.name||`Вектор ${index+2}`)}">×</button></div>`).join('')}`;
+    renderSavedTemplates();
     if(syncControls)syncContourControls();
+    renderVectorCutterPreview();
   }
   function getTemplate() { return {id:'plain',name:'Прямой фасад',style:'plain'}; }
   function getContourBoundsIn(contours,width,height,id,seen=new Set()) {
@@ -552,9 +643,10 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     const contour=state.contours.find(item=>item.id===state.selectedContour);
     const isBase=!contour&&state.objectType==='facade';
     const disabled=!contour&&!isBase;
-    ['vectorShape','vectorDirection','vectorOffset','vectorCorner','vectorParent'].forEach(id=>$(id).disabled=disabled||isBase);
+    ['vectorShape','vectorDirection','vectorOffset','vectorCorner'].forEach(id=>$(id).disabled=disabled||isBase);
     ['vectorCutter','vectorDiameter','vectorDepth','applyVectorSettings'].forEach(id=>$(id).disabled=disabled);
-    $('selectedVectorLabel').textContent=contour?.name||'Основной вектор фасада';
+    $('vectorSettingsTitle').textContent=isBase?'Фасад':'Вектор';
+    $('selectedVectorLabel').textContent=isBase?'':(contour?.name||'');
     if(isBase){
       $('vectorCutter').previousElementSibling.textContent='Фреза основного контура';
       $('applyVectorSettings').textContent='Применить к основному контуру';
@@ -567,24 +659,24 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     $('vectorShape').value=contour.shape;$('vectorDirection').value=contour.direction;
     $('vectorOffset').value=contour.offset;$('vectorCorner').value=contour.corner;
     $('vectorCutter').value=contour.cutter;$('vectorDiameter').value=contour.diameter;$('vectorDepth').value=contour.depth;
-    $('vectorParent').value=String(contour.parentId);
   }
   function updateObjectTypeView() {
     const type=$('objectType').value;
     state.objectType=type;
+    $('typeSettingsTitle').textContent=type==='profile'?'Профиль':'Гребёнка';
     $('profileSettings').classList.toggle('hidden',type!=='profile');
     $('combSettings').classList.toggle('hidden',type!=='comb');
     $('typeSettingsPanel').classList.toggle('hidden',type==='facade'||activeView==='nest');
     $('vectorSettingsPanel').classList.toggle('hidden',type!=='facade'||activeView!=='2d');
     $('outerRadiusSetting').classList.toggle('hidden',type!=='facade');
     $('quickOffsetControls').classList.toggle('hidden',type!=='facade');
-    $('vectorListPanel').style.display=type==='facade'?'':'none';
+    $('vectorListPanel').style.display=type==='facade'||type==='profile'?'':'none';
+    $('facadeVectorControls').classList.toggle('hidden',type!=='facade');
+    $('profileVectorControls').classList.toggle('hidden',type!=='profile');
     document.querySelector('.templates-strip').style.display=type==='facade'?'':'none';
     $('vectorListTitle').textContent=type==='facade'?'Контуры фасада':type==='comb'?'Проходы гребёнки':'Векторы профиля';
     $('objectTypeName').textContent=type==='facade'?'Фасад':type==='comb'?'Фасад-гребёнка':'Профиль';
     $('dimensionHelp').textContent=type==='facade'?'Укажите ширину, высоту и толщину фасада. Векторы добавляются и редактируются отдельно.':type==='comb'?'Шаг задаёт расстояние между проходами; первый и последний отступы ограничивают область размещения. Полосы идут по всей длине заготовки.':'Каждый профиль — отдельный вектор: задайте край, отступ и свои фрезу, ширину и глубину.';
-    $('deleteVector').style.display=type==='facade'?'':'none';
-    $('saveTemplate').closest('.style-actions').style.display=type==='facade'?'':'none';
     [...document.querySelectorAll('.left-scroll > .panel')].forEach(panel=>{
       const availableInSheet=panel.id==='designListPanel'||panel.id==='newDesignPanel';
       panel.classList.toggle('hidden',activeView==='nest'&&!availableInSheet);
@@ -633,23 +725,30 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       }).join('');
     }else if(state.objectType==='comb'){
       const cuts=[];
-      const lead=state.combCutWidth/2*scale;
-      if(state.combDirection!=='horizontal')combPositions(W).forEach(value=>{const px=x+value*scale;cuts.push(`<path d="M ${px} ${y-lead} V ${y+dh+lead}" stroke="#77736b" stroke-width="${Math.max(1.1,state.combCutWidth*scale)}" stroke-opacity=".23" stroke-dasharray="3 1.5"/><path d="M ${px} ${y-lead} V ${y+dh+lead}" stroke="#625f57" stroke-width="1.1" stroke-opacity=".75" stroke-dasharray="5 1 1 1"/>`);});
-      if(state.combDirection!=='vertical'){
-        combPositions(H).forEach(value=>{const py=y+value*scale;cuts.push(`<path d="M ${x-lead} ${py} H ${x+dw+lead}" stroke="#77736b" stroke-width="${Math.max(1.1,state.combCutWidth*scale)}" stroke-opacity=".23" stroke-dasharray="3 1.5"/><path d="M ${x-lead} ${py} H ${x+dw+lead}" stroke="#625f57" stroke-width="1.1" stroke-opacity=".75" stroke-dasharray="5 1 1 1"/>`);});
-      }
-      operation=cuts.join('');
+      operation=combOperationPaths(W,H).map(pass=>{
+        const halfCutter=Math.max(0,Number(state.combCutWidth)||0)*scale/2;
+        const path=pass.axis==='vertical'
+          ?`M ${x+pass.position*scale} ${y-halfCutter} V ${y+dh+halfCutter}`
+          :`M ${x-halfCutter} ${y+pass.position*scale} H ${x+dw+halfCutter}`;
+        const color=pass.extra?'#a45f40':'#625f57';
+        return `<path data-comb-pass="${pass.axis}" data-extra="${pass.extra}" d="${path}" stroke="#77736b" stroke-width="${Math.max(1.1,state.combCutWidth*scale)}" stroke-opacity=".23" stroke-dasharray="${pass.extra?'2 1':'3 1.5'}"/><path data-comb-pass="${pass.axis}" data-extra="${pass.extra}" d="${path}" stroke="${color}" stroke-width="${pass.extra?1.5:1.1}" stroke-opacity="${pass.extra?'.95':'.75'}" stroke-dasharray="${pass.extra?'2 1 1 1':'5 1 1 1'}"/>`;
+      }).join('');
     }
     const extra=state.customVectors.map((vector,index)=>`<g data-vector="${index}"><path d="${customVectorSvgPath(vector)}" fill="none" stroke="#625f57" stroke-opacity=".3" stroke-width="1.2" stroke-dasharray="5 1 1 1" transform="translate(.7 -.7)" vector-effect="non-scaling-stroke"/><path d="${customVectorSvgPath(vector)}" fill="none" stroke="${index===state.selectedVector?'#a45f40':'#625f57'}" stroke-opacity="${index===state.selectedVector?'.95':'.68'}" stroke-width="${index===state.selectedVector?1.9:1.35}" stroke-dasharray="5 1 1 1" vector-effect="non-scaling-stroke"/></g>`).join('');
     const imported=state.importedPaths.map(item=>`<g transform="translate(${x} ${y}) scale(${scale*W/item.viewBox.width} ${scale*H/item.viewBox.height}) translate(${-item.viewBox.x} ${-item.viewBox.y})"><path d="${esc(item.d)}" fill="none" stroke="#625f57" stroke-opacity=".65" stroke-width="1.3" stroke-dasharray="5 1 1 1" vector-effect="non-scaling-stroke"/></g>`).join('');
     svg.setAttribute('viewBox','0 0 800 800');
-    svg.innerHTML=`<defs>${textureDefs}<marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M 0 0 L 6 3 L 0 6 Z" fill="#625f57"/></marker></defs>
+    const minorCell=10*scale,majorCell=50*scale;
+    svg.innerHTML=`<defs>${textureDefs}
+      <pattern id="graphMinor" width="${minorCell}" height="${minorCell}" x="${x}" y="${y}" patternUnits="userSpaceOnUse"><path d="M ${minorCell} 0 H 0 V ${minorCell}" fill="none" stroke="#8d8a80" stroke-width=".65" opacity=".34"/></pattern>
+      <pattern id="graphMajor" width="${majorCell}" height="${majorCell}" x="${x}" y="${y}" patternUnits="userSpaceOnUse"><path d="M ${majorCell} 0 H 0 V ${majorCell}" fill="none" stroke="#75766e" stroke-width="1" opacity=".36"/></pattern>
+      <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M 0 0 L 6 3 L 0 6 Z" fill="#625f57"/></marker></defs>
+      <rect width="800" height="800" fill="#f8f6ef"/><rect width="800" height="800" fill="url(#graphMinor)"/><rect width="800" height="800" fill="url(#graphMajor)"/>
       ${outerGroove}${visible.outer?`<path data-contour="0" d="${outer}" fill="${textureFill}" stroke="#625f57" stroke-opacity="${state.selectedContour===0?'.95':'.75'}" stroke-width="${state.selectedContour===0?2.2:1.8}" stroke-dasharray="6 1 1 1" vector-effect="non-scaling-stroke"/><path d="${outer}" fill="none" stroke="#625f57" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="3 1 1 1" transform="translate(1.1 -1)"/>`:''}
       ${state.objectType==='facade'&&visible.inner?contours:''}${state.objectType==='facade'&&visible.details?extra:''}${imported}${operation}${dimensionGroup}${labels}`;
     $('dimensions').textContent=`${W} × ${H} мм`;
     const operationCount=state.objectType==='facade'?state.contours.length+1:operationVectorPaths().length;
     $('vectorCount').textContent=state.objectType==='comb'?`Проходов: ${operationCount}`:state.objectType==='profile'?`Векторов профиля: ${operationCount}`:`Контуров: ${operationCount}`;
-    $('canvasHint').textContent=state.objectType==='comb'?`Шаг ${state.combPitch} мм · ${operationCount} проходов · крайний вне габарита сохраняет шаг`:state.objectType==='profile'?`${operationCount} отдельных векторов профиля · свои фрезы для каждого`:activeView==='profile'?'Разрез фасада показывает все векторы одновременно':activeTool==='select'?'Выберите вектор слева или нажмите «Добавить вектор»':`Инструмент «${toolName(activeTool)}»: укажите точки на чертеже`;
+    $('canvasHint').textContent=state.objectType==='comb'?`Шаг ${state.combPitch} мм · ${operationCount} проходов · дополнительные проходы учитывают отступы`:state.objectType==='profile'?`${operationCount} отдельных векторов профиля · свои фрезы для каждого`:activeView==='profile'?'Разрез фасада показывает все векторы одновременно':activeTool==='select'?'Выберите вектор слева или нажмите «Добавить вектор»':`Инструмент «${toolName(activeTool)}»: укажите точки на чертеже`;
     const issue=geometryIssues().length>0;
     $('validity').textContent=issue?'⚠ Проверьте параметры':'● Проверка пройдена';
     $('validity').className=issue?'warning':'good';
@@ -694,7 +793,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     const isStrip=state.objectType==='profile';
     const isComb=state.objectType==='comb';
     const vertical=isStrip&&state.profileAxis==='vertical';
-    const sectionLength=isStrip?(vertical?state.width:state.height):state.width;
+    const sectionLength=isStrip?(vertical?state.width:state.height):isComb&&state.combDirection==='horizontal'?state.height:state.width;
     if(!Number.isFinite(sectionLength)||sectionLength<=0||!Number.isFinite(state.thickness)||state.thickness<=0){
       if(!compact)svg.innerHTML='<text x="400" y="270" text-anchor="middle" fill="#394653">Введите положительные размеры заготовки</text>';
       else svg.innerHTML='';
@@ -721,77 +820,72 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       });
     }
     else if(isStrip)profileOperations.forEach(operation=>operations.push(operation));
-    else combPositions(sectionLength).forEach(center=>operations.push({center,width:Number(state.combCutWidth),depth:Number(state.combCutDepth),shape:cutterShape(state.combCutter)}));
-    const cuts=operations.filter(cut=>Number.isFinite(cut.center)&&Number.isFinite(cut.width)&&cut.width>0&&Number.isFinite(cut.depth)&&cut.depth>0&&cut.shape);
+    else if(isComb){
+      const sectionAxis=state.combDirection==='horizontal'?'horizontal':'vertical';
+      combOperationPaths(state.width,state.height).filter(pass=>pass.axis===sectionAxis).forEach(pass=>operations.push({center:pass.position,width:Number(state.combCutWidth),depth:Number(state.combCutDepth),shape:cutterShape(state.combCutter),extra:pass.extra}));
+    }
+    const cuts=operations.filter(cut=>Number.isFinite(cut.center)&&Number.isFinite(cut.width)&&cut.width>0&&Number.isFinite(cut.depth)&&cut.depth>0&&cut.shape&&cut.center+cut.width/2>0&&cut.center-cut.width/2<sectionLength);
+    const allPasses=isComb?combOperationPaths(state.width,state.height).length:operations.length;
+    const additionalPasses=(Number(state.combBeforeStep)+Number(state.combAfterStep))*(state.combDirection==='both'?2:1);
     const vectorLines=isFacade?state.contours.flatMap(contour=>{
       const bounds=getContourBounds(contour.id);
       return [bounds.x,bounds.x+bounds.width].filter(center=>center>=0&&center<=sectionLength).map(center=>left+center*scale);
     }):[];
-    const profileLines=cuts.map(cut=>left+cut.center*scale);
     const surfaceDepthAt=at=>cuts.reduce((maximum,cut)=>{
-      const normalized=Math.abs(at-cut.center)/(cut.width/2);
-      if(normalized>=1)return maximum;
-      const depth=Math.min(cut.depth,state.thickness),remaining=1-normalized;
-      const relief=cut.shape==='flat'?depth:cut.shape==='v90'?depth*remaining:cut.shape==='round'?depth*Math.sqrt(1-normalized*normalized):depth*(1-normalized*normalized);
-      return Math.max(maximum,relief);
+      const normalized=(at-cut.center)/(cut.width/2),depth=Math.min(cut.depth,state.thickness);
+      return Math.max(maximum,cutterReliefDepth(cut.shape,normalized,depth));
     },0);
-    const sampleStep=cuts.length?Math.max(.2,Math.min(4,1/scale,...cuts.map(cut=>cut.width/6))):4;
+    const sampleStep=cuts.length?Math.max(.2,Math.min(4,1/scale,...cuts.map(cut=>cut.width/8))):4;
     const samplePoints=new Set([0,sectionLength]);
-    for(let at=sampleStep;at<sectionLength;at+=sampleStep)samplePoints.add(at);
-    cuts.forEach(cut=>{samplePoints.add(Math.max(0,cut.center-cut.width/2));samplePoints.add(Math.min(sectionLength,cut.center+cut.width/2));samplePoints.add(Math.max(0,Math.min(sectionLength,cut.center)));});
+    for(let at=sampleStep;at<sectionLength;at+=sampleStep)samplePoints.add(Number(at.toFixed(5)));
+    cuts.forEach(cut=>{
+      [cut.center-cut.width/2,cut.center,cut.center+cut.width/2].forEach(at=>{if(at>0&&at<sectionLength)samplePoints.add(Number(at.toFixed(5)));});
+    });
     const surfacePoints=[...samplePoints].sort((a,b)=>a-b).map(at=>`${left+at*scale} ${y+surfaceDepthAt(at)*scale}`);
-    const materialPath=`M ${left} ${surfacePoints[0].split(' ')[1]} L ${surfacePoints.slice(1).join(' L ')} L ${right} ${bottom} H ${left} Z`;
+    const materialPath=`M ${surfacePoints[0]} L ${surfacePoints.slice(1).join(' L ')} L ${right} ${bottom} H ${left} Z`;
     if(compact){
       svg.setAttribute('viewBox','0 0 800 100');
       svg.innerHTML=`<defs><pattern id="previewHatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><path d="M 0 0 V 6" stroke="#77736b" stroke-width=".8" stroke-opacity=".32"/></pattern></defs><path d="${materialPath}" fill="#e5e1d8" stroke="#625f57" stroke-width="1.5"/><path d="${materialPath}" fill="url(#previewHatch)"/><path d="M ${surfacePoints.join(' L ')} L ${right} ${y}" fill="none" stroke="#625f57" stroke-width="1.35" stroke-dasharray="5 1 1 1"/>`;
       return;
     }
-    const firstCut=cuts[0],width=firstCut?.width||0,depth=firstCut?.depth||0,position=firstCut?.center||sectionLength/2;
+    const firstCut=cuts[0],width=firstCut?.width||0,depth=firstCut?.depth||0,position=firstCut?.center??sectionLength/2;
     const x=left+position*scale,half=Math.max(1,width*scale/2),cutDepth=Math.max(1,depth*scale);
-    const cutter=isFacade?`${state.contours.length} векторов · ${cuts.length} резов`:isComb?`${cutterLabel(state.combCutter)} · диаметр ${width} мм · глубина ${depth} мм`:`${cuts.length} отдельных фрезерных векторов`;
-    const annotations=isFacade?state.contours.map((contour,index)=>{
-      const bounds=getContourBounds(contour.id);
-      return `Вектор ${index+2}: оси ${bounds.x.toFixed(1)} / ${(bounds.x+bounds.width).toFixed(1)} мм${contour.cutter==='none'?' · без фрезеровки':` · ${Number(contour.diameter)} × ${Number(contour.depth)} мм`}`;
-    }):isStrip?cuts.map((cut,index)=>`Профиль ${index+1}: отступ ${cut.center.toFixed(1)} мм · ${cutterLabel(state.profileBands[index]?.cutter)} ${cut.width} × ${cut.depth} мм`):[];
-    const annotationMarkup=isFacade||isStrip?'':annotations.slice(0,3).map((text,index)=>`<text x="80" y="${153+index*17}" font-size="11">${esc(text)}</text>`).join('')+(annotations.length>3?`<text x="80" y="204" font-size="11">Ещё векторов: ${annotations.length-3}</text>`:'');
-    const detailedCuts=isFacade||isStrip?cuts.map(cut=>{
-      const source=isFacade?(cut.base?null:state.contours[cut.vector-2]):state.profileBands[cut.vector-1];
-      const prefix=isFacade?`${cut.base?'О':'В'+cut.vector}${cut.side===0?'←':'→'}`:`П${cut.vector}`;
-      const detail=isFacade?`${cut.width}×${cut.depth} мм · ${cutterLabel(cut.base?state.outerCutter:source?.cutter)}`:`${cut.center.toFixed(1)} мм · ${cutterLabel(source?.cutter)} ${cut.width}×${cut.depth}`;
-      return{center:cut.center,label:`${prefix} · ${detail}`};
-    }):[];
-    const labelRows=[];
-    let calloutsRendered=0;
-    const calloutMarkup=detailedCuts.map(cut=>{
-      const center=Math.max(left+42,Math.min(right-42,left+cut.center*scale)),labelWidth=Math.min(230,Math.max(70,cut.label.length*5.7));
-      let row=labelRows.findIndex(previous=>Math.abs(center-previous.center)>=(labelWidth+previous.width)/2+8);
-      if(row<0)row=labelRows.length;
-      if(row>=6)return'';
-      labelRows[row]={center,width:labelWidth};
-      calloutsRendered++;
-      const labelY=144+row*14;
-      return`<path d="M ${center} ${labelY+4} V ${y-8}" stroke="#9a4c46" stroke-width=".8" stroke-dasharray="2 2"/><text x="${center}" y="${labelY}" text-anchor="middle" font-size="10" fill="#8e3935">${esc(cut.label)}</text>`;
-    }).join('')+(detailedCuts.length>calloutsRendered?`<text x="80" y="226" font-size="10" fill="#8e3935">Дополнительных линий сечения: ${detailedCuts.length-calloutsRendered}</text>`:'');
-    const showSimpleDimensions=cuts.length===1;
+    const cutter=isFacade?`${state.contours.length} внутренних векторов`:isComb?`${cutterLabel(state.combCutter)} · ${state.combCutWidth} × ${state.combCutDepth} мм`:`${cuts.length} фрезерных проходов`;
+    const specification=isComb?[
+      ['Направление',state.combDirection==='both'?'Вертикальное и горизонтальное':state.combDirection==='horizontal'?'Горизонтальное':'Вертикальное'],
+      ['Шаг / отступы',`${state.combPitch} мм · ${state.combStart} / ${state.combEnd} мм`],
+      ['Проходы',`${allPasses} всего · ${cuts.length} в сечении · ${additionalPasses} доп.`],
+      ['Фреза',`${cutterLabel(state.combCutter)} · Ø ${state.combCutWidth} мм · глубина ${state.combCutDepth} мм`]
+    ]:isStrip?[
+      ...state.profileBands.slice(0,3).map((band,index)=>[`Вектор ${index+1}`,`${band.side} · отступ ${band.offset} мм · ${cutterLabel(band.cutter)} ${band.cutterWidth} × ${band.depth} мм`]),
+      ...(state.profileBands.length>3?[[`Ещё векторов`,`+${state.profileBands.length-3}`]]:[])
+    ]:[
+      ['Контуры',`${state.contours.length} внутренних · ${cuts.length} фрезерных резов`],
+      ...state.contours.slice(0,3).map((contour,index)=>[`Вектор ${index+2}`,`${contour.direction==='out'?'наружу':'внутрь'} · ${contour.offset} мм · ${contour.cutter==='none'?'без фрезеровки':`${cutterLabel(contour.cutter)} ${contour.diameter} × ${contour.depth} мм`}`]),
+      ...(state.contours.length>3?[[`Ещё векторов`,`+${state.contours.length-3}`]]:[])
+    ].slice(0,4);
+    const specificationMarkup=specification.map(([label,value],index)=>`<text x="82" y="${154+index*16}" font-size="10" fill="#69716f">${esc(label)}</text><text x="190" y="${154+index*16}" font-size="10" fill="#35413f">${esc(value)}</text>`).join('');
+    const showSimpleDimensions=cuts.length===1&&x-half>=left-0.01&&x+half<=right+0.01;
+    const rulerWidth=Math.min(50,sectionLength)*scale,rulerStart=760-rulerWidth;
     svg.setAttribute('viewBox','0 0 800 540');
     svg.innerHTML=`<defs>
-      <pattern id="minorGrid" width="${Math.max(.2,10*scale)}" height="${Math.max(.2,10*scale)}" patternUnits="userSpaceOnUse"><path d="M ${10*scale} 0 H 0 V ${10*scale}" fill="none" stroke="#9aa5ae" stroke-width=".65" opacity=".28"/></pattern>
-      <pattern id="majorGrid" width="${Math.max(.2,50*scale)}" height="${Math.max(.2,50*scale)}" patternUnits="userSpaceOnUse"><path d="M ${50*scale} 0 H 0 V ${50*scale}" fill="none" stroke="#7e8b95" stroke-width=".9" opacity=".3"/></pattern>
+      <pattern id="minorGrid" x="${left}" y="${y}" width="${Math.max(.2,10*scale)}" height="${Math.max(.2,10*scale)}" patternUnits="userSpaceOnUse"><path d="M ${10*scale} 0 H 0 V ${10*scale}" fill="none" stroke="#9aa5ae" stroke-width=".65" opacity=".34"/></pattern>
+      <pattern id="majorGrid" x="${left}" y="${y}" width="${Math.max(.2,50*scale)}" height="${Math.max(.2,50*scale)}" patternUnits="userSpaceOnUse"><path d="M ${50*scale} 0 H 0 V ${50*scale}" fill="none" stroke="#7e8b95" stroke-width=".9" opacity=".38"/></pattern>
       <pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="8" stroke="#555b60" stroke-width="1" opacity=".48"/></pattern>
       <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M 0 0 L 6 3 L 0 6 Z" fill="#4e5961"/></marker>
       <clipPath id="boardClip"><rect x="${left}" y="${y}" width="${right-left}" height="${boardH}"/></clipPath></defs>
-      <rect width="800" height="540" fill="#f5f6f4"/><rect width="800" height="540" fill="url(#minorGrid)"/><rect width="800" height="540" fill="url(#majorGrid)"/>
+      <rect width="800" height="540" fill="#f8f6ef"/><rect width="800" height="540" fill="url(#minorGrid)"/><rect width="800" height="540" fill="url(#majorGrid)"/>
       <path d="${materialPath}" fill="#d9d9d4" stroke="#41464a" stroke-width="2.1" clip-path="url(#boardClip)"/>
       <path d="${materialPath}" fill="url(#hatch)" clip-path="url(#boardClip)"/>
-      <path d="M ${left} ${y} L ${surfacePoints.map(point=>point.split(' ')[0]+' '+point.split(' ')[1]).join(' L ')} L ${right} ${y}" fill="none" stroke="#343a3e" stroke-width="2.2" clip-path="url(#boardClip)"/>
+      <path d="M ${surfacePoints.join(' L ')}" fill="none" stroke="#343a3e" stroke-width="2.2" clip-path="url(#boardClip)"/>
       ${vectorLines.map(line=>`<path d="M ${line} ${y} V ${Math.min(bottom,y+Math.max(8,boardH*.45))}" stroke="#737a7e" stroke-width=".8" stroke-dasharray="3 3" opacity=".55" clip-path="url(#boardClip)"/>`).join('')}
       <path d="M ${left} ${bottom+36} V ${bottom+12} M ${right} ${bottom+36} V ${bottom+12} M ${left} ${bottom+25} H ${right} ${showSimpleDimensions?`M ${x-half} ${bottom+8} V ${bottom+1} M ${x+half} ${bottom+8} V ${bottom+1} M ${x-half} ${bottom+5} H ${x+half} M ${x+half+18} ${y} H ${x+half+5} M ${x+half+18} ${y+cutDepth} H ${x+half+5} M ${x+half+12} ${y} V ${y+cutDepth}`:''}" stroke="#4e5961" stroke-width="1.1" fill="none"/>
       ${showSimpleDimensions?`<path d="M ${x-half} ${bottom+5} H ${x+half} M ${x+half+12} ${y} V ${y+cutDepth}" stroke="#4e5961" stroke-width="1.1" fill="none" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`:''}
-      ${calloutMarkup}
-      <g fill="#38434a" font-size="12" font-weight="650" text-anchor="middle"><text x="${(left+right)/2}" y="${bottom+48}">${esc(sectionLength)} мм · длина сечения</text>${showSimpleDimensions?`<text x="${x}" y="${bottom+20}">${esc(width.toFixed(1))} мм</text><text transform="translate(${x+half+29} ${y+cutDepth/2}) rotate(-90)">${esc(depth.toFixed(1))} мм</text>`:''}<text transform="translate(${left-24} ${y+boardH/2}) rotate(-90)">${esc(state.thickness)} мм · толщина</text><text x="${(left+right)/2}" y="${bottom+70}">${isFacade?`Векторов: ${state.contours.length} · резов: ${cuts.length}`:isComb?`Шаг ${state.combPitch} мм · ${cuts.length} проходов`:`Векторов профиля: ${cuts.length}`}</text></g>
-      <g fill="#374149" font-size="13"><text x="80" y="67" font-size="19" font-weight="700">Разрез ${isFacade?'фасада':isComb?'гребёнки':'профиля'}</text><text x="80" y="91">${esc(state.width)} × ${esc(state.height)} × ${esc(state.thickness)} мм · ${esc(cutter)}</text><text x="80" y="113">Сетка 10 × 10 мм · жирная линия 50 мм · масштаб ${esc(scale.toFixed(2))} px/мм</text>${annotationMarkup}<text x="80" y="510">ЭСКИЗ В МАСШТАБЕ · серый контур — материал, тёмный контур — обработанная поверхность</text></g>`;
+      <g fill="#38434a" font-size="12" font-weight="650" text-anchor="middle"><text x="${(left+right)/2}" y="${bottom+48}">${esc(sectionLength)} мм · длина сечения</text>${showSimpleDimensions?`<text x="${x}" y="${bottom+20}">${esc(width.toFixed(1))} мм</text><text transform="translate(${x+half+29} ${y+cutDepth/2}) rotate(-90)">${esc(depth.toFixed(1))} мм</text>`:''}<text transform="translate(${left-24} ${y+boardH/2}) rotate(-90)">${esc(state.thickness)} мм · толщина</text><text x="${(left+right)/2}" y="${bottom+70}">${isFacade?`Векторов: ${state.contours.length} · резов: ${cuts.length}`:isComb?`Шаг ${state.combPitch} мм · ${allPasses} всего · ${cuts.length} в сечении`:`Векторов профиля: ${cuts.length}`}</text></g>
+      <path d="M ${rulerStart} 220 H 760 M ${rulerStart} 216 V 224 M 760 216 V 224" fill="none" stroke="#35413f" stroke-width="1.3"/><text x="760" y="214" text-anchor="end" font-size="9" fill="#35413f">${Math.min(50,sectionLength)} мм</text>
+      <g fill="#374149" font-size="12"><text x="80" y="67" font-size="19" font-weight="700">Разрез ${isFacade?'фасада':isComb?'гребёнки':'профиля'}</text><text x="80" y="91">${esc(state.width)} × ${esc(state.height)} × ${esc(state.thickness)} мм · ${esc(cutter)}</text><text x="80" y="113">Клетка 10 мм · жирная линия 50 мм · ${esc(scale.toFixed(2))} px/мм</text><text x="80" y="137" font-size="10" font-weight="700" fill="#56615e">СПЕЦИФИКАЦИЯ</text>${specificationMarkup}<text x="80" y="510" font-size="10">Масштабная сетка: малая клетка 10 мм, крупная клетка 50 мм</text></g>`;
     $('viewTitle').textContent=`Разрез: ${isFacade?'фасада':isComb?'гребёнки':'профиля'}`;
-    $('viewSubtitle').textContent=isFacade?`${state.contours.length} внутренних векторов · ${cuts.length} резов в сечении`: `${cutter} · ${cuts.length} проходов · глубина по введённым размерам`;
+    $('viewSubtitle').textContent=isFacade?`${state.contours.length} внутренних векторов · ${cuts.length} резов в сечении`:isComb?`${allPasses} проходов всего · ${cuts.length} пересекают сечение · глубина по введённым размерам`:`${cutter} · ${cuts.length} проходов · глубина по введённым размерам`;
   }
   function arrangeCuttingItems() {
     const boardWidth=Number(state.sheetWidth),boardHeight=Number(state.sheetHeight),margin=Number(state.sheetMargin),gap=Number(state.partGap);
@@ -923,12 +1017,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
         const across=vertical?item.width:item.height,coordinate=band.side==='right'||band.side==='bottom'?across-band.offset:band.offset;
         paths.push(vertical?`M ${coordinate} 0 V ${item.height}`:`M 0 ${coordinate} H ${item.width}`);
       });
-    }else if(item.objectType==='comb'){
-        const positions=(size)=>combPositions(size,item);
-      const lead=Number(item.combCutWidth)/2;
-      if(item.combDirection!=='horizontal')positions(item.width).forEach(x=>paths.push(`M ${x} ${-lead} V ${item.height+lead}`));
-      if(item.combDirection!=='vertical')positions(item.height).forEach(y=>paths.push(`M ${-lead} ${y} H ${item.width+lead}`));
-    }
+    }else if(item.objectType==='comb')combOperationPaths(item.width,item.height,item).forEach(pass=>paths.push(pass.d));
     return paths;
   }
   function renderCuttingView() {
@@ -966,7 +1055,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     $('canvas').classList.toggle('profile',activeView==='profile');$('canvas').classList.remove('dark');
     drawProfile($('profilePreview'),true);
     applyCanvasTransform();
-    $('zoomValue').textContent=activeView==='profile'?'Fit':`${state.zoom}%`;
+    $('zoomValue').textContent=activeView==='profile'&&state.zoom===100?'Fit':`${state.zoom}%`;
     if(activeView==='nest')renderCuttingView();
     else if(!Number.isFinite(state.width)||!Number.isFinite(state.height)){draw2d();$('viewTitle').textContent='Не заданы размеры фасада';$('viewSubtitle').textContent='Введите ширину и высоту, чтобы построить чертёж';}
     else if(activeView==='2d'){ $('viewTitle').textContent=state.objectType==='facade'?'Чертёж фасада':state.objectType==='comb'?'Схема проходов гребёнки':'Схема профиля';$('viewSubtitle').textContent='Размеры в мм · линии показаны в расчётных координатах';draw2d(); }
@@ -1168,7 +1257,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   function saveProject() {stateFromInputs();download(`${state.name.replace(/[<>:"/\\|?*]/g,'_')||'fasad'}.json`,JSON.stringify(state,null,2),'application/json');$('footerStatus').textContent='Проект сохранён в файл JSON';}
   function applyProject(project) {
     if(!project||typeof project!=='object'||Array.isArray(project))throw new Error('Файл проекта повреждён или имеет неверный формат.');
-    const allowed=['name','template','width','height','thickness','inset','secondInset','panelInset','radius','profileDepth','profilePitch','profileLand','profileRadius','material','grain','symmetry','profileType','toolPreset','roughDiameter','roughPass','roughRpm','roughFeed','finishDiameter','finishPass','finishRpm','finishFeed','objectType','profileAxis','profileBands','profileCutter','profileSide','profileOffset','profileBandWidth','profileCutWidth','profileCutDepth','outerCornerRadius','outerCutter','outerDiameter','outerDepth','combDirection','combCutter','combStart','combEnd','combPitch','combCutWidth','combCutDepth','combBeforeStep','combAfterStep','facadeTexture','sheetWidth','sheetHeight','sheetThickness','sheetMargin','partGap','cuttingItems','customVectors','contours','importedPaths','layers'];
+    const allowed=['name','template','width','height','thickness','inset','secondInset','panelInset','radius','profileDepth','profilePitch','profileLand','profileRadius','material','grain','symmetry','profileType','toolPreset','roughDiameter','roughPass','roughRpm','roughFeed','finishDiameter','finishPass','finishRpm','finishFeed','objectType','profileAxis','profileBands','selectedProfileBand','profileCutter','profileSide','profileOffset','profileBandWidth','profileCutWidth','profileCutDepth','outerCornerRadius','outerCutter','outerDiameter','outerDepth','combDirection','combCutter','combStart','combEnd','combPitch','combCutWidth','combCutDepth','combBeforeStep','combAfterStep','facadeTexture','sheetWidth','sheetHeight','sheetThickness','sheetMargin','partGap','cuttingItems','customVectors','contours','importedPaths','layers'];
     snapshot();allowed.forEach(key=>{if(project[key]!==undefined)state[key]=project[key];});
     state.combBeforeStep=project.combBeforeStep===true;state.combAfterStep=project.combAfterStep===true;
     state.facadeTexture=['paper','mdf','veneer','plain'].includes(project.facadeTexture)?project.facadeTexture:'paper';
@@ -1193,6 +1282,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       offset:Number(band?.offset),cutter:typeof band?.cutter==='string'?band.cutter:project.profileCutter||'round',
       cutterWidth:Number(band?.cutterWidth??band?.width??project.profileCutWidth??6),depth:Number(band?.depth??project.profileCutDepth??4.4)
     })).filter(band=>Number.isFinite(band.offset)&&Number.isFinite(band.cutterWidth)&&Number.isFinite(band.depth));
+    state.selectedProfileBand=state.profileBands.some(band=>band.id===Number(state.selectedProfileBand))?Number(state.selectedProfileBand):(state.profileBands[0]?.id||0);
     state.outerCornerRadius=Number(state.outerCornerRadius)||0;
     if(!['vertical','horizontal','both'].includes(state.combDirection))state.combDirection='vertical';
     if(!cutterShape(state.combCutter))state.combCutter='round';
@@ -1216,28 +1306,60 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     nextContourId=Math.max(1,...state.contours.map(contour=>contour.id+1));state.selectedContour=0;state.layers={...initialState.layers,...(state.layers||{})};state.selectedVector=-1;renderCutterOptions();syncInputs();renderProfileBands();renderCuttingList();updateObjectTypeView();renderTemplateButtons();drawView();
   }
   function render() {stateFromInputs();drawView();}
+  function renderSavedTemplates() {
+    const type=$('styleTypeFilter').value,icon=type==='facade'?iconSvg('frame','#625f57'):type==='profile'?'<svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#625f57" stroke-width="2"><path d="M9 12h46v40H9zM20 12v40m12-40v40m12-40v40"/></g></svg>':'<svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#625f57" stroke-width="2"><path d="M9 12v40M20 12v40M31 12v40M42 12v40M53 12v40"/></g></svg>';
+    const matches=savedStyles.map((style,index)=>({style,index})).filter(({style})=>(style.objectType||'facade')===type);
+    $('stylesList').innerHTML=matches.map(({style,index})=>`<article class="style-card"><button class="style-card-apply" type="button" data-style="${index}" title="Применить шаблон ${esc(style.name)}">${icon}<span><strong>${esc(style.name||'Шаблон без названия')}</strong><br><span class="sub">${esc(({facade:'Фасад',profile:'Профиль',comb:'Гребёнка'})[style.objectType||'facade'])} · ${esc(style.width||0)} × ${esc(style.height||0)} мм</span></span></button><button class="style-card-delete" type="button" data-delete-style="${index}" aria-label="Удалить шаблон ${esc(style.name||'без названия')}" title="Удалить шаблон">×</button></article>`).join('')||`<div class="styles-empty">Для типа «${esc(({facade:'Фасад',profile:'Профиль',comb:'Гребёнка'})[type])}» шаблонов пока нет.</div>`;
+  }
+  function openStylesDialog() {
+    stateFromInputs();
+    $('styleTypeFilter').value=state.objectType;
+    $('stylesOverlay').classList.remove('hidden');
+    renderSavedTemplates();
+    $('styleName').focus();
+  }
   function selectTemplate(id) {
     const style=savedStyles[Number(id)];
-    if(!style||!Array.isArray(style.contours))return;
-    const scale=Math.min(Number.isFinite(style.width)&&style.width>0?state.width/style.width:1,Number.isFinite(style.height)&&style.height>0?state.height/style.height:1);
-    const ids=new Map([[0,0]]),previousContours=state.contours,previousRadius=state.outerCornerRadius;
-    const candidateRadius=Number(style.outerCornerRadius||0)*scale;
-    const candidate=style.contours.map(contour=>{const id=nextContourId++;ids.set(contour.id,id);return{...contour,id,parentId:ids.get(contour.parentId)||0,offset:Number(contour.offset)*scale,corner:Number(contour.corner)*scale};});
-    state.contours=candidate;state.outerCornerRadius=candidateRadius;
+    if(!style){$('footerStatus').textContent='Шаблон больше не найден';return false;}
+    const type=style.objectType||'facade';
+    let candidate={};
+    if(type==='facade'){
+      if(!Array.isArray(style.contours))return false;
+      const scale=Math.min(Number.isFinite(style.width)&&style.width>0?state.width/style.width:1,Number.isFinite(style.height)&&style.height>0?state.height/style.height:1);
+      const ids=new Map([[0,0]]);
+      candidate={objectType:type,outerCornerRadius:Number(style.outerCornerRadius||0)*scale,contours:style.contours.map(contour=>{const id=nextContourId++;ids.set(contour.id,id);return{...contour,id,parentId:ids.get(contour.parentId)||0,offset:Number(contour.offset)*scale,corner:Number(contour.corner)*scale};})};
+    }else if(type==='profile'){
+      if(!Array.isArray(style.profileBands)||!style.profileBands.length)return false;
+      const axis=style.profileAxis==='horizontal'?'horizontal':'vertical',currentAcross=axis==='vertical'?state.width:state.height,sourceAcross=axis==='vertical'?Number(style.width):Number(style.height),scale=sourceAcross>0?currentAcross/sourceAcross:1;
+      candidate={objectType:type,profileAxis:axis,profileBands:style.profileBands.map(band=>({...band,offset:Number(band.offset)*scale}))};
+    }else if(type==='comb'){
+      candidate={objectType:type,combDirection:['vertical','horizontal','both'].includes(style.combDirection)?style.combDirection:'vertical',combStart:Number(style.combStart)||0,combEnd:Number(style.combEnd)||0,combPitch:Number(style.combPitch)||12,combCutter:style.combCutter||'round',combCutWidth:Number(style.combCutWidth)||3,combCutDepth:Number(style.combCutDepth)||2,combBeforeStep:style.combBeforeStep===true,combAfterStep:style.combAfterStep===true};
+      const sizes=candidate.combDirection==='vertical'?[state.width]:candidate.combDirection==='horizontal'?[state.height]:[state.width,state.height];
+      if(sizes.some(size=>candidate.combStart+candidate.combEnd>size)||candidate.combPitch<1)return false;
+    }else return false;
+    const previous={objectType:state.objectType,contours:state.contours,outerCornerRadius:state.outerCornerRadius,profileAxis:state.profileAxis,profileBands:state.profileBands,combDirection:state.combDirection,combStart:state.combStart,combEnd:state.combEnd,combPitch:state.combPitch,combCutter:state.combCutter,combCutWidth:state.combCutWidth,combCutDepth:state.combCutDepth,combBeforeStep:state.combBeforeStep,combAfterStep:state.combAfterStep};
+    Object.assign(state,candidate);
     const issues=geometryIssues();
-    state.contours=previousContours;state.outerCornerRadius=previousRadius;
-    if(issues.length){const message=`Шаблон «${style.name}» не помещается в фасад ${state.width} × ${state.height} мм: ${issues[0]}`;$('footerStatus').textContent=message;alert(message);return;}
-    snapshot();state.contours=candidate;state.outerCornerRadius=candidateRadius;
-    state.selectedContour=0;renderTemplateButtons();drawView();$('footerStatus').textContent=`Стиль «${style.name}» применён`;
+    if(issues.length){Object.assign(state,previous);const message=`Шаблон «${style.name}» нельзя применить: ${issues[0]}`;$('footerStatus').textContent=message;alert(message);return false;}
+    snapshot();
+    if(type==='profile')state.selectedProfileBand=state.profileBands[0]?.id||0;
+    if(type==='facade')state.selectedContour=0;
+    syncInputs();renderProfileBands();renderTemplateButtons();updateObjectTypeView();drawView();
+    $('stylesOverlay').classList.add('hidden');$('footerStatus').textContent=`Шаблон «${style.name}» применён`;
+    return true;
   }
   function saveTemplate() {
     const name=$('styleName').value.trim();
     if(!name){$('footerStatus').textContent='Введите название стиля';$('styleName').focus();return;}
-    stateFromInputs();const style={name:name.slice(0,48),width:state.width,height:state.height,outerCornerRadius:state.outerCornerRadius,contours:JSON.parse(JSON.stringify(state.contours))};
+    stateFromInputs();
+    const style={name:name.slice(0,48),objectType:state.objectType,width:state.width,height:state.height};
+    if(state.objectType==='facade')Object.assign(style,{outerCornerRadius:state.outerCornerRadius,contours:JSON.parse(JSON.stringify(state.contours))});
+    else if(state.objectType==='profile')Object.assign(style,{profileAxis:state.profileAxis,profileBands:JSON.parse(JSON.stringify(state.profileBands))});
+    else Object.assign(style,{combDirection:state.combDirection,combStart:state.combStart,combEnd:state.combEnd,combPitch:state.combPitch,combCutter:state.combCutter,combCutWidth:state.combCutWidth,combCutDepth:state.combCutDepth,combBeforeStep:state.combBeforeStep,combAfterStep:state.combAfterStep});
     try{localStorage.setItem('fasadlab-styles',JSON.stringify([...savedStyles,style]));}
     catch(error){$('footerStatus').textContent=`Не удалось сохранить шаблон: ${error.message}`;alert(`Не удалось сохранить шаблон: ${error.message}`);return;}
-    savedStyles.push(style);$('styleName').value=`Мой стиль ${savedStyles.length+1}`;
-    renderTemplateButtons();$('footerStatus').textContent='Стиль векторов сохранён на этом компьютере';
+    savedStyles.push(style);$('styleName').value=`Мой шаблон ${savedStyles.length+1}`;
+    $('styleTypeFilter').value=state.objectType;renderSavedTemplates();$('footerStatus').textContent='Шаблон изделия сохранён на этом компьютере';
   }
   function deleteTemplate(index) {
     const style=savedStyles[index];if(!style)return;
@@ -1245,11 +1367,12 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     const updated=savedStyles.filter((_,itemIndex)=>itemIndex!==index);
     try{localStorage.setItem('fasadlab-styles',JSON.stringify(updated));}
     catch(error){$('footerStatus').textContent=`Не удалось удалить шаблон: ${error.message}`;alert(`Не удалось удалить шаблон: ${error.message}`);return;}
-    savedStyles=updated;renderTemplateButtons();$('footerStatus').textContent=`Шаблон «${style.name}» удалён`;
+    savedStyles=updated;renderSavedTemplates();$('footerStatus').textContent=`Шаблон «${style.name}» удалён`;
   }
   function addContour() {
     stateFromInputs();
-    const parentId=state.selectedContour||0,parent=parentId===0?{width:state.width,height:state.height}:getContourBounds(parentId);
+    const parentId=Number($('vectorParent').value),parent=parentId===0?{width:state.width,height:state.height}:getContourBounds(parentId);
+    if(!Number.isInteger(parentId)||parentId!==0&&!state.contours.some(contour=>contour.id===parentId)){ $('footerStatus').textContent='Выберите существующий вектор для отступа';return;}
     if(parent.width<4||parent.height<4){$('footerStatus').textContent='Нельзя добавить контур: выбранная область слишком мала';return;}
     const requestedOffset=Number($('quickVectorOffset').value),offset=Number.isFinite(requestedOffset)&&requestedOffset>0?requestedOffset:Math.min(100,Math.floor(Math.min(parent.width,parent.height)/4));
     const candidate={id:nextContourId++,name:`Вектор ${state.contours.length+2}`,parentId,shape:'rect',direction:'in',offset,corner:0,cutter:'none',diameter:6,depth:3},previous=state.contours;
@@ -1263,23 +1386,44 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   function applyContourSettings() {
     const contour=state.contours.find(item=>item.id===state.selectedContour),isBase=!contour&&state.objectType==='facade';
     if(!contour&&!isBase)return;
-    const offset=Number($('vectorOffset').value),corner=Number($('vectorCorner').value),diameter=Number($('vectorDiameter').value),depth=Number($('vectorDepth').value),parentId=Number($('vectorParent').value);
-    if(!Number.isFinite(diameter)||diameter<=0||!Number.isFinite(depth)||depth<=0||(!isBase&&(!Number.isFinite(offset)||offset<=0||!Number.isFinite(corner)||corner<0||!Number.isInteger(parentId)))){
+    const offset=Number($('vectorOffset').value),corner=Number($('vectorCorner').value),diameter=Number($('vectorDiameter').value),depth=Number($('vectorDepth').value);
+    if(!Number.isFinite(diameter)||diameter<=0||!Number.isFinite(depth)||depth<=0||(!isBase&&(!Number.isFinite(offset)||offset<=0||!Number.isFinite(corner)||corner<0))){
       $('footerStatus').textContent='Проверьте отступ, радиус угла и размеры фрезы';return;
     }
     if(isBase){
       snapshot();state.outerCutter=$('vectorCutter').value;state.outerDiameter=diameter;state.outerDepth=depth;
       renderTemplateButtons();drawView();$('footerStatus').textContent='Настройки фрезы применены к основному контуру фасада';return;
     }
-    snapshot();contour.shape=$('vectorShape').value;contour.direction=$('vectorDirection').value;contour.offset=offset;contour.corner=corner;
-    contour.cutter=$('vectorCutter').value;contour.diameter=diameter;contour.depth=depth;contour.parentId=parentId;
+    const updatedContours=state.contours.map(item=>item.id===contour.id?{
+      ...item,shape:$('vectorShape').value,direction:$('vectorDirection').value,offset,corner,
+      cutter:$('vectorCutter').value,diameter,depth
+    }:item);
+    const affectedIds=new Set([contour.id]);
+    let foundDescendant=true;
+    while(foundDescendant){
+      foundDescendant=false;
+      updatedContours.forEach(item=>{
+        if(affectedIds.has(item.parentId)&&!affectedIds.has(item.id)){affectedIds.add(item.id);foundDescendant=true;}
+      });
+    }
+    const invalidContour=updatedContours.find((item,index)=>{
+      if(!affectedIds.has(item.id))return false;
+      const bounds=getContourBoundsIn(updatedContours,state.width,state.height,item.id);
+      return bounds.width<2||bounds.height<2||bounds.x<0||bounds.y<0||bounds.x+bounds.width>state.width||bounds.y+bounds.height>state.height;
+    });
+    if(invalidContour){
+      const message=`Нельзя применить настройки: ${invalidContour.name} выходит за границы фасада. Измените направление смещения или уменьшите отступ.`;
+      $('footerStatus').textContent=message;alert(message);return;
+    }
+    snapshot();state.contours=updatedContours;
     renderTemplateButtons();drawView();$('footerStatus').textContent=`Настройки применены к ${contour.name}`;
   }
   function toggleTool(tool) {activeTool=tool;pendingPoint=null;document.querySelectorAll('[data-tool]').forEach(button=>button.classList.toggle('active',button.dataset.tool===tool));$('footerStatus').textContent=`Инструмент «${toolName(tool)}»`;}
   document.addEventListener('click',event=>{
+    if(event.target.closest('#openStyles')){openStylesDialog();return;}
+    if(event.target.closest('#closeStyles')||event.target.closest('#closeStylesFooter')){$('stylesOverlay').classList.add('hidden');return;}
     if(event.target.closest('#saveTemplate')){saveTemplate();return;}
     const deleteStyle=event.target.closest('[data-delete-style]');if(deleteStyle){deleteTemplate(Number(deleteStyle.dataset.deleteStyle));return;}
-    if(event.target.closest('#loadTemplates')){$('templatePicker').click();return;}
     const styleButton=event.target.closest('[data-style]');if(styleButton){selectTemplate(styleButton.dataset.style);return;}
     const toolButton=event.target.closest('[data-tool]');if(toolButton){toggleTool(toolButton.dataset.tool);return;}
     const nav=event.target.closest('[data-nav]');
@@ -1291,10 +1435,19 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       document.querySelectorAll('.nav [data-nav]').forEach(item=>item.classList.toggle('active',item===nav));return;
     }
   });
+  $('styleTypeFilter').addEventListener('change',renderSavedTemplates);
+  $('stylesOverlay').addEventListener('click',event=>{if(event.target===$('stylesOverlay'))$('stylesOverlay').classList.add('hidden');});
   document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>switchView(button.dataset.view)));
   $('toggleLayers').addEventListener('click',()=>{
     const collapsed=$('layerContent').classList.toggle('collapsed');
     $('toggleLayers').textContent=collapsed?'Показать':'Скрыть';$('toggleLayers').setAttribute('aria-expanded',String(!collapsed));
+  });
+  [['toggleVectorSettings','vectorSettingsContent'],['toggleTypeSettings','typeSettingsContent']].forEach(([buttonId,contentId])=>{
+    $(buttonId).addEventListener('click',()=>{
+      const collapsed=$(contentId).classList.toggle('hidden');
+      $(buttonId).textContent=collapsed?'Показать':'Скрыть';
+      $(buttonId).setAttribute('aria-expanded',String(!collapsed));
+    });
   });
   $('addOffsetVector').addEventListener('click',addContour);
   $('profileAxis').addEventListener('change',()=>{
@@ -1305,40 +1458,52 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   });
   $('profileBands').addEventListener('focusin',()=>{stateFromInputs();snapshot();});
   $('profileBands').addEventListener('input',render);
+  $('profileBands').addEventListener('input',()=>updateProfileCutterPreview());
   $('profileBands').addEventListener('change',event=>{
     if(event.target.matches('[data-band-cutter]')){
       const tool=customCutters.find(item=>`custom:${item.id}`===event.target.value);
       if(tool)event.target.closest('.profile-band-row').querySelector('[data-band-width]').value=tool.width;
     }
     render();
+    updateProfileCutterPreview();
   });
   $('profileBands').addEventListener('click',event=>{
     const button=event.target.closest('[data-remove-band]');if(!button)return;
-    stateFromInputs();snapshot();state.profileBands=state.profileBands.filter(band=>band.id!==Number(button.dataset.removeBand));
+    stateFromInputs();snapshot();
+    const removedIndex=state.profileBands.findIndex(band=>band.id===Number(button.dataset.removeBand));
+    state.profileBands=state.profileBands.filter(band=>band.id!==Number(button.dataset.removeBand));
+    if(state.selectedProfileBand===Number(button.dataset.removeBand))state.selectedProfileBand=state.profileBands[Math.min(removedIndex,state.profileBands.length-1)]?.id||0;
     renderProfileBands();drawView();$('footerStatus').textContent='Вектор профиля удалён';
   });
   $('addProfileBand').addEventListener('click',()=>{
-    stateFromInputs();snapshot();
-    const previous=state.profileBands.at(-1),vertical=state.profileAxis==='vertical';
-    state.profileBands.push({id:Math.max(0,...state.profileBands.map(band=>band.id))+1,side:vertical?'left':'top',offset:previous?previous.offset+previous.cutterWidth+5:5,cutter:'round',cutterWidth:6,depth:4.4});
+    stateFromInputs();
+    const offset=Number($('newProfileBandOffset').value),vertical=state.profileAxis==='vertical',limit=vertical?state.width:state.height;
+    if(!Number.isFinite(offset)||offset<0||offset>limit){
+      $('footerStatus').textContent=`Отступ нового вектора должен быть от 0 до ${limit} мм`;
+      return;
+    }
+    snapshot();
+    const band={id:Math.max(0,...state.profileBands.map(band=>band.id))+1,side:vertical?'left':'top',offset,cutter:'round',cutterWidth:6,depth:4.4};
+    state.profileBands.push(band);state.selectedProfileBand=band.id;
     renderProfileBands();drawView();$('footerStatus').textContent='Вектор профиля добавлен';
   });
-  $('addCustomCutter').addEventListener('click',()=>{
+  $('selectedProfileBand').addEventListener('change',event=>{
+    stateFromInputs();state.selectedProfileBand=Number(event.target.value);renderProfileBands();drawView();
+  });
+  $('saveCustomCutter').addEventListener('click',()=>{
+    if(editingCutterId===null){$('footerStatus').textContent='Выберите импортированную фрезу для редактирования';return;}
     const name=$('customCutterName').value.trim(),shape=$('customCutterShape').value,width=Number($('customCutterWidth').value);
     if(!name||!builtinCutterShapes.includes(shape)||!Number.isFinite(width)||width<=0){
       $('footerStatus').textContent='Укажите название, форму и положительную ширину фрезы';return;
     }
-    if(editingCutterId!==null){
-      const cutter=customCutters.find(item=>item.id===editingCutterId);
-      if(!cutter){editingCutterId=null;$('footerStatus').textContent='Редактируемая фреза больше не найдена';return;}
-      Object.assign(cutter,{name,shape,width});editingCutterId=null;
-      $('addCustomCutter').textContent='＋ Добавить фрезу';
-    }else{
-      const id=Math.max(0,...customCutters.map(item=>item.id))+1;
-      customCutters.push({id,name,shape,width});
-    }
+    const cutter=customCutters.find(item=>item.id===editingCutterId);
+    if(!cutter){editingCutterId=null;$('customCutterEditor').classList.add('hidden');$('footerStatus').textContent='Редактируемая фреза больше не найдена';return;}
+    Object.assign(cutter,{name,shape,width});editingCutterId=null;$('customCutterEditor').classList.add('hidden');
     persistCustomCutters();renderCutterOptions();renderProfileBands();
-    $('customCutterName').value='';$('footerStatus').textContent=`Фреза «${name}» сохранена в локальном каталоге`;
+    $('footerStatus').textContent=`Изменения фрезы «${name}» сохранены`;
+  });
+  $('cancelCutterEdit').addEventListener('click',()=>{
+    editingCutterId=null;$('customCutterEditor').classList.add('hidden');$('footerStatus').textContent='Редактирование фрезы отменено';
   });
   $('importArtcamCutters').addEventListener('click',()=>$('artcamToolPicker').click());
   $('artcamToolPicker').addEventListener('change',async event=>{
@@ -1392,12 +1557,12 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       const item=customCutters.find(cutter=>cutter.id===Number(editButton.dataset.editCutter));
       if(!item)return;
       editingCutterId=item.id;$('customCutterName').value=item.name;$('customCutterShape').value=item.shape;$('customCutterWidth').value=item.width;
-      $('addCustomCutter').textContent='Сохранить изменения';$('footerStatus').textContent=`Редактирование фрезы «${item.name}»`;return;
+      $('customCutterEditor').classList.remove('hidden');$('footerStatus').textContent=`Редактирование фрезы «${item.name}»`;return;
     }
     const button=event.target.closest('[data-delete-cutter]');if(!button)return;
     stateFromInputs();const id=Number(button.dataset.deleteCutter),value=`custom:${id}`,tool=customCutters.find(item=>item.id===id);
     if(!tool)return;
-    if(editingCutterId===id){editingCutterId=null;$('customCutterName').value='';$('addCustomCutter').textContent='＋ Добавить фрезу';}
+    if(editingCutterId===id){editingCutterId=null;$('customCutterEditor').classList.add('hidden');}
     state.contours.forEach(contour=>{if(contour.cutter===value)contour.cutter='round';});
     state.profileBands.forEach(band=>{if(band.cutter===value)band.cutter='round';});
     if(state.combCutter===value)state.combCutter='round';
@@ -1412,6 +1577,8 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       render();
     });
   });
+  $('vectorCutter').addEventListener('change',renderVectorCutterPreview);
+  ['vectorDiameter','vectorDepth'].forEach(id=>$(id).addEventListener('input',renderVectorCutterPreview));
   $('toggleInfo').addEventListener('click',()=>setObjectInfoVisible($('objectInfo').classList.contains('hidden')));
   $('applyVectorSettings').addEventListener('click',applyContourSettings);
   $('vectorShape').addEventListener('change',()=>{if($('vectorShape').value!=='rect'&&Number($('vectorCorner').value)===0)$('vectorCorner').value='12';});
@@ -1419,9 +1586,10 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   $('canvas').addEventListener('click',handleCanvasClick);
   $('drawing').addEventListener('wheel',event=>{event.preventDefault();state.zoom=Math.max(40,Math.min(250,state.zoom+(event.deltaY<0?10:-10)));$('zoomValue').textContent=`${state.zoom}%`;applyCanvasTransform();},{passive:false});
   $('canvas').addEventListener('pointerdown',event=>{
-    if(event.button!==0||activeView==='profile'||activeView==='2d'&&activeTool!=='select')return;
+    if(event.button!==0||activeView==='2d'&&activeTool!=='select'||event.target.closest('button,input,select'))return;
+    event.preventDefault();
     draggingCanvas={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,lastX:event.clientX,lastY:event.clientY,moved:false};
-    $('canvas').setPointerCapture(event.pointerId);$('canvas').classList.add('grabbing');
+    $('canvas').setPointerCapture(event.pointerId);$('canvas').classList.add('grabbing');document.body.classList.add('is-canvas-dragging');
   });
   $('canvas').addEventListener('pointermove',event=>{
     if(!draggingCanvas||draggingCanvas.pointerId!==event.pointerId)return;
@@ -1432,38 +1600,57 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   });
   const endCanvasPan=event=>{
     if(!draggingCanvas||draggingCanvas.pointerId!==event.pointerId)return;
-    suppressCanvasClick=draggingCanvas.moved;draggingCanvas=null;$('canvas').classList.remove('grabbing');
+    suppressCanvasClick=draggingCanvas.moved;draggingCanvas=null;$('canvas').classList.remove('grabbing');document.body.classList.remove('is-canvas-dragging');
   };
   $('canvas').addEventListener('pointerup',endCanvasPan);$('canvas').addEventListener('pointercancel',endCanvasPan);
   document.querySelectorAll('input:not([type=file]),select').forEach(input=>{
     input.addEventListener('focus',()=>{stateFromInputs();snapshot();},{once:false});
     input.addEventListener('input',()=>{
-      if(input.id.startsWith('vector'))return;
+      if(input.type==='checkbox'||input.id.startsWith('vector')||input.id==='selectedContour'||input.id==='selectedProfileBand')return;
       if(input.dataset.layer){state.layers[input.dataset.layer]=input.checked;}
       if(input.id==='finishDiameter'||input.id==='finishRpm')$('toolPreset').value='manual';
       render();
     });
+    input.addEventListener('change',()=>{
+      if(input.type!=='checkbox')return;
+      if(input.dataset.layer){state.layers[input.dataset.layer]=input.checked;drawView();return;}
+      render();
+    });
   });
-  document.querySelectorAll('[data-layer]').forEach(input=>input.addEventListener('change',()=>{state.layers[input.dataset.layer]=input.checked;drawView();}));
   $('saveProject').addEventListener('click',saveProject);
   $('openProject').addEventListener('click',()=>$('projectPicker').click());
   $('projectPicker').addEventListener('change',async event=>{const file=event.target.files[0];if(!file)return;try{applyProject(JSON.parse(await file.text()));$('footerStatus').textContent='Проект загружен';}catch(error){alert(`Не удалось открыть проект: ${error.message}`);}$('projectPicker').value='';});
   $('newProject').addEventListener('click',createDesign);
   $('selectedContour').addEventListener('change',event=>{state.selectedContour=Number(event.target.value);renderTemplateButtons();drawView();});
+  $('facadeContourList').addEventListener('click',event=>{
+    const deleteButton=event.target.closest('[data-delete-contour]');
+    if(deleteButton){
+      const id=Number(deleteButton.dataset.deleteContour),contour=state.contours.find(item=>item.id===id);
+      if(!contour)return;
+      const removed=new Set([id]);
+      let changed=true;
+      while(changed){changed=false;state.contours.forEach(item=>{if(removed.has(item.parentId)&&!removed.has(item.id)){removed.add(item.id);changed=true;}});}
+      snapshot();
+      state.contours=state.contours.filter(item=>!removed.has(item.id));
+      if(removed.has(state.selectedContour))state.selectedContour=contour.parentId;
+      renderTemplateButtons();drawView();
+      $('footerStatus').textContent=removed.size>1?'Вектор и вложенные в него контуры удалены':'Вектор удалён';
+      return;
+    }
+    const selectButton=event.target.closest('[data-select-contour]');
+    if(selectButton){state.selectedContour=Number(selectButton.dataset.selectContour);renderTemplateButtons();drawView();}
+  });
   $('designList').addEventListener('click',event=>{const deleteButton=event.target.closest('[data-delete-design]');if(deleteButton){deleteDesign(deleteButton.dataset.deleteDesign);return;}const button=event.target.closest('[data-design-id]');if(button)activateDesign(button.dataset.designId);});
+  $('cutterLibraryButton').addEventListener('click',()=>$('cutterLibraryOverlay').classList.remove('hidden'));
+  const closeCutterLibrary=()=> $('cutterLibraryOverlay').classList.add('hidden');
+  $('closeCutterLibrary').addEventListener('click',closeCutterLibrary);
+  $('closeCutterLibraryFooter').addEventListener('click',closeCutterLibrary);
+  $('cutterLibraryOverlay').addEventListener('click',event=>{if(event.target===$('cutterLibraryOverlay'))closeCutterLibrary();});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape')closeCutterLibrary();});
   $('aboutButton').addEventListener('click',()=>$('aboutOverlay').classList.remove('hidden'));
   $('closeAbout').addEventListener('click',()=>$('aboutOverlay').classList.add('hidden'));
   $('aboutOk').addEventListener('click',()=>$('aboutOverlay').classList.add('hidden'));
   $('aboutOverlay').addEventListener('click',event=>{if(event.target===$('aboutOverlay'))$('aboutOverlay').classList.add('hidden');});
-  $('loginForm').addEventListener('submit',async event=>{
-    event.preventDefault();$('loginError').textContent='';
-    try{
-      if(typeof window.fasadLab?.unlock!=='function')throw new Error('Вход доступен только в приложении ФасадЛаб для Windows.');
-      const accepted=await window.fasadLab.unlock($('loginPassword').value);
-      if(accepted){$('loginOverlay').classList.add('hidden');$('loginPassword').value='';$('footerStatus').textContent='Вход выполнен';}
-      else{$('loginError').textContent='Неверный пароль';$('loginPassword').select();}
-    }catch(error){$('loginError').textContent=`Не удалось проверить пароль: ${error.message}`;}
-  });
   $('exportFile').addEventListener('click',exportSvg);
   $('exportCuttingPanel').addEventListener('click',exportCuttingDxf);
   $('exportFooter').addEventListener('click',()=>activeView==='nest'?exportCuttingDxf():exportDxf());
@@ -1473,17 +1660,6 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     if(preset){state.finishDiameter=preset.diameter;state.finishRpm=preset.maxRpm;}
     syncInputs();drawView();
     $('footerStatus').textContent=preset?`Справочная фреза 5005: D${preset.diameter} мм · S${preset.length} мм · максимум ${preset.maxRpm} об/мин`:'Свободная настройка фрезы';
-  });
-  $('deleteVector').addEventListener('click',()=>{
-    if(state.selectedContour!==0){
-      const removed=new Set([state.selectedContour]);
-      let changed=true;
-      while(changed){changed=false;state.contours.forEach(contour=>{if(removed.has(contour.parentId)&&!removed.has(contour.id)){removed.add(contour.id);changed=true;}});}
-      snapshot();state.contours=state.contours.filter(contour=>!removed.has(contour.id));state.selectedContour=0;renderTemplateButtons();drawView();$('footerStatus').textContent='Выбранный вектор и вложенные в него контуры удалены';return;
-    }
-    if(!state.customVectors.length){$('footerStatus').textContent='Выберите внутренний вектор, чтобы удалить его';return;}
-    snapshot();const index=state.selectedVector>=0?state.selectedVector:state.customVectors.length-1;
-    state.customVectors.splice(index,1);state.selectedVector=-1;drawView();$('footerStatus').textContent='Вектор удалён';
   });
   $('undo').addEventListener('click',()=>{if(!undoStack.length)return;redoStack.push(JSON.stringify(state));state=JSON.parse(undoStack.pop());syncInputs();renderProfileBands();renderCuttingList();renderTemplateButtons();drawView();});
   $('redo').addEventListener('click',()=>{if(!redoStack.length)return;undoStack.push(JSON.stringify(state));state=JSON.parse(redoStack.pop());syncInputs();renderProfileBands();renderCuttingList();renderTemplateButtons();drawView();});
@@ -1638,11 +1814,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
         const across=vertical?state.width:state.height,coordinate=band.side==='right'||band.side==='bottom'?across-band.offset:band.offset;
         paths.push(vertical?`M ${coordinate} 0 V ${state.height}`:`M 0 ${coordinate} H ${state.width}`);
       });
-    }else if(state.objectType==='comb'){
-      const lead=state.combCutWidth/2;
-      if(state.combDirection!=='horizontal')combPositions(state.width).forEach(x=>paths.push(`M ${x} ${-lead} V ${state.height+lead}`));
-      if(state.combDirection!=='vertical')combPositions(state.height).forEach(y=>paths.push(`M ${-lead} ${y} H ${state.width+lead}`));
-    }
+    }else if(state.objectType==='comb')return combOperationPaths(state.width,state.height).map(pass=>pass.d);
     return paths;
   }
   if(savedDesigns.length){
