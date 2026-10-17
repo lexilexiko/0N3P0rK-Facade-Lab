@@ -198,6 +198,22 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 .sheet-tabs{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}.sheet-tabs button{padding:5px 9px;font-size:12px;border:1px solid #b9b4a8;border-radius:6px;background:#f4f1e9;color:#2f383d;cursor:pointer}.sheet-tabs button.active{background:#2f383d;color:#fff;border-color:#2f383d}
 .sheet-block{border:1px solid #b9b4a8;border-radius:6px;margin:6px 0;background:#f4f1e9;overflow:hidden}.sheet-block.active{border-color:#2f383d}.sheet-block>button{display:flex;justify-content:space-between;width:100%;padding:6px 9px;border:0;background:transparent;font-weight:650;font-size:13px;color:#2f383d;cursor:pointer}.sheet-block.active>button{background:#2f383d;color:#fff}.sheet-block>button span{font-weight:400;font-size:12px}.sheet-block ul{list-style:none;margin:0;padding:4px 9px 6px}.sheet-block li{display:flex;align-items:center;gap:8px;font-size:12px;padding:2px 0}.sheet-block li>span{flex:1}.piece-remove{width:22px;height:22px;padding:0;border:1px solid #c9b3ac;border-radius:5px;background:#f6ece8;color:#8c4e45;cursor:pointer;line-height:1}.piece-remove:hover{background:#eee2dc}
 .panel-fold{width:84px;height:28px;padding:4px 10px;font-size:13px;flex:none}.panel-collapsed>*:not(.panel-title){display:none!important}
+.cutter-select-hidden{display:none!important}
+.cutter-picker{position:relative;margin-top:2px}
+.cutter-picker-button{width:100%;display:grid;grid-template-columns:minmax(0,1fr) 14px;align-items:center;gap:8px;padding:7px 10px;min-height:34px;text-align:left;color:inherit;background:#fbfaf6;border:1px solid var(--line);border-radius:7px;cursor:pointer}
+.cutter-picker-button:hover:not(:disabled){border-color:#8d887e}
+.cutter-picker-button:disabled{opacity:.55;cursor:default}
+.cutter-thumb{display:block;border-radius:5px;background:#e8e3d9;overflow:hidden}
+.cutter-thumb svg{display:block;width:64px;height:44px}
+.cutter-picker-name,.cutter-option-name{font-size:12px;line-height:1.25;overflow-wrap:anywhere}
+.cutter-picker-caret{color:var(--muted);font-size:12px}
+#cutterPickerPopup{position:fixed;z-index:2000;overflow:auto;padding:4px;background:#fbfaf6;border:1px solid #8d887e;border-radius:9px;box-shadow:0 12px 32px rgba(0,0,0,.28)}
+.cutter-popup-search{width:100%;margin-bottom:4px;box-sizing:border-box}
+.cutter-option{display:grid;grid-template-columns:64px minmax(0,1fr);align-items:center;gap:8px;width:100%;padding:3px 6px;text-align:left;color:inherit;background:transparent;border:0;border-radius:6px;cursor:pointer}
+.cutter-option:hover,.cutter-option:focus-visible{background:#e8e3d9;outline:none}
+.cutter-option.active{background:#d9e6df;color:#1f2a27}
+.cutter-option,.cutter-picker-button{font-weight:400}
+.cutter-option-group{padding:6px 6px 2px;font-size:10px;font-weight:650;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -335,6 +351,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
         <label class="check-row"><input id="vBack" type="checkbox" checked> Четверть с тыльной стороны (под стекло)</label>
         <label class="check-row"><input id="vThrough" type="checkbox" checked> Вырезать окно насквозь</label>
         <div class="field"><label for="vEdgeCutter">Профиль кромки окна (лицевая сторона)</label><select id="vEdgeCutter"><option value="none">Без профиля</option></select></div>
+        <div id="vEdgeCutterPreview" class="cutter-preview hidden" aria-live="polite"></div>
         <div class="fields" id="vEdgeFields">
           <div class="field"><label for="vEdgeDia">Ширина фрезы, мм</label><input id="vEdgeDia" type="number" min="1" step="0.5" value="6"></div>
           <div class="field"><label for="vEdgeDepth">Глубина, мм</label><input id="vEdgeDepth" type="number" min="0.1" step="0.1" value="2"></div>
@@ -409,6 +426,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
           <label class="check-row"><input id="combBeforeStep" type="checkbox">Дополнительный шаг до фасада</label>
           <label class="check-row"><input id="combAfterStep" type="checkbox">Дополнительный шаг после фасада</label>
           <div class="field"><label for="combCutter">Тип фрезы</label><select id="combCutter"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option></select></div>
+          <div id="combCutterPreview" class="cutter-preview" aria-live="polite"></div>
           <div class="fields"><div class="field"><label for="combCutWidth">Диаметр фрезы, мм</label><input id="combCutWidth" type="number" min="1" value="3"></div><div class="field"><label for="combCutDepth">Глубина, мм</label><input id="combCutDepth" type="number" min="0.1" value="2"></div></div>
           <div class="notice">Основные проходы идут с заданным шагом от начального отступа до последней позиции внутри конечного отступа. Дополнительные проходы продолжают ряд ещё на один шаг до первого и после последнего прохода.</div>
         </div>
@@ -437,7 +455,242 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 <div id="cutterLibraryOverlay" class="modal-overlay hidden"><section class="modal-card cutter-library-card" role="dialog" aria-modal="true" aria-labelledby="cutterLibraryTitle"><button class="modal-close" id="closeCutterLibrary" aria-label="Закрыть">×</button><div class="cutter-library-heading"><div><strong id="cutterLibraryTitle">Библиотека фрез</strong><p>Из .TDB читается реальный профиль режущей кромки: узорные, фасонные и конические фрезы показываются своей формой в виде сверху, в разрезе и в карточке. Профили по параметрам (Ogee, Roman Ogee, Roundover) считаются точно; приблизительные помечены «≈».</p></div><div class="cutter-card-actions"><button id="importArtcamCutters" type="button">Импорт ArtCAM .TDB</button><button id="importDxfCutter" type="button" title="Открытый вектор — половина профиля фрезы, как в ArtCAM Custom Form">Фреза из профиля DXF</button></div></div><div id="customCutterEditor" class="cutter-library-form hidden"><strong>Редактирование импортированной фрезы</strong><div class="field"><label for="customCutterName">Название</label><input id="customCutterName" maxlength="40"></div><div class="fields"><div class="field"><label for="customCutterShape">Тип профиля</label><select id="customCutterShape"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="roundover">Радиус кромки (скругление)</option><option value="wave">Волновая / другая</option><option value="form">Профиль из ArtCAM</option></select></div><div class="field"><label for="customCutterWidth">Диаметр / ширина, мм</label><input id="customCutterWidth" type="number" min="0.1" step="0.1"></div></div><div class="cutter-card-actions"><button id="saveCustomCutter" class="primary" type="button">Сохранить изменения</button><button id="cancelCutterEdit" type="button">Отмена</button></div></div><h3 class="cutter-catalog-title">Стандартные и импортированные фрезы</h3><div class="field"><input id="cutterSearch" type="search" placeholder="Поиск по названию или группе" aria-label="Поиск фрезы"><div class="cutter-card-meta" id="cutterCount"></div></div><div id="customCutterList" class="cutter-catalog"></div><div class="notice">Профиль узорных фрез (Custom Form) читается из .TDB точно: линии и дуги в долях диаметра. Для Ogee, Roman Ogee, Roundover и Veining контур считается по параметрам из файла (диаметр, радиус дуги, внутренний диаметр, ступень) по определению ArtCAM; для Raised Panel смысл параметров в файле не раскрыт, поэтому форма приблизительная (помечена «≈»). Незнакомые типы фрез и другие версии базы не отбрасываются: фреза добавляется по названию и размеру (тоже с «≈»). Параметры резания не импортируются; проверьте инструмент и обработку в ArtCAM.</div><button class="primary" id="closeCutterLibraryFooter">Готово</button></section></div>
 <div id="real3DOverlay" class="modal-overlay hidden"><section class="real3d-dialog" role="dialog" aria-modal="true" aria-labelledby="real3DTitle"><div class="real3d-head"><div><strong id="real3DTitle">3D-модель обработки фасада</strong><div id="real3DInfo">Поверхность построена по выбранным фрезам и глубинам.</div></div><div class="real3d-actions"><button id="real3DReset" type="button">Сбросить вид</button><button id="closeReal3D" type="button" aria-label="Закрыть">× Закрыть</button></div></div><canvas id="real3DCanvas" aria-label="Вращаемая трёхмерная модель фрезерованного фасада"></canvas><div class="real3d-foot"><span>Перетаскивайте мышью — вращение</span><span>Колесо — масштаб</span><span id="real3DStatus">Подготовка геометрии…</span></div></section></div>
 <div id="aboutOverlay" class="modal-overlay hidden"><section class="modal-card"><button class="modal-close" id="closeAbout" aria-label="Закрыть">×</button><div class="brand-name"><span>Фасад</span>Лаб</div><p>Редактор фасадов, профилей и карт раскроя.</p><div class="about-credit"><b>Программист</b><span>L3xik0</span><b>Дополнительный агент</b><span>Евгений Жуков</span><b>Версия</b><span>0.7.1</span></div><button class="primary" id="aboutOk">Закрыть</button></section></div>
-<script src="node_modules/dxf-parser/dist/dxf-parser.js"></script>
+<script>
+// Встроенная читалка ASCII DXF (замена внешнему dxf-parser, который в веб-версии недоступен).
+// Интерфейс совместим: new DxfParser().parseSync(text) -> { entities, blocks }.
+// Поддержано: LINE, LWPOLYLINE, POLYLINE+VERTEX (с bulge), CIRCLE, ARC, ELLIPSE, SPLINE (B-сплайн/NURBS),
+// POINT, SOLID/TRACE, 3DFACE, INSERT (с массивами), DIMENSION (ссылка на блок), блоки, зеркальные OCS (extrusion -1).
+(function () {
+  if (typeof window.DxfParser === 'function') return;
+  var DEG = Math.PI / 180;
+
+  function tokenize(text) {
+    var source = String(text).replace(/^\uFEFF/, '');
+    if (/^AutoCAD Binary DXF/.test(source)) throw new Error('Бинарный DXF не поддерживается. Сохраните чертёж как ASCII DXF.');
+    var lines = source.split(/\r\n|\n|\r/), pairs = [];
+    for (var i = 0; i + 1 < lines.length; i += 2) {
+      var raw = lines[i].trim();
+      if (raw === '') {
+        var rest = lines.slice(i).join('').trim();
+        if (rest === '') break;
+        throw new Error('Нарушена структура DXF около строки ' + (i + 1) + '.');
+      }
+      var code = parseInt(raw, 10);
+      if (!isFinite(code) || String(code) !== raw.replace(/^\+/, '').replace(/^0+(?=\d)/, '')) throw new Error('Нарушена структура DXF около строки ' + (i + 1) + '.');
+      pairs.push([code, lines[i + 1].trim()]);
+    }
+    return pairs;
+  }
+
+  function sampleBSpline(degree, knots, control, weights) {
+    var n = control.length;
+    if (!(degree >= 1) || n < degree + 1 || knots.length !== n + degree + 1) return null;
+    var t0 = knots[degree], t1 = knots[n];
+    if (!(t1 > t0)) return null;
+    var samples = Math.min(4000, Math.max(32, n * 12)), points = [];
+    for (var s = 0; s <= samples; s++) {
+      var t = t0 + (t1 - t0) * s / samples, k = degree;
+      while (k < n - 1 && t >= knots[k + 1]) k++;
+      var d = [];
+      for (var j = 0; j <= degree; j++) {
+        var idx = k - degree + j, w = weights ? weights[idx] : 1;
+        d.push([control[idx].x * w, control[idx].y * w, w]);
+      }
+      for (var r = 1; r <= degree; r++) {
+        for (var jj = degree; jj >= r; jj--) {
+          var i2 = k - degree + jj, den = knots[i2 + degree - r + 1] - knots[i2], a = den === 0 ? 0 : (t - knots[i2]) / den;
+          for (var c = 0; c < 3; c++) d[jj][c] = (1 - a) * d[jj - 1][c] + a * d[jj][c];
+        }
+      }
+      if (!d[degree][2]) return null;
+      points.push({ x: d[degree][0] / d[degree][2], y: d[degree][1] / d[degree][2] });
+    }
+    return points;
+  }
+
+  function parseEntityBody(type, body) {
+    var e = { type: type };
+    var f = function (v) { return parseFloat(v); };
+    var current = null, extrusionZ = 1;
+    for (var n = 0; n < body.length; n++) if (body[n][0] === 230) extrusionZ = f(body[n][1]);
+    var mirror = extrusionZ < 0;
+    var mx = function (x) { return mirror ? -x : x; };
+
+    if (type === 'LINE') {
+      var p1 = { x: 0, y: 0, z: 0 }, p2 = { x: 0, y: 0, z: 0 };
+      body.forEach(function (g) {
+        var c = g[0], v = f(g[1]);
+        if (c === 10) p1.x = v; else if (c === 20) p1.y = v; else if (c === 30) p1.z = v;
+        else if (c === 11) p2.x = v; else if (c === 21) p2.y = v; else if (c === 31) p2.z = v;
+      });
+      e.vertices = [p1, p2];
+    } else if (type === 'LWPOLYLINE') {
+      e.vertices = []; e.shape = false;
+      body.forEach(function (g) {
+        var c = g[0], v = f(g[1]);
+        if (c === 10) { current = { x: mx(v), y: 0, bulge: 0 }; e.vertices.push(current); }
+        else if (c === 20 && current) current.y = v;
+        else if (c === 42 && current) current.bulge = mirror ? -v : v;
+        else if (c === 70) e.shape = (parseInt(g[1], 10) & 1) === 1;
+      });
+    } else if (type === 'POLYLINE') {
+      e.vertices = []; e.shape = false; e.mirror = mirror;
+      body.forEach(function (g) { if (g[0] === 70) { var flags = parseInt(g[1], 10); e.shape = (flags & 1) === 1; e.flags = flags; } });
+    } else if (type === 'VERTEX') {
+      var vertex = { x: 0, y: 0, bulge: 0, flags: 0 };
+      body.forEach(function (g) {
+        var c = g[0], v = f(g[1]);
+        if (c === 10) vertex.x = v; else if (c === 20) vertex.y = v; else if (c === 30) vertex.z = v;
+        else if (c === 42) vertex.bulge = v; else if (c === 70) vertex.flags = parseInt(g[1], 10);
+      });
+      return vertex;
+    } else if (type === 'CIRCLE' || type === 'ARC') {
+      e.center = { x: 0, y: 0, z: 0 }; e.radius = 0; var start = 0, end = 360;
+      body.forEach(function (g) {
+        var c = g[0], v = f(g[1]);
+        if (c === 10) e.center.x = v; else if (c === 20) e.center.y = v; else if (c === 30) e.center.z = v;
+        else if (c === 40) e.radius = v; else if (c === 50) start = v; else if (c === 51) end = v;
+      });
+      e.center.x = mx(e.center.x);
+      if (type === 'ARC') {
+        e.startAngle = start * DEG; e.endAngle = end * DEG;
+        if (mirror) { var s2 = Math.PI - e.endAngle, e2 = Math.PI - e.startAngle; e.startAngle = s2; e.endAngle = e2; }
+      }
+    } else if (type === 'ELLIPSE') {
+      e.center = { x: 0, y: 0, z: 0 }; e.majorAxisEndPoint = { x: 1, y: 0, z: 0 }; e.axisRatio = 1; e.startAngle = 0; e.endAngle = Math.PI * 2;
+      body.forEach(function (g) {
+        var c = g[0], v = f(g[1]);
+        if (c === 10) e.center.x = v; else if (c === 20) e.center.y = v; else if (c === 30) e.center.z = v;
+        else if (c === 11) e.majorAxisEndPoint.x = v; else if (c === 21) e.majorAxisEndPoint.y = v; else if (c === 31) e.majorAxisEndPoint.z = v;
+        else if (c === 40) e.axisRatio = v; else if (c === 41) e.startAngle = v; else if (c === 42) e.endAngle = v;
+      });
+    } else if (type === 'SPLINE') {
+      e.controlPoints = []; e.fitPoints = []; e.knotValues = []; e.weights = []; e.degreeOfSplineCurve = 3; e.closed = false;
+      var cp = null, fp = null;
+      body.forEach(function (g) {
+        var c = g[0], v = f(g[1]);
+        if (c === 70) e.closed = (parseInt(g[1], 10) & 1) === 1;
+        else if (c === 71) e.degreeOfSplineCurve = parseInt(g[1], 10);
+        else if (c === 40) e.knotValues.push(v);
+        else if (c === 41) e.weights.push(v);
+        else if (c === 10) { cp = { x: v, y: 0, z: 0 }; e.controlPoints.push(cp); }
+        else if (c === 20 && cp) cp.y = v;
+        else if (c === 30 && cp) cp.z = v;
+        else if (c === 11) { fp = { x: v, y: 0, z: 0 }; e.fitPoints.push(fp); }
+        else if (c === 21 && fp) fp.y = v;
+        else if (c === 31 && fp) fp.z = v;
+      });
+      if (e.fitPoints.length < 2 && e.controlPoints.length >= 2) {
+        var weights = e.weights.length === e.controlPoints.length ? e.weights : null;
+        var sampled = sampleBSpline(e.degreeOfSplineCurve, e.knotValues, e.controlPoints, weights);
+        if (sampled && sampled.length >= 2) e.fitPoints = sampled;
+      }
+    } else if (type === 'POINT') {
+      e.position = { x: 0, y: 0, z: 0 };
+      body.forEach(function (g) { var c = g[0], v = f(g[1]); if (c === 10) e.position.x = v; else if (c === 20) e.position.y = v; else if (c === 30) e.position.z = v; });
+    } else if (type === 'SOLID' || type === 'TRACE' || type === '3DFACE') {
+      var pts = [{ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }];
+      body.forEach(function (g) {
+        var c = g[0], v = f(g[1]);
+        if (c >= 10 && c <= 13) pts[c - 10].x = v; else if (c >= 20 && c <= 23) pts[c - 20].y = v;
+      });
+      if (type === '3DFACE') e.vertices = pts; else { e.type = 'SOLID'; e.points = pts; }
+    } else if (type === 'INSERT') {
+      e.position = { x: 0, y: 0, z: 0 }; e.xScale = 1; e.yScale = 1; e.zScale = 1; e.rotation = 0; e.columnCount = 1; e.rowCount = 1; e.columnSpacing = 0; e.rowSpacing = 0;
+      body.forEach(function (g) {
+        var c = g[0];
+        if (c === 2) e.name = g[1];
+        else { var v = f(g[1]);
+          if (c === 10) e.position.x = v; else if (c === 20) e.position.y = v; else if (c === 30) e.position.z = v;
+          else if (c === 41) e.xScale = v; else if (c === 42) e.yScale = v; else if (c === 43) e.zScale = v;
+          else if (c === 50) e.rotation = v; else if (c === 70) e.columnCount = parseInt(g[1], 10); else if (c === 71) e.rowCount = parseInt(g[1], 10);
+          else if (c === 44) e.columnSpacing = v; else if (c === 45) e.rowSpacing = v; }
+      });
+    } else if (type === 'DIMENSION') {
+      e.anchorPoint = { x: 0, y: 0, z: 0 };
+      body.forEach(function (g) {
+        var c = g[0];
+        if (c === 2) e.block = g[1];
+        else { var v = f(g[1]); if (c === 10) e.anchorPoint.x = v; else if (c === 20) e.anchorPoint.y = v; }
+      });
+    } else if (type === 'BLOCK') {
+      e.name = ''; e.position = { x: 0, y: 0, z: 0 };
+      body.forEach(function (g) {
+        var c = g[0];
+        if (c === 2 && !e.name) e.name = g[1];
+        else if (c === 10) e.position.x = f(g[1]); else if (c === 20) e.position.y = f(g[1]);
+      });
+    }
+    return e;
+  }
+
+  function readEntities(pairs, start, stopCodes) {
+    var out = [], pos = start;
+    while (pos < pairs.length) {
+      var pair = pairs[pos];
+      if (pair[0] !== 0) { pos++; continue; }
+      if (stopCodes.indexOf(pair[1]) >= 0) return { entities: out, pos: pos };
+      var type = pair[1], bodyStart = pos + 1, bodyEnd = bodyStart;
+      while (bodyEnd < pairs.length && pairs[bodyEnd][0] !== 0) bodyEnd++;
+      var entity = parseEntityBody(type, pairs.slice(bodyStart, bodyEnd));
+      pos = bodyEnd;
+      if (type === 'POLYLINE') {
+        while (pos < pairs.length && pairs[pos][0] === 0 && pairs[pos][1] === 'VERTEX') {
+          var vEnd = pos + 1;
+          while (vEnd < pairs.length && pairs[vEnd][0] !== 0) vEnd++;
+          var vertex = parseEntityBody('VERTEX', pairs.slice(pos + 1, vEnd));
+          // 16 — управляющая вершина сплайна, 128 — грань polyface: геометрией контура не являются
+          if (!(vertex.flags & (16 | 128))) {
+            if (entity.mirror) { vertex.x = -vertex.x; vertex.bulge = -vertex.bulge; }
+            entity.vertices.push(vertex);
+          }
+          pos = vEnd;
+        }
+        if (pos < pairs.length && pairs[pos][0] === 0 && pairs[pos][1] === 'SEQEND') {
+          pos++;
+          while (pos < pairs.length && pairs[pos][0] !== 0) pos++;
+        }
+        delete entity.mirror;
+      }
+      out.push(entity);
+    }
+    return { entities: out, pos: pos };
+  }
+
+  function DxfParser() {}
+  DxfParser.prototype.parseSync = function (text) {
+    var pairs = tokenize(text), result = { header: {}, blocks: {}, entities: [] }, pos = 0;
+    while (pos < pairs.length) {
+      var pair = pairs[pos];
+      if (pair[0] === 0 && pair[1] === 'SECTION') {
+        var name = pairs[pos + 1] && pairs[pos + 1][0] === 2 ? pairs[pos + 1][1] : '';
+        pos += 2;
+        if (name === 'ENTITIES') {
+          var read = readEntities(pairs, pos, ['ENDSEC']);
+          result.entities = result.entities.concat(read.entities); pos = read.pos;
+        } else if (name === 'BLOCKS') {
+          while (pos < pairs.length && !(pairs[pos][0] === 0 && pairs[pos][1] === 'ENDSEC')) {
+            if (pairs[pos][0] === 0 && pairs[pos][1] === 'BLOCK') {
+              var headEnd = pos + 1;
+              while (headEnd < pairs.length && pairs[headEnd][0] !== 0) headEnd++;
+              var block = parseEntityBody('BLOCK', pairs.slice(pos + 1, headEnd));
+              var blockRead = readEntities(pairs, headEnd, ['ENDBLK', 'ENDSEC']);
+              block.entities = blockRead.entities; delete block.type;
+              result.blocks[block.name] = block;
+              pos = blockRead.pos;
+              if (pairs[pos] && pairs[pos][1] === 'ENDBLK') pos++;
+            } else pos++;
+          }
+        } else {
+          while (pos < pairs.length && !(pairs[pos][0] === 0 && pairs[pos][1] === 'ENDSEC')) pos++;
+        }
+      } else pos++;
+    }
+    return result;
+  };
+  window.DxfParser = DxfParser;
+})();
+</script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
@@ -640,6 +893,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   }
   function renderVectorCutterPreview() {
     $('vectorCutterPreview').innerHTML=cutterSelectionPreview($('vectorCutter').value,$('vectorDiameter').value,$('vectorDepth').value);
+    if($('combCutterPreview'))updateExtraCutterPreviews();
   }
   function customCutterOptionsMarkup(filter=()=>true) {
     const groups=new Map();
@@ -3175,7 +3429,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   $('importFile').addEventListener('click',()=>$('vectorPicker').click());
   function parseAsciiDxf(text) {
     if(typeof text!=='string'||text.length>20*1024*1024)throw new Error('ASCII DXF должен занимать не более 20 МБ.');
-    if(typeof window.DxfParser!=='function')throw new Error('Модуль чтения DXF не загружен. Переустановите приложение.');
+    if(typeof window.DxfParser!=='function')throw new Error('Модуль чтения DXF не загружен. Обновите страницу (Ctrl+F5).');
     let drawing;
     try{drawing=new window.DxfParser().parseSync(text);}
     catch(error){throw new Error(`Не удалось разобрать DXF: ${error.message}`);}
@@ -3273,7 +3527,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
           const points=entity.points.filter(point=>Number.isFinite(point?.x)&&Number.isFinite(point?.y)),outline=points.length===4?[points[0],points[1],points[3],points[2]]:points;
           addPolyline(outline,true,matrix);
         }else if(entity.type==='3DFACE'&&entity.vertices?.length>=3)addPolyline(entity.vertices.filter(point=>Number.isFinite(point?.x)&&Number.isFinite(point?.y)),true,matrix);
-        else if(entity.type==='DIMENSION'&&entity.block&&blocks[entity.block])emit([{type:'INSERT',name:entity.block,position:entity.insertionPoint||entity.anchorPoint||{x:0,y:0},rotation:0}],matrix,blockStack);
+        else if(entity.type==='DIMENSION'&&entity.block&&blocks[entity.block])emit([{type:'INSERT',name:entity.block,position:{x:0,y:0},rotation:0}],matrix,blockStack);
         else if(['TEXT','MTEXT','ATTDEF'].includes(entity.type))ignored.add(entity.type);
         else if(entity.type==='DIMENSION')ignored.add(entity.type);
         else if(!['SEQEND','VERTEX'].includes(entity.type))ignored.add(entity.type);
@@ -3288,6 +3542,155 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     const d=paths.map(path=>{const points=path.points.map(mapPoint);return`M ${points[0].x} ${points[0].y} ${points.slice(1).map(point=>`L ${point.x} ${point.y}`).join(' ')}${path.closed?' Z':''}`;}).join(' ');
     return{d,viewBox:{x:0,y:0,width:Math.max(width,1e-6),height:Math.max(height,1e-6)},ignoredTypes:[...ignored],importedEntities:paths.length};
   }
+  // ---- Импорт SVG: path/rect/circle/ellipse/line/polyline/polygon, группы и transform -> абсолютные пути ----
+  function svgParseTransform(text) {
+    let matrix = [1, 0, 0, 1, 0, 0];
+    const mul = (a, b) => [a[0] * b[0] + a[2] * b[1], a[1] * b[0] + a[3] * b[1], a[0] * b[2] + a[2] * b[3], a[1] * b[2] + a[3] * b[3], a[0] * b[4] + a[2] * b[5] + a[4], a[1] * b[4] + a[3] * b[5] + a[5]];
+    const re = /(matrix|translate|scale|rotate|skewX|skewY)\s*\(([^)]*)\)/g;
+    let match;
+    while ((match = re.exec(text || ''))) {
+      const v = match[2].trim().split(/[\s,]+/).filter(Boolean).map(Number);
+      if (v.some(value => !Number.isFinite(value))) continue;
+      let m = null;
+      if (match[1] === 'matrix' && v.length === 6) m = v;
+      else if (match[1] === 'translate') m = [1, 0, 0, 1, v[0] || 0, v[1] || 0];
+      else if (match[1] === 'scale') m = [v[0] ?? 1, 0, 0, v[1] ?? v[0] ?? 1, 0, 0];
+      else if (match[1] === 'rotate') {
+        const a = (v[0] || 0) * Math.PI / 180, c = Math.cos(a), s = Math.sin(a), cx = v[1] || 0, cy = v[2] || 0;
+        m = [c, s, -s, c, cx - c * cx + s * cy, cy - s * cx - c * cy];
+      } else if (match[1] === 'skewX') m = [1, 0, Math.tan((v[0] || 0) * Math.PI / 180), 1, 0, 0];
+      else if (match[1] === 'skewY') m = [1, Math.tan((v[0] || 0) * Math.PI / 180), 0, 1, 0, 0];
+      if (m) matrix = mul(matrix, m);
+    }
+    return matrix;
+  }
+  function svgArcToCubics(x1, y1, rx, ry, phiDeg, fa, fs, x2, y2) {
+    if (!rx || !ry || (x1 === x2 && y1 === y2)) return [['L', x2, y2]];
+    rx = Math.abs(rx); ry = Math.abs(ry);
+    const phi = phiDeg * Math.PI / 180, cp = Math.cos(phi), sp = Math.sin(phi);
+    const dx = (x1 - x2) / 2, dy = (y1 - y2) / 2, x1p = cp * dx + sp * dy, y1p = -sp * dx + cp * dy;
+    const lambda = x1p * x1p / (rx * rx) + y1p * y1p / (ry * ry);
+    if (lambda > 1) { const k = Math.sqrt(lambda); rx *= k; ry *= k; }
+    const num = rx * rx * ry * ry - rx * rx * y1p * y1p - ry * ry * x1p * x1p, den = rx * rx * y1p * y1p + ry * ry * x1p * x1p;
+    const coef = (fa === fs ? -1 : 1) * Math.sqrt(Math.max(0, num / den)), cxp = coef * rx * y1p / ry, cyp = -coef * ry * x1p / rx;
+    const cx = cp * cxp - sp * cyp + (x1 + x2) / 2, cy = sp * cxp + cp * cyp + (y1 + y2) / 2;
+    const angle = (ux, uy, vx, vy) => Math.atan2(ux * vy - uy * vx, ux * vx + uy * vy);
+    const th1 = angle(1, 0, (x1p - cxp) / rx, (y1p - cyp) / ry);
+    let dth = angle((x1p - cxp) / rx, (y1p - cyp) / ry, (-x1p - cxp) / rx, (-y1p - cyp) / ry);
+    if (!fs && dth > 0) dth -= 2 * Math.PI;
+    if (fs && dth < 0) dth += 2 * Math.PI;
+    const count = Math.max(1, Math.ceil(Math.abs(dth) / (Math.PI / 2) - 1e-9)), delta = dth / count, t = 4 / 3 * Math.tan(delta / 4);
+    const map = (ux, uy) => [cp * rx * ux - sp * ry * uy + cx, sp * rx * ux + cp * ry * uy + cy];
+    const segments = [];
+    for (let i = 0; i < count; i++) {
+      const a1 = th1 + i * delta, a2 = a1 + delta;
+      const c1 = map(Math.cos(a1) - t * Math.sin(a1), Math.sin(a1) + t * Math.cos(a1));
+      const c2 = map(Math.cos(a2) + t * Math.sin(a2), Math.sin(a2) - t * Math.cos(a2));
+      const end = i === count - 1 ? [x2, y2] : map(Math.cos(a2), Math.sin(a2));
+      segments.push(['C', c1[0], c1[1], c2[0], c2[1], end[0], end[1]]);
+    }
+    return segments;
+  }
+  // Разбор атрибута d в абсолютные команды M / L / C / Z (дуги и квадратичные кривые переводятся в кубические).
+  function svgParsePathData(d) {
+    const numberRe = /[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?/y;
+    let i = 0;
+    const skip = () => { while (i < d.length && /[\s,]/.test(d[i])) i++; };
+    const number = () => { skip(); numberRe.lastIndex = i; const m = numberRe.exec(d); if (!m) throw new Error('Некорректные данные пути SVG.'); i += m[0].length; return parseFloat(m[0]); };
+    const flag = () => { skip(); const ch = d[i]; if (ch !== '0' && ch !== '1') throw new Error('Некорректные данные пути SVG.'); i++; return Number(ch); };
+    const out = [];
+    let x = 0, y = 0, sx = 0, sy = 0, cmd = '', lastCubic = null, lastQuad = null;
+    while (true) {
+      skip();
+      if (i >= d.length) break;
+      if (/[A-Za-z]/.test(d[i])) { cmd = d[i++]; if (!/[MmLlHhVvCcSsQqTtAaZz]/.test(cmd)) throw new Error('Неподдерживаемая команда пути SVG.'); }
+      else if (!cmd || /[Zz]/.test(cmd)) throw new Error('Некорректные данные пути SVG.');
+      const rel = cmd === cmd.toLowerCase(), up = cmd.toUpperCase();
+      if (up === 'Z') { out.push(['Z']); x = sx; y = sy; lastCubic = lastQuad = null; continue; }
+      if (up === 'M') {
+        let nx = number(), ny = number(); if (rel) { nx += x; ny += y; }
+        out.push(['M', nx, ny]); x = sx = nx; y = sy = ny; cmd = rel ? 'l' : 'L'; lastCubic = lastQuad = null;
+      } else if (up === 'L') { let nx = number(), ny = number(); if (rel) { nx += x; ny += y; } out.push(['L', nx, ny]); x = nx; y = ny; lastCubic = lastQuad = null; }
+      else if (up === 'H') { let nx = number(); if (rel) nx += x; out.push(['L', nx, y]); x = nx; lastCubic = lastQuad = null; }
+      else if (up === 'V') { let ny = number(); if (rel) ny += y; out.push(['L', x, ny]); y = ny; lastCubic = lastQuad = null; }
+      else if (up === 'C' || up === 'S') {
+        let x1, y1;
+        if (up === 'C') { x1 = number(); y1 = number(); if (rel) { x1 += x; y1 += y; } }
+        else if (lastCubic) { x1 = 2 * x - lastCubic[0]; y1 = 2 * y - lastCubic[1]; } else { x1 = x; y1 = y; }
+        let x2 = number(), y2 = number(), nx = number(), ny = number();
+        if (rel) { x2 += x; y2 += y; nx += x; ny += y; }
+        out.push(['C', x1, y1, x2, y2, nx, ny]); lastCubic = [x2, y2]; lastQuad = null; x = nx; y = ny;
+      } else if (up === 'Q' || up === 'T') {
+        let qx, qy;
+        if (up === 'Q') { qx = number(); qy = number(); if (rel) { qx += x; qy += y; } }
+        else if (lastQuad) { qx = 2 * x - lastQuad[0]; qy = 2 * y - lastQuad[1]; } else { qx = x; qy = y; }
+        let nx = number(), ny = number(); if (rel) { nx += x; ny += y; }
+        out.push(['C', x + 2 / 3 * (qx - x), y + 2 / 3 * (qy - y), nx + 2 / 3 * (qx - nx), ny + 2 / 3 * (qy - ny), nx, ny]);
+        lastQuad = [qx, qy]; lastCubic = null; x = nx; y = ny;
+      } else if (up === 'A') {
+        const rx = number(), ry = number(), rot = number(), fa = flag(), fs = flag();
+        let nx = number(), ny = number(); if (rel) { nx += x; ny += y; }
+        svgArcToCubics(x, y, rx, ry, rot, fa, fs, nx, ny).forEach(segment => out.push(segment));
+        x = nx; y = ny; lastCubic = lastQuad = null;
+      }
+    }
+    return out;
+  }
+  function svgTransformedPathData(segments, m) {
+    const fmt = value => { if (!Number.isFinite(value)) throw new Error('В SVG найдены недопустимые координаты.'); return String(Number(value.toFixed(4))); };
+    const pt = (px, py) => `${fmt(m[0] * px + m[2] * py + m[4])} ${fmt(m[1] * px + m[3] * py + m[5])}`;
+    return segments.map(s => s[0] === 'Z' ? 'Z' : s[0] === 'M' || s[0] === 'L' ? `${s[0]} ${pt(s[1], s[2])}` : `C ${pt(s[1], s[2])} ${pt(s[3], s[4])} ${pt(s[5], s[6])}`).join(' ');
+  }
+  function svgShapeToPathData(el) {
+    const tag = el.localName, n = name => Number.parseFloat(el.getAttribute(name)) || 0;
+    if (tag === 'path') return el.getAttribute('d') || '';
+    if (tag === 'rect') {
+      const x = n('x'), y = n('y'), w = n('width'), h = n('height');
+      if (!(w > 0 && h > 0)) return '';
+      let rx = el.hasAttribute('rx') ? n('rx') : n('ry'), ry = el.hasAttribute('ry') ? n('ry') : rx;
+      rx = Math.min(Math.abs(rx), w / 2); ry = Math.min(Math.abs(ry), h / 2);
+      if (!rx || !ry) return `M ${x} ${y} H ${x + w} V ${y + h} H ${x} Z`;
+      return `M ${x + rx} ${y} H ${x + w - rx} A ${rx} ${ry} 0 0 1 ${x + w} ${y + ry} V ${y + h - ry} A ${rx} ${ry} 0 0 1 ${x + w - rx} ${y + h} H ${x + rx} A ${rx} ${ry} 0 0 1 ${x} ${y + h - ry} V ${y + ry} A ${rx} ${ry} 0 0 1 ${x + rx} ${y} Z`;
+    }
+    if (tag === 'circle' || tag === 'ellipse') {
+      const cx = n('cx'), cy = n('cy'), rx = tag === 'circle' ? n('r') : n('rx'), ry = tag === 'circle' ? n('r') : n('ry');
+      if (!(rx > 0 && ry > 0)) return '';
+      return `M ${cx + rx} ${cy} A ${rx} ${ry} 0 1 0 ${cx - rx} ${cy} A ${rx} ${ry} 0 1 0 ${cx + rx} ${cy} Z`;
+    }
+    if (tag === 'line') return `M ${n('x1')} ${n('y1')} L ${n('x2')} ${n('y2')}`;
+    if (tag === 'polyline' || tag === 'polygon') {
+      const values = (el.getAttribute('points') || '').trim().split(/[\s,]+/).filter(Boolean).map(Number);
+      if (values.length < 4 || values.some(value => !Number.isFinite(value))) return '';
+      let d = `M ${values[0]} ${values[1]}`;
+      for (let index = 2; index + 1 < values.length; index += 2) d += ` L ${values[index]} ${values[index + 1]}`;
+      return tag === 'polygon' ? `${d} Z` : d;
+    }
+    return '';
+  }
+  function svgCollectPaths(root) {
+    const shapes = new Set(['path', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon']);
+    const skipContainers = new Set(['defs', 'clipPath', 'mask', 'symbol', 'pattern', 'marker', 'metadata', 'title', 'desc', 'style', 'script', 'filter', 'linearGradient', 'radialGradient']);
+    const paths = [], ignored = new Set(), maxPaths = 20000;
+    const walk = (node, matrix) => {
+      for (const el of node.children) {
+        const tag = el.localName;
+        if (skipContainers.has(tag)) continue;
+        if ((el.getAttribute('display') || '').trim() === 'none' || /display\s*:\s*none/.test(el.getAttribute('style') || '')) continue;
+        const local = svgParseTransform(el.getAttribute('transform'));
+        const m = [matrix[0] * local[0] + matrix[2] * local[1], matrix[1] * local[0] + matrix[3] * local[1], matrix[0] * local[2] + matrix[2] * local[3], matrix[1] * local[2] + matrix[3] * local[3], matrix[0] * local[4] + matrix[2] * local[5] + matrix[4], matrix[1] * local[4] + matrix[3] * local[5] + matrix[5]];
+        if (shapes.has(tag)) {
+          const source = svgShapeToPathData(el);
+          if (!source) continue;
+          if (paths.length >= maxPaths) throw new Error(`В SVG больше ${maxPaths} контуров.`);
+          try { paths.push(svgTransformedPathData(svgParsePathData(source), m)); }
+          catch (error) { if (/^[MmLlHhVvCcSsQqTtAaZzEe0-9,.\s+\-]+$/.test(source) && m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 1 && !m[4] && !m[5]) paths.push(source); else throw error; }
+        } else if (tag === 'g' || tag === 'svg' || tag === 'a' || tag === 'switch') walk(el, m);
+        else if (['text', 'tspan', 'image', 'use', 'foreignObject'].includes(tag)) ignored.add(tag);
+      }
+    };
+    walk(root, [1, 0, 0, 1, 0, 0]);
+    return { paths, ignored: [...ignored] };
+  }
   $('vectorPicker').addEventListener('change',async event=>{
     const file=event.target.files[0];if(!file)return;
     if(file.name.toLowerCase().endsWith('.dxf')){
@@ -3300,14 +3703,15 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       }catch(error){$('footerStatus').textContent='Импорт DXF не выполнен';alert(`Не удалось импортировать DXF: ${error.message}`);}
     }else if(file.name.toLowerCase().endsWith('.svg')){
       try{
+        if(file.size>30*1024*1024)throw new Error('Файл SVG больше 30 МБ.');
         const doc=new DOMParser().parseFromString(await file.text(),'image/svg+xml'),root=doc.documentElement;
         if(root.localName!=='svg'||doc.querySelector('parsererror'))throw new Error('SVG повреждён или не является векторным SVG.');
         const raw=(root.getAttribute('viewBox')||`0 0 ${Number.parseFloat(root.getAttribute('width'))||state.width} ${Number.parseFloat(root.getAttribute('height'))||state.height}`).trim().split(/[,\s]+/).map(Number);
         if(raw.length!==4||raw.some(value=>!Number.isFinite(value))||raw[2]<=0||raw[3]<=0)throw new Error('У SVG не заданы размеры области просмотра.');
-        const paths=[...doc.querySelectorAll('path')].map(path=>path.getAttribute('d')).filter(d=>d&&/^[MmLlHhVvCcSsQqTtAaZzEe0-9,.\s+\-]+$/.test(d));
-        if(!paths.length)throw new Error('Не найдены поддерживаемые контуры SVG. Для импорта пока нужны элементы path.');
+        const {paths,ignored}=svgCollectPaths(root);
+        if(!paths.length)throw new Error('Не найдены контуры SVG (path, rect, circle, ellipse, line, polyline, polygon).');
         snapshot();state.importedPaths.push(...paths.map(d=>({d,viewBox:{x:raw[0],y:raw[1],width:raw[2],height:raw[3]}})));drawView();
-        $('footerStatus').textContent=`Импортировано контуров: ${paths.length}`;
+        $('footerStatus').textContent=`Импортировано контуров: ${paths.length}${ignored.length?` · не преобразованы: ${ignored.join(', ')}`:''}`;
       }catch(error){alert(`Не удалось импортировать SVG: ${error.message}`);}
     }
     $('vectorPicker').value='';
@@ -3466,6 +3870,109 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     try{applyProject({...active.state,cuttingItems:readStored('fasadlab-order',[])});}
     catch(error){$('footerStatus').textContent=`Не удалось восстановить автосохранённое изделие: ${error.message}`;alert(`Автосохранённое изделие повреждено: ${error.message}`);}
   }
+  // ---- Выбор фрезы с рисунком профиля: обычные <select> остаются под капотом, поверх — список с картинками ----
+  const CUTTER_SELECT_SELECTOR='#vectorCutter,#combCutter,#vEdgeCutter,#rustCutter,#pocketCutter,[data-band-cutter],[data-extra-shape]';
+  function cutterThumb(value) {
+    if(value==='none')return '<svg viewBox="0 0 120 78" aria-hidden="true"><path d="M 8 25 H 112" stroke="#8d887e" stroke-width="2" stroke-dasharray="4 3" fill="none"/></svg>';
+    const shape=cutterShape(value);
+    if(!shape)return '';
+    const match=/^custom:(\d+)$/.exec(String(value)),tool=match?customCutters.find(item=>item.id===Number(match[1])):null;
+    try{
+      if(tool&&tool.shape==='form'&&tool.profile)return cutterToolIllustration(tool);
+      if(tool)return cutterIllustration(shape,tool.width,Math.min(tool.width/2,1));
+      return cutterIllustration(shape);
+    }catch(error){return '';}
+  }
+  let cutterPopup=null,cutterPopupOwner=null;
+  function closeCutterPopup() {
+    if(cutterPopup){cutterPopup.remove();cutterPopup=null;}
+    if(cutterPopupOwner){cutterPopupOwner.button.setAttribute('aria-expanded','false');cutterPopupOwner=null;}
+  }
+  function openCutterPopup(select,button) {
+    closeCutterPopup();
+    const popup=document.createElement('div');
+    popup.id='cutterPickerPopup';popup.setAttribute('role','listbox');
+    const entries=[];
+    [...select.children].forEach(node=>{
+      if(node.tagName==='OPTGROUP'){entries.push({group:node.label});[...node.children].forEach(option=>entries.push({option}));}
+      else if(node.tagName==='OPTION')entries.push({option:node});
+    });
+    const optionCount=entries.filter(entry=>entry.option).length;
+    const list=document.createElement('div');
+    const render=query=>{
+      const text=query.trim().toLocaleLowerCase();
+      let pendingGroup=null,html='';
+      entries.forEach(entry=>{
+        if(entry.group!==undefined){pendingGroup=entry.group;return;}
+        const label=entry.option.textContent;
+        if(text&&!`${label} ${pendingGroup||''}`.toLocaleLowerCase().includes(text))return;
+        if(pendingGroup!==null){html+=`<div class="cutter-option-group">${esc(pendingGroup)}</div>`;pendingGroup=null;}
+        html+=`<button type="button" role="option" class="cutter-option${entry.option.value===select.value?' active':''}" data-value="${esc(entry.option.value)}" aria-selected="${entry.option.value===select.value}"><span class="cutter-thumb">${cutterThumb(entry.option.value)}</span><span class="cutter-option-name">${esc(label)}</span></button>`;
+      });
+      list.innerHTML=html||'<div class="cutter-option-group">Ничего не найдено</div>';
+    };
+    if(optionCount>10){
+      const search=document.createElement('input');
+      search.type='search';search.placeholder='Поиск фрезы…';search.className='cutter-popup-search';
+      search.addEventListener('input',()=>render(search.value));
+      popup.appendChild(search);
+    }
+    popup.appendChild(list);render('');
+    document.body.appendChild(popup);
+    const rect=button.getBoundingClientRect(),width=Math.max(rect.width,270),left=Math.max(8,Math.min(rect.left,window.innerWidth-width-8));
+    const below=window.innerHeight-rect.bottom-12,above=rect.top-12,openUp=below<200&&above>below,maxHeight=Math.max(160,Math.min(420,openUp?above:below));
+    popup.style.cssText=`left:${left}px;width:${width}px;max-height:${maxHeight}px;${openUp?`bottom:${window.innerHeight-rect.top+4}px`:`top:${rect.bottom+4}px`}`;
+    popup.addEventListener('click',event=>{
+      const item=event.target.closest('.cutter-option');if(!item)return;
+      select.value=item.dataset.value;
+      closeCutterPopup();
+      select.dispatchEvent(new Event('input',{bubbles:true}));
+      select.dispatchEvent(new Event('change',{bubbles:true}));
+      button.focus();
+    });
+    popup.addEventListener('keydown',event=>{
+      if(event.key==='Escape'){closeCutterPopup();button.focus();return;}
+      if(event.key!=='ArrowDown'&&event.key!=='ArrowUp')return;
+      const items=[...popup.querySelectorAll('.cutter-option')],index=items.indexOf(document.activeElement);
+      if(!items.length)return;
+      event.preventDefault();
+      items[Math.max(0,Math.min(items.length-1,index+(event.key==='ArrowDown'?1:-1)))].focus();
+    });
+    cutterPopup=popup;cutterPopupOwner={select,button};button.setAttribute('aria-expanded','true');
+    (popup.querySelector('.cutter-option.active')||popup.querySelector('.cutter-popup-search')||popup.querySelector('.cutter-option'))?.focus({preventScroll:false});
+    popup.querySelector('.cutter-option.active')?.scrollIntoView({block:'center'});
+  }
+  function enhanceCutterSelect(select) {
+    if(select.dataset.cutterPicker)return;
+    select.dataset.cutterPicker='1';
+    const wrap=document.createElement('div'),button=document.createElement('button');
+    wrap.className='cutter-picker';button.type='button';button.className='cutter-picker-button';button.setAttribute('aria-haspopup','listbox');button.setAttribute('aria-expanded','false');
+    wrap.appendChild(button);
+    select.insertAdjacentElement('afterend',wrap);select.classList.add('cutter-select-hidden');
+    const refresh=()=>{
+      const option=select.options[select.selectedIndex];
+      button.innerHTML=`<span class="cutter-picker-name">${esc(option?option.textContent:'—')}</span><span class="cutter-picker-caret" aria-hidden="true">▾</span>`;
+      button.disabled=select.disabled;
+    };
+    const descriptor=Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value');
+    Object.defineProperty(select,'value',{configurable:true,get(){return descriptor.get.call(this);},set(next){descriptor.set.call(this,next);refresh();}});
+    new MutationObserver(refresh).observe(select,{childList:true,attributes:true,attributeFilter:['disabled']});
+    button.addEventListener('click',()=>{if(cutterPopupOwner&&cutterPopupOwner.button===button)closeCutterPopup();else openCutterPopup(select,button);});
+    refresh();
+  }
+  function enhanceCutterSelects() {document.querySelectorAll(CUTTER_SELECT_SELECTOR).forEach(enhanceCutterSelect);}
+  document.addEventListener('mousedown',event=>{if(cutterPopup&&!cutterPopup.contains(event.target)&&!event.target.closest('.cutter-picker'))closeCutterPopup();});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&cutterPopup)closeCutterPopup();});
+  window.addEventListener('resize',closeCutterPopup);
+  document.addEventListener('scroll',event=>{if(cutterPopup&&!cutterPopup.contains(event.target))closeCutterPopup();},true);
+  (function(){let queued=false;new MutationObserver(()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;enhanceCutterSelects();});}).observe(document.body,{childList:true,subtree:true});})();
+  function updateExtraCutterPreviews() {
+    $('combCutterPreview').innerHTML=cutterSelectionPreview($('combCutter').value,$('combCutWidth').value,$('combCutDepth').value);
+    const edge=$('vEdgeCutter').value!=='none';
+    $('vEdgeCutterPreview').classList.toggle('hidden',!edge);
+    $('vEdgeCutterPreview').innerHTML=edge?cutterSelectionPreview($('vEdgeCutter').value,$('vEdgeDia').value,$('vEdgeDepth').value):'';
+  }
+  ['combCutter','combCutWidth','combCutDepth','vEdgeCutter','vEdgeDia','vEdgeDepth'].forEach(id=>['input','change'].forEach(type=>$(id).addEventListener(type,()=>setTimeout(updateExtraCutterPreviews,0))));
   // Сворачиваемые панели слева и справа: «Скрыть / Показать» есть у всех панелей.
   (function setupCollapsiblePanels(){
     let saved={};try{saved=JSON.parse(localStorage.getItem('fasadlab-collapsed-panels')||'{}')||{};}catch(error){saved={};}
@@ -3483,6 +3990,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     });
   })();
   renderCutterOptions();renderTemplateButtons();syncInputs();renderProfileBands();renderCuttingList();renderDesignList();updateObjectTypeView();drawView();setObjectInfoVisible(true);
+  enhanceCutterSelects();updateExtraCutterPreviews();
 })();
 </script>
 </body>
