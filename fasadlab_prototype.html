@@ -186,7 +186,7 @@ body{font-size:14px}
 .templates-panel,.template,.vector-row,.tool-button,.view-tabs,.field input,.field select,.mode-select select,.cut-row input{background:#e6e1d7;color:#302f2a;border-color:#bcb4a7}
 button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 .left-scroll,.right-scroll{scrollbar-color:#aaa295 #e6e1d7}
-@media(max-width:1200px){.app{grid-template-columns:minmax(270px,290px) minmax(280px,1fr) minmax(240px,260px)}.brand{min-width:190px}.templates{grid-template-columns:repeat(2,minmax(0,1fr))}.templates-strip{height:102px}.view-tabs button{padding:6px 5px}}
+@media(max-width:1200px){.app{grid-template-columns:minmax(270px,290px) minmax(280px,1fr) minmax(240px,260px)}.brand{min-width:190px}.templates{grid-template-columns:repeat(2,minmax(0,1fr))}.view-tabs button{padding:6px 5px}}
 @media(max-width:940px){header{gap:6px;padding:0 8px}.brand{min-width:155px}.brand-mark{width:38px;height:38px}.brand-mark svg{width:33px;height:33px}.header-tabs button{padding:5px 4px;font-size:10px}.header-actions{gap:2px}.header-actions button{padding:6px 4px;font-size:10px}}
 .pocket-select-area{fill:#5d9b91;fill-opacity:.001;pointer-events:fill;cursor:pointer}
 .pocket-select-area:hover{fill-opacity:.12}
@@ -242,7 +242,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 <header>
   <div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9.5 34 7l6 4v29L8 42Z" stroke-width="1.5"/><path d="m12 13 23-2v24l-23 2Z" stroke-width="1.1"/><path d="M17 17 27 16v16l-10 1Z" stroke-width=".9"/><path d="m29 8 3-4 3 2-2 4M30 9l-9 15 3 2 10-14m-13 12-1 4 4-2" stroke-width="1.5"/><path d="m10 11 3-2m24 29 2-2M12 40l2-1" stroke-width=".7"/></g></svg></div><div><div class="brand-name"><span>Фасад</span>Лаб</div><div class="sub">Редактор мебельных фасадов</div></div></div>
   <div class="view-tabs header-tabs" aria-label="Виды чертежа"><button class="active" data-view="2d">Вид сверху</button><button data-view="profile">Разрез</button><button data-view="nest">Карта листа</button></div>
-  <div class="header-actions"><button id="cutterLibraryButton" title="Открыть библиотеку фрез">Фрезы</button><button id="aboutButton">О программе</button><button id="openProject">Открыть</button><button id="saveProject">Сохранить</button></div>
+  <div class="header-actions"><button id="cutterLibraryButton" title="Открыть библиотеку фрез">Фрезы</button><button id="aboutButton">О программе</button><button id="openArtButton" title="Открыть проект ArtCAM (.art): размер заготовки, материал, траектории и фрезы">ArtCAM</button><button id="openProject">Открыть</button><button id="saveProject">Сохранить</button></div>
 </header>
 <main class="app">
   <aside class="column left-scroll">
@@ -510,17 +510,17 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 </main>
 <div id="importPanel" class="import-panel hidden" role="dialog" aria-label="Импорт SVG и DXF">
   <div class="import-head"><b>Импорт SVG / DXF</b><span class="sub" id="impInfo">Файл не загружен</span><button type="button" id="impClose" aria-label="Закрыть">✕</button></div>
-  <div class="import-row"><span class="grp">Объект</span><button type="button" id="impLoad">Загрузить SVG / DXF…</button><select id="impList" aria-label="Импортированные объекты"></select><button type="button" id="impDup">Дубль</button><button type="button" id="impSplit" title="Разбить на отдельные контуры, как «Ungroup» в ArtCAM">Разбить на контуры</button><button type="button" id="impDelete" class="warn">Удалить</button></div>
+  <div class="import-row"><span class="grp">Объект</span><button type="button" id="impLoad">Загрузить SVG / DXF…</button><button type="button" id="impArt" title="Открыть проект ArtCAM (.art): размер заготовки, материал, траектории и фрезы">Проект ArtCAM…</button><select id="impList" aria-label="Импортированные объекты"></select><button type="button" id="impDup">Дубль</button><button type="button" id="impSplit" title="Разбить на отдельные контуры, как «Ungroup» в ArtCAM">Разбить на контуры</button><button type="button" id="impDelete" class="warn">Удалить</button></div>
   <div class="import-row"><span class="grp">Положение</span><label>X слева <input id="impX" type="number" step="0.1"></label><label>Y снизу <input id="impY" type="number" step="0.1"></label><label>Ширина <input id="impW" type="number" step="0.1" min="0.1"></label><label>Высота <input id="impH" type="number" step="0.1" min="0.1"></label><label><input id="impProp" type="checkbox" checked>пропорционально</label><button type="button" id="impApplyBox">Применить</button></div>
   <div class="import-row"><span class="grp">Масштаб</span><label><input id="impScale" type="number" value="100" step="1" min="1"> %</label><button type="button" id="impApplyScale">Масштабировать</button><button type="button" id="impFit" title="Вписать в фасад с сохранением пропорций">Вписать в фасад</button><button type="button" id="impStretch" title="Растянуть на весь фасад (пропорции изменятся)">Растянуть</button><label>Отступ <input id="impMargin" type="number" value="0" min="0" step="1"> мм</label></div>
   <div class="import-row"><span class="grp">Поворот</span><label><input id="impRot" type="number" value="0" step="1"> °</label><button type="button" id="impApplyRot">Задать угол</button><button type="button" data-imp-rot="-90">−90°</button><button type="button" data-imp-rot="90">+90°</button><button type="button" data-imp-rot="180">180°</button><button type="button" data-imp-rot="45">+45°</button><span class="grp" style="min-width:auto;margin-left:10px">Зеркало</span><button type="button" id="impMirrorH">↔ по горизонтали</button><button type="button" id="impMirrorV">↕ по вертикали</button></div>
   <div class="import-row"><span class="grp">Выровнять</span><button type="button" data-imp-align="cx">По центру ↔</button><button type="button" data-imp-align="cy">По центру ↕</button><button type="button" data-imp-align="c">В центр</button><button type="button" data-imp-align="l">Влево</button><button type="button" data-imp-align="r">Вправо</button><button type="button" data-imp-align="t">Вверх</button><button type="button" data-imp-align="b">Вниз</button></div>
   <div class="import-row"><span class="grp">Массив</span><label>Кол-во <input id="impCount" type="number" min="2" max="200" step="1" value="3"></label><label>Шаг X <input id="impStepX" type="number" step="1" value="50"></label><label>Шаг Y <input id="impStepY" type="number" step="1" value="0"></label><button type="button" id="impArray">Создать копии</button><span class="sub" style="color:#6c6a62">Мышью: выберите «Выбор» и тяните вектор по макету</span></div>
 </div>
-<footer><span>●</span><span class="footer-status" id="footerStatus">Готово к работе</span><span class="footer-spacer"></span><button id="openReal3D" type="button" title="Объёмная модель с реальным рельефом фрезеровки">◈ 3D-модель</button><button id="importFile">＋ Импорт SVG / DXF</button><button id="exportFile">⇩ SVG</button><button id="exportDocument" type="button" title="Печать чертежа и спецификации или сохранение в PDF">▤ PDF</button><button id="checkGeometry">✓ Проверить</button><button id="exportCuttingPanel">▤ Карта DXF</button><button class="footer-primary" id="exportFooter">⇩ Экспорт DXF</button></footer>
+<footer><span>●</span><span class="footer-status" id="footerStatus">Готово к работе</span><span class="footer-spacer"></span><button id="openReal3D" type="button" title="Объёмная модель с реальным рельефом фрезеровки">◈ 3D-модель</button><button id="importFile">＋ Импорт SVG / DXF</button><button id="exportFile">⇩ SVG</button><button id="exportDocument" type="button" title="Печать чертежа и спецификации или сохранение в PDF">▤ PDF</button><button id="checkGeometry">✓ Проверить</button><button id="exportCuttingPanel">▤ Карта DXF</button><button id="exportArtcam" type="button" title="ZIP для ArtCAM: DXF со слоями по операциям (фреза, Ø, глубина) и таблица операций">⇩ Пакет ArtCAM</button><button class="footer-primary" id="exportFooter">⇩ Экспорт DXF</button></footer>
 <section id="printDocument" class="print-document" aria-hidden="true"></section>
 <input id="projectPicker" type="file" accept=".json,application/json">
-<input id="vectorPicker" type="file" accept=".svg,.dxf,image/svg+xml,application/dxf">
+<input id="vectorPicker" type="file" accept=".svg,.dxf,image/svg+xml,application/dxf"><input id="artProjectPicker" type="file" accept=".art" hidden>
 <input id="artcamToolPicker" type="file" accept=".tdb" multiple hidden><input id="dxfCutterPicker" type="file" accept=".dxf" hidden>
 <div id="stylesOverlay" class="modal-overlay hidden"><section class="modal-card styles-dialog" role="dialog" aria-modal="true" aria-labelledby="stylesDialogTitle"><button class="modal-close" id="closeStyles" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="stylesDialogTitle">Шаблоны изделий</h2><p>Выберите тип шаблона и примените сохранённые настройки к изделию.</p></div><div class="styles-dialog-controls"><label class="field" for="styleTypeFilter">Тип изделия<select id="styleTypeFilter"><option value="facade">Фасад</option><option value="vitrina">Витрина</option><option value="profile">Профиль</option><option value="tsulaga">Цулага</option><option value="comb">Гребёнка</option></select></label><div class="field"><label for="styleName">Название нового шаблона</label><input id="styleName" aria-label="Название сохраняемого шаблона" maxlength="48" value="Мой шаблон" placeholder="Название шаблона"></div></div><button id="saveTemplate" class="primary" type="button">＋ Сохранить текущие настройки как шаблон</button><div id="stylesList" class="styles-list" aria-live="polite"></div><button class="primary" id="closeStylesFooter" type="button">Готово</button></section></div>
 <div id="cutterLibraryOverlay" class="modal-overlay hidden"><section class="modal-card cutter-library-card" role="dialog" aria-modal="true" aria-labelledby="cutterLibraryTitle"><button class="modal-close" id="closeCutterLibrary" aria-label="Закрыть">×</button><div class="cutter-library-heading"><div><strong id="cutterLibraryTitle">Библиотека фрез</strong><p>Из .TDB читается реальный профиль режущей кромки: узорные, фасонные и конические фрезы показываются своей формой в виде сверху, в разрезе и в карточке. Профили по параметрам (Ogee, Roman Ogee, Roundover) считаются точно; приблизительные помечены «≈».</p></div><div class="cutter-card-actions"><button id="importArtcamCutters" type="button">Импорт ArtCAM .TDB</button><button id="importDxfCutter" type="button" title="Открытый вектор — половина профиля фрезы, как в ArtCAM Custom Form">Фреза из профиля DXF</button></div></div><div id="customCutterEditor" class="cutter-library-form hidden"><strong>Редактирование импортированной фрезы</strong><div class="field"><label for="customCutterName">Название</label><input id="customCutterName" maxlength="40"></div><div class="fields"><div class="field"><label for="customCutterShape">Тип профиля</label><select id="customCutterShape"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="roundover">Радиус кромки (скругление)</option><option value="wave">Волновая / другая</option><option value="form">Профиль из ArtCAM</option></select></div><div class="field"><label for="customCutterWidth">Диаметр / ширина, мм</label><input id="customCutterWidth" type="number" min="0.1" step="0.1"></div></div><div class="cutter-card-actions"><button id="saveCustomCutter" class="primary" type="button">Сохранить изменения</button><button id="cancelCutterEdit" type="button">Отмена</button></div></div><h3 class="cutter-catalog-title">Стандартные и импортированные фрезы</h3><div class="field"><input id="cutterSearch" type="search" placeholder="Поиск по названию или группе" aria-label="Поиск фрезы"><div class="cutter-card-meta" id="cutterCount"></div></div><div id="customCutterList" class="cutter-catalog"></div><div class="notice">Профиль узорных фрез (Custom Form) читается из .TDB точно: линии и дуги в долях диаметра. Для Ogee, Roman Ogee, Roundover и Veining контур считается по параметрам из файла (диаметр, радиус дуги, внутренний диаметр, ступень) по определению ArtCAM; для Raised Panel смысл параметров в файле не раскрыт, поэтому форма приблизительная (помечена «≈»). Незнакомые типы фрез и другие версии базы не отбрасываются: фреза добавляется по названию и размеру (тоже с «≈»). Параметры резания не импортируются; проверьте инструмент и обработку в ArtCAM.</div><button class="primary" id="closeCutterLibraryFooter">Готово</button></section></div>
@@ -3036,6 +3036,142 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     }catch(error){$('footerStatus').textContent='Карта раскроя не экспортирована';alert(`Не удалось создать карту раскроя DXF: ${error.message}`);}
     finally{lastGeometry=previous;}
   }
+  // ===== Пакет для ArtCAM: DXF со слоями по операциям + таблица операций (ZIP) =====
+  function artcamSlug(text,max=12) {
+    const map={а:'a',б:'b',в:'v',г:'g',д:'d',е:'e',ё:'e',ж:'zh',з:'z',и:'i',й:'y',к:'k',л:'l',м:'m',н:'n',о:'o',п:'p',р:'r',с:'s',т:'t',у:'u',ф:'f',х:'h',ц:'c',ч:'ch',ш:'sh',щ:'sch',ъ:'',ы:'y',ь:'',э:'e',ю:'yu',я:'ya'};
+    const out=String(text||'').toLowerCase().split('').map(ch=>map[ch]!==undefined?map[ch]:ch).join('').replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+    return (out||'x').slice(0,max).toUpperCase();
+  }
+  function crc32(bytes) {
+    if(!crc32.table){crc32.table=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;crc32.table.push(c>>>0);}}
+    let crc=0xFFFFFFFF;
+    for(let index=0;index<bytes.length;index++)crc=crc32.table[(crc^bytes[index])&255]^(crc>>>8);
+    return (crc^0xFFFFFFFF)>>>0;
+  }
+  function makeZip(files) {
+    const encoder=new TextEncoder(),parts=[],central=[],now=new Date();
+    const dosTime=(now.getHours()<<11)|(now.getMinutes()<<5)|(now.getSeconds()>>1),dosDate=((now.getFullYear()-1980)<<9)|((now.getMonth()+1)<<5)|now.getDate();
+    let offset=0;
+    files.forEach(file=>{
+      const name=encoder.encode(file.name),crc=crc32(file.data),size=file.data.length;
+      const local=new DataView(new ArrayBuffer(30));
+      local.setUint32(0,0x04034b50,true);local.setUint16(4,20,true);local.setUint16(6,0x0800,true);local.setUint16(10,dosTime,true);local.setUint16(12,dosDate,true);
+      local.setUint32(14,crc,true);local.setUint32(18,size,true);local.setUint32(22,size,true);local.setUint16(26,name.length,true);
+      parts.push(new Uint8Array(local.buffer),name,file.data);
+      const entry=new DataView(new ArrayBuffer(46));
+      entry.setUint32(0,0x02014b50,true);entry.setUint16(4,20,true);entry.setUint16(6,20,true);entry.setUint16(8,0x0800,true);entry.setUint16(12,dosTime,true);entry.setUint16(14,dosDate,true);
+      entry.setUint32(16,crc,true);entry.setUint32(20,size,true);entry.setUint32(24,size,true);entry.setUint16(28,name.length,true);entry.setUint32(42,offset,true);
+      central.push(new Uint8Array(entry.buffer),name);
+      offset+=30+name.length+size;
+    });
+    const centralSize=central.reduce((sum,part)=>sum+part.length,0),end=new DataView(new ArrayBuffer(22));
+    end.setUint32(0,0x06054b50,true);end.setUint16(8,files.length,true);end.setUint16(10,files.length,true);end.setUint32(12,centralSize,true);end.setUint32(16,offset,true);
+    return new Blob([...parts,...central,new Uint8Array(end.buffer)],{type:'application/zip'});
+  }
+  function buildArtcamPackage() {
+    const W=state.width,H=state.height,thickness=Number(state.thickness)||0;
+    const lines=['0','SECTION','2','HEADER','9','$ACADVER','1','AC1009','9','$INSUNITS','70','4','0','ENDSEC','0','SECTION','2','ENTITIES'];
+    const mapPoint=point=>({x:point.x,y:H-point.y}),previous=lastGeometry;
+    const operations=[],used=new Set(),layersById=new Map(),measure=value=>String(Number(Number(value).toFixed(2)));
+    let opNo=0;
+    const pad=value=>String(value).padStart(2,'0');
+    const part=value=>measure(value).replace('.','P').replace('-','M');
+    const uniqueLayer=(head,tail='')=>{
+      let name=`${head.slice(0,Math.max(4,31-tail.length))}${tail}`.replace(/_+/g,'_'),candidate=name,k=2;
+      while(used.has(candidate)){const suffix=`_${k++}`;candidate=name.slice(0,31-suffix.length)+suffix;}
+      used.add(candidate);return candidate;
+    };
+    const sideLabel={on:'по вектору (On)',outside:'снаружи (Outside)',inside:'внутри (Inside)'};
+    const strategyFor=(cutterValue,pass,thru)=>{
+      const name=cutterLabel(cutterValue).toLowerCase(),shape=String(cutterShape(cutterValue)||''),isV=shape==='v90'||/v-?bit|v-фрез|конус|conic|engrav|гравир/.test(name);
+      if(thru)return 'Profile Toolpath — рез насквозь (рекомендуются мостики / Tabs)';
+      if(isV)return 'V-Bit Carving / Engraving Toolpath';
+      return 'Profile Toolpath';
+    };
+    const addOperation=(info)=>{
+      const pass=info.pass,depth=Number(pass.depth),thru=thickness>0&&depth>=thickness-0.001;
+      const layer=uniqueLayer(`OP${pad(++opNo)}_${info.role}_${artcamSlug(cutterLabel(pass.cutter),14)}`,`_W${part(pass.diameter)}_Z${part(depth)}`);
+      info.draw(layer);
+      operations.push({no:opNo,layer,title:info.title,strategy:info.strategy||strategyFor(pass.cutter,pass,thru),cutter:cutterLabel(pass.cutter),diameter:Number(pass.diameter),depth,stepdown:Number(pass.stepdown)||0,side:sideLabel[pass.side||'on']||sideLabel.on,allowance:Number(pass.allowance)||0,feed:pass.feed==='conventional'?'встречное':'попутное',thru,note:info.note||''});
+      return layer;
+    };
+    const addGeometry=(name,draw)=>{const layer=uniqueLayer(name);draw(layer);return layer;};
+    lastGeometry={x:0,y:0,scale:1,width:W,height:H};
+    try{
+      if(state.kind==='tsulaga'&&state.objectType==='profile'){
+        const t=state.tsulaga,g=tsulagaGeometry(t);
+        addOperation({role:'CUTOUT',title:'Вырезание цулаги из листа',pass:{cutter:'flat',diameter:t.cutDia,depth:thickness,side:'outside',feed:'climb'},strategy:'Profile Toolpath — снаружи (Outside), рез насквозь (рекомендуются мостики / Tabs)',note:`Габарит заготовки ${g.width} × ${g.height} мм`,draw:layer=>appendTsulagaDxf(lines,t,layer,mapPoint)});
+      }else if(state.objectType==='facade'){
+        const baseLayers=[];
+        const basePath=outerRectPath(0,0,W,H),basePasses=outerContourCutterPasses();
+        if(basePasses.length)basePasses.forEach(pass=>baseLayers.push(addOperation({role:'BASE',title:'Основной контур',pass,note:'Наружный край заготовки',draw:layer=>appendDxfPath(lines,basePath,layer,mapPoint)})));
+        else baseLayers.push(addGeometry('BASE_OUTLINE',layer=>appendDxfPath(lines,basePath,layer,mapPoint)));
+        layersById.set(0,baseLayers);
+        state.contours.forEach((contour,index)=>{
+          const bounds=getContourBounds(contour.id),path=contourPath(contour,1,0,0,bounds),label=contour.name||`Вектор ${index+2}`,passes=contourCutterPasses(contour),ids=[];
+          const note=`${contour.direction==='out'?'Наружу':'Внутрь'} от родителя, отступ ${measure(contour.offset)} мм · ${measure(bounds.width)} × ${measure(bounds.height)} мм`;
+          if(passes.length)passes.forEach(pass=>ids.push(addOperation({role:`VEC${pad(index+1)}`,title:`Вектор «${label}»`,pass,note,draw:layer=>appendDxfPath(lines,path,layer,mapPoint)})));
+          else ids.push(addGeometry(`VEC${pad(index+1)}_${artcamSlug(label,14)}`,layer=>appendDxfPath(lines,path,layer,mapPoint)));
+          layersById.set(contour.id,ids);
+        });
+        state.pockets.forEach((pocket,index)=>{
+          const region=getPocketRegion(pocket.parentId,pocket.islandId,pocket.regionType||'ring');
+          if(!region)return;
+          const depth=Number(pocket.depth),outerId=region.regionType==='inside'?null:Number(pocket.parentId),islandLayers=layersById.get(Number(pocket.islandId))||[],outerLayers=outerId===null?[]:(layersById.get(outerId)||layersById.get(0)||[]);
+          operations.push({no:++opNo,layer:[...outerLayers,...islandLayers].join(' + ')||'—',title:`Выборка ${index+1}: ${region.regionType==='inside'?`внутри «${region.islandName}»`:`между «${region.outerName}» и «${region.islandName}»`}`,strategy:'Area Clearance Toolpath',cutter:cutterLabel(pocket.cutter),diameter:Number(pocket.diameter),depth,stepdown:Number(pocket.passDepth)||0,side:'—',allowance:0,feed:'—',thru:thickness>0&&depth>=thickness-0.001,note:`Выделите векторы этих слоёв вместе. Шаг ${pocket.stepover}% Ø`});
+        });
+        state.importedPaths.forEach((item,index)=>{
+          const importedMap=importedMapPoint(item,W,H),importedPoint=point=>{const q=importedMap(point);return{x:q.x,y:H-q.y};};
+          const draw=layer=>appendDxfPath(lines,item.d,layer,importedPoint),title=`Импорт «${item.name||index+1}»`;
+          if(item.cutter&&item.cutter!=='none'&&Number(item.diameter)>0&&Number(item.depth)>0)addOperation({role:`IMP${pad(index+1)}`,title,pass:{cutter:item.cutter,diameter:item.diameter,depth:item.depth,side:item.side||'on',allowance:item.allowance,feed:item.feed,stepdown:item.stepdown},draw});
+          else addGeometry(`IMPORT${pad(index+1)}_${artcamSlug(item.name||'',12)}`,draw);
+        });
+        const details=allCustomVectors();
+        if(details.length)addGeometry('DETAIL_VECTORS',layer=>details.forEach(vector=>{
+          if(vector.type==='point'){const point=vector.points[0];lines.push('0','CIRCLE','8',layer,'10',dxfNumber(point.x),'20',dxfNumber(H-point.y),'30','0','40','4');}
+          else appendDxfPath(lines,customVectorSvgPath(vector),layer,mapPoint);
+        }));
+      }else if(state.objectType==='profile'){
+        const paths=operationVectorPaths();
+        state.profileBands.forEach((band,index)=>{
+          const path=paths[index];if(!path)return;
+          const draw=layer=>appendDxfPath(lines,path,layer,mapPoint);
+          if(band.cutter&&band.cutter!=='none')addOperation({role:`PROF${pad(index+1)}`,title:`Вектор профиля ${index+1}`,pass:{cutter:band.cutter,diameter:band.cutterWidth,depth:band.depth,side:'on'},note:`${band.side} · отступ ${measure(band.offset)} мм`,draw});
+          else addGeometry(`PROF${pad(index+1)}`,draw);
+        });
+      }else if(state.objectType==='comb'){
+        const passes=combOperationPaths(W,H),draw=layer=>passes.forEach(pass=>appendDxfPath(lines,pass.d,layer,mapPoint));
+        if(state.combCutter!=='none')addOperation({role:'COMB',title:'Гребёнка',pass:{cutter:state.combCutter,diameter:state.combCutWidth,depth:state.combCutDepth,side:'on'},note:`${passes.length} проходов, шаг ${measure(state.combPitch)} мм`,draw});
+        else addGeometry('COMB_LINES',draw);
+      }
+    }finally{lastGeometry=previous;}
+    lines.push('0','ENDSEC','0','EOF');
+    return{dxf:lines.join('\r\n')+'\r\n',operations};
+  }
+  function artcamPackageTexts(operations) {
+    const typeName=typeLabel(state.objectType,state.kind),name=state.name||typeName;
+    const num=value=>String(Number(Number(value).toFixed(2))).replace('.',',');
+    const head=[`ФасадЛаб → ArtCAM: пакет для станка`,`Изделие: ${name} (${typeName})`,`Заготовка: ${num(state.width)} × ${num(state.height)} мм, толщина ${num(state.thickness)} мм`,`Единицы: мм. Начало координат в DXF: левый нижний угол заготовки. Z = 0 — верх материала.`,'',`Как использовать:`,`  1. В ArtCAM: Файл → Импорт → Векторные данные (File › Import › Vector Data) — выберите .dxf из этого архива.`,`  2. Слои DXF станут векторными слоями. Название слоя = номер операции, роль, фреза, ширина (W) и глубина (Z) в мм (P — десятичная точка).`,`  3. На каждый слой создайте траекторию по списку ниже. Стратегия — рекомендация, её можно менять.`,''];
+    const blocks=operations.map(op=>[`${op.no}. ${op.title}`,`   Слой DXF: ${op.layer}`,`   Стратегия ArtCAM: ${op.strategy}`,`   Фреза: ${op.cutter} · Ø ${num(op.diameter)} мм`,`   Глубина реза: ${num(op.depth)} мм${op.thru?' (насквозь)':''}${op.stepdown?` · глубина прохода ${num(op.stepdown)} мм (${Math.ceil(op.depth/op.stepdown)} прох.)`:''}`,op.side==='—'?null:`   Сторона: ${op.side}${op.allowance?` · припуск ${num(op.allowance)} мм`:''} · ${op.feed}`,op.note?`   Примечание: ${op.note}`:null,''].filter(item=>item!==null).join('\n'));
+    const text='\uFEFF'+head.join('\n')+'\nОперации:\n\n'+(blocks.length?blocks.join('\n'):'Операций с фрезами нет: в DXF только векторы.\n');
+    const cell=value=>`"${String(value).replace(/"/g,'""')}"`;
+    const csvHead=['№','Операция','Слой DXF','Стратегия ArtCAM','Фреза','Диаметр, мм','Глубина, мм','Глубина прохода, мм','Сторона','Припуск, мм','Направление','Насквозь','Примечание'];
+    const csv='\uFEFF'+[csvHead,...operations.map(op=>[op.no,op.title,op.layer,op.strategy,op.cutter,op.diameter,op.depth,op.stepdown||'',op.side,op.allowance||'',op.feed,op.thru?'да':'нет',op.note])].map(row=>row.map(cell).join(';')).join('\r\n')+'\r\n';
+    return{text,csv};
+  }
+  function exportArtcamPackage() {
+    stateFromInputs();
+    if(activeView==='nest'){alert('Пакет ArtCAM собирается для текущего изделия. Для карты раскроя используйте «Экспорт карты DXF».');return;}
+    const issues=geometryIssues();
+    if(issues.length){$('footerStatus').textContent=issues[0];alert(`Проверьте геометрию перед экспортом:\n${issues.join('\n')}`);return;}
+    try{
+      const pack=buildArtcamPackage(),texts=artcamPackageTexts(pack.operations),encoder=new TextEncoder();
+      const base=`artcam_${artcamSlug(state.name||typeLabel(state.objectType,state.kind),20).toLowerCase()}_${state.width}x${state.height}`;
+      const zip=makeZip([{name:`${base}.dxf`,data:encoder.encode(pack.dxf)},{name:`${base}_operations.txt`,data:encoder.encode(texts.text)},{name:`${base}_operations.csv`,data:encoder.encode(texts.csv)}]);
+      download(`${base}.zip`,zip,'application/zip');
+      $('footerStatus').textContent=`Пакет ArtCAM сохранён: DXF со слоями по операциям (${pack.operations.length}) и таблица операций`;
+    }catch(error){$('footerStatus').textContent='Пакет ArtCAM не создан';alert(`Не удалось создать пакет ArtCAM: ${error.message}`);}
+  }
   function download(name,content,type) {
     const link=document.createElement('a'),url=URL.createObjectURL(new Blob([content],{type}));
     link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
@@ -3860,6 +3996,11 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
   $('importArtcamCutters').addEventListener('click',()=>$('artcamToolPicker').click());
   $('artcamToolPicker').addEventListener('change',async event=>{
     const files=[...event.target.files];if(!files.length)return;
+    await importArtcamToolFiles(files);
+  });
+  async function importArtcamToolFiles(files,options={}) {
+    // files — объекты с name и arrayBuffer() (File или поток из проекта .art); options.silent — без окон об ошибках
+    let result={added:0,message:''};
     try{
       const imported=[],failures=[];let skipped=0,unsupported=0;
       for(const file of files){
@@ -3892,11 +4033,14 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
       const profiled=added.filter(tool=>tool.profile).length,approximate=added.filter(tool=>tool.approx).length;
       const message=`Импортировано ${added.length} фрез из ${files.length} файлов ArtCAM .TDB${profiled?`; с профилем режущей кромки ${profiled}${approximate?` (приблизительных ${approximate})`:''}`:''}${upgraded?`; обновлено прежних записей ${upgraded}`:''}${skipped+unsupported?`; пропущено нечитаемых ${skipped+unsupported}`:''}${duplicates?`; повторов пропущено ${duplicates}`:''}`;
       $('footerStatus').textContent=message;
-      if(failures.length)alert(`${message}\nНе удалось прочитать:\n${failures.join('\n')}`);
+      result={added:added.length+upgraded,message,names:added.map(tool=>tool.name)};
+      if(failures.length&&!options.silent)alert(`${message}\nНе удалось прочитать:\n${failures.join('\n')}`);
     }catch(error){
-      $('footerStatus').textContent='Импорт фрез ArtCAM не выполнен';alert(`Не удалось импортировать фрезы ArtCAM: ${error.message}`);
+      result={added:0,message:error.message};
+      if(!options.silent){$('footerStatus').textContent='Импорт фрез ArtCAM не выполнен';alert(`Не удалось импортировать фрезы ArtCAM: ${error.message}`);}
     }finally{$('artcamToolPicker').value='';}
-  });
+    return result;
+  }
   $('addToCuttingList').addEventListener('click',()=>{
     stateFromInputs();
     const issues=geometryIssues();
@@ -4110,6 +4254,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     }
     const button=event.target.closest('[data-sheet]');if(!button)return;activeSheet=Number(button.dataset.sheet)||0;drawView();});
   $('exportFooter').addEventListener('click',()=>activeView==='nest'?exportCuttingDxf():exportDxf());
+  $('exportArtcam').addEventListener('click',exportArtcamPackage);
   $('toolPreset').addEventListener('change',()=>{
     state.toolPreset=$('toolPreset').value;
     const preset=cutterCatalog[state.toolPreset];
@@ -4386,6 +4531,143 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
     walk(root, [1, 0, 0, 1, 0, 0]);
     return { paths, ignored: [...ignored] };
   }
+  // ---- Проект ArtCAM (.art): контейнер OLE2. Читаем размер заготовки, материал, траектории и фрезы. ----
+  // Векторы лежат в потоке VectorDocument в зашифрованном виде — их прочитать нельзя, импортируются через DXF.
+  function readCfb(buffer) {
+    const bytes=new Uint8Array(buffer),view=new DataView(buffer);
+    if(bytes.length<512||[0xd0,0xcf,0x11,0xe0,0xa1,0xb1,0x1a,0xe1].some((value,index)=>bytes[index]!==value))throw new Error('Это не проект ArtCAM (.art): неизвестный контейнер.');
+    const sectorSize=2**view.getUint16(30,true),miniSize=2**view.getUint16(32,true);
+    if(sectorSize!==512&&sectorSize!==4096)throw new Error('Неподдерживаемый размер сектора файла.');
+    const fatCount=view.getUint32(44,true),dirStart=view.getUint32(48,true),cutoff=view.getUint32(56,true),miniStart=view.getUint32(60,true),miniCount=view.getUint32(64,true),difatStart=view.getUint32(68,true),difatCount=view.getUint32(72,true);
+    const END=0xFFFFFFF0,sectorAt=index=>{const offset=(index+1)*sectorSize;if(offset+sectorSize>bytes.length)throw new Error('Файл .art повреждён или обрезан.');return offset;};
+    const difat=[];
+    for(let index=0;index<109;index++)difat.push(view.getUint32(76+index*4,true));
+    let next=difatStart;
+    for(let count=0;count<difatCount&&next<END;count++){const offset=sectorAt(next);for(let index=0;index<sectorSize/4-1;index++)difat.push(view.getUint32(offset+index*4,true));next=view.getUint32(offset+sectorSize-4,true);}
+    const fat=[];
+    difat.slice(0,fatCount).forEach(sector=>{const offset=sectorAt(sector);for(let index=0;index<sectorSize/4;index++)fat.push(view.getUint32(offset+index*4,true));});
+    const chain=(start,limit=Infinity)=>{
+      const parts=[],seen=new Set();let total=0,sector=start;
+      while(sector<END&&!seen.has(sector)&&total<limit){seen.add(sector);const offset=sectorAt(sector);parts.push(bytes.subarray(offset,offset+sectorSize));total+=sectorSize;sector=fat[sector];}
+      const out=new Uint8Array(Math.min(total,limit===Infinity?total:limit));let position=0;
+      parts.forEach(part=>{const length=Math.min(part.length,out.length-position);if(length>0){out.set(part.subarray(0,length),position);position+=length;}});
+      return out;
+    };
+    const directory=chain(dirStart),entries=[];
+    for(let index=0;index<directory.length/128;index++){
+      const base=index*128,dv=new DataView(directory.buffer,directory.byteOffset+base,128),nameLength=dv.getUint16(64,true);
+      let name='';for(let at=0;at<Math.max(0,nameLength-2);at+=2)name+=String.fromCharCode(dv.getUint16(at,true));
+      entries.push({name,type:directory[base+66],left:dv.getUint32(68,true),right:dv.getUint32(72,true),child:dv.getUint32(76,true),start:dv.getUint32(116,true),size:dv.getUint32(120,true)+dv.getUint32(124,true)*4294967296});
+    }
+    const root=entries[0];
+    const miniStream=root&&root.size?chain(root.start,root.size):new Uint8Array(0);
+    let miniFat=[];
+    if(miniCount){const raw=chain(miniStart),mv=new DataView(raw.buffer,raw.byteOffset,raw.byteLength);for(let index=0;index<raw.length/4;index++)miniFat.push(mv.getUint32(index*4,true));}
+    const readEntry=entry=>{
+      if(entry.size<cutoff){
+        const parts=[],seen=new Set();let sector=entry.start;
+        while(sector<END&&!seen.has(sector)){seen.add(sector);parts.push(miniStream.subarray(sector*miniSize,sector*miniSize+miniSize));sector=miniFat[sector];}
+        const out=new Uint8Array(entry.size);let position=0;
+        parts.forEach(part=>{const length=Math.min(part.length,out.length-position);if(length>0){out.set(part.subarray(0,length),position);position+=length;}});
+        return out;
+      }
+      return chain(entry.start,entry.size);
+    };
+    const streams=new Map();
+    const walk=(index,path)=>{
+      if(index===0xFFFFFFFF||index>=entries.length||path.split('/').length>16)return;
+      const entry=entries[index];
+      walk(entry.left,path);
+      const full=`${path}/${entry.name}`;
+      if(entry.type===2)streams.set(full,entry);
+      if(entry.type===1||entry.type===5)walk(entry.child,full);
+      walk(entry.right,path);
+    };
+    walk(root.child,'');
+    return{has:path=>streams.has(path),list:()=>[...streams.keys()],read:path=>streams.has(path)?readEntry(streams.get(path)):null,size:path=>streams.has(path)?streams.get(path).size:0};
+  }
+  function artUtf16Strings(bytes) {
+    // Строки MFC идут с произвольным выравниванием — просматриваем обе чётности и возвращаем в порядке следования
+    const found=[];
+    for(const parity of [0,1]){
+      let current='',startAt=0;
+      for(let index=parity;index+1<bytes.length;index+=2){
+        const code=bytes[index]|(bytes[index+1]<<8);
+        if(code>=0x20&&(code<0x7f||(code>=0xa0&&code<=0x4ff))){if(!current)startAt=index;current+=String.fromCharCode(code);}
+        else{if(current.length>=3)found.push({at:startAt,text:current});current='';}
+      }
+      if(current.length>=3)found.push({at:startAt,text:current});
+    }
+    found.sort((a,b)=>a.at-b.at);
+    // строка, найденная на другой чётности внутри уже найденной, — мусор
+    const out=[];let lastEnd=-1;
+    found.forEach(item=>{if(item.at>=lastEnd){out.push(item.text);lastEnd=item.at+item.text.length*2;}});
+    return out;
+  }
+  function parseArtProject(buffer) {
+    const cfb=readCfb(buffer),project={width:null,height:null,thickness:null,toolpaths:[],toolStream:null,hasVectors:false,vectorBytes:0};
+    if(!cfb.list().some(path=>path.startsWith('/ArtCAM/')))throw new Error('В файле нет данных ArtCAM.');
+    const relief=cfb.read('/ArtCAM/Reliefs/Relief1')||cfb.read('/ArtCAM/ReliefLayers/Layer1/Relief');
+    if(relief){
+      const head=new TextDecoder('latin1').decode(relief.subarray(0,2048)),match=/relief is\s+([\d.]+)\s*mm wide by\s+([\d.]+)\s*mm high/i.exec(head);
+      if(match){project.width=Number(match[1]);project.height=Number(match[2]);}
+    }
+    const thickness=cfb.read('/ArtCAM/Material/MaterialThickness');
+    if(thickness&&thickness.length===8){const value=new DataView(thickness.buffer,thickness.byteOffset,8).getFloat64(0,true);if(Number.isFinite(value)&&Math.abs(value)>0.001&&Math.abs(value)<1000)project.thickness=Math.round(Math.abs(value)*1000)/1000;}
+    project.vectorBytes=cfb.size('/ArtCAM/Models/Model1/VectorDocument');project.hasVectors=project.vectorBytes>128;
+    const list=cfb.read('/ArtCAM/ToolpathData/#UnicodeToolpathList');
+    if(list)artUtf16Strings(list).filter(id=>/^[A-Za-z0-9]{20,40}$/.test(id)).forEach(id=>{
+      const parameters=cfb.read(`/ArtCAM/ToolpathData/${id}/Parameters`);
+      if(!parameters)return;
+      const strings=artUtf16Strings(parameters).filter(text=>/[A-Za-zА-Яа-я]/.test(text));
+      if(strings.length)project.toolpaths.push({tool:strings[0].trim(),name:strings[strings.length-1].trim()});
+    });
+    project.toolStream=cfb.read('/ArtCAM/OA_ToolpathData/OA_TOOLPATH_MANAGER');
+    return project;
+  }
+  $('impArt').addEventListener('click',()=>$('artProjectPicker').click());
+  $('openArtButton').addEventListener('click',()=>$('artProjectPicker').click());
+  $('artProjectPicker').addEventListener('change',async event=>{
+    const file=event.target.files[0];if(!file)return;
+    try{
+      if(file.size>400*1024*1024)throw new Error('Файл больше 400 МБ.');
+      const project=parseArtProject(await file.arrayBuffer());
+      let toolsText='фрез в проекте не найдено';
+      if(project.toolStream&&project.toolStream.length>64){
+        const result=await importArtcamToolFiles([{name:file.name,arrayBuffer:async()=>project.toolStream.buffer.slice(project.toolStream.byteOffset,project.toolStream.byteOffset+project.toolStream.byteLength)}],{silent:true});
+        toolsText=result.added?`в каталог фрез добавлено: ${result.added}${result.names&&result.names.length?` (${result.names.slice(0,6).join(', ')}${result.names.length>6?'…':''})`:''}`:'фрезы проекта уже есть в каталоге или не распознаны';
+      }
+      // Фрезы траекторий, которых нет в блоке инструментов: создаём по названию (Ø и угол из текста), помечаем приблизительными
+      const known=new Set(customCutters.map(tool=>tool.name.toLocaleLowerCase())),extra=[],unknown=[];
+      [...new Set(project.toolpaths.map(item=>item.tool))].forEach(name=>{
+        if(known.has(name.toLocaleLowerCase()))return;
+        const guess=tdbGuessFromName(name,0);
+        if(!guess){unknown.push(name);return;}
+        const item={name:name.slice(0,80),shape:guess.shape,width:Number(guess.width.toFixed(4)),source:'ArtCAM TDB',exact:false,approx:true};
+        if(guess.profile){item.profile=guess.profile.points;item.profileRadius=Number(guess.profile.radius.toFixed(4));item.profileHeight=Number((Math.max(...guess.profile.points.map(point=>point[1]))*guess.profile.radius).toFixed(3));}
+        extra.push(item);
+      });
+      if(extra.length){
+        let nextId=Math.max(0,...customCutters.map(tool=>tool.id));
+        const combined=[...customCutters,...extra.map(tool=>({...tool,id:++nextId}))];
+        try{localStorage.setItem('fasadlab-cutters',JSON.stringify(combined));customCutters=combined;renderCutterOptions();renderProfileBands();renderTemplateButtons();}
+        catch(error){unknown.push(...extra.map(tool=>tool.name));}
+      }
+      if(extra.length)toolsText+=`${toolsText.includes('не найдено')?'':'; '}по названию (приблизительно): ${extra.map(tool=>tool.name).join(', ')}`;
+      if(unknown.length)toolsText+=`; не распознаны (создайте вручную): ${unknown.join(', ')}`;
+      const lines=[`Проект ArtCAM: ${file.name}`,'',project.width?`Заготовка: ${project.width} × ${project.height} мм`:'Размер заготовки не определён',project.thickness?`Материал (толщина): ${project.thickness} мм`:'Толщина материала не определена',`Фрезы: ${toolsText}`,project.toolpaths.length?`Траектории (${project.toolpaths.length}):\n  • ${project.toolpaths.map(item=>`${item.name} — ${item.tool}`).join('\n  • ')}`:'Траекторий в проекте нет',''];
+      if(project.hasVectors)lines.push('Векторы ArtCAM хранит в зашифрованном виде, программа их прочитать не может. Выгрузите векторы из ArtCAM в DXF (или SVG) и загрузите кнопкой «Загрузить SVG / DXF…».','');
+      const canApply=project.width&&project.height&&!state.kind;
+      $('footerStatus').textContent=`Проект ArtCAM прочитан: ${project.width&&project.height?`${project.width} × ${project.height} мм, `:''}траекторий ${project.toolpaths.length}`;
+      if(canApply&&confirm(`${lines.join('\n')}\nПрименить размер заготовки${project.thickness?' и толщину':''} к текущему изделию?`)){
+        snapshot();
+        const apply=(id,value)=>{$(id).value=value;$(id).dispatchEvent(new Event('input',{bubbles:true}));$(id).dispatchEvent(new Event('change',{bubbles:true}));};
+        apply('width',project.width);apply('height',project.height);if(project.thickness)apply('thickness',project.thickness);
+        $('footerStatus').textContent=`Размер изделия задан по проекту ArtCAM: ${project.width} × ${project.height} мм`;
+      }else if(!canApply)alert(lines.join('\n'));
+    }catch(error){$('footerStatus').textContent='Проект ArtCAM не открыт';alert(`Не удалось открыть проект ArtCAM: ${error.message}`);}
+    finally{$('artProjectPicker').value='';}
+  });
   $('vectorPicker').addEventListener('change',async event=>{
     const file=event.target.files[0];if(!file)return;
     if(file.name.toLowerCase().endsWith('.dxf')){
