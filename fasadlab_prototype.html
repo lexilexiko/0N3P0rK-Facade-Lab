@@ -14,7 +14,7 @@ header{height:62px;padding:0 16px;display:flex;align-items:center;gap:12px;borde
 .app{height:calc(100vh - 105px);min-height:0;padding:7px;display:grid;grid-template-columns:minmax(230px,285px) minmax(320px,1fr) minmax(215px,250px);grid-template-rows:minmax(0,1fr);gap:7px}
 .column{min-height:0;display:flex;flex-direction:column;gap:7px}.panel{min-height:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden}.panel-title{height:36px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);font-weight:650}.panel-title .sub{font-weight:400}.panel-body{padding:10px}
 .left-scroll,.right-scroll{overflow:auto;min-height:0;display:flex;flex-direction:column;gap:7px;scrollbar-color:#3b4d66 #182334;scrollbar-width:thin}.left-scroll,.right-scroll{min-width:0}.left-scroll>.panel,.right-scroll>.panel{flex:none}
-.templates-panel{flex:1}.templates{padding:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.template{height:84px;text-align:left;padding:4px;position:relative;background:#151e2a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:#dce6f2}.template svg{height:53px;width:52px}.template small{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.template.active{border-color:#1488ff;box-shadow:inset 0 0 0 1px #1488ff;color:#72bdff}.field{min-width:0}.field label{display:block;font-size:11px;color:#c1cddd;margin-bottom:4px}.field input,.field select{width:100%;height:30px;padding:4px 8px;color:var(--text);background:#111925;border:1px solid #304158;border-radius:6px;outline:none}.field input:focus,.field select:focus{border-color:#248dff}.field input[type=checkbox]{width:15px;height:15px;vertical-align:middle;accent-color:var(--blue)}.fields{display:grid;grid-template-columns:1fr 1fr;gap:9px 8px}.fields.single{grid-template-columns:1fr}.check-row{display:flex;align-items:center;gap:7px;color:#c5d2e2;font-size:11px}
+.engrave-row{display:flex;gap:8px;align-items:center;font-size:12px;margin:2px 0}.engrave-row input{width:auto}.sharp-box{margin-top:10px;padding:8px;border:1px dashed var(--line);border-radius:8px;display:flex;flex-direction:column;gap:7px}.sharp-title{font-weight:700;font-size:12px;opacity:.85}.templates-panel{flex:1}.templates{padding:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.template{height:84px;text-align:left;padding:4px;position:relative;background:#151e2a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:#dce6f2}.template svg{height:53px;width:52px}.template small{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.template.active{border-color:#1488ff;box-shadow:inset 0 0 0 1px #1488ff;color:#72bdff}.field{min-width:0}.field label{display:block;font-size:11px;color:#c1cddd;margin-bottom:4px}.field input,.field select{width:100%;height:30px;padding:4px 8px;color:var(--text);background:#111925;border:1px solid #304158;border-radius:6px;outline:none}.field input:focus,.field select:focus{border-color:#248dff}.field input[type=checkbox]{width:15px;height:15px;vertical-align:middle;accent-color:var(--blue)}.fields{display:grid;grid-template-columns:1fr 1fr;gap:9px 8px}.fields.single{grid-template-columns:1fr}.check-row{display:flex;align-items:center;gap:7px;color:#c5d2e2;font-size:11px}
 .config-panel .panel-body{display:grid;gap:9px}.config-advanced{border-top:1px solid var(--line);padding-top:8px}.config-advanced summary{cursor:pointer;color:#bdd0e6;font-size:12px}.config-advanced .fields{margin-top:9px}.notice{border:1px solid #394359;border-radius:6px;padding:8px;background:#121b27;color:#9eacc1;font-size:10px}
 .center{display:flex;flex-direction:column;gap:7px;min-width:0;min-height:0}.view-tabs{display:flex;flex:none;padding:3px;background:#111925;border:1px solid var(--line);border-radius:7px}.view-tabs button{border:0;background:transparent;padding:6px 8px}.view-tabs button.active{background:#086adb}.header-tabs{margin-left:auto}.header-tabs button{color:#d4dde7;white-space:nowrap}.header-tabs button.active{color:white}.header-actions{margin-left:0;gap:4px}.header-actions button{padding-inline:6px}.profile-preview-panel{height:106px;min-height:106px;flex:none;display:flex;align-items:stretch;padding:5px 10px;gap:12px}.profile-preview{flex:1;min-width:0;display:flex;flex-direction:column}.profile-preview-title{height:19px;color:#625f57;font-size:10px;font-weight:650}.profile-preview svg{width:100%;height:74px;min-height:0}.edit-actions{display:flex;gap:4px;align-items:center}.edit-actions button{width:34px;height:30px;padding:2px;font-size:17px;line-height:1}.edit-actions button:disabled{opacity:.45;cursor:default}
 .canvas-panel{flex:1;display:flex;flex-direction:column}.canvas-heading{min-height:44px;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line)}.canvas-heading strong{font-size:12px}.stats{display:flex;gap:12px;color:#556478;font-size:10px;flex-wrap:wrap}.canvas{position:relative;flex:1;min-height:270px;overflow:hidden;display:grid;place-items:center;background:#f8f6ef;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}.canvas svg{height:100%;width:100%;min-height:0;user-select:none;-webkit-user-select:none}.canvas.grabbing{cursor:grabbing}.canvas.profile{background:#f3f4ed}.canvas.dark{background:#151b25}
@@ -94,6 +94,23 @@ button.active,.primary,.footer-primary{background:#356761;border-color:#356761;c
 .cutter-library-heading strong{font-size:18px}
 .cutter-library-heading button{flex:none}
 .styles-dialog{width:min(620px,100%);max-height:88vh;overflow:auto}
+.scan-dialog{width:min(760px,100%);max-height:92vh;overflow:auto}
+.scan-actions{display:flex;gap:8px;flex-wrap:wrap}
+.scan-actions button{flex:1;min-width:150px}
+.scan-preview{display:grid;place-items:center;background:#25282e;border:1px solid #a79f92;border-radius:8px;overflow:hidden;min-height:120px;max-height:46vh}
+.scan-preview canvas{display:block;max-width:100%;max-height:46vh;touch-action:none;cursor:crosshair}
+.scan-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px 14px;margin-top:10px}
+.scan-controls .field span{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#58574f;margin-bottom:4px}
+.scan-controls input[type=range]{height:24px;padding:0;background:transparent;border:0;accent-color:#1254a1}
+.scan-dialog .field input[type=checkbox]{background:#faf8f1;border:1px solid #bcb4a7}
+.scan-modes{display:grid;gap:5px;margin-top:10px;padding-top:10px;border-top:1px solid #cfc7b8}
+.scan-modes label{display:flex;gap:8px;align-items:center;color:#383831}
+.scan-modes input[type=radio]{accent-color:#1254a1;width:16px;height:16px}
+.scan-dialog #scanStats{margin-top:8px;color:#58574f}
+.scan-dialog .cutter-card-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.scan-crop-row{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:8px;flex-wrap:wrap}
+.scan-crop-row button{flex:none}
+.scan-mode-hint{margin-top:6px;color:#6c675d;line-height:1.35}
 .styles-dialog-heading{padding-right:28px}
 .styles-dialog-heading h2{margin:0;font-size:19px}
 .styles-dialog-heading p{margin:4px 0 0;color:var(--muted)}
@@ -372,7 +389,7 @@ body.hide-hint #canvasHint{display:none}
           <label class="field"><span>Ширина, мм</span><input id="newWidth" type="number" min="1" max="3000" value="596"></label>
           <label class="field"><span>Высота, мм</span><input id="newHeight" type="number" min="1" max="3000" value="716"></label>
         </div>
-        <button type="button" id="importAsNew" class="generate-style import-new" title="Загрузить DXF или SVG: изделие создастся по размеру чертежа, контуры получат фрезу">⤓ Импорт чертежа как изделие (DXF / SVG)</button><button type="button" id="generateStyle" class="generate-style" title="Случайный стиль для текущего изделия: фасад, витрина, цулага, профиль или гребёнка — формы, отступы, фрезы">🎲 Генератор стиля</button>
+        <button type="button" id="importAsNew" class="generate-style import-new" title="Загрузить DXF или SVG: изделие создастся по размеру чертежа, контуры получат фрезу">⤓ Импорт чертежа как изделие (DXF / SVG)</button><button type="button" id="scanDrawing" class="generate-style import-new" title="Камера или фото: разрез фасада → вектора с фрезами, либо обводка линий чертежа, либо фреза из торца — режим выбирается в окне">📷 Скан по фото (разрез / чертёж)</button><button type="button" id="generateStyle" class="generate-style" title="Случайный стиль для текущего изделия: фасад, витрина, цулага, профиль или гребёнка — формы, отступы, фрезы">🎲 Генератор стиля</button>
       </div>
     </section>
     <section class="panel config-panel">
@@ -514,6 +531,8 @@ body.hide-hint #canvasHint{display:none}
           <div class="field"><label for="vectorDepth">Глубина реза, мм</label><input id="vectorDepth" type="number" min="0.1" max="18" step="0.1" value="3"></div>
         </div>
         <div class="field"><label for="vectorCutSide">Фрезеровать</label><select id="vectorCutSide"><option value="on">Вдоль вектора (центр фрезы по линии)</option><option value="outside">Снаружи вектора (фреза за линией)</option><option value="inside">Внутри вектора (фреза в пределах линии)</option></select></div>
+        <label class="engrave-row" id="vectorEngraveRow"><input type="checkbox" id="vectorEngrave"> Гравировка острых углов (как в АртКам)</label>
+        <div class="notice vector-note hidden" id="vectorEngraveInfo">В каждом углу фреза выходит по биссектрисе к внешнему углу канавки, глубина плавно уходит в 0 — углы получаются острыми, а не круглыми.</div>
         <div class="fields">
           <div class="field"><label for="vectorAllowance">Припуск, мм</label><input id="vectorAllowance" type="number" min="0" step="0.05" value="0"></div>
           <div class="field"><label for="vectorStepdown">Глубина прохода, мм</label><input id="vectorStepdown" type="number" min="0" step="0.1" value="0" placeholder="0 — за раз"></div>
@@ -524,6 +543,19 @@ body.hide-hint #canvasHint{display:none}
         <button type="button" id="addVectorCutter">＋ Добавить фрезу к вектору</button>
         <div class="notice vector-note">Эскиз сечения рассчитывается по выбранному типу фрезы и размерам. Сверьте форму режущей кромки с чертежом вашей фрезы перед обработкой.</div>
         <button class="primary" id="applyVectorSettings">Применить к вектору</button>
+        <div class="sharp-box" id="sharpCornerBox">
+          <div class="sharp-title">Острый угол</div>
+          <div class="fields">
+            <div class="field" id="sharpDirField"><label for="sharpDir">Острый угол</label><select id="sharpDir"><option value="out">Наружу</option><option value="in">Внутрь</option></select></div>
+          <div class="field hidden" id="sharpMethodField" style="display:none"><label for="sharpMethod">Способ</label><select id="sharpMethod"><option value="ell">Г-образно тонкой фрезой</option></select></div>
+          <div class="field" id="sharpSmallField"><label for="sharpSmall">Ø острой фрезы, мм</label><input id="sharpSmall" type="number" min="0.5" max="20" step="0.5" value="3"></div>
+          <div class="field" id="sharpDepthField"><label for="sharpDepth">Глубина стрелки, мм (0 — как у основной фрезы)</label><input id="sharpDepth" type="number" min="0" max="100" step="0.1" value="0"></div>
+          <div class="field hidden" id="sharpMainField"><label for="sharpMain">Ø основной фрезы, мм</label><input id="sharpMain" type="number" min="1" max="80" step="0.5" value="10"></div>
+          <button type="button" id="addSharpCorner">◣ Добавить острый угол</button>
+          <button type="button" id="removeSharpOne" class="hidden">✕ Удалить эту стрелку</button>
+          <button type="button" id="removeSharpCorners" class="hidden">Убрать все острые углы вектора</button>
+          <div class="notice vector-note" id="sharpNote">В каждый угол прямоугольного вектора ставится короткий вектор-стрелка. Назначьте ему тонкую фрезу — угол выйдет чётким. Стрелка укорачивается, чтобы не задеть соседние векторы.</div>
+        </div>
       </div>
     </section>
     <section class="panel hidden" id="vitrinaSettingsPanel">
@@ -641,7 +673,7 @@ body.hide-hint #canvasHint{display:none}
 </main>
 <div id="importPanel" class="import-panel hidden" role="dialog" aria-label="Импорт SVG и DXF">
   <div class="import-head"><b>Импорт SVG / DXF</b><span class="sub" id="impInfo">Файл не загружен</span><button type="button" id="impClose" aria-label="Закрыть">✕</button></div>
-  <div class="import-row"><span class="grp">Объект</span><button type="button" id="impLoad">Загрузить SVG / DXF…</button><button type="button" id="impArt" title="Открыть проект ArtCAM (.art): размер заготовки, материал, траектории и фрезы">Проект ArtCAM…</button><select id="impList" aria-label="Импортированные объекты"></select><button type="button" id="impDup">Дубль</button><button type="button" id="impSplit" title="Разбить на отдельные контуры, как «Ungroup» в ArtCAM">Разбить на контуры</button><button type="button" id="impDelete" class="warn">Удалить</button></div>
+  <div class="import-row"><span class="grp">Объект</span><button type="button" id="impLoad">Загрузить SVG / DXF…</button><button type="button" id="impScan" title="Фото или скан документа: программа обведёт линии чертежа и добавит контуры фрезеровки">Скан фото…</button><button type="button" id="impArt" title="Открыть проект ArtCAM (.art): размер заготовки, материал, траектории и фрезы">Проект ArtCAM…</button><select id="impList" aria-label="Импортированные объекты"></select><button type="button" id="impDup">Дубль</button><button type="button" id="impSplit" title="Разбить на отдельные контуры, как «Ungroup» в ArtCAM">Разбить на контуры</button><button type="button" id="impDelete" class="warn">Удалить</button></div>
   <div class="import-row"><span class="grp">Положение</span><label>X слева <input id="impX" type="number" step="0.1"></label><label>Y снизу <input id="impY" type="number" step="0.1"></label><label>Ширина <input id="impW" type="number" step="0.1" min="0.1"></label><label>Высота <input id="impH" type="number" step="0.1" min="0.1"></label><label><input id="impProp" type="checkbox" checked>пропорционально</label><button type="button" id="impApplyBox">Применить</button></div>
   <div class="import-row"><span class="grp">Масштаб</span><label><input id="impScale" type="number" value="100" step="1" min="1"> %</label><button type="button" id="impApplyScale">Масштабировать</button><button type="button" id="impFit" title="Вписать в фасад с сохранением пропорций">Вписать в фасад</button><button type="button" id="impStretch" title="Растянуть на весь фасад (пропорции изменятся)">Растянуть</button><label>Отступ <input id="impMargin" type="number" value="0" min="0" step="1"> мм</label></div>
   <div class="import-row"><span class="grp">Поворот</span><label><input id="impRot" type="number" value="0" step="1"> °</label><button type="button" id="impApplyRot">Задать угол</button><button type="button" data-imp-rot="-90">−90°</button><button type="button" data-imp-rot="90">+90°</button><button type="button" data-imp-rot="180">180°</button><button type="button" data-imp-rot="45">+45°</button><span class="grp" style="min-width:auto;margin-left:10px">Зеркало</span><button type="button" id="impMirrorH">↔ по горизонтали</button><button type="button" id="impMirrorV">↕ по вертикали</button></div>
@@ -652,11 +684,12 @@ body.hide-hint #canvasHint{display:none}
 <section id="printDocument" class="print-document" aria-hidden="true"></section>
 <input id="projectPicker" type="file" accept=".json,application/json">
 <input id="vectorPicker" type="file" accept=".svg,.dxf,.dwg,image/svg+xml,application/dxf"><input id="artProjectPicker" type="file" accept=".art" hidden>
-<input id="artcamToolPicker" type="file" accept=".tdb" multiple hidden><input id="dxfCutterPicker" type="file" accept=".dxf" hidden>
+<input id="artcamToolPicker" type="file" accept=".tdb" multiple hidden><input id="dxfCutterPicker" type="file" accept=".dxf" hidden><input id="scanCameraPicker" type="file" accept="image/*" capture="environment" hidden><input id="scanFilePicker" type="file" accept="image/*,.svg,image/svg+xml" hidden>
 <div id="stylesOverlay" class="modal-overlay hidden"><section class="modal-card styles-dialog" role="dialog" aria-modal="true" aria-labelledby="stylesDialogTitle"><button class="modal-close" id="closeStyles" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="stylesDialogTitle">Шаблоны изделий</h2><p>Выберите тип шаблона и примените сохранённые настройки к изделию.</p></div><div class="styles-dialog-controls"><label class="field" for="styleTypeFilter">Тип изделия<select id="styleTypeFilter"><option value="facade">Фасад</option><option value="vitrina">Витрина</option><option value="profile">Профиль</option><option value="tsulaga">Цулага</option><option value="comb">Гребёнка</option></select></label><div class="field"><label for="styleName">Название нового шаблона</label><input id="styleName" aria-label="Название сохраняемого шаблона" maxlength="48" value="Мой шаблон" placeholder="Название шаблона"></div></div><button id="saveTemplate" class="primary" type="button">＋ Сохранить текущие настройки как шаблон</button><div id="stylesList" class="styles-list" aria-live="polite"></div><button class="primary" id="closeStylesFooter" type="button">Готово</button></section></div>
 <div id="cutterLibraryOverlay" class="modal-overlay hidden"><section class="modal-card cutter-library-card" role="dialog" aria-modal="true" aria-labelledby="cutterLibraryTitle"><button class="modal-close" id="closeCutterLibrary" aria-label="Закрыть">×</button><div class="cutter-library-heading"><div><strong id="cutterLibraryTitle">Библиотека фрез</strong><p>Из .TDB читается реальный профиль режущей кромки: узорные, фасонные и конические фрезы показываются своей формой в виде сверху, в разрезе и в карточке. Профили по параметрам (Ogee, Roman Ogee, Roundover) считаются точно; приблизительные помечены «≈».</p></div><div class="cutter-card-actions"><button id="importArtcamCutters" type="button">Импорт ArtCAM .TDB</button><button id="importDxfCutter" type="button" title="Открытый вектор — половина профиля фрезы, как в ArtCAM Custom Form">Фреза из профиля DXF</button></div></div><div id="customCutterEditor" class="cutter-library-form hidden"><strong>Редактирование импортированной фрезы</strong><div class="field"><label for="customCutterName">Название</label><input id="customCutterName" maxlength="40"></div><div class="fields"><div class="field"><label for="customCutterShape">Тип профиля</label><select id="customCutterShape"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="roundover">Радиус кромки (скругление)</option><option value="wave">Волновая / другая</option><option value="form">Профиль из ArtCAM</option></select></div><div class="field"><label for="customCutterWidth">Диаметр / ширина, мм</label><input id="customCutterWidth" type="number" min="0.1" step="0.1"></div></div><div class="cutter-card-actions"><button id="saveCustomCutter" class="primary" type="button">Сохранить изменения</button><button id="cancelCutterEdit" type="button">Отмена</button></div></div><h3 class="cutter-catalog-title">Стандартные и импортированные фрезы</h3><div class="field"><input id="cutterSearch" type="search" placeholder="Поиск по названию или группе" aria-label="Поиск фрезы"><div class="cutter-card-meta" id="cutterCount"></div></div><div id="customCutterList" class="cutter-catalog"></div><div class="notice">Профиль узорных фрез (Custom Form) читается из .TDB точно: линии и дуги в долях диаметра. Для Ogee, Roman Ogee, Roundover и Veining контур считается по параметрам из файла (диаметр, радиус дуги, внутренний диаметр, ступень) по определению ArtCAM; для Raised Panel смысл параметров в файле не раскрыт, поэтому форма приблизительная (помечена «≈»). Незнакомые типы фрез и другие версии базы не отбрасываются: фреза добавляется по названию и размеру (тоже с «≈»). Параметры резания не импортируются; проверьте инструмент и обработку в ArtCAM.</div><button class="primary" id="closeCutterLibraryFooter">Готово</button></section></div>
 
 <div id="aboutOverlay" class="modal-overlay hidden"><section class="modal-card"><button class="modal-close" id="closeAbout" aria-label="Закрыть">×</button><div class="brand-name"><span>Фасад</span>Лаб</div><p>Редактор фасадов, профилей и карт раскроя.</p><div class="about-credit"><b>Программист</b><span>L3xik0</span><b>Дополнительный агент</b><span>Евгений Жуков</span><b>Версия</b><span>0.7.1</span></div><button class="primary" id="aboutOk">Закрыть</button></section></div>
+<div id="scanOverlay" class="modal-overlay hidden"><section class="modal-card scan-dialog" role="dialog" aria-modal="true" aria-labelledby="scanTitle"><button class="modal-close" id="scanClose" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="scanTitle">Скан по фото</h2><p>Фото или снимок камеры: «Разрез фасада» — программа найдёт вырезы и выставит вектора с фрезами из вашей библиотеки; «Рисунок» — обведёт линии и смонтирует их в текущий фасад. На Android кнопка камеры открывает снимок сразу, «Выбрать изображение» — галерею или файл.</p></div><div class="scan-actions"><button type="button" id="scanCameraBtn">📷 Снять на камеру</button><button type="button" id="scanFileBtn">🖼 Выбрать изображение…</button></div><div id="scanEmpty" class="styles-empty">Изображение ещё не загружено. Снимите чертёж камерой или выберите фото / скан.</div><div id="scanWork" class="hidden"><div class="scan-preview"><canvas id="scanCanvas"></canvas></div><div class="scan-controls"><label class="field"><span>Порог яркости <b id="scanThresholdVal">128</b></span><input id="scanThreshold" type="range" min="0" max="255" value="128"></label><label class="field"><span>Точность обводки, px <b id="scanToleranceVal">1.5</b></span><input id="scanTolerance" type="range" min="0.3" max="5" step="0.1" value="1.5"></label><label class="field"><span>Отсечь мелочь, px <b id="scanMinSizeVal">4</b></span><input id="scanMinSize" type="range" min="0" max="30" step="1" value="4"></label><label class="field"><span id="scanWidthLabel">Реальная ширина чертежа, мм</span><input id="scanWidthMm" type="number" min="1" max="3000" value="600"></label><label class="field scan-invert"><span>Инверсия (светлые линии на тёмном)</span><input id="scanInvert" type="checkbox"></label><div id="scanSectionControls" class="hidden" style="grid-column:1/-1;display:grid;gap:10px 14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))"><label class="field"><span>Что на снимке</span><select id="scanPart"><option value="full">Весь фасад (от края до края)</option><option value="left">Левая часть: от левого края фасада</option><option value="right">Правая часть: до правого края фасада</option><option value="custom">Участок из середины (задать смещение)</option></select></label><label class="field"><span>Масштаб снимка</span><select id="scanScaleBy"><option value="thick">По толщине фасада (низ находится сам)</option><option value="width">По ширине между зелёными линиями</option></select></label><label class="field" id="scanThicknessField"><span>Реальная толщина фасада, мм</span><input id="scanThicknessMm" type="number" min="1" max="100" step="0.1" value="19"></label><label class="field hidden" id="scanOffsetField"><span>Смещение от левого края фасада до начала участка, мм</span><input id="scanOffsetMm" type="number" min="0" max="3000" step="0.5" value="0"></label><label class="field"><span>Начало участка на снимке <b id="scanStartVal">0%</b></span><input id="scanStart" type="range" min="0" max="100" step="0.1" value="0"></label><label class="field"><span>Конец участка на снимке <b id="scanEndVal">100%</b></span><input id="scanEnd" type="range" min="0" max="100" step="0.1" value="100"></label><div class="sub" style="grid-column:1/-1">Зелёные линии на снимке — границы участка. Совместите левую с краем фасада (или с тем местом, откуда нужно считать), правую — с концом: всё за линиями игнорируется. «Реальная ширина» — ширина именно между зелёными линиями.</div></div></div><div class="sub" id="scanStats">Контуров: 0</div><div class="scan-crop-row"><span class="sub" id="scanCropHint">Проведите пальцем или мышью по фото — область обрежется, обводка будет только внутри неё.</span><button type="button" id="scanCropReset">✂ Сбросить выделение</button></div></div><div class="scan-modes"><label><input type="radio" name="scanMode" value="section" checked> Разрез фасада → определить вектора и выставить фрезы из имеющихся</label><label><input type="radio" name="scanMode" value="add"> Рисунок → смонтировать в текущий фасад (опорные контуры)</label></div><div class="sub scan-mode-hint" id="scanModeHint"></div><div class="cutter-card-actions"><button type="button" id="scanCancel">Отмена</button><button type="button" id="scanApply" class="primary">Создать контуры</button></div></section></div>
 <script>
 // Встроенная читалка ASCII DXF (замена внешнему dxf-parser, который в веб-версии недоступен).
 // Интерфейс совместим: new DxfParser().parseSync(text) -> { entities, blocks }.
@@ -1018,7 +1051,7 @@ body.hide-hint #canvasHint{display:none}
     const valid=pass=>pass.cutter!=='none'&&cutterShape(pass.cutter)&&Number.isFinite(Number(pass.diameter))&&Number(pass.diameter)>0&&Number.isFinite(Number(pass.depth))&&Number(pass.depth)>0;
     const main={cutter:contour.cutter,diameter:Number(contour.diameter),depth:Number(contour.depth)};
     const extras=Array.isArray(contour.additionalCutters)?contour.additionalCutters:[];
-    return[...(valid(main)?[{...main,...common}]:[]),...extras.filter(valid).map(pass=>({...pass,...own(pass)}))];
+    return[...(valid(main)?[{...main,...common,engrave:!!contour.engraveCorners}]:[]),...extras.filter(valid).map(pass=>({...pass,...own(pass)}))];
   }
   function newExtraPass() {
     return{cutter:'flat',diameter:6,depth:Math.min(3,Number(state.thickness)),side:$('vectorCutSide').value||'on',allowance:Math.max(0,Number($('vectorAllowance').value)||0),stepdown:Math.max(0,Number($('vectorStepdown').value)||0),feed:$('vectorFeed').value==='conventional'?'conventional':'climb'};
@@ -1069,6 +1102,22 @@ body.hide-hint #canvasHint{display:none}
     else if(contour.shape==='chamfer'){const base=corner||Math.min(bounds.width,bounds.height)*.08;clone.corner=Math.max(0,base+delta*(2-Math.SQRT2));}
     else if(ARCH_SHAPES.includes(contour.shape))clone.rise=archRiseValue(contour,bounds.width,bounds.height)+delta;
     return{contour:clone,bounds:nb};
+  }
+  const SHARP_CORNERS=[[1,1],[-1,1],[-1,-1],[1,-1]];
+  // Гравировка острых углов: из угла линии прохода к внешнему углу канавки, глубина от полной до 0.
+  function engraveCornerPoints(b,pass) {
+    const R=Number(pass.diameter)/2,al=Number(pass.allowance)||0,list=[];
+    SHARP_CORNERS.forEach(([sx,sy],i)=>{
+      const kx=sx>0?b.x:b.x+b.width,ky=sy>0?b.y:b.y+b.height,c=pass.side==='inside'?R+al:pass.side==='outside'?-(R+al):0;
+      const cx=kx+sx*c,cy=ky+sy*c;list.push({i,from:{x:cx,y:cy},to:{x:cx-sx*R,y:cy-sy*R}});
+    });
+    return list;
+  }
+  function engraveSpikes(b,pass,scale,ox,oy) {
+    return engraveCornerPoints(b,pass).map(p=>{
+      const x0=ox+p.from.x*scale,y0=oy+p.from.y*scale,x1=ox+p.to.x*scale,y1=oy+p.to.y*scale;
+      return `<g pointer-events="none"><path d="M ${x0} ${y0} L ${x1} ${y1}" fill="none" stroke="#c0392b" stroke-width="1.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle cx="${x1}" cy="${y1}" r="2" fill="#c0392b"/></g>`;
+    }).join('');
   }
   function passToolPath(contour,pass,scale,originX,originY,bounds) {
     const geometry=offsetContourGeometry(contour,bounds,passDelta(pass));
@@ -1208,7 +1257,7 @@ body.hide-hint #canvasHint{display:none}
     const customCards=matches.map(item=>{
       const form=item.shape==='form'&&item.profile;
       const preview=form?cutterToolIllustration(item):cutterIllustration(item.shape,item.width,Math.min(item.width/2,1));
-      const meta=form?`${item.source==='DXF'?'Профиль из DXF':'Профиль из ArtCAM'}${item.approx?' (приблизительный)':item.derived?' (по параметрам)':''} · Ø ${esc(item.width)} мм · высота ${esc(item.profileHeight||'—')} мм`:`${esc(cutterLabel(item.shape))} · ${esc(item.width)} мм`;
+      const meta=form?`${item.source==='Скан'?'Профиль из скана':item.source==='DXF'?'Профиль из DXF':'Профиль из ArtCAM'}${item.approx?' (приблизительный)':item.derived?' (по параметрам)':''} · Ø ${esc(item.width)} мм · высота ${esc(item.profileHeight||'—')} мм`:`${esc(cutterLabel(item.shape))} · ${esc(item.width)} мм`;
       return `<article class="cutter-card"><div class="cutter-card-preview">${preview}</div><div><div class="cutter-card-name" title="${esc(item.sourceFile||'')}">${esc(item.name)}</div><div class="cutter-card-meta">${meta}${item.group?`<br>${esc(item.group)}`:''}</div><div class="cutter-card-actions"><button type="button" data-edit-cutter="${item.id}" aria-label="Редактировать фрезу ${esc(item.name)}">Изменить</button><button type="button" data-delete-cutter="${item.id}" aria-label="Удалить фрезу ${esc(item.name)}">Удалить</button></div></div></article>`;
     }).join('');
     $('customCutterList').innerHTML=($('customCutterList').dataset.builtin||'')+customCards+(query&&!matches.length?'<div class="notice">Среди импортированных фрез ничего не найдено.</div>':'');
@@ -2015,6 +2064,7 @@ body.hide-hint #canvasHint{display:none}
     $('vectorSettingsTitle').textContent=isBase?typeLabel(state.objectType,state.kind):'Вектор';
     $('selectedVectorLabel').textContent=isBase?'':(contour?.name||'');
     if(isBase){
+      syncSharpBox(null);$('vectorEngrave').checked=false;$('vectorEngrave').disabled=true;$('vectorEngraveInfo').classList.add('hidden');
       renderAdditionalVectorCutters(null,true);$('vectorRiseField').classList.add('hidden');
       $('vectorCutter').previousElementSibling.textContent='Фреза основного контура';
       $('applyVectorSettings').textContent='Применить к основному контуру';
@@ -2023,13 +2073,16 @@ body.hide-hint #canvasHint{display:none}
       renderCutSideInfo();
       return;
     }
-    if(!contour){renderAdditionalVectorCutters(null);return;}
+    if(!contour){syncSharpBox(null);$('vectorEngrave').disabled=true;renderAdditionalVectorCutters(null);return;}
     $('vectorCutter').previousElementSibling.textContent='Фреза / профиль';
     $('applyVectorSettings').textContent='Применить к вектору';
+    syncSharpBox(contour);
     $('vectorShape').value=contour.shape;$('vectorDirection').value=contour.direction;$('vectorRise').value=Number(contour.rise)||0;updateRiseField();
     $('vectorOffset').value=contour.offset;$('vectorCorner').value=contour.corner;
     $('vectorCutter').value=contour.cutter;$('vectorDiameter').value=contour.diameter;$('vectorDepth').value=contour.depth;
     $('vectorCutSide').value=contour.side||'on';$('vectorAllowance').value=contour.allowance||0;$('vectorStepdown').value=contour.stepdown||0;$('vectorFeed').value=contour.feed||'climb';
+    $('vectorEngrave').checked=!!contour.engraveCorners&&contour.shape==='rect';$('vectorEngrave').disabled=contour.shape!=='rect';
+    $('vectorEngraveInfo').classList.toggle('hidden',!$('vectorEngrave').checked);
     renderCutSideInfo();
     renderAdditionalVectorCutters(contour);
   }
@@ -2156,8 +2209,14 @@ body.hide-hint #canvasHint{display:none}
       const path=contourPath(contour,scale,x,y),selected=contour.id===state.selectedContour,passes=contourCutterPasses(contour);
       const pencil=selected?'#a45f40':'#625f57';
       const contourBounds=getContourBounds(contour.id);
-      const grooves=passes.map(pass=>{const toolPath=passToolPath(contour,pass,scale,x,y,contourBounds);if(!toolPath)return '';const centerLine=pass.side!=='on'?`<path d="${toolPath}" fill="none" stroke="#a45f40" stroke-width="1" stroke-opacity=".7" stroke-dasharray="1 3" vector-effect="non-scaling-stroke"/>${passDirectionArrow(contour,pass,scale,x,y,contourBounds)}`:'';return (formGrooveMarkup(toolPath,pass.cutter,pass.diameter,pass.depth,scale)||`<path d="${toolPath}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,Math.min(16,pass.diameter*scale))}" stroke-opacity="${Math.min(.2,.08+pass.depth/Math.max(state.thickness,1)*.1)}" stroke-dasharray="2 1.5"/>`)+centerLine;}).join('');
-      return `<g data-contour="${contour.id}">${pencilContourUnder(contour,path,passes,contourBounds)}${grooves}<path d="${path}" fill="none" stroke="#656159" stroke-width="${selected?1.7:1.2}" stroke-opacity=".34" stroke-dasharray="5 1 1 1" transform="translate(.8 -.7)" vector-effect="non-scaling-stroke"/><path d="${path}" fill="none" stroke="${pencil}" stroke-width="${selected?1.9:1.35}" stroke-opacity="${selected?.95:.66}" stroke-dasharray="5 1 1 1" stroke-linecap="round" vector-effect="non-scaling-stroke"/><title>${esc(contour.name)} · ${passes.map(pass=>`${cutterLabel(pass.cutter)} · ${pass.diameter} × ${pass.depth} мм${passSideText(pass)}`).join('; ')||'без фрезеровки'}</title></g>`;
+      const grooves=passes.map(pass=>{const toolPath=passToolPath(contour,pass,scale,x,y,contourBounds);if(!toolPath)return '';const centerLine=pass.side!=='on'?`<path d="${toolPath}" fill="none" stroke="#a45f40" stroke-width="1" stroke-opacity=".7" stroke-dasharray="1 3" vector-effect="non-scaling-stroke"/>${passDirectionArrow(contour,pass,scale,x,y,contourBounds)}`:'';const spikes=(pass.engrave&&contour.shape==='rect')?engraveSpikes(contourBounds,pass,scale,x,y):'';return spikes+(formGrooveMarkup(toolPath,pass.cutter,pass.diameter,pass.depth,scale)||`<path d="${toolPath}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,Math.min(16,pass.diameter*scale))}" stroke-opacity="${Math.min(.2,.08+pass.depth/Math.max(state.thickness,1)*.1)}" stroke-dasharray="2 1.5"/>`)+centerLine;}).join('');
+      const cornerArrow=(()=>{
+        if(!contour.cornerOf||!Array.isArray(contour.arrowPts)||contour.arrowPts.length<2)return '';
+        const P=contour.arrowPts.map(p=>[x+p[0]*scale,y+p[1]*scale]),[x1,y1]=P[P.length-1],[xp,yp]=P[P.length-2],len=Math.hypot(x1-xp,y1-yp)||1,ux=(x1-xp)/len,uy=(y1-yp)/len,col=selected?'#d4491f':'#1d7a46',head=7;
+        const hp=`${x1+ux*head*.6} ${y1+uy*head*.6} ${x1-ux*head-uy*head*.5} ${y1-uy*head+ux*head*.5} ${x1-ux*head+uy*head*.5} ${y1-uy*head-ux*head*.5}`,poly=P.map(p=>p.join(' ')).join(' L ');
+        return `<path d="M ${poly}" fill="none" stroke="transparent" stroke-width="14"/><path d="M ${poly}" fill="none" stroke="${col}" stroke-width="${selected?2.6:2}" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><polygon points="${hp}" fill="${col}"/>`;
+      })();
+      return `<g data-contour="${contour.id}">${cornerArrow}${pencilContourUnder(contour,path,passes,contourBounds)}${grooves}<path d="${path}" fill="none" stroke="#656159" stroke-width="${selected?1.7:1.2}" stroke-opacity=".34" stroke-dasharray="5 1 1 1" transform="translate(.8 -.7)" vector-effect="non-scaling-stroke"/><path d="${path}" fill="none" stroke="${pencil}" stroke-width="${selected?1.9:1.35}" stroke-opacity="${selected?.95:.66}" stroke-dasharray="5 1 1 1" stroke-linecap="round" vector-effect="non-scaling-stroke"/><title>${esc(contour.name)} · ${passes.map(pass=>`${cutterLabel(pass.cutter)} · ${pass.diameter} × ${pass.depth} мм${passSideText(pass)}`).join('; ')||'без фрезеровки'}</title></g>`;
     }).join('');
     const outerPseudo={shape:state.outerCornerRadius>0||state.outerCorners?'round':'rect',corner:Number(state.outerCornerRadius)||0,cornerSet:state.outerCorners};
     const outerGroove=visible.outer?outerContourCutterPasses().map(pass=>{const outerPath=(isTs||pass.side==='on')?outer:passToolPath(outerPseudo,pass,scale,x,y,{x:0,y:0,width:state.width,height:state.height});const mark=(!isTs&&pass.side!=='on')?`<path d="${outerPath}" fill="none" stroke="#a45f40" stroke-width="1" stroke-opacity=".7" stroke-dasharray="1 3" vector-effect="non-scaling-stroke"/>${passDirectionArrow(outerPseudo,pass,scale,x,y,{x:0,y:0,width:state.width,height:state.height})}`:'';return (formGrooveMarkup(outerPath,pass.cutter,pass.diameter,pass.depth,scale)||`<path d="${outerPath}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,pass.diameter*scale)}" stroke-opacity=".14"/>`)+mark;}).join(''):'';
@@ -4402,6 +4461,177 @@ body.hide-hint #canvasHint{display:none}
     state.selectedContour=candidate.id;renderTemplateButtons();drawView();
     $('footerStatus').textContent=clamped?`${candidate.name} создан с максимально возможным отступом ${offset} мм (запрошено ${requestedOffset} мм — места не хватает)`:`${candidate.name} добавлен с отступом ${offset} мм`;
   }
+
+  // ---------- Острые углы ----------
+  const SHARP_NAMES=['левый верхний','правый верхний','правый нижний','левый нижний'];
+  const SIDE_TEXT={on:'по линии',inside:'внутри вектора',outside:'снаружи вектора'};
+  // Что именно оставило круглый угол: проходы фрезы вектора и выборки, у которых этот вектор — внешняя граница.
+  function sharpTargets(contour) {
+    const list=[];
+    contourCutterPasses(contour).forEach((pass,i)=>list.push({key:`p${i}`,shape:cutterShape(pass.cutter),cutter:pass.cutter,diameter:Number(pass.diameter),R:Number(pass.diameter)/2,side:pass.side,allowance:Number(pass.allowance)||0,depth:Number(pass.depth),label:`Фреза Ø${pass.diameter} — ${SIDE_TEXT[pass.side]}${pass.allowance?`, припуск ${pass.allowance}`:''}`}));
+    state.pockets.forEach((pocket,i)=>{
+      const region=getPocketRegion(pocket.parentId,pocket.islandId,pocket.regionType||'ring');
+      if(!region)return;
+      const mine=region.regionType==='inside'?region.islandId===contour.id:region.parent&&region.parent.id===contour.id;
+      if(mine)list.push({key:`k${i}`,R:Number(pocket.diameter)/2,side:'pocket',allowance:0,depth:Number(pocket.depth),label:`Выборка Ø${pocket.diameter} — внутри «${contour.name}»`});
+    });
+    list.push({key:'manual',R:null,side:'pocket',allowance:0,depth:Number(contour.depth)||3,label:'Свой диаметр основной фрезы…'});
+    return list;
+  }
+  function sharpResolve(contour,mode) {
+    const list=sharpTargets(contour).filter(t=>t.key!=='manual'),pockets=list.filter(t=>t.side==='pocket'),passes=list.filter(t=>t.side!=='pocket');
+    const pick=mode==='in'
+      ?(pockets[0]||passes.find(t=>t.side==='inside')||passes[0])
+      :(passes.find(t=>t.side==='on'||t.side==='outside')||passes[0]||pockets[0]);
+    return pick||null;
+  }
+  function sharpAutoMode(contour) {
+    const list=sharpTargets(contour).filter(t=>t.key!=='manual');
+    if(!list.length)return 'out';
+    const first=list.find(t=>t.side!=='pocket')||list[0];
+    return first.side==='inside'||first.side==='pocket'?'in':'out';
+  }
+  function syncSharpBox(contour) {
+    const box=$('sharpCornerBox');if(!box)return;
+    const rectLike=!!contour&&contour.shape==='rect'&&!contour.cornerOf,isCorner=!!contour?.cornerOf;
+    box.classList.toggle('hidden',!contour||(contour.shape==='free'&&!contour.cornerOf));
+    ['sharpDirField','sharpMethodField','sharpSmallField','sharpDepthField'].forEach(id=>$(id).classList.toggle('hidden',isCorner));
+    $('addSharpCorner').classList.toggle('hidden',isCorner);
+    $('addSharpCorner').disabled=!rectLike;
+    let info='';
+    if(rectLike){
+      const select=$('sharpDir');
+      const sig=`${contour.id}|${contour.side||'on'}|${contour.cutter}|${state.pockets.length}`;
+      if(select.dataset.forContour!==sig){select.dataset.forContour=sig;select.value=sharpAutoMode(contour);}
+      const pick=sharpResolve(contour,select.value);
+      $('sharpMainField').classList.toggle('hidden',!!pick);
+      info=pick?`Считаю по: ${pick.label}.`:'У вектора нет фрезы — укажите диаметр основной фрезы.';
+    }else $('sharpMainField').classList.add('hidden');
+    const baseId=contour?(contour.cornerOf||contour.id):0,has=!!contour&&state.contours.some(item=>item.cornerOf===baseId);
+    $('removeSharpCorners').classList.toggle('hidden',!has);
+    $('removeSharpOne').classList.toggle('hidden',!isCorner);
+    if(isCorner&&contour.engrave)$('sharpNote').textContent=`Гравировка угла (${contour.cornerName}): фреза идёт по стрелке из угла линии к внешнему углу канавки, глубина от ${contour.rampFrom} мм плавно до 0 — обе кромки сходятся в чёткий угол.`;
+    else if(isCorner)$('sharpNote').textContent=`Это острый угол (${contour.cornerName||'угол'}): фреза пройдёт вдоль стенок и снимет остаток от круглой фрезы. Фреза уже назначена.`;
+    else if(contour&&!rectLike)$('sharpNote').textContent='Острые углы доступны для прямоугольного вектора (форма «Прямоугольник»).';
+    else $('sharpNote').textContent=`Стрелка встанет в каждый угол и пойдёт вдоль стенок — тонкая фреза снимет остаток круга. «Внутрь/Наружу» подобрано по фрезе вектора. ${info}`;
+  }
+  // Сосед мешает, только если он не глубже стрелки: более глубокий рез уже убрал материал ниже, стрелка ему не повредит.
+  function sharpObstacles(skipIds,arrowDepth=Infinity) {
+    const segs=[],add=(pts,closed)=>{for(let i=0;i<pts.length-(closed?0:1);i++){const a=pts[i],b=pts[(i+1)%pts.length];segs.push([a.x,a.y,b.x,b.y]);}};
+    add([{x:0,y:0},{x:state.width,y:0},{x:state.width,y:state.height},{x:0,y:state.height}],true);
+    state.contours.forEach(item=>{
+      if(skipIds.has(item.id)||item.cornerOf)return;
+      const deepest=Math.max(0,...contourCutterPasses(item).map(pass=>Number(pass.depth)||0));
+      if(deepest>0&&deepest>=arrowDepth-1e-6)return;
+      try{flattenSvgPath(contourPath(item,1,0,0,getContourBounds(item.id))).forEach(part=>add(part.points,part.closed));}catch(error){}
+    });
+    return segs;
+  }
+  function sharpSegDist(px,py,s) {
+    const dx=s[2]-s[0],dy=s[3]-s[1],l2=dx*dx+dy*dy;
+    let t=l2?((px-s[0])*dx+(py-s[1])*dy)/l2:0;t=Math.max(0,Math.min(1,t));
+    return Math.hypot(px-(s[0]+t*dx),py-(s[1]+t*dy));
+  }
+  // Возвращает {p0,p1,cut} либо {blocked:true}. p0 — центр острой фрезы у самого угла, p1 — в зоне, уже выбранной основной фрезой.
+  // Остаток круглого угла: стенка в точке T, центр большой фрезы M=T+s·R. Острая фреза идёт Г-образно вдоль обеих стенок
+  // (центр на расстоянии r от стенки), ломаная A→P0→B, A и B лежат на касании с кругом большой фрезы — остаток снимается целиком.
+  function sharpCornerStroke(box,index,target,R,small,obstacles,mode) {
+    const [sx,sy]=SHARP_CORNERS[index],r=small/2,al=target.allowance||0;
+    const kx=sx>0?box.x:box.x+box.width,ky=sy>0?box.y:box.y+box.height;
+    let shift=0; // сдвиг стенки от угла вектора (наружу положительный)
+    if(mode==='out'){if(target.side==='on')shift=R;else if(target.side==='outside')shift=2*R+al;else if(target.side==='inside')shift=-al;}
+    else shift=target.side==='inside'?-al:0;
+    const tx=kx-sx*shift,ty=ky-sy*shift;
+    if(R<=r+.05)return{blocked:true,reason:'маленький'};
+    const P0={x:tx+sx*r,y:ty+sy*r},A={x:tx+sx*R,y:ty+sy*r},B={x:tx+sx*r,y:ty+sy*R};
+    const clear=r-.05,ok=pt=>obstacles.every(seg=>sharpSegDist(pt.x,pt.y,seg)>=clear);
+    if(!ok(P0))return{blocked:true};
+    // укорачиваем ветви от конца к углу, если задевают соседа
+    const trim=end=>{
+      let good=0;for(let n=1;n<=24;n++){const t=n/24,pt={x:P0.x+(end.x-P0.x)*t,y:P0.y+(end.y-P0.y)*t};if(ok(pt))good=t;else break;}
+      return{pt:{x:P0.x+(end.x-P0.x)*good,y:P0.y+(end.y-P0.y)*good},cut:good<1};
+    };
+    const a=trim(A),b=trim(B);
+    return{pts:[a.pt,P0,b.pt],cut:a.cut||b.cut,T:{x:tx,y:ty}};
+  }
+  function addSharpCorners() {
+    const contour=state.contours.find(item=>item.id===state.selectedContour);
+    if(!contour||contour.shape!=='rect'||contour.cornerOf){$('footerStatus').textContent='Выберите прямоугольный вектор';return;}
+    const mode=$('sharpDir').value==='in'?'in':'out',smallWanted=Number($('sharpSmall').value);
+    let target=sharpResolve(contour,mode),R=target?target.R:null;
+    if(!target){target={side:'pocket',allowance:0,depth:Number(contour.depth)||3};R=Number($('sharpMain').value)/2;}
+    const isEngrave=!!target&&!!target.cutter&&($('sharpMethod').value==='engrave'||($('sharpMethod').value==='auto'&&target.shape&&target.shape!=='flat'));
+    if(!target||!Number.isFinite(smallWanted)||smallWanted<.5||smallWanted>20||!(R>0)){$('footerStatus').textContent='Проверьте диаметры фрез';return;}
+    if(!isEngrave&&R<=smallWanted/2+.05){const msg=`Острая фреза Ø${smallWanted} не меньше основной Ø${R*2} — круглый угол ею не исправить. Возьмите фрезу тоньше.`;$('footerStatus').textContent=msg;alert(msg);return;}
+    const box=getContourBounds(contour.id),W=state.width,H=state.height;
+    const arrowDepth=Math.min(Number($('sharpDepth').value)>0?Number($('sharpDepth').value):(target.depth||3),state.thickness);
+    const obstacles=sharpObstacles(new Set([contour.id]),arrowDepth);
+    // Если острая фреза не помещается между стенкой и соседним вектором — берём тоньше (до Ø1), пока не влезет во все углы.
+    let small=smallWanted;
+    const allFit=d=>{for(let i=0;i<4;i++)if(sharpCornerStroke(box,i,target,R,d,obstacles,mode).blocked)return false;return true;};
+    if(!isEngrave&&!allFit(small)){for(let d=Math.floor((smallWanted-.25)*4)/4;d>=1;d=Math.round((d-.25)*100)/100){if(allFit(d)){small=d;break;}}}
+    const created=[],blocked=[],shortened=[];
+    const method=$('sharpMethod').value,engrave=!!target.cutter&&(method==='engrave'||(method==='auto'&&target.shape&&target.shape!=='flat'));
+    if(engrave){
+      // Гравировка V-фрезой (как V-carve в АртКам): фреза идёт по биссектрисе из угла линии прохода к внешнему углу канавки,
+      // глубина плавно уменьшается от полной до 0 — обе кромки канавки сходятся в чёткий угол.
+      const al=target.allowance||0,Dfull=Math.min(target.depth||3,state.thickness);
+      // Глубина вдоль стрелки: кромка канавки должна сходиться в угол, т.е. полуширина реза на глубине z равна расстоянию до стенки.
+      const ramp=[];
+      for(let k=0;k<=8;k++){const t=k/8;let z=Dfull*(1-t);
+        if(target.shape&&target.shape!=='flat'){const d=cutterReliefDepth(target.shape,1-t,Dfull,target.diameter);z=Math.max(0,Math.min(Dfull,Dfull-d));if(k===0)z=Dfull;}
+        ramp.push([t,z]);}
+      for(let i=0;i<4;i++){
+        const [sx,sy]=SHARP_CORNERS[i],kx=sx>0?box.x:box.x+box.width,ky=sy>0?box.y:box.y+box.height;
+        const c=target.side==='inside'?R+al:target.side==='outside'?-(R+al):0,cx=kx+sx*c,cy=ky+sy*c,tx=cx-sx*R,ty=cy-sy*R;
+        let good=0;
+        for(let n=0;n<=24;n++){const t=n/24,px=cx+(tx-cx)*t,py=cy+(ty-cy)*t,rr=R*(1-t);if(obstacles.every(seg=>sharpSegDist(px,py,seg)>=rr-.05))good=t;else break;}
+        if(good<.3){blocked.push(SHARP_NAMES[i]);continue;}
+        const ex=cx+(tx-cx)*good,ey=cy+(ty-cy)*good,pts=[{x:cx,y:cy},{x:ex,y:ey}];
+        const bx=Math.min(cx,ex),by=Math.min(cy,ey),bw=Math.max(Math.abs(ex-cx),.01),bh=Math.max(Math.abs(ey-cy),.01),n=v=>Number(v.toFixed(5)),pt=p=>`${n((p.x-bx)/bw)} ${n((p.y-by)/bh)}`;
+        if(good<1)shortened.push(SHARP_NAMES[i]);
+        created.push({idx:i,item:{name:`Гравировка угла ${i+1} · ${contour.name}`,parentId:contour.id,shape:'free',direction:'out',offset:1,corner:0,
+          rel:{x:n(bx/W),y:n(by/H),w:n(bw/W),h:n(bh/H)},freeD:`M ${pt(pts[0])} L ${pt(pts[1])}`,
+          cutter:target.cutter,diameter:target.diameter,depth:Dfull,side:'on',engrave:true,rampFrom:Dfull,rampTo:0,ramp:ramp.map(p=>[n(p[0]*good),n(p[1])]),
+          cornerOf:contour.id,cornerIdx:i,cornerName:SHARP_NAMES[i],arrowPts:pts.map(p=>[n(p.x),n(p.y)])}});
+      }
+    }
+    for(let i=0;i<(engrave?0:4);i++){
+      const res=sharpCornerStroke(box,i,target,R,small,obstacles,mode);
+      if(res.blocked){blocked.push(SHARP_NAMES[i]);continue;}
+      const pts=res.pts,xs=pts.map(p=>p.x),ys=pts.map(p=>p.y);
+      const bx=Math.min(...xs),by=Math.min(...ys),bw=Math.max(Math.max(...xs)-bx,.01),bh=Math.max(Math.max(...ys)-by,.01);
+      const n=v=>Number(v.toFixed(5)),pt=p=>`${n((p.x-bx)/bw)} ${n((p.y-by)/bh)}`;
+      if(res.cut)shortened.push(SHARP_NAMES[i]);
+      created.push({idx:i,item:{name:`Угол ${i+1} · ${contour.name}`,parentId:contour.id,shape:'free',direction:'out',offset:1,corner:0,
+        rel:{x:n(bx/W),y:n(by/H),w:n(bw/W),h:n(bh/H)},freeD:`M ${pt(pts[0])} L ${pt(pts[1])} L ${pt(pts[2])}`,
+        cutter:'flat',diameter:small,depth:arrowDepth,side:'on',
+        cornerOf:contour.id,cornerIdx:i,cornerName:SHARP_NAMES[i],arrowPts:pts.map(p=>[n(p.x),n(p.y)])}});
+    }
+    if(!created.length){const msg='Острые углы не добавлены: во всех углах рядом сосед или край фасада.';$('footerStatus').textContent=msg;alert(msg);return;}
+    snapshot();
+    const replace=new Set(created.map(c=>c.idx));
+    const previous=state.contours.filter(item=>!(item.cornerOf===contour.id&&replace.has(item.cornerIdx)));
+    const items=created.map(c=>({id:nextContourId++,...c.item}));
+    state.contours=[...previous,...items];
+    const issues=geometryIssues();
+    if(issues.length){state.contours=previous;nextContourId-=items.length;undoStack.pop();$('footerStatus').textContent=`Острые углы не добавлены: ${issues[0]}`;return;}
+    state.selectedContour=items[0].id;renderTemplateButtons();drawView();
+    $('footerStatus').textContent=`Добавлено острых углов: ${items.length}. ${engrave?`Гравировка: по биссектрисе, глубина от ${target.depth} до 0 мм.`:`Фреза Ø${small} уже назначена`}${!engrave&&small<smallWanted?` (Ø${smallWanted} не помещается — сосед слишком близко, взял тоньше)`:''}${engrave?'':' — пройдёт вдоль стенок по стрелке'}.${blocked.length?` Пропущено (мешает сосед): ${blocked.join(', ')}.`:''}${shortened.length?` Укорочено: ${shortened.join(', ')}.`:''}`;
+  }
+  function removeSharpOne() {
+    const contour=state.contours.find(item=>item.id===state.selectedContour);
+    if(!contour||!contour.cornerOf)return;
+    snapshot();state.contours=state.contours.filter(item=>item.id!==contour.id);
+    state.selectedContour=contour.cornerOf;renderTemplateButtons();drawView();$('footerStatus').textContent='Стрелка удалена';
+  }
+  function removeSharpCorners() {
+    const contour=state.contours.find(item=>item.id===state.selectedContour);if(!contour)return;
+    const id=contour.cornerOf||contour.id;
+    if(!state.contours.some(item=>item.cornerOf===id))return;
+    snapshot();state.contours=state.contours.filter(item=>item.cornerOf!==id);
+    state.selectedContour=id;renderTemplateButtons();drawView();$('footerStatus').textContent='Острые углы убраны';
+  }
   function applyContourSettings() {
     const contour=state.contours.find(item=>item.id===state.selectedContour),isBase=!contour&&state.objectType==='facade';
     if(!contour&&!isBase)return;
@@ -4424,9 +4654,10 @@ body.hide-hint #canvasHint{display:none}
       $('footerStatus').textContent=message;alert(message);return;
     }
     const updatedContours=state.contours.map(item=>item.id===contour.id?{
-      ...item,shape:item.shape==='free'?'free':($('vectorShape').value==='free'?item.shape:$('vectorShape').value),direction:item.shape==='free'?'in':$('vectorDirection').value,offset:item.shape==='free'?item.offset:offset,corner:item.shape==='free'?0:corner,rise:Math.max(0,Number($('vectorRise').value)||0),cornerSet:($('vectorShape').value===item.shape&&corner===item.corner)?item.cornerSet:undefined,
+      ...item,shape:item.shape==='free'?'free':($('vectorShape').value==='free'?item.shape:$('vectorShape').value),direction:item.shape==='free'?(item.cornerOf?item.direction:'in'):$('vectorDirection').value,offset:item.shape==='free'?item.offset:offset,corner:item.shape==='free'?0:corner,rise:Math.max(0,Number($('vectorRise').value)||0),cornerSet:($('vectorShape').value===item.shape&&corner===item.corner)?item.cornerSet:undefined,
       cutter:$('vectorCutter').value,diameter,depth,additionalCutters,
-      side:$('vectorCutSide').value,allowance:Math.max(0,Number($('vectorAllowance').value)||0),stepdown:Math.max(0,Number($('vectorStepdown').value)||0),feed:$('vectorFeed').value
+      side:$('vectorCutSide').value,allowance:Math.max(0,Number($('vectorAllowance').value)||0),stepdown:Math.max(0,Number($('vectorStepdown').value)||0),feed:$('vectorFeed').value,
+      engraveCorners:item.shape==='rect'&&$('vectorEngrave').checked
     }:item);
     const affectedIds=new Set([contour.id]);
     let foundDescendant=true;
@@ -4446,7 +4677,7 @@ body.hide-hint #canvasHint{display:none}
       $('footerStatus').textContent=message;alert(message);return;
     }
     snapshot();state.contours=updatedContours;
-    renderTemplateButtons();drawView();$('footerStatus').textContent=`Настройки применены к ${contour.name}`;
+    renderTemplateButtons();drawView();syncSharpBox(state.contours.find(item=>item.id===contour.id));$('footerStatus').textContent=`Настройки применены к ${contour.name}`;
   }
   function rustFirstContour() {
     // Для рустов нужен ближайший к краю фасада (первый по вложенности) вектор,
@@ -4805,9 +5036,9 @@ body.hide-hint #canvasHint{display:none}
   function deleteContourById(id) {
     const contour=state.contours.find(item=>item.id===id);if(!contour)return false;
     const signed=item=>(item.direction==='out'?-1:1)*Number(item.offset||0);
-    const children=state.contours.filter(item=>item.parentId===id).length;
+    const children=state.contours.filter(item=>item.parentId===id&&item.cornerOf!==id).length;
     snapshot();
-    state.contours=state.contours.filter(item=>item.id!==id).map(item=>{
+    state.contours=state.contours.filter(item=>item.id!==id&&item.cornerOf!==id).map(item=>{
       if(item.parentId!==id)return item;
       const delta=Math.round((signed(item)+signed(contour))*1000)/1000;
       return{...item,parentId:contour.parentId,direction:delta<0?'out':'in',offset:Math.max(.1,Math.abs(delta))};
@@ -5099,6 +5330,7 @@ body.hide-hint #canvasHint{display:none}
   });
   ['vectorDiameter','vectorDepth'].forEach(id=>$(id).addEventListener('input',renderVectorCutterPreview));
   $('toggleInfo').addEventListener('click',()=>setObjectInfoVisible($('objectInfo').classList.contains('hidden')));
+  $('addSharpCorner').addEventListener('click',addSharpCorners);$('vectorEngrave').addEventListener('change',()=>$('vectorEngraveInfo').classList.toggle('hidden',!$('vectorEngrave').checked));$('sharpDir').addEventListener('change',()=>syncSharpBox(state.contours.find(item=>item.id===state.selectedContour)));$('removeSharpCorners').addEventListener('click',removeSharpCorners);$('removeSharpOne').addEventListener('click',removeSharpOne);
   $('applyVectorSettings').addEventListener('click',applyContourSettings);$('vectorShape').addEventListener('change',updateRiseField);
   $('addVectorCutter').addEventListener('click',()=>{
     const contour=state.contours.find(item=>item.id===state.selectedContour);
@@ -5751,6 +5983,715 @@ body.hide-hint #canvasHint{display:none}
       }catch(error){alert(`Не удалось импортировать SVG: ${error.message}`);}finally{vectorPickerMode='add';}
     }
     $('vectorPicker').value='';
+  });
+
+  // ===== Скан чертежа: снимок камеры или фото → контуры фрезеровки (векторизация растра) =====
+  const SCAN_MAX=1200; // предельный размер рабочей копии изображения, px по большей стороне
+  let scanImage=null,scanGrayData=null,scanLoops=[],scanTimer=0,scanCrop=null,scanCropDrag=null;
+  function scanGrayOf(data,length){const gray=new Uint8Array(length);for(let i=0,j=0;i<length;i++,j+=4)gray[i]=(data[j]*299+data[j+1]*587+data[j+2]*114)/1000|0;return gray;}
+  function scanBoxBlur(gray,W,H){ // лёгкое сглаживание против шума фотоснимка (делается один раз при загрузке)
+    const out=new Uint8Array(gray.length);
+    for(let y=0;y<H;y++){
+      const y0=y>0?y-1:0,y1=y<H-1?y+1:H-1;
+      for(let x=0;x<W;x++){
+        const x0=x>0?x-1:0,x1=x<W-1?x+1:W-1;
+        let sum=0;
+        for(let yy=y0;yy<=y1;yy++){const row=yy*W;for(let xx=x0;xx<=x1;xx++)sum+=gray[row+xx];}
+        out[y*W+x]=(sum/((y1-y0+1)*(x1-x0+1)))|0;
+      }
+    }
+    return out;
+  }
+  function scanOtsu(gray){ // автоподбор порога яркости (метод Оцу)
+    const hist=new Uint32Array(256);
+    for(let i=0;i<gray.length;i++)hist[gray[i]]++;
+    const total=gray.length;let sum=0;
+    for(let t=0;t<256;t++)sum+=t*hist[t];
+    let sumB=0,wB=0,best=128,maxVar=-1;
+    for(let t=0;t<256;t++){
+      wB+=hist[t];if(!wB)continue;
+      const wF=total-wB;if(!wF)break;
+      sumB+=t*hist[t];
+      const mB=sumB/wB,mF=(sum-sumB)/wF,v=wB*wF*(mB-mF)*(mB-mF);
+      if(v>maxVar){maxVar=v;best=t;}
+    }
+    return best;
+  }
+  // Обводка чёрных областей (marching squares): сегмент идёт так, что заливка справа.
+  // Точки — полуцелые координаты ячейки: T=(1,0) R=(2,1) B=(1,2) L=(0,1) от угла (2x,2y).
+  const SCAN_EDGES=[[1,0],[2,1],[1,2],[0,1]]; // 0=T 1=R 2=B 3=L
+  const SCAN_TABLE=[[],[[3,2]],[[2,1]],[[3,1]],[[1,0]],[[1,0],[3,2]],[[2,0]],[[3,0]],[[0,3]],[[0,2]],[[0,3],[2,1]],[[0,1]],[[1,3]],[[1,2]],[[2,3]],[]];
+  function scanTrace(binary,W,H){
+    const PW=W+2,PH=H+2,P=new Uint8Array(PW*PH);
+    for(let y=0;y<H;y++)P.set(binary.subarray(y*W,y*W+W),(y+1)*PW+1);
+    const heads=new Map(),segs=[];
+    for(let y=0;y<PH-1;y++){
+      const row=y*PW,row2=(y+1)*PW;
+      for(let x=0;x<PW-1;x++){
+        const code=(P[row+x]<<3)|(P[row+x+1]<<2)|(P[row2+x+1]<<1)|P[row2+x];
+        const rules=SCAN_TABLE[code];
+        for(let r=0;r<rules.length;r++){
+          const a=SCAN_EDGES[rules[r][0]],b=SCAN_EDGES[rules[r][1]];
+          const sx=2*x+a[0],sy=2*y+a[1],key=sx*32768+sy;
+          let bucket=heads.get(key);
+          if(!bucket){bucket=[];heads.set(key,bucket);}
+          bucket.push(segs.length);
+          segs.push(sx,sy,2*x+b[0],2*y+b[1]);
+        }
+      }
+    }
+    const loops=[];
+    for(let i=0;i<segs.length;i+=4){
+      if(segs[i]===-1)continue; // сегмент уже использован
+      const coords=[];
+      let cur=i;
+      while(cur>=0&&segs[cur]!==-1){
+        const sx=segs[cur],sy=segs[cur+1],bx=segs[cur+2],by=segs[cur+3];
+        segs[cur]=-1;
+        coords.push(sx/2-1,sy/2-1); // в пиксели исходного изображения (минус рамка)
+        const bucket=heads.get(bx*32768+by);
+        cur=-1;
+        if(bucket){while(bucket.length&&segs[bucket[bucket.length-1]]===-1)bucket.pop();if(bucket.length)cur=bucket.pop();}
+      }
+      if(coords.length>=8){ // минимум 4 точки
+        const pts=new Array(coords.length/2);
+        for(let k=0,j=0;j<coords.length;j+=2,k++)pts[k]=[coords[j],coords[j+1]];
+        loops.push(pts);
+      }
+    }
+    return loops;
+  }
+  function scanRDP(pts,tol){ // упрощение Рамера–Дугласа–Пекера
+    const n=pts.length;
+    if(n<3)return pts.slice();
+    const keep=new Uint8Array(n);keep[0]=keep[n-1]=1;
+    const stack=[0,n-1],tol2=tol*tol;
+    while(stack.length){
+      const i1=stack.pop(),i0=stack.pop();
+      if(i1<=i0+1)continue;
+      const x1=pts[i0][0],y1=pts[i0][1],dx=pts[i1][0]-x1,dy=pts[i1][1]-y1,len2=dx*dx+dy*dy;
+      let maxD=-1,idx=-1;
+      for(let i=i0+1;i<i1;i++){
+        const px=pts[i][0],py=pts[i][1];
+        let t=len2?((px-x1)*dx+(py-y1)*dy)/len2:0;
+        t=t<0?0:t>1?1:t;
+        const qx=x1+t*dx-px,qy=y1+t*dy-py,d=qx*qx+qy*qy;
+        if(d>maxD){maxD=d;idx=i;}
+      }
+      if(maxD>tol2&&idx>0){keep[idx]=1;stack.push(i0,idx,idx,i1);}
+    }
+    const out=[];
+    for(let i=0;i<n;i++)if(keep[i])out.push(pts[i]);
+    return out;
+  }
+  function scanRDPClosed(loop,tol){ // упрощение замкнутого контура: режем в самом дальнем от начала месте
+    if(loop.length<8)return loop;
+    let far=1,maxD=-1;
+    for(let i=1;i<loop.length;i++){const dx=loop[i][0]-loop[0][0],dy=loop[i][1]-loop[0][1],d=dx*dx+dy*dy;if(d>maxD){maxD=d;far=i;}}
+    if(far<2)return loop;
+    const a=scanRDP(loop.slice(0,far+1),tol);
+    const b=scanRDP(loop.slice(far).concat([[loop[0][0],loop[0][1]]]),tol);
+    return a.concat(b.slice(1,b.length-1));
+  }
+  function scanBBox(loop){
+    let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+    for(let i=0;i<loop.length;i++){
+      const p=loop[i];
+      if(p[0]<minX)minX=p[0];if(p[0]>maxX)maxX=p[0];
+      if(p[1]<minY)minY=p[1];if(p[1]>maxY)maxY=p[1];
+    }
+    return {x:minX,y:minY,w:maxX-minX,h:maxY-minY};
+  }
+  function scanUpdate(){
+    if(!scanImage)return;
+    const threshold=Number($('scanThreshold').value),tol=Number($('scanTolerance').value),minSize=Number($('scanMinSize').value),invert=$('scanInvert').checked;
+    $('scanThresholdVal').textContent=String(threshold);
+    $('scanToleranceVal').textContent=tol.toFixed(1);
+    $('scanMinSizeVal').textContent=String(minSize);
+    if(scanModeValue()==='section'){scanLoops=[];scanSection=scanAnalyzeSection();scanDraw();scanShowStats();return;}
+    scanSection=null;
+    const W=scanImage.width,H=scanImage.height,binary=new Uint8Array(W*H);
+    for(let i=0;i<binary.length;i++){const dark=scanGrayData[i]<=threshold?1:0;binary[i]=invert?1-dark:dark;}
+    const crop=scanCropRect();
+    if(crop){
+      for(let y=0;y<H;y++){
+        const insideY=y>=crop.y&&y<crop.y+crop.h;
+        for(let x=0;x<W;x++)if(!insideY||x<crop.x||x>=crop.x+crop.w)binary[y*W+x]=0;
+      }
+    }
+    const entries=[];
+    for(const loop of scanTrace(binary,W,H)){
+      const bb=scanBBox(loop);
+      if(Math.max(bb.w,bb.h)<minSize)continue;
+      const simplified=scanRDPClosed(loop,tol);
+      if(simplified.length<3)continue;
+      entries.push({loop:simplified,area:bb.w*bb.h});
+    }
+    entries.sort((a,b)=>b.area-a.area);
+    if(entries.length>450)entries.length=450; // лимит контуров (у импорта — 500)
+    scanLoops=entries.map(entry=>entry.loop);
+    scanDraw();
+    scanShowStats();
+  }
+  function scanDraw(){
+    if(!scanImage)return;
+    const cv=$('scanCanvas');
+    cv.width=scanImage.width;cv.height=scanImage.height;
+    const ctx=cv.getContext('2d');
+    ctx.putImageData(scanImage,0,0);
+    ctx.lineWidth=2;ctx.strokeStyle='#e5484d';ctx.lineJoin='round';
+    if(scanModeValue()==='section')scanDrawSection(ctx);
+    for(let i=0;i<scanLoops.length;i++){
+      const loop=scanLoops[i];
+      ctx.beginPath();
+      for(let j=0;j<loop.length;j++){const p=loop[j];if(j)ctx.lineTo(p[0],p[1]);else ctx.moveTo(p[0],p[1]);}
+      ctx.closePath();ctx.stroke();
+    }
+    const crop=scanCropRect();
+    if(crop){
+      const W=cv.width,H=cv.height;
+      ctx.fillStyle='rgba(18,20,24,.5)';
+      ctx.fillRect(0,0,W,crop.y);
+      ctx.fillRect(0,crop.y+crop.h,W,H-crop.y-crop.h);
+      ctx.fillRect(0,crop.y,crop.x,crop.h);
+      ctx.fillRect(crop.x+crop.w,crop.y,W-crop.x-crop.w,crop.h);
+      ctx.strokeStyle='#248cff';ctx.lineWidth=2;ctx.setLineDash([8,6]);
+      ctx.strokeRect(crop.x+.5,crop.y+.5,crop.w-1,crop.h-1);
+      ctx.setLineDash([]);
+    }
+  }
+  function scanShowStats(){
+    if(scanModeValue()==='section'){$('scanStats').textContent=scanSectionSummary(scanSection);return;}
+    if(!scanLoops.length){$('scanStats').textContent='Контуров не найдено: попробуйте изменить порог, инверсию или отсечение мелочи.';return;}
+    const widthMm=Number($('scanWidthMm').value)||0;
+    let points=0,minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+    for(let i=0;i<scanLoops.length;i++){
+      const loop=scanLoops[i];
+      points+=loop.length;
+      const bb=scanBBox(loop);
+      if(bb.x<minX)minX=bb.x;if(bb.y<minY)minY=bb.y;
+      if(bb.x+bb.w>maxX)maxX=bb.x+bb.w;
+      if(bb.y+bb.h>maxY)maxY=bb.y+bb.h;
+    }
+    const bw=maxX-minX,bh=maxY-minY;
+    let size='';
+    if(scanModeValue()==='profile')size=' · режим: фреза из торца (разрез)';
+    else{
+      const crop=scanCropRect(),spanPx=crop?crop.w:scanImage.width;
+      if(widthMm>0&&spanPx>0){const k=widthMm/spanPx;size=` · чертёж ${Math.round(bw*k*100)/100} × ${Math.round(bh*k*100)/100} мм`;}
+    }
+    $('scanStats').textContent=`Контуров: ${scanLoops.length} · точек: ${points}${size}`;
+  }
+  function scanBuildPaths(){
+    if(!scanLoops.length)throw new Error('Нет контуров.');
+    const k=scanScaleK('drawing');
+    let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+    for(let i=0;i<scanLoops.length;i++)for(let j=0;j<scanLoops[i].length;j++){
+      const p=scanLoops[i][j];
+      if(p[0]<minX)minX=p[0];if(p[0]>maxX)maxX=p[0];
+      if(p[1]<minY)minY=p[1];if(p[1]>maxY)maxY=p[1];
+    }
+    const bw=maxX-minX,bh=maxY-minY;
+    if(!(bw>0&&bh>0))throw new Error('Пустой чертёж.');
+    const width=Math.round(bw*k*100)/100,height=Math.round(bh*k*100)/100;
+    if(!(width>=1&&width<=3000&&height>=1&&height<=3000))throw new Error(`Размер чертежа ${width} × ${height} мм вне допустимых 1–3000 мм. Проверьте реальный размер.`);
+    const parts=[];
+    for(let i=0;i<scanLoops.length;i++){
+      const loop=scanLoops[i];
+      let d='';
+      for(let j=0;j<loop.length;j++)d+=(j?'L':'M')+Math.round((loop[j][0]-minX)*k*100)/100+' '+Math.round((loop[j][1]-minY)*k*100)/100;
+      parts.push(d+'Z');
+    }
+    return {d:parts.join(' '),width,height,count:parts.length};
+  }
+  function scanCropRect(){
+    if(!scanCrop||!scanImage)return null;
+    const x0=Math.max(0,Math.min(scanImage.width,Math.min(scanCrop.x0,scanCrop.x1)));
+    const x1=Math.max(0,Math.min(scanImage.width,Math.max(scanCrop.x0,scanCrop.x1)));
+    const y0=Math.max(0,Math.min(scanImage.height,Math.min(scanCrop.y0,scanCrop.y1)));
+    const y1=Math.max(0,Math.min(scanImage.height,Math.max(scanCrop.y0,scanCrop.y1)));
+    return x1-x0>=8&&y1-y0>=8?{x:x0,y:y0,w:x1-x0,h:y1-y0}:null;
+  }
+  function scanCanvasPoint(event){
+    const cv=$('scanCanvas'),rect=cv.getBoundingClientRect();
+    return[(event.clientX-rect.left)*(cv.width/Math.max(1,rect.width)),(event.clientY-rect.top)*(cv.height/Math.max(1,rect.height))];
+  }
+  $('scanCanvas').addEventListener('pointerdown',event=>{
+    if(!scanImage)return;
+    event.preventDefault();
+    const point=scanCanvasPoint(event);
+    scanCropDrag={x0:point[0],y0:point[1]};
+    scanCrop={x0:point[0],y0:point[1],x1:point[0],y1:point[1]};
+    try{event.target.setPointerCapture(event.pointerId);}catch(error){}
+  });
+  $('scanCanvas').addEventListener('pointermove',event=>{
+    if(!scanCropDrag)return;
+    const point=scanCanvasPoint(event);
+    scanCrop={x0:scanCropDrag.x0,y0:scanCropDrag.y0,x1:point[0],y1:point[1]};
+    scanDraw();
+  });
+  $('scanCanvas').addEventListener('pointerup',()=>{
+    if(!scanCropDrag)return;
+    scanCropDrag=null;
+    if(!scanCropRect())scanCrop=null;
+    clearTimeout(scanTimer);scanTimer=setTimeout(scanUpdate,30);
+  });
+  $('scanCanvas').addEventListener('pointercancel',()=>{scanCropDrag=null;scanDraw();});
+  $('scanCropReset').addEventListener('click',()=>{scanCrop=null;clearTimeout(scanTimer);scanTimer=setTimeout(scanUpdate,30);});
+  function scanScaleK(what){
+    const crop=scanCropRect();
+    const spanPx=what==='profile'?(crop?crop.h:scanImage.height):(crop?crop.w:scanImage.width);
+    if(!(spanPx>1))throw new Error('Выделенная область слишком маленькая.');
+    const sizeMm=Number($('scanWidthMm').value);
+    if(!(sizeMm>=1&&sizeMm<=3000))throw new Error('Реальный размер должен быть 1–3000 мм.');
+    return sizeMm/spanPx;
+  }
+  function scanBuildCutterProfile(){
+    if(!scanLoops.length)throw new Error('Нет контуров: обведите полоску заново или измените порог.');
+    let best=null;
+    for(const loop of scanLoops){const bb=scanBBox(loop);if(!best||bb.w*bb.h>best.area)best={loop,area:bb.w*bb.h};}
+    const loop=best.loop;
+    let minI=0,maxI=0;
+    for(let i=1;i<loop.length;i++){if(loop[i][1]<loop[minI][1])minI=i;if(loop[i][1]>loop[maxI][1])maxI=i;}
+    if(minI===maxI)throw new Error('Не удалось разобрать полоску профиля.');
+    const chainOf=(from,to)=>{const out=[];let i=from;for(;;){out.push(loop[i]);if(i===to)break;i=(i+1)%loop.length;if(out.length>loop.length)break;}return out;};
+    const chainA=chainOf(minI,maxI),chainB=chainOf(maxI,minI);
+    const meanX=chain=>chain.reduce((sum,point)=>sum+point[0],0)/chain.length;
+    const chain=(meanX(chainA)>=meanX(chainB)?chainA:chainB).slice();
+    if(chain.length<4)throw new Error('Полоска слишком короткая: ведите её длиннее, по всей линии среза.');
+    const k=scanScaleK('profile');
+    let maxY=-Infinity;
+    for(const point of chain)if(point[1]>maxY)maxY=point[1];
+    // в систему профиля фрезы: x = радиус (снизу — кончик), y = высота (по горизонтали фото)
+    const pts=chain.map(point=>[(maxY-point[1])*k,point[0]*k]);
+    const minX=Math.min(...pts.map(point=>point[0])),minY=Math.min(...pts.map(point=>point[1]));
+    const shifted=pts.map(point=>[point[0]-minX,point[1]-minY]);
+    if(shifted[0][0]>shifted[shifted.length-1][0])shifted.reverse();
+    if(shifted[0][0]>1e-6)shifted.unshift([0,shifted[0][1]]);
+    const dense=[];
+    for(const point of shifted){
+      const last=dense[dense.length-1];
+      if(!last||Math.hypot(point[0]-last[0],point[1]-last[1])>0.001)dense.push([Number(point[0].toFixed(4)),Number(point[1].toFixed(4))]);
+    }
+    const profile=tdbNormalizeProfile(dense);
+    if(!profile||!(profile.radius>0.05)||profile.radius*2>500)throw new Error('Профиль вырожден или слишком велик (Ø больше 500 мм). Проверьте выделение и реальный размер.');
+    const height=Math.max(...profile.points.map(point=>point[1]))*profile.radius;
+    if(!(height>=0.3))throw new Error('Профиль слишком прямой — по горизонтали почти нет глубины. Ведите полоску точно по линии среза.');
+    while(profile.points.length>600)profile.points.splice(1,2);
+    return {profile,height};
+  }
+  // ===== Разрез фасада по фото: верхняя линия профиля → вырезы → фрезы и вектора =====
+  let scanSection=null;
+  const SCAN_SHAPES=[
+    {shape:'flat',label:'Прямая',f:n=>1},
+    {shape:'v90',label:'V-образная',f:n=>1-Math.abs(n)},
+    {shape:'round',label:'Шаровая (R)',f:n=>Math.sqrt(Math.max(0,1-n*n))},
+    {shape:'roundover',label:'Галтельная',f:n=>{const inward=1-Math.abs(n);return 1-Math.sqrt(Math.max(0,1-inward*inward));}},
+    {shape:'wave',label:'Параболическая',f:n=>1-n*n}
+  ];
+  function scanSectionBinary(){
+    const W=scanImage.width,H=scanImage.height,threshold=Number($('scanThreshold').value),invert=$('scanInvert').checked,binary=new Uint8Array(W*H);
+    for(let i=0;i<binary.length;i++){const dark=scanGrayData[i]<=threshold?1:0;binary[i]=invert?1-dark:dark;}
+    return binary;
+  }
+  // Возвращает {k,top,cuts[],depth[],x0,x1}: k — мм на пиксель; глубины — по каждому столбцу пикселей.
+  function scanAnalyzeSection(){
+    const W=scanImage.width,H=scanImage.height,binary=scanSectionBinary(),crop=scanCropRect();
+    const cx0=crop?Math.floor(crop.x):0,cx1=crop?Math.ceil(crop.x+crop.w):W,y0=crop?Math.floor(crop.y):0,y1=crop?Math.ceil(crop.y+crop.h):H;
+    const fa=Math.min(99,Math.max(0,Number($('scanStart').value)))/100,fb=Math.max(fa*100+1,Math.min(100,Number($('scanEnd').value)))/100;
+    let x0=Math.round(cx0+fa*(cx1-cx0)),x1=Math.round(cx0+fb*(cx1-cx0));
+    if(x1-x0<20)return{error:'Участок между зелёными линиями слишком узкий.'};
+    const thickMode=$('scanScaleBy').value==='thick';
+    let n=x1-x0;
+    let surf=new Float32Array(n).fill(-1);
+    for(let x=x0;x<x1;x++){
+      for(let y=y0;y<y1-1;y++){if(binary[y*W+x]&&binary[(y+1)*W+x]){surf[x-x0]=y;break;}}
+    }
+    let thicknessPx=0,widthMm=Number($('scanWidthMm').value),k=0;
+    if(thickMode){
+      // фон за фасадом: убираем столбцы без материала по краям
+      let a=0;while(a<n&&surf[a]<0)a++;
+      let b=n-1;while(b>a&&surf[b]<0)b--;
+      if(b-a<20)return{error:'Не найден фасад на снимке: измените порог яркости или инверсию.'};
+      surf=surf.slice(a,b+1);x1=x0+b+1;x0=x0+a;n=surf.length;
+      // низ фасада: самая нижняя строка с длинной тёмной линией; толщина = низ − верхняя линия
+      const need=n*.3;let bottom=-1,topRow=1e9;
+      for(let y=y0;y<y1;y++){let cnt=0;const row=y*W;for(let x=x0;x<x1;x++)if(binary[row+x])cnt++;if(cnt>=need){if(y<topRow)topRow=y;bottom=y;}}
+      const thk=Number($('scanThicknessMm').value);
+      if(!(thk>0&&thk<=100))return{error:'Задайте реальную толщину фасада, мм.'};
+      if(bottom<0||bottom-topRow<4){$('scanScaleBy').value='width';$('scanWidthMm').disabled=false;$('scanThicknessField').classList.add('hidden');return{error:'Не найден низ фасада на снимке (нужна нижняя линия или заливка), поэтому масштаб переключён «по ширине»: введите реальную ширину между зелёными линиями.'};}
+      thicknessPx=bottom-topRow+1;k=thk/thicknessPx;widthMm=n*k;
+      $('scanWidthMm').value=String(Math.round(widthMm*10)/10);
+    }else{
+      if(!(widthMm>=1&&widthMm<=3000))return{error:'Задайте реальную ширину разреза, мм.'};
+      k=widthMm/(x1-x0);
+    }
+    const minMm=Math.max(.2,1.5*k);
+    const valid=[];for(let i=0;i<n;i++)if(surf[i]>=0)valid.push(surf[i]);
+    if(valid.length<n*.5)return{error:'На снимке не найдена линия или материал разреза: измените порог яркости или инверсию.'};
+    // заполнение пропусков и медианное сглаживание
+    let last=-1;for(let i=0;i<n;i++){if(surf[i]>=0)last=surf[i];else if(last>=0)surf[i]=last;}
+    for(let i=n-1;i>=0;i--){if(surf[i]<0){let j=i+1;while(j<n&&surf[j]<0)j++;surf[i]=j<n?surf[j]:valid[0];}}
+    const sm=new Float32Array(n);
+    for(let i=0;i<n;i++){const w=[];for(let d=-2;d<=2;d++)w.push(surf[Math.max(0,Math.min(n-1,i+d))]);w.sort((a,b)=>a-b);sm[i]=w[2];}
+    // верхняя линия (поверхность): робастная прямая по верхней кромке — учитывает наклон снимка
+    let keep=Array.from({length:n},(_,q)=>q),lineA=0,lineB=0;
+    for(let iter=0;iter<8;iter++){
+      let sx=0,sy=0,sxx=0,sxy=0;const m=keep.length;
+      for(const q of keep){sx+=q;sy+=sm[q];sxx+=q*q;sxy+=q*sm[q];}
+      const den=m*sxx-sx*sx;lineB=den?(m*sxy-sx*sy)/den:0;lineA=(sy-lineB*sx)/m;
+      const next=[];for(let q=0;q<n;q++)if(sm[q]<=lineA+lineB*q+Math.max(1.2,.0015*n))next.push(q);
+      if(next.length<n*.15||next.length===keep.length)break;keep=next;
+    }
+    const top=lineA+lineB*(n/2),topAt=q=>lineA+lineB*q;
+    const depth=sm.map((v,q)=>Math.max(0,(v-topAt(q))*k));
+    // выступ вверх от «верха» игнорируем (depth уже >=0)
+    const runs=[];let i=0;
+    while(i<n){
+      if(depth[i]>minMm){let j=i;while(j<n&&depth[j]>minMm)j++;runs.push([i,j]);i=j;}else i++;
+    }
+    // слияние близких участков (разрыв < 2 px)
+    const merged=[];for(const run of runs){const lastRun=merged[merged.length-1];if(lastRun&&run[0]-lastRun[1]<3)lastRun[1]=run[1];else merged.push([run[0],run[1]]);}
+    const cuts=[];
+    for(const [a,b] of merged){
+      const wMm=(b-a)*k;if(wMm<Math.max(.4,3*k))continue;
+      const truncL=a<=1,truncR=b>=n-1;
+      let D=0;for(let q=a;q<b;q++)D=Math.max(D,depth[q]);
+      const c=(a+b)/2,half=(b-a)/2,samples=[];
+      for(let t=0;t<=24;t++){const nn=-1+2*t/24,xx=c+nn*half,q=Math.max(0,Math.min(n-1,Math.round(xx-.5)));samples.push({n:nn,v:D>0?depth[q]/D:0});}
+      let best=null;
+      for(const tpl of SCAN_SHAPES){
+        let err=0,cnt=0;
+        for(const sm2 of samples){if(Math.abs(sm2.n)>.97)continue;const d=sm2.v-tpl.f(sm2.n);err+=d*d;cnt++;}
+        err=Math.sqrt(err/Math.max(1,cnt));
+        if(!best||err<best.err)best={shape:tpl.shape,label:tpl.label,err};
+      }
+      let wFix=wMm;if((best.shape==='v90'||best.shape==='wave'||best.shape==='roundover')&&D>minMm*2)wFix=wMm*D/(D-minMm);
+      cuts.push({xs:(a+b)/2*k-wFix/2,xe:(a+b)/2*k+wFix/2,w:wFix,D,center:(a+b)/2*k,shape:best.shape,label:best.label,err:best.err,angle:D>0?2*Math.atan((wMm/2)/D)*180/Math.PI:0,samples,pxA:a+x0,pxB:b+x0,truncL,truncR});
+    }
+    return{k,top:top,x0,x1,y0,y1,widthMm,cuts,depth,topPx:top,lineA,lineB,thickMode,thicknessPx};
+  }
+  window.__scanFitDebug=()=>{const cands=scanCandidateList();return scanSection.cuts.map(c=>{const out=[];for(const cand of cands){const saved=cands;}const f=scanFitCut(c,cands,19);return {w:c.w,best:f&&[f.cand.value,f.cand.width,f.score,f.z]}});};
+  window.__scanDebug=()=>scanSection&&scanSection.cuts?scanSection.cuts.map(c=>({shape:c.shape,samples:c.samples.map(q=>Number(q.v.toFixed(2))),err:Number(c.err.toFixed(3)),w:Number(c.w.toFixed(1)),D:Number(c.D.toFixed(1))})):null;
+  function scanSectionSummary(result){
+    if(!result)return '';
+    if(result.error)return result.error;
+    if(!result.cuts.length)return 'Вырезов не найдено: измените порог яркости, инверсию или выделите только полосу разреза.';
+    return `Найдено вырезов: ${result.cuts.length} · `+result.cuts.slice(0,6).map((c,i)=>`№${i+1} ${c.label} ${Math.round(c.w*10)/10}×${Math.round(c.D*10)/10} мм (с ${Math.round(c.xs*10)/10})`).join(' · ')+(result.cuts.length>6?' …':'');
+  }
+  function scanDrawSection(ctx){
+    if(!scanSection||scanSection.error)return;
+    const r=scanSection;
+    ctx.save();
+    ctx.strokeStyle='#17a34a';ctx.lineWidth=2.5;ctx.setLineDash([]);
+    [r.x0,r.x1].forEach(xm=>{ctx.beginPath();ctx.moveTo(xm,0);ctx.lineTo(xm,scanImage.height);ctx.stroke();});
+    ctx.lineWidth=1.5;ctx.setLineDash([6,4]);
+    ctx.beginPath();ctx.moveTo(r.x0,r.lineA+r.y0*0);ctx.lineTo(r.x1,r.lineA+r.lineB*(r.x1-r.x0));ctx.stroke();ctx.setLineDash([]);
+    r.cuts.forEach((c,i)=>{
+      ctx.fillStyle='rgba(229,72,77,.28)';ctx.strokeStyle='#e5484d';ctx.lineWidth=2;
+      const x=r.x0+c.xs/r.k,w=c.w/r.k,h=c.D/r.k,ty=r.lineA+r.lineB*(c.center/r.k);
+      ctx.fillRect(x,ty,w,h);ctx.strokeRect(x,ty,w,h);
+      ctx.fillStyle='#e5484d';ctx.font='bold 14px sans-serif';ctx.fillText(String(i+1),x+2,Math.max(14,ty-6));
+    });
+    ctx.restore();
+  }
+  function scanPickFormCutterFromCut(cut,thickness,edge){
+    // профиль выреза как форменная фреза: точки [r, h] от кончика (r=0) к краю.
+    // edge: 'left'|'right' — вырез упирается в край фасада: ось фрезы лежит на краю, берётся внутренняя половина
+    const result=scanSection,pts=[];
+    const at=pos=>result.depth[Math.max(0,Math.min(result.depth.length-1,Math.round(pos/result.k-.5)))];
+    const R=edge?cut.w:cut.w/2;
+    const nCols=Math.max(8,Math.min(60,Math.round(R/result.k/2)));
+    let D0=cut.D;
+    if(edge)D0=Math.max(...[0,1,2,3].map(q=>at(edge==='left'?cut.xs+q*result.k:cut.xe-q*result.k)));
+    for(let t=0;t<=nCols;t++){
+      const r=R*t/nCols;
+      let d;
+      if(edge)d=at(edge==='left'?cut.xs+r:cut.xe-r);
+      else d=(at(cut.xs+R-r)+at(cut.xs+R+r))/2;
+      pts.push([r,Math.max(0,D0-d)]);
+    }
+    pts[0][1]=0;
+    for(let i=1;i<pts.length;i++)if(pts[i][1]<pts[i-1][1])pts[i][1]=pts[i-1][1];
+    const profile=tdbNormalizeProfile(pts);
+    if(!profile||!(profile.radius>0.05))return null;
+    const height=Math.max(...profile.points.map(point=>point[1]))*profile.radius;
+    return {profile,height,depth:D0};
+  }
+  // ===== Подбор фрез из имеющихся: библиотека (customCutters) + стандартные прямая/шаровая/V =====
+  function scanCandidateList(){
+    const list=[],seen=new Set();
+    for(const tool of customCutters){
+      const value='custom:'+tool.id,shape=cutterShape(value),width=Number(tool.width);
+      if(!shape||!(width>0))continue;
+      const key=shape+'|'+width+(String(shape).startsWith('form')?'|'+tool.id:'');
+      if(seen.has(key))continue;seen.add(key);
+      list.push({value,name:tool.name,shape,width,maxDepth:String(shape).startsWith('form')?Number(tool.profileHeight)||Infinity:Infinity,lib:true});
+    }
+    if(list.length<3){
+      for(const shape of ['flat','round','v90'])for(const width of [3,4,5,6,8,9,10,12,16,20,25,32]){
+        const key=shape+'|'+width;if(seen.has(key))continue;seen.add(key);
+        list.push({value:shape,shape,name:cutterLabel(shape),width,maxDepth:Infinity,lib:false});
+      }
+    }
+    return list;
+  }
+  function scanCandReliefAt(cand,z,dx){ // глубина среза фрезой на расстоянии dx от оси при погружении z
+    const d=cand.shape==='v90'?Math.min(cand.width,2*z):cand.width;
+    const n=dx/(d/2);
+    return cutterReliefDepth(cand.shape,n,z,d);
+  }
+  // подбор для одного выреза: возвращает лучший вариант {cand,z,centers[],score,rms}
+  function scanFitCut(cut,candidates,thickness){
+    const r=scanSection,k=r.k;
+    const at=pos=>{const i=Math.round(pos/k-.5);return i<0||i>=r.depth.length?0:r.depth[i];};
+    const margin=Math.max(.4,cut.w*.12),from=cut.xs-margin,to=cut.xe+margin,steps=60;
+    const xs=[],meas=[];for(let t=0;t<=steps;t++){const x=from+(to-from)*t/steps;xs.push(x);meas.push(at(x));}
+    const D=Math.min(thickness,cut.D);
+    let best=null;
+    for(const cand of candidates){
+      if(cand.shape==='v90'&&cand.width<Math.min(cut.w,2*D)*.9)continue;
+      let z=Math.min(D,cand.maxDepth);if(!(z>0))continue;
+      const options=[];
+      options.push({centers:[cut.center],z});
+      const d=cand.shape==='v90'?Math.min(cand.width,2*z):cand.width;
+      if(d<cut.w*.85&&cand.shape!=='v90'){
+        const pitch=Math.max(d*.6,.3),count=Math.min(8,Math.ceil((cut.w-d)/pitch)+1);
+        if(count>=2){const a=cut.xs+d/2,b=cut.xe-d/2,cs=[];for(let q=0;q<count;q++)cs.push(a+(b-a)*q/(count-1));options.push({centers:cs,z});}
+      }
+      for(const opt of options){
+        let err=0;
+        const step=(to-from)/steps,lo=Math.min(from,Math.min(...opt.centers)-d/2),hi=Math.max(to,Math.max(...opt.centers)+d/2);
+        for(let x=lo;x<=hi+1e-9;x+=step){let pred=0;for(const c of opt.centers)pred=Math.max(pred,scanCandReliefAt(cand,opt.z,x-c));err+=(pred-at(x))**2;}
+        const rms=Math.sqrt(err/(steps+1)),score=rms/Math.max(D,.5)+.015*(opt.centers.length-1)+(cand.lib?0:.01)+(String(cand.shape).startsWith('form')?.03:0);
+        if(!best||score<best.score)best={cand,z:opt.z,centers:opt.centers,score,rms};
+      }
+    }
+    return best;
+  }
+  // подбор для кромки у края фасада (ось фрезы на краю, работает внутренняя половина)
+  function scanFitEdge(cut,side,candidates,thickness){
+    const r=scanSection,k=r.k;
+    const at=pos=>{const i=Math.round(pos/k-.5);return i<0||i>=r.depth.length?0:r.depth[i];};
+    const w=cut.w,steps=50,ts=[],meas=[];
+    for(let t=0;t<=steps;t++){const tt=w*1.15*t/steps;ts.push(tt);meas.push(at(side==='left'?cut.xs+tt:cut.xe-tt));}
+    const D0=Math.max(...meas.slice(0,4)),D=Math.min(thickness,Math.max(D0,.2));
+    let best=null;
+    for(const cand of candidates){
+      if(cand.shape==='v90')continue;
+      const z=Math.min(D,cand.maxDepth);if(!(z>0))continue;
+      let err=0;for(let t=0;t<ts.length;t++){const pred=scanCandReliefAt(cand,z,ts[t]);err+=(pred-meas[t])**2;}
+      const rms=Math.sqrt(err/ts.length),score=rms/Math.max(D,.5)+(cand.lib?0:.01)+(String(cand.shape).startsWith('form')?.03:0);
+      if(!best||score<best.score)best={cand,z,score,rms};
+    }
+    return best;
+  }
+  function scanApplySection(){
+    const r=scanSection;
+    if(!r||r.error)throw new Error(r?r.error:'Сначала проанализируйте разрез.');
+    if(!r.cuts.length)throw new Error('Вырезов не найдено.');
+    if(state.objectType!=='facade')throw new Error('Разрез по фото строит вектора только для фасада.');
+    const part=$('scanPart').value,span=r.widthMm;
+    const Wf=part==='full'?span:Number(state.width);
+    let offset=0;
+    if(part==='right')offset=Wf-span;else if(part==='custom')offset=Math.max(0,Number($('scanOffsetMm').value)||0);
+    if(offset<-0.01||offset+span>Wf+0.5)throw new Error(`Участок (${Math.round(span*10)/10} мм со смещением ${Math.round(offset*10)/10} мм) не помещается в ширину фасада ${Math.round(Wf*10)/10} мм. Проверьте «Что на снимке» и реальную ширину.`);
+    const thickness=Number(state.thickness)||19,pocketThreshold=14;
+    const notes=[],items=[],edgeCuts=[];
+    r.cuts.forEach((cut,idx)=>{
+      const no=idx+1;
+      const xs=offset+cut.xs,xe=offset+cut.xe,center=offset+cut.center;
+      // вырез, обрезанный границей участка (не краем фасада и не центром) — размер неизвестен
+      const atFacadeLeft=offset<0.5,atFacadeRight=offset+span>Wf-0.5;
+      if((cut.truncL&&atFacadeLeft)||(cut.truncR&&atFacadeRight)){edgeCuts.push({cut,no,side:(cut.truncL&&atFacadeLeft)?'left':'right'});return;}
+      if(cut.truncL&&!atFacadeLeft&&Math.abs(offset-Wf/2)>1){notes.push(`вырез №${no} обрезан левой границей участка — пропущен`);return;}
+      if(cut.truncR&&!atFacadeRight&&Math.abs(offset+span-Wf/2)>1){notes.push(`вырез №${no} обрезан правой границей участка — пропущен`);return;}
+      const left=xs,right=Wf-xe,nearIsLeft=left<=right;
+      let o=nearIsLeft?xs:Wf-xe,o2=nearIsLeft?xe:Wf-xs,cen=Math.min(center,Wf-center);
+      // вырез у центра (обрезан серединой снимка) считаем симметричным
+      const touchesMid=(nearIsLeft?cut.truncR:cut.truncL)&&Math.abs((nearIsLeft?xe:xs)-Wf/2)<=1.5;
+      if(touchesMid)o2=Wf-o;
+      items.push({cut,no,o,o2,cen,D:Math.min(thickness,Math.round(cut.D*100)/100)});
+    });
+    // дубликаты (симметрия)
+    const unique=[];
+    for(const it of items){
+      const c=it.cut,same=unique.find(u=>u.cut.shape===c.shape&&Math.abs(u.o-it.o)<=Math.max(1.2,c.w*.08)&&Math.abs(u.cut.w-c.w)<=Math.max(1.5,c.w*.12)&&Math.abs(u.cut.D-c.D)<=Math.max(.8,c.D*.15));
+      if(!same)unique.push(it);
+    }
+    if(!unique.length&&!edgeCuts.length)throw new Error('Нет вырезов, которые можно построить: '+(notes.join('; ')||'проверьте участок.'));
+    snapshot();
+    if(r.thickMode){const thk=Number($('scanThicknessMm').value);if(thk>0&&Math.abs(Number(state.thickness)-thk)>0.01){state.thickness=Math.round(thk*100)/100;notes.push(`толщина фасада задана по снимку: ${state.thickness} мм`);}}
+    if(part==='full'&&Math.abs(state.width-Wf)>0.01){state.width=Math.round(Wf*100)/100;notes.push(`ширина фасада задана по снимку: ${state.width} мм`);}
+    const made=[];
+    const candidates=scanCandidateList();
+    if(!candidates.length)throw new Error('В библиотеке нет фрез: загрузите фрезы («Фрезы» → импорт) или создайте хотя бы одну.');
+    const fmt=v=>Math.round(v*10)/10;
+    const describe=(fit)=>{const q=fit.score<.1?'точно':fit.score<.2?'близко':'приблизительно';return `${fit.cand.name} Ø${fmt(fit.cand.shape==='v90'?Math.min(fit.cand.width,2*fit.z):fit.cand.width)} (${q})`;};
+    if(edgeCuts.length){
+      const e=edgeCuts[0],fit=scanFitEdge(e.cut,e.side,candidates,thickness);
+      if(fit){
+        state.outerCutter=fit.cand.value;state.outerDiameter=fit.cand.shape==='v90'?Math.min(fit.cand.width,2*fit.z):fit.cand.width;state.outerDepth=Math.round(fit.z*100)/100;state.outerSide='on';
+        notes.push(`кромка (вырез №${e.no}): основной контур — ${describe(fit)}, глубина ${state.outerDepth} мм`);
+      }
+    }
+    const addContour=props=>{const contour={id:nextContourId++,name:nextVectorName(),parentId:0,shape:'rect',direction:'in',corner:0,...props};state.contours=[...state.contours,contour];made.push(contour);return contour;};
+    const flats=candidates.filter(c=>c.shape==='flat').sort((a,b)=>b.width-a.width);
+    for(const u of unique.sort((a,b)=>a.o-b.o)){
+      const c=u.cut,D=u.D,o=Math.max(1,Math.round(u.o*100)/100),o2=Math.round(u.o2*100)/100;
+      if(c.shape==='flat'&&c.err<0.15&&c.w>=pocketThreshold){
+        const inside=o2>=Wf/2-0.01,gap=inside?Wf-2*o:o2-o;
+        const pick=flats.find(f=>f.width<gap&&f.width<=32)||flats[flats.length-1];
+        if(!pick||pick.width>=gap){notes.push(`вырез №${u.no}: нет прямой фрезы уже ${fmt(gap)} мм — пропущен`);continue;}
+        if(inside){
+          const island=addContour({offset:o,cutter:'none',diameter:6,depth:D});
+          state.pockets=[...state.pockets,{parentId:island.id,islandId:island.id,regionType:'inside',cutter:pick.value,diameter:pick.width,depth:D,stepover:40,passDepth:Math.min(2,D),back:false}];
+        }else{
+          const outer=addContour({offset:o,cutter:'none',diameter:6,depth:D}),inner=addContour({offset:o2,cutter:'none',diameter:6,depth:D});
+          state.pockets=[...state.pockets,{parentId:outer.id,islandId:inner.id,regionType:'ring',cutter:pick.value,diameter:pick.width,depth:D,stepover:40,passDepth:Math.min(2,D),back:false}];
+        }
+        notes.push(`вырез №${u.no}: выборка ${fmt(gap)} мм, фреза ${pick.name} Ø${pick.width}, глубина ${D} мм`);
+        continue;
+      }
+      if(u.o2>=Wf/2-0.01&&c.w>Wf/2){notes.push(`вырез №${u.no} пересекает центр и не плоский — пропущен`);continue;}
+      const fit=scanFitCut(c,candidates,thickness);
+      if(!fit){notes.push(`вырез №${u.no}: подходящей фрезы в библиотеке нет`);continue;}
+      const d=fit.cand.shape==='v90'?Math.min(fit.cand.width,2*fit.z):fit.cand.width;
+      for(const center of fit.centers){
+        const abs=offset+center,oc=Math.max(1,Math.round(Math.min(abs,Wf-abs)*100)/100);
+        addContour({offset:oc,cutter:fit.cand.value,diameter:Math.round(d*100)/100,depth:Math.round(fit.z*100)/100,side:'on'});
+      }
+      notes.push(`вырез №${u.no} (${fmt(c.w)}×${fmt(c.D)} мм): ${describe(fit)}, глубина ${Math.round(fit.z*100)/100} мм${fit.centers.length>1?`, проходов ${fit.centers.length}`:''}`);
+    }
+    if(!made.length&&!edgeCuts.length){undoOnce();throw new Error('Не удалось построить вектора: проверьте выделение и размеры.');}
+    const issues=geometryIssues();
+    if(issues.length){undoOnce();throw new Error(`Вектора не помещаются: ${issues[0]}`);}
+    state.pockets=state.pockets.filter(p=>getPocketRegion(p.parentId,p.islandId,p.regionType||'ring'));
+    syncInputs();renderTemplateButtons();drawView();
+    return {count:made.length,notes};
+  }
+  function undoOnce(){if(undoStack.length){state=JSON.parse(undoStack.pop());nextContourId=Math.max(1,...state.contours.map(c=>c.id+1));}}
+  // SVG-разрез: растеризуем с белым фоном; замкнутые фигуры без заливки закрашиваем (материал = тёмное).
+  async function scanSvgImage(file){
+    const text=await file.text(),doc=new DOMParser().parseFromString(text,'image/svg+xml'),root=doc.documentElement;
+    if(!root||root.nodeName.toLowerCase()!=='svg'||doc.querySelector('parsererror'))throw new Error('не удалось прочитать SVG');
+    const num=v=>{const n=parseFloat(v);return Number.isFinite(n)&&n>0&&!/%/.test(String(v))?n:0;};
+    let vb=(root.getAttribute('viewBox')||'').trim().split(/[\s,]+/).map(Number),w=num(root.getAttribute('width')),h=num(root.getAttribute('height'));
+    if(vb.length!==4||vb.some(n=>!Number.isFinite(n))||vb[2]<=0||vb[3]<=0){
+      if(!w||!h)throw new Error('в SVG нет размеров (viewBox или width/height)');
+      vb=[0,0,w,h];root.setAttribute('viewBox',`0 0 ${w} ${h}`);
+    }
+    const k=Math.min(2400/Math.max(vb[2],vb[3]),8),pw=Math.max(1,Math.round(vb[2]*k)),ph=Math.max(1,Math.round(vb[3]*k));
+    root.setAttribute('width',String(pw));root.setAttribute('height',String(ph));
+    root.querySelectorAll('path,rect,circle,ellipse,polygon').forEach(el=>{
+      const fill=(el.getAttribute('fill')||el.style.fill||'').trim().toLowerCase();
+      const closed=el.nodeName!=='path'||/[zZ]\s*$/.test(el.getAttribute('d')||'');
+      if(closed&&(fill===''||fill==='none'||fill==='transparent')){el.setAttribute('fill','#000');el.style.fill='#000';}
+      else if(fill&&fill!=='none'&&fill!=='#000'&&fill!=='black'){el.setAttribute('fill','#000');el.style.fill='#000';}
+      el.removeAttribute('fill-opacity');el.removeAttribute('opacity');
+      const stroke=(el.getAttribute('stroke')||el.style.stroke||'').trim().toLowerCase();
+      if(stroke&&stroke!=='none'){el.setAttribute('stroke','#000');el.style.stroke='#000';if(!el.getAttribute('stroke-width'))el.setAttribute('stroke-width',String(Math.max(vb[2],vb[3])/800));}
+    });
+    root.querySelectorAll('line,polyline').forEach(el=>{el.setAttribute('stroke','#000');if(!el.getAttribute('stroke-width'))el.setAttribute('stroke-width',String(Math.max(vb[2],vb[3])/800));});
+    const url='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(new XMLSerializer().serializeToString(root));
+    return await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('браузер не смог отрисовать SVG'));img.src=url;});
+  }
+  async function scanLoadImageFile(file){
+    if(!file)return;
+    try{
+      let source=null;
+      if(/\.svg$/i.test(file.name||'')||file.type==='image/svg+xml')source=await scanSvgImage(file);
+      if(!source&&window.createImageBitmap){try{source=await createImageBitmap(file);}catch(error){source=null;}}
+      if(!source)source=await new Promise((resolve,reject)=>{
+        const img=new Image(),url=URL.createObjectURL(file);
+        img.onload=()=>{URL.revokeObjectURL(url);resolve(img);};
+        img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('файл не является изображением'));};
+        img.src=url;
+      });
+      const srcW=source.naturalWidth||source.width,srcH=source.naturalHeight||source.height;
+      if(!(srcW>0&&srcH>0))throw new Error('пустое изображение');
+      const scale=Math.min(1,SCAN_MAX/Math.max(srcW,srcH));
+      const cw=Math.max(1,Math.round(srcW*scale)),ch=Math.max(1,Math.round(srcH*scale));
+      const cv=document.createElement('canvas');cv.width=cw;cv.height=ch;
+      const ctx=cv.getContext('2d',{willReadFrequently:true});
+      ctx.fillStyle='#fff';ctx.fillRect(0,0,cw,ch);ctx.drawImage(source,0,0,cw,ch);
+      if(source.close)source.close();
+      scanImage=ctx.getImageData(0,0,cw,ch);
+      scanGrayData=scanBoxBlur(scanGrayOf(scanImage.data,cw*ch),cw,ch);
+      $('scanThreshold').value=String(scanOtsu(scanGrayData));
+      (()=>{try{const thr=Number($('scanThreshold').value),inv=$('scanInvert').checked,cnt=new Uint32Array(cw);
+        for(let y=0;y<ch;y++)for(let x=0;x<cw;x++){const dark=scanGrayData[y*cw+x]<=thr?1:0;if(inv?!dark:dark)cnt[x]++;}
+        const need=ch*.12;let l=0,rr=cw-1;while(l<cw&&cnt[l]<need)l++;while(rr>l&&cnt[rr]<need)rr--;
+        if(rr-l>cw*.2){$('scanStart').value=(l/cw*100).toFixed(1);$('scanEnd').value=((rr+1)/cw*100).toFixed(1);}else{$('scanStart').value='0';$('scanEnd').value='100';}
+        $('scanStartVal').textContent=Number($('scanStart').value).toFixed(1)+'%';$('scanEndVal').textContent=Number($('scanEnd').value).toFixed(1)+'%';}catch(e){}})();
+      scanLoops=[];
+      $('scanEmpty').classList.add('hidden');
+      $('scanWork').classList.remove('hidden');
+      scanUpdate();
+      $('footerStatus').textContent=`Скан: изображение ${srcW} × ${srcH} px загружено, порог подобран автоматически — при необходимости уточните ползунком.`;
+    }catch(error){alert(`Не удалось открыть изображение: ${error.message}`);}
+  }
+  function scanModeValue(){const input=document.querySelector('input[name="scanMode"]:checked');return input?input.value:'section';}
+  function scanSyncModeUI(){
+    const profile=false,section=scanModeValue()==='section';
+    $('scanWidthLabel').textContent=profile?'Реальная высота выделения (сверху вниз), мм':section?'Реальная ширина между зелёными линиями, мм':'Реальная ширина чертежа, мм';
+    $('scanApply').textContent=profile?'Создать фрезу':section?'Создать вектора с фрезами':'Смонтировать контуры';
+    $('scanSectionControls').classList.toggle('hidden',!section);
+    $('scanOffsetField').classList.toggle('hidden',$('scanPart').value!=='custom');
+    $('scanThicknessField').classList.toggle('hidden',$('scanScaleBy').value!=='thick');
+    if(section&&!$('scanThicknessMm').dataset.touched)$('scanThicknessMm').value=String(state.thickness);
+    $('scanWidthMm').disabled=section&&$('scanScaleBy').value==='thick';
+    if(section&&scanImage){const w=Number($('scanWidthMm').value);if(!(w>=1))$('scanWidthMm').value=String(state.width);}
+    clearTimeout(scanTimer);scanTimer=setTimeout(scanUpdate,30);
+    $('scanModeHint').textContent=section
+      ?'Снимите разрез фасада строго сбоку (или возьмите чертёж разреза): верхняя линия — поверхность, ниже — материал. Обведите пальцем всю ширину разреза. Программа найдёт все вырезы, определит форму (прямая, V, шар…), ширину и глубину, подберёт из вашей библиотеки фрез (или стандартных прямых/шаровых/V) те, что дадут такой же разрез, и построит вектора — новые фрезы не создаются. Слева-направо должна быть вся ширина фасада.'
+      :profile
+      ?'Снимите торец сбоку, линию среза — вертикально. Проведите пальцем узкую полоску вдоль линии профиля: ВЕРХ полоски — место, где срез выходит на поверхность, НИЗ — самая глубокая точка реза (кончик фрезы). Реальный размер — вертикальный размер выделения по линейке.'
+      :'При необходимости обведите пальцем область чертежа — обводка будет только внутри выделения. Реальная ширина — размер этой области по горизонтали.';
+  }
+  function scanOpen(mode){
+    const radio=document.querySelector('input[name="scanMode"][value="'+(mode==='add'?'add':'section')+'"]');
+    if(radio)radio.checked=true;
+    scanSyncModeUI();
+    $('scanOverlay').classList.remove('hidden');
+    try{localStorage.setItem('fasadlab-scan-mode',scanModeValue());}catch(e){}
+  }
+  function scanClose(){$('scanOverlay').classList.add('hidden');}
+  $('scanDrawing').addEventListener('click',()=>{let last='section';try{last=localStorage.getItem('fasadlab-scan-mode')||'section';}catch(e){}scanOpen(last==='add'?'add':'section');});
+  $('impScan').addEventListener('click',()=>scanOpen('add'));
+  $('scanClose').addEventListener('click',scanClose);
+  $('scanCancel').addEventListener('click',scanClose);
+  $('scanCameraBtn').addEventListener('click',()=>$('scanCameraPicker').click());
+  $('scanFileBtn').addEventListener('click',()=>$('scanFilePicker').click());
+  const scanPicked=async event=>{const file=event.target.files&&event.target.files[0];event.target.value='';if(file)await scanLoadImageFile(file);};
+  $('scanCameraPicker').addEventListener('change',scanPicked);
+  $('scanFilePicker').addEventListener('change',scanPicked);
+  ['scanThreshold','scanTolerance','scanMinSize'].forEach(id=>$(id).addEventListener('input',()=>{clearTimeout(scanTimer);scanTimer=setTimeout(scanUpdate,150);}));
+  $('scanWidthMm').addEventListener('input',()=>{clearTimeout(scanTimer);scanTimer=setTimeout(scanModeValue()==='section'?scanUpdate:scanShowStats,150);});
+  ['scanPart','scanOffsetMm','scanStart','scanEnd','scanScaleBy','scanThicknessMm'].forEach(id=>$(id).addEventListener('input',()=>{$('scanOffsetField').classList.toggle('hidden',$('scanPart').value!=='custom');$('scanThicknessField').classList.toggle('hidden',$('scanScaleBy').value!=='thick');$('scanWidthMm').disabled=$('scanScaleBy').value==='thick';$('scanStartVal').textContent=Number($('scanStart').value).toFixed(1)+'%';$('scanEndVal').textContent=Number($('scanEnd').value).toFixed(1)+'%';clearTimeout(scanTimer);scanTimer=setTimeout(scanUpdate,60);}));
+  $('scanInvert').addEventListener('change',()=>{clearTimeout(scanTimer);scanTimer=setTimeout(scanUpdate,60);});
+  document.querySelectorAll('input[name="scanMode"]').forEach(input=>input.addEventListener('change',scanSyncModeUI));
+  $('scanApply').addEventListener('click',()=>{
+    if(!scanImage){alert('Сначала сделайте снимок или выберите изображение.');return;}
+    const mode=scanModeValue();
+    if(mode==='section'){
+      try{
+        scanSection=scanAnalyzeSection();
+        const made=scanApplySection();
+        $('footerStatus').textContent=`Разрез по фото: создано векторов ${made.count}. ${made.notes.join('; ')}.`;
+        scanClose();
+      }catch(error){alert(error.message);}
+      return;
+    }
+    if(!scanLoops.length){alert('Контуры не найдены: измените порог яркости, инверсию или отсечение мелочи.');return;}
+    let built;
+    try{built=scanBuildPaths();}catch(error){alert(error.message);return;}
+    try{
+      snapshot();
+      addImportedItem(built.d,{x:0,y:0,width:built.width,height:built.height},'Скан чертежа','page');
+      $('footerStatus').textContent=`Скан: добавлено опорных контуров ${built.count} (${built.width} × ${built.height} мм) в текущий фасад. «Забрать» превратит их в основные.`;
+    }catch(error){alert(`Не удалось создать контуры: ${error.message}`);return;}
+    scanClose();
   });
   function zoomBy(amount){state.zoom=Math.max(40,Math.min(800,state.zoom+amount));$('zoomValue').textContent=`${state.zoom}%`;applyCanvasTransform();}
   function operationVectorPaths() {
