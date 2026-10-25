@@ -256,7 +256,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 
 .profile-preview-title{display:flex;align-items:center;gap:8px}.section-tools{margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500}.section-tools button{min-width:26px;height:22px;padding:0 6px;font-size:13px;line-height:1}#sectionZoomValue{min-width:38px;text-align:center}
 #profilePreview{touch-action:none;cursor:grab}#profilePreview.panning{cursor:grabbing}
-.profile-preview-panel.expanded{height:220px;min-height:220px}.profile-preview-panel.expanded .profile-preview svg{height:180px}
+.profile-preview-panel.expanded{height:auto;min-height:220px}.profile-preview-panel.expanded .profile-preview svg{height:180px}
 
 .dock{flex:none;display:flex;flex-direction:column}
 .dock .canvas-heading{min-height:40px;padding:4px 10px;border-bottom:1px solid var(--line);flex-wrap:wrap}
@@ -313,7 +313,7 @@ body:not(.hide-left)::after,body:not(.hide-right)::after{content:'';position:fix
 body.hide-left .app>.left-scroll,body.hide-right .app>.right-scroll{display:none}
 .edge-toggle{width:30px;height:76px}
 .profile-preview-panel{flex:none}
-.app>.center{overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}.canvas-panel{flex:none;height:min(46vh,520px);min-height:220px}.profile-preview-panel:not(.expanded){height:104px;min-height:0}.profile-preview-panel:not(.expanded) .profile-preview svg{height:60px}.profile-preview-panel,.dock{flex:none}
+.app>.center{overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}.canvas-panel{flex:none;height:min(46vh,520px);min-height:220px}.profile-preview-panel:not(.expanded){height:auto;min-height:0;padding-bottom:6px}.profile-preview-panel:not(.expanded) .profile-preview svg{height:60px}.profile-preview-panel,.dock{flex:none}
 .dock{flex:none}
 .dock .canvas-heading{padding:3px 8px;gap:4px}.dock .canvas-heading .sub{display:none}
 .dock .canvas-heading-actions{flex-wrap:wrap;gap:4px}
@@ -355,11 +355,24 @@ footer{min-height:40px;padding:2px 8px}footer button{height:34px}
 .screen-dialog{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:12px}
 .screen-dialog.hidden{display:none}
 .screen-card{width:min(420px,100%);max-height:100%;overflow:auto;background:#f1ede4;border:1px solid #a79f90;border-radius:12px;padding:14px 16px;box-shadow:0 12px 40px rgba(0,0,0,.35);zoom:1}
+.user-hidden{display:none!important}
+.scr-det{margin:8px 0;border:1px solid var(--line);border-radius:8px;padding:6px 8px}.scr-det summary{cursor:pointer;font-weight:700}
+.scr-colors{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;margin:8px 0}.scr-colors label{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:13px}.scr-colors input{width:44px;height:30px;padding:0}
+.scr-prow{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;padding:5px 0;border-top:1px solid var(--line);font-size:13px}.scr-prow>span:first-child{flex:1 1 100%;font-weight:600}.scr-dc{display:grid;gap:8px;margin:8px 0}.scr-dc label{display:grid;gap:3px;font-size:13px}.scr-dc .scr-inl,.scr-dc .scr-chk{display:flex;align-items:center;gap:8px}.scr-dc output{float:right;color:var(--muted)}
+.scr-mv{display:flex;gap:4px}.scr-mv button{padding:2px 9px;font-size:13px}
+.scr-prow label{display:flex;gap:4px;align-items:center}.scr-fixed,.scr-note{color:var(--muted);font-size:12px}
 .screen-card h4{margin:10px 0 2px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .screen-card select{width:100%;padding:6px;font:inherit}
 .screen-row:has(select){display:block}.screen-row:has(select) label{display:block;margin-bottom:3px}
 body.ui-contrast{--bg:#f4f4f2;--panel:#ffffff;--panel2:#e9e9e6;--line:#2b2b2b;--text:#000;--muted:#333;--blue:#00478f;--green:#006b2e;--red:#b00020;--cyan:#006a80;--purple:#5a2a8a;--grid:#8a8a8a}
 body.ui-contrast{background:#e4e4e1;color:#000}body.ui-contrast header{background:#fff;border-bottom:2px solid #000}body.ui-contrast .panel{border-width:2px;background:#fff}body.ui-contrast .screen-card{background:#fff;border:2px solid #000}
+body.ui-contrast button,body.ui-contrast input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),body.ui-contrast select,body.ui-contrast textarea{border:2px solid #000!important;background:#fff;color:#000}
+body.ui-contrast button.active,body.ui-contrast .primary,body.ui-contrast .footer-primary{background:#00478f;color:#fff;border-color:#000!important}
+body.ui-contrast button:hover{background:#ffe97a;color:#000;border-color:#000}
+body.ui-contrast .panel-title{background:#fff;border-bottom:2px solid #000;color:#000}
+body.ui-contrast .panel-title .sub{color:#333}
+body.ui-contrast footer,body.ui-contrast .canvas-panel,body.ui-contrast .dock,body.ui-contrast .profile-preview-panel{border:2px solid #000;background:#fff}
+body.ui-contrast footer{border-width:2px 0 0}
 body.ui-contrast .panel,body.ui-contrast button,body.ui-contrast input,body.ui-contrast select{border-color:#2b2b2b}
 body.ui-contrast .panel h2,body.ui-contrast .panel h3,body.ui-contrast label{font-weight:700}
 .screen-card h3{margin:0 0 8px;font-size:16px}
@@ -399,7 +412,7 @@ body.hide-hint #canvasHint{display:none}
         <button type="button" id="importAsNew" class="generate-style import-new" title="Загрузить DXF или SVG: изделие создастся по размеру чертежа, контуры получат фрезу">⤓ Импорт чертежа как изделие (DXF / SVG)</button><button type="button" id="scanDrawing" class="generate-style import-new" title="Камера или фото: разрез фасада → вектора с фрезами, либо обводка линий чертежа, либо фреза из торца — режим выбирается в окне">📷 Скан по фото (разрез / чертёж)</button><button type="button" id="generateStyle" class="generate-style" title="Случайный стиль для текущего изделия: фасад, витрина, цулага, профиль или гребёнка — формы, отступы, фрезы">🎲 Генератор стиля</button>
       </div>
     </section>
-    <section class="panel config-panel">
+    <section class="panel config-panel" id="configPanel">
       <div class="panel-title">Основа <span class="sub" id="objectTypeName">Фасад</span></div>
       <div class="panel-body">
         <label class="field" for="projectName">Название изделия <span class="sub">автосохранение</span><input id="projectName" value="Фасад 1" maxlength="48" placeholder="Название фасада / профиля / гребёнки"></label>
@@ -489,7 +502,11 @@ body.hide-hint #canvasHint{display:none}
     </div></div></section>
   </section>
   <aside class="column right-scroll">
-    <section class="panel"><div class="panel-title">Слои <button id="toggleLayers" aria-expanded="true">Скрыть</button></div><div class="layers layer-content" id="layerContent">
+    <section class="panel" id="infoPanel"><div class="panel-title">Свойства фасада <button id="toggleInfo" aria-expanded="false">Показать</button></div><div class="info-list hidden" id="objectInfo">
+      <span class="group">РАЗМЕРЫ (ММ)</span><span>Ширина</span><span class="value" id="infoWidth">596</span><span>Высота</span><span class="value" id="infoHeight">716</span><span>Толщина</span><span class="value" id="infoThickness">19</span>
+      <span class="group">ВЕКТОРЫ И ПРОВЕРКА</span><span>Контуры</span><span class="value" id="infoContours">2</span><span>Элементы</span><span class="value" id="infoElements">2</span><span>Скругления</span><span class="value" id="infoRounds">4</span><span>Статус</span><span class="value good" id="infoStatus">Без ошибок</span>
+    </div></section>
+    <section class="panel" id="layersPanel"><div class="panel-title">Слои <button id="toggleLayers" aria-expanded="true">Скрыть</button></div><div class="layers layer-content" id="layerContent">
       <label class="layer"><input type="checkbox" data-layer="outer" checked><span class="swatch" style="background:#147eff"></span>Контур (наружный)</label>
       <label class="layer"><input type="checkbox" data-layer="inner" checked><span class="swatch" style="background:#ed5260"></span>Контур (внутренний)</label>
       <label class="layer"><input type="checkbox" data-layer="details" checked><span class="swatch" style="background:#17c682"></span>Скругления / профиль</label>
@@ -498,10 +515,6 @@ body.hide-hint #canvasHint{display:none}
       <label class="layer"><input type="checkbox" data-layer="text" checked><span class="swatch" style="background:#ad54ef"></span>Текст</label>
       <label class="layer"><input type="checkbox" data-layer="underlay" checked><span class="swatch" style="background:#b99067"></span>Фактура заготовки</label>
       <label class="field texture-choice" for="facadeTexture">Текстура фасада сверху<select id="facadeTexture"><option value="pencil">Карандашный эскиз (штриховка и тени)</option><option value="graphite">Графит (тёмный рельеф)</option><option value="paper">Бумажный скетч (тушь и акварель)</option><option value="mdf">МДФ (плита с фактурой)</option><option value="veneer">Шпон (древесный рисунок)</option><option value="plain">Однотонная (матовая краска)</option></select></label>
-    </div></section>
-    <section class="panel"><div class="panel-title">Свойства фасада <button id="toggleInfo" aria-expanded="false">Показать</button></div><div class="info-list hidden" id="objectInfo">
-      <span class="group">РАЗМЕРЫ (ММ)</span><span>Ширина</span><span class="value" id="infoWidth">596</span><span>Высота</span><span class="value" id="infoHeight">716</span><span>Толщина</span><span class="value" id="infoThickness">19</span>
-      <span class="group">ВЕКТОРЫ И ПРОВЕРКА</span><span>Контуры</span><span class="value" id="infoContours">2</span><span>Элементы</span><span class="value" id="infoElements">2</span><span>Скругления</span><span class="value" id="infoRounds">4</span><span>Статус</span><span class="value good" id="infoStatus">Без ошибок</span>
     </div></section>
     <section class="panel" id="importSettingsPanel">
       <div class="panel-title"><span>Импортированный вектор</span><span class="panel-title-actions"><span class="sub" id="isLabel"></span></span></div>
@@ -2286,11 +2299,11 @@ body.hide-hint #canvasHint{display:none}
     $('vectorListTitle').textContent=type==='facade'?(state.kind==='vitrina'?'Контуры витрины':'Контуры фасада'):type==='comb'?'Проходы гребёнки':'Векторы профиля';
     $('objectTypeName').textContent=type==='facade'?(state.kind==='vitrina'?'Витрина':'Фасад'):type==='profile'&&state.kind==='tsulaga'?'Цулага':type==='comb'?'Фасад-гребёнка':'Профиль';
     $('dimensionHelp').textContent=type==='facade'?(state.kind==='vitrina'?'Укажите ширину, высоту и толщину витрины. Четверть и окно строятся автоматически.':'Укажите ширину, высоту и толщину фасада. Векторы добавляются и редактируются отдельно.'):type==='comb'?'Шаг задаёт расстояние между проходами; первый и последний отступы ограничивают область размещения. Полосы идут по всей длине заготовки.':state.kind==='tsulaga'?'Размеры цулаги считаются по её форме (ширина полосы, длина, угол торца) и здесь только показываются.':'Каждый профиль — отдельный вектор: задайте край, отступ и свои фрезу, ширину и глубину.';
-    [...document.querySelectorAll('.left-scroll > .panel')].forEach(panel=>{
+    [...document.querySelectorAll('.panel[data-origin="left"]')].forEach(panel=>{
       const availableInSheet=panel.id==='designListPanel'||panel.id==='newDesignPanel';
       panel.classList.toggle('hidden',activeView==='nest'&&!availableInSheet);
     });
-    [...document.querySelectorAll('.right-scroll > .panel')].forEach(panel=>{
+    [...document.querySelectorAll('.panel[data-origin="right"]')].forEach(panel=>{
       panel.classList.toggle('hidden',activeView==='nest'?panel.id!=='cuttingPanel':panel.id==='cuttingPanel');
     });
     $('typeSettingsPanel').classList.toggle('hidden',type==='facade'||(type==='profile'&&state.kind==='tsulaga')||activeView==='nest');
@@ -2315,27 +2328,27 @@ body.hide-hint #canvasHint{display:none}
       const relief=Math.min(1,cutterReliefDepth(shape,(ring-.5)/rings,cutDepth,diameter)/cutDepth);
       out+=`<path d="${path}" fill="none" stroke="${mixHex('#ece8dd','#4f4a40',relief*.9)}" stroke-width="${(width*ring/rings).toFixed(2)}" stroke-linejoin="round"/>`;
     }
-    return `<g opacity=".6" ${attrs}>${out}</g>`;
+    return `<g opacity=".6" data-role="swath" ${attrs}>${out}</g>`;
   }
   function draw2d() {
     const svg=$('drawing'),W=state.width,H=state.height,pad=76;
     const objectLabel=state.objectType==='comb'?'Фасад-гребёнка':typeLabel(state.objectType,state.kind),isTs=state.kind==='tsulaga'&&state.objectType==='profile';
     const shownCount=state.objectType==='facade'?state.contours.length+1:operationVectorPaths().length;
     if(!Number.isFinite(W)||!Number.isFinite(H)){
-      svg.setAttribute('viewBox','0 0 800 800');svg.innerHTML='<text x="400" y="390" text-anchor="middle" fill="#b64b53" font-size="22">Введите ширину и высоту фасада</text>';
+      svg.setAttribute('preserveAspectRatio','xMidYMid meet');svg.setAttribute('viewBox','0 0 800 800');svg.innerHTML='<text x="400" y="390" text-anchor="middle" fill="#b64b53" font-size="22">Введите ширину и высоту фасада</text>';
       $('dimensions').textContent='Размеры не заданы';$('vectorCount').textContent=`Векторов: ${state.contours.length+1}`;
       $('validity').textContent='⚠ Укажите размеры';$('validity').className='warning';$('infoStatus').textContent='Укажите размеры';$('infoStatus').className='value warning';
       $('canvasHint').textContent='Для чертежа введите ширину и высоту фасада';return;
     }
     const scale=Math.min((800-pad*2)/(W+30),(800-pad*2)/(H+30));
     const dw=Math.max(40,W*scale),dh=Math.max(40,H*scale),x=(800-dw)/2-8,y=(800-dh)/2-8;
-    lastGeometry={x,y,scale,width:W,height:H};
+    lastGeometry={x,y,scale,width:W,height:H};svg.setAttribute('preserveAspectRatio','xMidYMid meet');
     const outer=isTs?tsulagaPathD(state.tsulaga,scale,x,y):outerRectPath(x,y,dw,dh,scale);
     const tsCut=isTs?`<path d="${outer}" fill="none" stroke="#a34d43" stroke-width="2" vector-effect="non-scaling-stroke"><title>Сквозной рез · фреза Ø ${state.tsulaga.cutDia} мм · насквозь ${state.thickness} мм</title></path>`:'';
     const visible=state.layers;
     $('canvas').style.backgroundImage=visible.underlay?'':'none';
     const textureDefs=`<pattern id="boardgrain" width="36" height="32" patternUnits="userSpaceOnUse"><rect width="36" height="32" fill="#f2efe7"/><path d="m-3 8 9-4m-6 11 12-5m4 14 12-13m-2 21 14-15m-7-14 9-8M5 27l8-9m13-20 4-4" fill="none" stroke="#79746a" stroke-width=".65" stroke-opacity=".12"/><path d="m4 12 5-3m13 18 6-6m-1-17 4-3" fill="none" stroke="#fff" stroke-width=".8" stroke-opacity=".5"/></pattern><pattern id="mdfgrain" width="24" height="22" patternUnits="userSpaceOnUse"><rect width="24" height="22" fill="#e9e5dc"/><path d="m3 6 1 0m8 3 1 0m6-5 1 0M6 17l1 0m11 1 1 0m-7-12 .5 0" stroke="#79746a" stroke-width="1" stroke-opacity=".2"/></pattern><pattern id="veneergrain" width="90" height="48" patternUnits="userSpaceOnUse"><rect width="90" height="48" fill="#e9e4d9"/><path d="M-4 8C18 2 30 14 52 8S76 4 94 8M-4 23C18 17 30 29 52 23s24-4 42 0M-4 39c22-6 34 6 56 0s24-4 42 0" fill="none" stroke="#807565" stroke-width=".8" stroke-opacity=".2"/></pattern>`;
-    const texMode=visible.underlay&&['pencil','graphite','paper','mdf','veneer','plain'].includes(effTexture())&&!document.body.classList.contains('draw-crisp')?effTexture():null,pencilMode=texMode;
+    const texMode=visible.underlay&&['pencil','graphite','paper','mdf','veneer','plain'].includes(effTexture())&&!crispFlat()?effTexture():null,pencilMode=texMode;
     // Настройки текстур: цвет поверхности, зерно, штриховка, тени вокруг векторов, цвет линий. У каждой текстуры свой характер.
     const TEXCFG={
       pencil:{top:'#f8f3e8',bot:'#e6dec9',line:'#3a3833',wob:0,hatch:.24,cross:.13,grain:'speck',grainOp:.4,edge:['#2e2b26',.26,34],inner:['hatch',.3],shadow:['#2b2924',.32,6,2.4,3,3.2],hi:.7,groove:'hatch',sheen:.5},
@@ -2391,14 +2404,14 @@ body.hide-hint #canvasHint{display:none}
       const path=contourPath(contour,scale,x,y),selected=contour.id===state.selectedContour,passes=contourCutterPasses(contour);
       const pencil=selected?'#a45f40':'#625f57';
       const contourBounds=getContourBounds(contour.id);
-      const grooves=passes.map(pass=>{const egOverlay=pass.engrave?(()=>{const eg=engraveGeometry(contour,pass);return eg&&!eg.error&&visible.corners!==false?engraveMarkup(eg,pass,scale,x,y,pass.cutter):'';})():'';const toolPath=passToolPath(contour,pass,scale,x,y,contourBounds);if(!toolPath)return egOverlay;const centerLine=pass.side!=='on'?`<path d="${toolPath}" fill="none" stroke="#a45f40" stroke-width="1" stroke-opacity=".7" stroke-dasharray="1 3" vector-effect="non-scaling-stroke"/>${passDirectionArrow(contour,pass,scale,x,y,contourBounds)}`:'';return egOverlay+(formGrooveMarkup(toolPath,pass.cutter,pass.diameter,pass.depth,scale)||`<path d="${toolPath}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,Math.min(16,pass.diameter*scale))}" stroke-opacity="${Math.min(.2,.08+pass.depth/Math.max(state.thickness,1)*.1)}" stroke-dasharray="2 1.5"/>`)+centerLine;}).join('');
+      const grooves=passes.map(pass=>{const egOverlay=pass.engrave?(()=>{const eg=engraveGeometry(contour,pass);return eg&&!eg.error&&visible.corners!==false?engraveMarkup(eg,pass,scale,x,y,pass.cutter):'';})():'';const toolPath=passToolPath(contour,pass,scale,x,y,contourBounds);if(!toolPath)return egOverlay;const centerLine=pass.side!=='on'?`<path data-role="traj" d="${toolPath}" fill="none" stroke="#a45f40" stroke-width="1" stroke-opacity=".7" stroke-dasharray="1 3" vector-effect="non-scaling-stroke"/>${passDirectionArrow(contour,pass,scale,x,y,contourBounds)}`:'';return egOverlay+(formGrooveMarkup(toolPath,pass.cutter,pass.diameter,pass.depth,scale)||`<path data-role="swath" d="${toolPath}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,Math.min(16,pass.diameter*scale))}" stroke-opacity="${Math.min(.2,.08+pass.depth/Math.max(state.thickness,1)*.1)}" stroke-dasharray="2 1.5"/>`)+centerLine;}).join('');
       const cornerArrow=(()=>{
         if(!contour.cornerOf||!Array.isArray(contour.arrowPts)||contour.arrowPts.length<2)return '';
         const P=contour.arrowPts.map(p=>[x+p[0]*scale,y+p[1]*scale]),poly=P.map(p=>p.join(' ')).join(' L ');
         return `<path d="M ${poly}" fill="none" stroke="transparent" stroke-width="14"/><path d="M ${poly}" fill="none" stroke="${selected?'#d4491f':'#8e44ad'}" stroke-width="${selected?2.4:1.7}" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`;
       })();
       if(contour.cornerOf&&visible.corners===false)return '';
-      return `<g data-contour="${contour.id}">${cornerArrow}${pencilContourUnder(contour,path,passes,contourBounds)}${grooves}<path d="${path}" fill="none" stroke="#656159" stroke-width="${selected?1.7:1.2}" stroke-opacity=".34" stroke-dasharray="5 1 1 1" transform="translate(.8 -.7)" vector-effect="non-scaling-stroke"/><path d="${path}" fill="none" stroke="${pencil}" stroke-width="${selected?1.9:1.35}" stroke-opacity="${selected?.95:.66}" stroke-dasharray="5 1 1 1" stroke-linecap="round" vector-effect="non-scaling-stroke"/><title>${esc(contour.name)} · ${passes.map(pass=>`${cutterLabel(pass.cutter)} · ${pass.diameter} × ${pass.depth} мм${passSideText(pass)}`).join('; ')||'без фрезеровки'}</title></g>`;
+      return `<g data-contour="${contour.id}">${cornerArrow}${pencilContourUnder(contour,path,passes,contourBounds)}${grooves}<path data-role="vecg" d="${path}" fill="none" stroke="#656159" stroke-width="${selected?1.7:1.2}" stroke-opacity=".34" stroke-dasharray="5 1 1 1" transform="translate(.8 -.7)" vector-effect="non-scaling-stroke"/><path data-role="vec" d="${path}" fill="none" stroke="${pencil}" stroke-width="${selected?1.9:1.35}" stroke-opacity="${selected?.95:.66}" stroke-dasharray="5 1 1 1" stroke-linecap="round" vector-effect="non-scaling-stroke"/><title>${esc(contour.name)} · ${passes.map(pass=>`${cutterLabel(pass.cutter)} · ${pass.diameter} × ${pass.depth} мм${passSideText(pass)}`).join('; ')||'без фрезеровки'}</title></g>`;
     }).join('');
     const outerPseudo={shape:state.outerCornerRadius>0||state.outerCorners?'round':'rect',corner:Number(state.outerCornerRadius)||0,cornerSet:state.outerCorners};
     const outerGroove=visible.outer?outerContourCutterPasses().map(pass=>{const outerPath=(isTs||pass.side==='on')?outer:passToolPath(outerPseudo,pass,scale,x,y,{x:0,y:0,width:state.width,height:state.height});const mark=(!isTs&&pass.side!=='on')?`<path d="${outerPath}" fill="none" stroke="#a45f40" stroke-width="1" stroke-opacity=".7" stroke-dasharray="1 3" vector-effect="non-scaling-stroke"/>${passDirectionArrow(outerPseudo,pass,scale,x,y,{x:0,y:0,width:state.width,height:state.height})}`:'';return (formGrooveMarkup(outerPath,pass.cutter,pass.diameter,pass.depth,scale)||`<path d="${outerPath}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,pass.diameter*scale)}" stroke-opacity=".14"/>`)+mark;}).join(''):'';
@@ -2494,7 +2507,14 @@ body.hide-hint #canvasHint{display:none}
     return `M ${a} ${top} C ${a+w*.12} ${top+d*.18} ${a+w*.15} ${deep} ${half} ${deep} C ${b-w*.15} ${deep} ${b-w*.12} ${top+d*.18} ${b} ${top}`;
   }
   let selectedCutKey=null,lastCutGroups=[];
+  function spreadChips(xs,min,max,gap){
+    const r=xs.slice();
+    for(let i=0;i<r.length;i++)r[i]=Math.max(r[i],i?r[i-1]+gap:min);
+    for(let i=r.length-1;i>=0;i--){const lim=i===r.length-1?max:r[i+1]-gap;if(r[i]>lim)r[i]=lim;}
+    return r;
+  }
   function drawProfile(svg=$('drawing'),compact=false) {
+    const mapMode=!compact&&document.body.classList.contains('sec-map');
     const isFacade=state.objectType==='facade';
     const isStrip=state.objectType==='profile';
     const isComb=state.objectType==='comb';
@@ -2505,8 +2525,8 @@ body.hide-hint #canvasHint{display:none}
       else svg.innerHTML='';
       return;
     }
-    const scale=Math.min(4,(compact?730:620)/sectionLength,(compact?58:180)/state.thickness);
-    const left=(800-sectionLength*scale)/2,right=left+sectionLength*scale,boardH=state.thickness*scale,y=compact?Math.max(6,(100-boardH)/2):262,bottom=y+boardH;
+    const scale=Math.min(4,(compact?730:620)/sectionLength,(compact?30:180)/state.thickness);
+    const left=(800-sectionLength*scale)/2,right=left+sectionLength*scale,boardH=state.thickness*scale,y=compact?42:mapMode?130:262,bottom=y+boardH;
     const profileOperations=isStrip?state.profileBands.map((band,index)=>{
       const total=vertical?state.width:state.height;
       const center=bandCoord(band,total);
@@ -2566,7 +2586,25 @@ body.hide-hint #canvasHint{display:none}
     const materialPath=`M ${surfacePoints[0]} L ${surfacePoints.slice(1).join(' L ')} L ${bottomPoints.join(' L ')} Z`;
     if(compact){
       svg.setAttribute('viewBox','0 0 800 100');
-      svg.innerHTML=`<defs><pattern id="previewHatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><path d="M 0 0 V 6" stroke="#77736b" stroke-width=".8" stroke-opacity=".32"/></pattern></defs><path d="${materialPath}" fill="#e5e1d8" stroke="#625f57" stroke-width="1.5"/><path d="${materialPath}" fill="url(#previewHatch)"/><path d="M ${surfacePoints.join(' L ')} L ${right} ${y}" fill="none" stroke="#625f57" stroke-width="1.35" stroke-dasharray="5 1 1 1"/>`;
+      const fmtC=v=>Number(Number(v).toFixed(2)),gm=new Map();
+      [...cuts].sort((p,q)=>p.center-q.center).forEach(cut=>{
+        const key=[cut.pocket?'P'+(cut.region||[]).join(':'):'C'+cut.contourId,cut.cutter,fmtC(cut.width),fmtC(cut.depth)].join('|');
+        if(!gm.has(key))gm.set(key,{key,members:[],first:cut});gm.get(key).members.push(cut);
+      });
+      const cgroups=[...gm.values()].sort((p,q)=>p.first.center-q.first.center).map((g,i)=>{const cut=g.first;return{...g,n:i+1,d:Math.min(cut.depth,state.thickness),from:Math.max(0,cut.center-cut.width/2),to:Math.min(sectionLength,cut.center+cut.width/2)};});
+      if(isFacade||isComb||isStrip){lastCutGroups=cgroups;if(selectedCutKey&&!cgroups.some(g=>g.key===selectedCutKey))selectedCutKey=null;}
+      const toolC=(cut,cx)=>{const hw=Math.max(1,cut.width*scale/2),d=Math.min(cut.depth,state.thickness),pts=[];
+        for(let k=0;k<=16;k++){const nn=-1+2*k/16,rd=cutterReliefDepth(cut.shape,Math.max(-.9999,Math.min(.9999,nn)),d,cut.width,cut.formHeight);pts.push(`${(cx+nn*hw).toFixed(2)} ${(y+rd*scale).toFixed(2)}`);}
+        return `M ${cx-hw} ${y-14} V ${y} L ${pts.join(' L ')} L ${cx+hw} ${y} V ${y-14}`;};
+      const cmarks=cgroups.map(g=>{
+        const sel=g.key===selectedCutKey,col=sel?'#0a6cf0':'#a45f40';
+        const parts=g.members.map(m=>{
+          const cx=left+m.center*scale,hw=Math.max(1,m.width*scale/2),dd=Math.min(m.depth,state.thickness)*scale;
+          return `<path d="${toolC(m,cx)}" fill="${col}" fill-opacity="${sel?.45:.16}" stroke="${col}" stroke-width="${sel?1.8:1}" stroke-dasharray="${sel?'':'3 2'}"/><rect x="${cx-hw-4}" y="${y-20}" width="${2*hw+8}" height="${dd+24}" fill="transparent"/>`;
+        }).join('');
+        return `<g data-cutno="${g.n}" style="cursor:pointer">${parts}</g>`;
+      }).join('');
+      svg.innerHTML=`<defs><pattern id="previewHatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><path d="M 0 0 V 6" stroke="#77736b" stroke-width=".8" stroke-opacity=".32"/></pattern></defs><path d="${materialPath}" fill="#e5e1d8" stroke="#625f57" stroke-width="1.5"/><path d="${materialPath}" fill="url(#previewHatch)"/><path d="M ${surfacePoints.join(' L ')} L ${right} ${y}" fill="none" stroke="#625f57" stroke-width="1.35" stroke-dasharray="5 1 1 1"/>${cmarks}`;
       return;
     }
     const firstCut=cuts[0],width=firstCut?.width||0,depth=firstCut?.depth||0,position=firstCut?.center??sectionLength/2;
@@ -2590,7 +2628,8 @@ body.hide-hint #canvasHint{display:none}
       ...(state.pockets.length>2?[[`Ещё выборок`,`+${state.pockets.length-2}`]]:[]),
       ...(state.contours.length>(state.pockets.length?1:3)?[[`Ещё векторов`,`+${state.contours.length-(state.pockets.length?1:3)}`]]:[])
     ].slice(0,4);
-    const specificationMarkup=specification.map(([label,value],index)=>`<text x="82" y="${154+index*16}" font-size="10" fill="#69716f">${esc(label)}</text><text x="190" y="${154+index*16}" font-size="10" fill="#35413f">${esc(value)}</text>`).join('');
+    const dataOff=mapMode?bottom+100-67:0;
+    const specificationMarkup=specification.map(([label,value],index)=>`<text x="82" y="${154+dataOff+index*16}" font-size="10" fill="#69716f">${esc(label)}</text><text x="190" y="${154+dataOff+index*16}" font-size="10" fill="#35413f">${esc(value)}</text>`).join('');
     const cutNotes=(()=>{
       const fmt=v=>Number(Number(v).toFixed(2));
       const sorted=[...cuts].sort((p,q)=>p.center-q.center),groupsMap=new Map();
@@ -2609,13 +2648,19 @@ body.hide-hint #canvasHint{display:none}
       const tool=(cut,cx)=>{const hw=Math.max(1,cut.width*scale/2),d=Math.min(cut.depth,state.thickness),pts=[];
         for(let k=0;k<=24;k++){const nn=-1+2*k/24,rd=cutterReliefDepth(cut.shape,Math.max(-.9999,Math.min(.9999,nn)),d,cut.width,cut.formHeight);pts.push(`${(cx+nn*hw).toFixed(2)} ${(y+rd*scale).toFixed(2)}`);}
         return `M ${cx-hw} ${y-16} V ${y} L ${pts.join(' L ')} L ${cx+hw} ${y} V ${y-16}`;};
-      const marks=groups.map(g=>{
+      const chipXs=mapMode?spreadChips(groups.map(g=>left+g.first.center*scale),30,770,30):[];
+      const band=mapMode&&groups.length?`<rect x="14" y="30" width="772" height="36" rx="6" fill="#efe9dc" stroke="#b9ae98" stroke-width="1"/><text x="22" y="26" font-size="9.5" font-weight="700" fill="#7b7466">ФРЕЗЫ · нажмите номер</text>`:'';
+      const marks=band+groups.map((g,gi)=>{
         const sel=g.key===selectedCutKey,col=sel?'#0a6cf0':'#a45f40';
+        if(mapMode){
+          const chx=chipXs[gi],cxm=left+g.first.center*scale,sil=g.members.map(m=>`<path d="${tool(m,left+m.center*scale)}" fill="${col}" fill-opacity="${sel?.45:.14}" stroke="${col}" stroke-width="${sel?2.4:1.1}" stroke-dasharray="${sel?'':'4 2'}"/>`).join('');
+          return `<g data-cutno="${g.n}" style="cursor:pointer">${sil}<path d="M ${chx} 60 V 80 L ${cxm} 104 V ${y-16}" fill="none" stroke="${col}" stroke-width="${sel?1.8:.9}"/><circle cx="${chx}" cy="48" r="17" fill="transparent"/><circle cx="${chx}" cy="48" r="12" fill="${sel?'#0a6cf0':'#fff'}" stroke="${col}" stroke-width="1.5"/><text x="${chx}" y="52.5" font-size="${g.n>9?11:13}" font-weight="700" text-anchor="middle" fill="${sel?'#fff':'#7a3e24'}" pointer-events="none">${g.n}</text></g>`;
+        }
         const silhouettes=g.members.map(m=>`<path d="${tool(m,left+m.center*scale)}" fill="${col}" fill-opacity="${sel?.45:.14}" stroke="${col}" stroke-width="${sel?2.4:1.1}" stroke-dasharray="${sel?'':'4 2'}"/>`).join('');
         const cx=left+g.first.center*scale,ly=y-26-(g.n%3)*15;
         return `<g data-cutno="${g.n}" style="cursor:pointer">${silhouettes}<path d="M ${cx} ${ly+8} V ${y-16}" stroke="${col}" stroke-width=".8"/><circle cx="${cx}" cy="${ly}" r="12" fill="transparent"/><circle cx="${cx}" cy="${ly}" r="8" fill="${sel?'#0a6cf0':'#fff'}" stroke="${col}" stroke-width="1.1"/><text x="${cx}" y="${ly+3.5}" font-size="${g.n>9?8:9.5}" font-weight="700" text-anchor="middle" fill="${sel?'#fff':'#7a3e24'}" pointer-events="none">${g.n}</text></g>`;
       }).join('');
-      const maxRows=14,rows=groups.slice(0,maxRows),tableTop=bottom+92,ph=18;
+      const maxRows=14,rows=groups.slice(0,maxRows),tableTop=mapMode?bottom+100+165:bottom+92,ph=18;
       const nameOf=g=>{const c=g.first;return c.pocket?(c.name||'Выборка'):(c.name||'Контур');};
       const head=`<text x="80" y="${tableTop}" font-size="11" font-weight="700" fill="#56615e">ФРЕЗЫ В СЕЧЕНИИ — нажмите номер на разрезе или строку</text><g font-size="10.5" font-weight="700" fill="#69716f"><text x="80" y="${tableTop+ph}">№</text><text x="104" y="${tableTop+ph}">Вектор</text><text x="270" y="${tableTop+ph}">Фреза · Ø</text><text x="400" y="${tableTop+ph}">Глубина</text><text x="470" y="${tableTop+ph}">Левый край X</text><text x="570" y="${tableTop+ph}">Ширина</text><text x="640" y="${tableTop+ph}">Срез, мм²</text></g>`;
       const body=rows.map((g,i)=>{const ty=tableTop+ph*2+i*ph,sel=g.key===selectedCutKey,c=g.first;
@@ -2627,7 +2672,7 @@ body.hide-hint #canvasHint{display:none}
     })();
     const showSimpleDimensions=cuts.length===1&&x-half>=left-0.01&&x+half<=right+0.01;
     const rulerWidth=Math.min(50,sectionLength)*scale,rulerStart=760-rulerWidth;
-    svg.setAttribute('viewBox',`0 0 800 ${cutNotes.height}`);
+    svg.setAttribute('viewBox',`0 0 800 ${cutNotes.height}`);svg.setAttribute('preserveAspectRatio','xMidYMin meet');
     svg.innerHTML=`<defs>
       <pattern id="minorGrid" x="${left}" y="${y}" width="${Math.max(.2,10*scale)}" height="${Math.max(.2,10*scale)}" patternUnits="userSpaceOnUse"><path d="M ${10*scale} 0 H 0 V ${10*scale}" fill="none" stroke="#9aa5ae" stroke-width=".65" opacity=".34"/></pattern>
       <pattern id="majorGrid" x="${left}" y="${y}" width="${Math.max(.2,50*scale)}" height="${Math.max(.2,50*scale)}" patternUnits="userSpaceOnUse"><path d="M ${50*scale} 0 H 0 V ${50*scale}" fill="none" stroke="#7e8b95" stroke-width=".9" opacity=".38"/></pattern>
@@ -2642,8 +2687,8 @@ body.hide-hint #canvasHint{display:none}
       <path d="M ${left} ${bottom+36} V ${bottom+12} M ${right} ${bottom+36} V ${bottom+12} M ${left} ${bottom+25} H ${right} ${showSimpleDimensions?`M ${x-half} ${bottom+8} V ${bottom+1} M ${x+half} ${bottom+8} V ${bottom+1} M ${x-half} ${bottom+5} H ${x+half} M ${x+half+18} ${y} H ${x+half+5} M ${x+half+18} ${y+cutDepth} H ${x+half+5} M ${x+half+12} ${y} V ${y+cutDepth}`:''}" stroke="#4e5961" stroke-width="1.1" fill="none"/>
       ${showSimpleDimensions?`<path d="M ${x-half} ${bottom+5} H ${x+half} M ${x+half+12} ${y} V ${y+cutDepth}" stroke="#4e5961" stroke-width="1.1" fill="none" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`:''}
       <g fill="#38434a" font-size="12" font-weight="650" text-anchor="middle"><text x="${(left+right)/2}" y="${bottom+48}">${esc(sectionLength)} мм · длина сечения</text>${showSimpleDimensions?`<text x="${x}" y="${bottom+20}">${esc(width.toFixed(1))} мм</text><text transform="translate(${x+half+29} ${y+cutDepth/2}) rotate(-90)">${esc(depth.toFixed(1))} мм</text>`:''}<text transform="translate(${left-24} ${y+boardH/2}) rotate(-90)">${esc(state.thickness)} мм · толщина</text><text x="${(left+right)/2}" y="${bottom+70}">${isFacade?`Векторов: ${state.contours.length} · выборок: ${state.pockets.length} · резов в сечении: ${cuts.length}`:isComb?`Шаг ${state.combPitch} мм · ${allPasses} всего · ${cuts.length} в сечении`:`Векторов профиля: ${cuts.length}`}</text></g>
-      <path d="M ${rulerStart} 220 H 760 M ${rulerStart} 216 V 224 M 760 216 V 224" fill="none" stroke="#35413f" stroke-width="1.3"/><text x="760" y="214" text-anchor="end" font-size="9" fill="#35413f">Линейка ${Math.min(50,sectionLength)} мм</text>
-      <g fill="#374149" font-size="12"><text x="80" y="67" font-size="19" font-weight="700">Разрез ${typeGenitive(state.objectType,state.kind)}</text><text x="80" y="91">${esc(state.width)} × ${esc(state.height)} × ${esc(state.thickness)} мм · ${esc(cutter)}</text><text x="80" y="113">Клетка 10 мм · жирная линия 50 мм · ${esc(scale.toFixed(2))} px/мм</text><text x="80" y="137" font-size="10" font-weight="700" fill="#56615e">СПЕЦИФИКАЦИЯ</text>${specificationMarkup}<text x="80" y="${cutNotes.height-8}" font-size="10">Масштабная сетка: малая клетка 10 мм, крупная клетка 50 мм</text></g>${cutNotes.marks}${cutNotes.table}`;
+      <path d="M ${rulerStart} ${mapMode?bottom+88:220} H 760 M ${rulerStart} ${(mapMode?bottom+88:220)-4} V ${(mapMode?bottom+88:220)+4} M 760 ${(mapMode?bottom+88:220)-4} V ${(mapMode?bottom+88:220)+4}" fill="none" stroke="#35413f" stroke-width="1.3"/><text x="760" y="${(mapMode?bottom+88:220)-6}" text-anchor="end" font-size="9" fill="#35413f">Линейка ${Math.min(50,sectionLength)} мм</text>
+      <g fill="#374149" font-size="12"><text x="80" y="${67+dataOff}" font-size="19" font-weight="700">Разрез ${typeGenitive(state.objectType,state.kind)}</text><text x="80" y="${91+dataOff}">${esc(state.width)} × ${esc(state.height)} × ${esc(state.thickness)} мм · ${esc(cutter)}</text><text x="80" y="${113+dataOff}">Клетка 10 мм · жирная линия 50 мм · ${esc(scale.toFixed(2))} px/мм</text><text x="80" y="${137+dataOff}" font-size="10" font-weight="700" fill="#56615e">СПЕЦИФИКАЦИЯ</text>${specificationMarkup}<text x="80" y="${cutNotes.height-8}" font-size="10">Масштабная сетка: малая клетка 10 мм, крупная клетка 50 мм</text></g>${cutNotes.marks}${cutNotes.table}`;
     $('viewTitle').textContent=`Разрез: ${typeGenitive(state.objectType,state.kind)}`;
     $('viewSubtitle').textContent=isFacade?`${state.contours.length} внутренних векторов · ${cuts.length} резов в сечении`:isComb?`${allPasses} проходов всего · ${cuts.length} пересекают сечение · глубина по введённым размерам`:`${cutter} · ${cuts.length} проходов · глубина по введённым размерам`;
   }
@@ -3569,10 +3614,12 @@ body.hide-hint #canvasHint{display:none}
   const sectionView={zoom:1,cx:400};
   function applySectionZoom() {
     const svg=$('profilePreview');if(!svg)return;
+    svg.style.height='';
     const rect=svg.getBoundingClientRect(),aspect=rect.width>0&&rect.height>0?rect.height/rect.width:100/800;
-    const width=800/sectionView.zoom,height=width*aspect;
+    const width=800/sectionView.zoom,NEED=76;let height=width*aspect;
+    if(rect.width>0&&height<NEED){const px=Math.min(240,Math.max(rect.height,rect.width*NEED/width));svg.style.height=px+'px';height=width*(px/rect.width);}
     sectionView.cx=Math.max(width/2-40,Math.min(840-width/2,sectionView.cx));
-    svg.setAttribute('viewBox',`${sectionView.cx-width/2} ${50-height/2} ${width} ${height}`);
+    svg.setAttribute('viewBox',`${sectionView.cx-width/2} ${40-height/2} ${width} ${height}`);
     svg.setAttribute('preserveAspectRatio','xMidYMid meet');
     $('sectionZoomValue').textContent=`${Math.round(sectionView.zoom*100)}%`;
   }
@@ -3598,7 +3645,12 @@ body.hide-hint #canvasHint{display:none}
     });
     svg.addEventListener('wheel',event=>{event.preventDefault();zoomSection(event.deltaY<0?1.25:1/1.25,event.clientX);},{passive:false});
     svg.addEventListener('dblclick',()=>{sectionView.zoom=1;sectionView.cx=400;applySectionZoom();});
-    svg.addEventListener('pointerdown',event=>{svg.setPointerCapture(event.pointerId);pointers.set(event.pointerId,{x:event.clientX});svg.classList.add('panning');pinch=0;});
+    svg.addEventListener('click',event=>{
+      if(Math.abs((event.clientX||0)-(svg._downX||0))>5)return;
+      const el=event.target.closest?.('[data-cutno]')||document.elementFromPoint(event.clientX,event.clientY)?.closest?.('[data-cutno]');
+      if(el)selectCutGroup(Number(el.dataset.cutno));
+    });
+    svg.addEventListener('pointerdown',event=>{svg._downX=event.clientX;svg.setPointerCapture(event.pointerId);pointers.set(event.pointerId,{x:event.clientX});svg.classList.add('panning');pinch=0;});
     svg.addEventListener('pointermove',event=>{
       const prev=pointers.get(event.pointerId);if(!prev)return;
       const ctm=svg.getScreenCTM();if(!ctm)return;
@@ -3696,34 +3748,97 @@ body.hide-hint #canvasHint{display:none}
   }
 
   // ===== Настройка экрана: масштаб интерфейса, высота чертежа, размер кнопок =====
-  function effTexture(){return document.body.classList.contains('draw-crisp')?'plain':state.facadeTexture;}
+  window.flDC={vw:1,ow:1.5,vcol:'',ocol:'',solid:true,swath:30,grid:true,tex:'plain',tw:1,tcol:'#1f7a6d',tdash:'solid'};
+  function crispFlat(){return document.body.classList.contains('draw-crisp')&&window.flDC.tex!=='layers';}
+  function effTexture(){return crispFlat()?'plain':state.facadeTexture;}
   function crispPass(){
-    if(!document.body.classList.contains('draw-crisp'))return;
+    const crisp=document.body.classList.contains('draw-crisp'),solid=crisp||document.body.classList.contains('ui-contrast'),dc=window.flDC;
+    if(!solid)return;
+    if(crisp){
+      document.querySelectorAll('#drawing [data-role]').forEach(el=>{
+        const role=el.dataset.role;if(el.dataset.crisp)return;el.dataset.crisp='1';
+        if(role==='vecg'){el.setAttribute('stroke-opacity','0');return;}
+        if(role==='swath'){
+          if(el.tagName==='g')el.setAttribute('opacity',String(dc.swath/100));else el.setAttribute('stroke-opacity',String(Math.min(1,dc.swath/100)));
+          return;
+        }
+        if(role==='vec'){
+          el.setAttribute('stroke-width',String(dc.vw));el.setAttribute('stroke-opacity','1');el.setAttribute('vector-effect','non-scaling-stroke');
+          if(dc.solid)el.removeAttribute('stroke-dasharray');
+          if(dc.vcol&&el.getAttribute('stroke')!=='#a45f40')el.setAttribute('stroke',dc.vcol);
+          return;
+        }
+        if(role==='traj'){
+          el.setAttribute('stroke-width',String(dc.tw));el.setAttribute('stroke-opacity','1');el.setAttribute('stroke',dc.tcol||'#1f7a6d');
+          if(dc.tdash==='solid')el.removeAttribute('stroke-dasharray');else el.setAttribute('stroke-dasharray',dc.tdash==='dash'?'6 3':'1 3');
+        }
+      });
+    }
     document.querySelectorAll('#drawing path').forEach(el=>{
+      if(el.closest('defs,pattern,clipPath,marker'))return;
+      if(crisp&&(el.dataset.role||el.closest('[data-role]')))return;
       const st=el.getAttribute('stroke');if(!st||st==='none'||st==='transparent')return;
       const w=parseFloat(el.getAttribute('stroke-width'));if(!(w>0))return;
       if(el.dataset.crisp)return;el.dataset.crisp='1';
-      if(w>3){el.setAttribute('stroke-opacity',String(Math.min(.3,(parseFloat(el.getAttribute('stroke-opacity'))||1)*.45)));}
-      else{el.setAttribute('stroke-width','1');el.setAttribute('vector-effect','non-scaling-stroke');el.setAttribute('stroke-linecap','butt');}
+      const keepDash=crisp&&!dc.solid;
+      if(w<=3&&el.hasAttribute('stroke-dasharray')&&!keepDash)el.removeAttribute('stroke-dasharray');
+      if(!crisp)return;
+      if(w>3){el.setAttribute('stroke-opacity',String(Math.min(dc.swath/100,(parseFloat(el.getAttribute('stroke-opacity'))||1)*.45)));return;}
+      if(st.toLowerCase()==='#fff'||st.toLowerCase()==='#ffffff'){el.setAttribute('stroke-opacity','0');return;}
+      const outline=st.toLowerCase()==='#3a3833';
+      el.setAttribute('stroke-width',String(outline?dc.ow:dc.vw));
+      el.setAttribute('vector-effect','non-scaling-stroke');el.setAttribute('stroke-linecap','butt');
+      if(outline&&dc.ocol)el.setAttribute('stroke',dc.ocol);
     });
+    document.querySelectorAll('#drawing rect').forEach(r=>{const f=r.getAttribute('fill')||'';if(/graph(Minor|Major)/.test(f))r.style.display=crisp&&!dc.grid?'none':'';});
     const svg=$('drawing');if(svg)svg.setAttribute('shape-rendering','geometricPrecision');
   }
   function bindScreenSettings() {
-    const KEY='fasadlab-screen',defaults={ui:100,canvas:46,tool:68,drawer:88,section:true,hint:false,style:'classic',draw:'classic',d3:'color'};
+    const KEY='fasadlab-screen',defaults={ui:100,canvas:46,tool:68,drawer:88,section:true,hint:false,style:'classic',draw:'classic',d3:'color',sec:'map',colors:{},layout:{},btns:{},dc:{}};
     let cfg={...defaults};
     try{Object.assign(cfg,JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(error){}
     const dlg=document.createElement('div');dlg.className='screen-dialog hidden';dlg.id='screenDialog';
-    dlg.innerHTML=`<div class="screen-card" role="dialog" aria-label="Меню"><h3>Меню</h3><h4>Экран</h4>
+    dlg.innerHTML=`<div class="screen-card" role="dialog" aria-label="Меню"><h3>Меню</h3><details class="scr-det"><summary>Экран</summary>
       <div class="screen-row"><label for="scrUi">Размер интерфейса</label><output id="scrUiV"></output><input id="scrUi" type="range" min="60" max="160" step="5"></div>
       <div class="screen-row"><label for="scrCanvas">Высота чертежа (телефон стоя)</label><output id="scrCanvasV"></output><input id="scrCanvas" type="range" min="25" max="75" step="1"></div>
       <div class="screen-row"><label for="scrTool">Размер кнопок инструментов</label><output id="scrToolV"></output><input id="scrTool" type="range" min="52" max="100" step="2"></div>
       <div class="screen-row"><label for="scrDrawer">Ширина выезжающих панелей</label><output id="scrDrawerV"></output><input id="scrDrawer" type="range" min="60" max="95" step="1"></div>
       <label class="screen-check"><input id="scrSection" type="checkbox">Показывать панель «Разрез изделия»</label>
       <label class="screen-check"><input id="scrHint" type="checkbox">Скрыть подсказку под чертежом</label>
-      <h4>Стиль</h4>
+      </details>
+      <details class="scr-det"><summary>Стиль</summary>
       <div class="screen-row"><label for="scrStyle">Стиль интерфейса</label><select id="scrStyle"><option value="classic">Классический</option><option value="contrast">Контрастный</option></select></div>
-      <div class="screen-row"><label for="scrDraw">Стиль чертежа</label><select id="scrDraw"><option value="classic">Классический</option><option value="crisp">Чёткий: тонкие линии, фреза полупрозрачная</option></select></div>
+      <div class="screen-row"><label for="scrDraw">Стиль чертежа</label><select id="scrDraw"><option value="classic">Классический</option><option value="crisp">Настраиваемый (параметры ниже)</option></select></div>
+      <div class="screen-row"><label for="scrSec">Вид разреза</label><select id="scrSec"><option value="map">Карта разреза сверху, данные снизу, номера полоской</option><option value="classic">Классический</option></select></div>
       <div class="screen-row"><label for="scr3d">3D-вид</label><select id="scr3d"><option value="color">Цветной (глубина по цвету)</option><option value="mono">Свет и тень</option></select></div>
+      </details>
+      <details class="scr-det"><summary>Чертёж: настраиваемый стиль</summary>
+        <div class="scr-note">Работает, когда «Стиль чертежа» = «Настраиваемый». Слои (галочки) действуют и в нём.</div>
+        <div class="scr-dc">
+          <label>Толщина линий вектора <output id="dcVwV"></output><input type="range" id="dcVw" data-dc="vw" min="0.4" max="4" step="0.1"></label>
+          <label>Толщина контура заготовки <output id="dcOwV"></output><input type="range" id="dcOw" data-dc="ow" min="0.4" max="4" step="0.1"></label>
+          <label>Полоса фрезы (след), непрозрачность <output id="dcSwV"></output><input type="range" id="dcSw" data-dc="swath" min="5" max="80" step="5"></label>
+          <label class="scr-inl">Цвет векторов <input type="color" id="dcVcol" data-dcc="vcol" value="#a45f40"><button type="button" data-dcr="vcol">как было</button></label>
+          <label class="scr-inl">Цвет контура <input type="color" id="dcOcol" data-dcc="ocol" value="#3a3833"><button type="button" data-dcr="ocol">как было</button></label>
+          <label class="scr-chk"><input type="checkbox" id="dcSolid" data-dcb="solid">Линии сплошные (без пунктира)</label>
+          <label class="scr-chk"><input type="checkbox" id="dcGrid" data-dcb="grid">Показывать сетку</label>
+          <label>Толщина траектории фрезы <output id="dcTwV"></output><input type="range" id="dcTw" data-dc="tw" min="0.4" max="4" step="0.1"></label>
+          <label class="scr-inl">Цвет траектории фрезы <input type="color" id="dcTcol" data-dcc="tcol" value="#1f7a6d"></label>
+          <label>Линия траектории<select id="dcTdash" data-dcs="tdash"><option value="solid">Сплошная</option><option value="dash">Штрих</option><option value="dot">Точки</option></select></label>
+          <label>Фон фасада<select id="dcTex" data-dcs="tex"><option value="plain">Гладкий</option><option value="layers">Текстура из панели «Слои»</option></select></label>
+        </div></details>
+      <details class="scr-det"><summary>Цвета интерфейса</summary>
+        <div class="scr-colors">
+          <label>Фон<input type="color" id="scrcBg" data-col="bg" value="#d6d1c7"></label>
+          <label>Панели<input type="color" id="scrcPanel" data-col="panel" value="#f1ede4"></label>
+          <label>Кнопки<input type="color" id="scrcBtn" data-col="btn" value="#e4ded2"></label>
+          <label>Активная кнопка<input type="color" id="scrcAcc" data-col="acc" value="#356761"></label>
+          <label>Текст<input type="color" id="scrcText" data-col="text" value="#302f2a"></label>
+          <label>Рамки<input type="color" id="scrcLine" data-col="line" value="#bcb4a7"></label>
+        </div><button type="button" id="scrColReset">Вернуть цвета стиля</button></details>
+      <details class="scr-det"><summary>Вкладки: где и показывать ли</summary>
+        <div class="scr-note">Слева / справа, порядок стрелками ▲▼ и галочка «Показывать». Убрать можно только независимые вкладки.</div>
+        <div id="scrPanels"></div></details>
       <div class="screen-actions"><button type="button" id="scrReset">Сбросить</button><button type="button" id="scrClose" class="primary">Готово</button></div></div>`;
     document.body.appendChild(dlg);
     const q=id=>dlg.querySelector('#'+id);
@@ -3736,25 +3851,100 @@ body.hide-hint #canvasHint{display:none}
       b.style.setProperty('height',`${window.innerHeight/z}px`,'important');
       b.style.setProperty('min-width','0','important');b.style.setProperty('max-width','none','important');b.style.setProperty('max-height','none','important');
     };
+    const PANELS=[['newDesignPanel','Новое изделие',1],['configPanel','Основа',0],['vectorListPanel','Список векторов',0],['planesPanel','Плоскости',1],['referenceListPanel','Эталоны',1],['designListPanel','Список изделий',1],['layersPanel','Слои',1],['infoPanel','Свойства фасада',1],['importSettingsPanel','Настройки импорта',0],['vectorSettingsPanel','Вектор',0],['cuttingPanel','Раскрой / резка',0]];
+    const BTNS=[['generateStyle','Кнопка «Генератор стиля»'],['scanDrawing','Кнопка «Скан по фото»'],['importAsNew','Кнопка «Импорт чертежа как изделие»']];
+    let colorStyle=document.getElementById('userColors');
+    if(!colorStyle){colorStyle=document.createElement('style');colorStyle.id='userColors';document.head.appendChild(colorStyle);}
+    const applyColors=()=>{
+      const c=cfg.colors||{},r=[];
+      if(c.bg)r.push(`html,body{background:${c.bg}!important}.app>.left-scroll,.app>.right-scroll{background:${c.bg}!important}`);
+      if(c.panel)r.push(`.panel,header,footer,.screen-card,.dock,.canvas-panel{background:${c.panel}!important}.panel-title{background:${c.panel}!important}`);
+      if(c.btn)r.push(`button,select,input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]){background:${c.btn}!important}`);
+      if(c.acc)r.push(`button.active,.primary,.footer-primary,.toggle.active{background:${c.acc}!important;border-color:${c.acc}!important;color:#fff!important}`);
+      if(c.text)r.push(`body,.panel,header,footer,button,select,input,label,.screen-card{color:${c.text}!important}`);
+      if(c.line)r.push(`.panel,button,select,input,textarea,header,footer,.canvas-panel,.dock{border-color:${c.line}!important}`);
+      colorStyle.textContent=r.join('\n');
+    };
+    const sideOf=id=>(cfg.layout[id]&&cfg.layout[id].side)||null;
+    const getOrder=()=>{
+      const base=[...document.querySelectorAll('.left-scroll > .panel, .right-scroll > .panel')].sort((a,b)=>Number(a.dataset.ord||0)-Number(b.dataset.ord||0)).map(e=>e.id);
+      const cur=Array.isArray(cfg.order)?cfg.order.filter(id=>base.includes(id)):[];
+      base.forEach(id=>{if(!cur.includes(id))cur.push(id);});
+      return cur;
+    };
+    const movePanel=(id,dir)=>{
+      const el=document.getElementById(id),aside=el.parentElement,order=getOrder();
+      const mates=order.filter(x=>{const e=document.getElementById(x);return e&&e.parentElement===aside;});
+      const i=mates.indexOf(id),j=i+dir;if(j<0||j>=mates.length)return;
+      const a=order.indexOf(id),b=order.indexOf(mates[j]);order[a]=mates[j];order[b]=id;
+      cfg.order=order;applyLayout();save();buildPanelRows();
+    };
+    const applyLayout=()=>{
+      const left=document.querySelector('.left-scroll'),right=document.querySelector('.right-scroll');
+      [...document.querySelectorAll('.left-scroll > .panel, .right-scroll > .panel')].forEach((el,i)=>{if(!el.dataset.origin){el.dataset.origin=el.parentElement===left?'left':'right';el.dataset.ord=String(i);}});
+      PANELS.forEach(([id,,hideable])=>{
+        const el=document.getElementById(id);if(!el)return;
+        const side=sideOf(id)||el.dataset.origin,aside=side==='left'?left:right;
+        if(el.parentElement!==aside)aside.appendChild(el);
+        el.classList.toggle('user-hidden',!!(hideable&&cfg.layout[id]&&cfg.layout[id].hide));
+      });
+      const ord=getOrder(),key=el=>{const i=ord.indexOf(el.id);return i<0?1000+Number(el.dataset.ord):i;};
+      [left,right].forEach(aside=>[...aside.children].filter(el=>el.dataset.ord!==undefined).sort((a,b)=>key(a)-key(b)).forEach(el=>aside.appendChild(el)));
+      BTNS.forEach(([id])=>{const el=document.getElementById(id);if(el)el.classList.toggle('user-hidden',!!(cfg.btns&&cfg.btns[id]));});
+    };
+    const buildPanelRows=()=>{
+      const box=q('scrPanels');box.innerHTML='';
+      PANELS.forEach(([id,name,hideable])=>{
+        const el=document.getElementById(id);if(!el)return;
+        const side=sideOf(id)||el.dataset.origin||'left',hidden=!!(cfg.layout[id]&&cfg.layout[id].hide);
+        const row=document.createElement('div');row.className='scr-prow';
+        row.innerHTML=`<span>${name}</span><label><input type="radio" name="side-${id}" value="left" ${side==='left'?'checked':''}>Слева</label><label><input type="radio" name="side-${id}" value="right" ${side==='right'?'checked':''}>Справа</label><span class="scr-mv"><button type="button" data-mv="-1" title="Выше">▲</button><button type="button" data-mv="1" title="Ниже">▼</button></span>${hideable?`<label><input type="checkbox" data-show="${id}" ${hidden?'':'checked'}>Показывать</label>`:'<span class="scr-fixed">всегда</span>'}`;
+        row.querySelectorAll('input[type=radio]').forEach(inp=>inp.addEventListener('change',()=>{cfg.layout[id]={...(cfg.layout[id]||{}),side:inp.value};applyLayout();save();}));
+        row.querySelectorAll('[data-mv]').forEach(btn=>btn.addEventListener('click',()=>movePanel(id,Number(btn.dataset.mv))));
+        const cb=row.querySelector('[data-show]');if(cb)cb.addEventListener('change',()=>{cfg.layout[id]={...(cfg.layout[id]||{}),hide:!cb.checked};applyLayout();save();});
+        box.appendChild(row);
+      });
+      BTNS.forEach(([id,name])=>{
+        if(!document.getElementById(id))return;
+        const row=document.createElement('div');row.className='scr-prow';
+        row.innerHTML=`<span>${name}</span><label><input type="checkbox" data-btn="${id}" ${cfg.btns&&cfg.btns[id]?'':'checked'}>Показывать</label>`;
+        row.querySelector('input').addEventListener('change',event=>{cfg.btns=cfg.btns||{};cfg.btns[id]=!event.target.checked;applyLayout();save();});
+        box.appendChild(row);
+      });
+    };
     const apply=()=>{
       const root=document.documentElement.style;
       root.setProperty('--canvas-h',cfg.canvas);root.setProperty('--tool-w',cfg.tool);root.setProperty('--drawer-w',cfg.drawer);
-      document.body.classList.toggle('ui-contrast',cfg.style==='contrast');document.body.classList.toggle('draw-crisp',cfg.draw==='crisp');document.body.classList.toggle('mono3d',cfg.d3==='mono');
+      document.body.classList.toggle('ui-contrast',cfg.style==='contrast');document.body.classList.toggle('draw-crisp',cfg.draw==='crisp');document.body.classList.toggle('mono3d',cfg.d3==='mono');document.body.classList.toggle('sec-map',cfg.sec!=='classic');
       document.body.classList.toggle('hide-section',!cfg.section);document.body.classList.toggle('hide-hint',!!cfg.hint);
+      window.flDC={vw:1,ow:1.5,vcol:'',ocol:'',solid:true,swath:30,grid:true,tex:'plain',tw:1,tcol:'#1f7a6d',tdash:'solid',...(cfg.dc||{})};
+      applyColors();applyLayout();
       fitBody();window.dispatchEvent(new Event('resize'));
     };
     const sync=()=>{
       q('scrUi').value=cfg.ui;q('scrUiV').textContent=`${cfg.ui}%`;q('scrCanvas').value=cfg.canvas;q('scrCanvasV').textContent=`${cfg.canvas}%`;
       q('scrTool').value=cfg.tool;q('scrToolV').textContent=`${cfg.tool} px`;q('scrDrawer').value=cfg.drawer;q('scrDrawerV').textContent=`${cfg.drawer}%`;
-      q('scrStyle').value=cfg.style;q('scrDraw').value=cfg.draw;q('scr3d').value=cfg.d3;q('scrSection').checked=cfg.section;q('scrHint').checked=cfg.hint;
+      const dcv={...window.flDC};
+      dlg.querySelectorAll('[data-dc]').forEach(i=>{i.value=dcv[i.dataset.dc];});q('dcVwV').textContent=dcv.vw+' px';q('dcOwV').textContent=dcv.ow+' px';q('dcSwV').textContent=dcv.swath+'%';q('dcTwV').textContent=dcv.tw+' px';q('dcTdash').value=dcv.tdash;q('dcTcol').value=dcv.tcol||'#1f7a6d';
+      q('dcSolid').checked=dcv.solid;q('dcGrid').checked=dcv.grid;q('dcTex').value=dcv.tex;
+      buildPanelRows();dlg.querySelectorAll('[data-col]').forEach(inp=>{const d={bg:'#d6d1c7',panel:'#f1ede4',btn:'#e4ded2',acc:'#356761',text:'#302f2a',line:'#bcb4a7'};inp.value=(cfg.colors&&cfg.colors[inp.dataset.col])||d[inp.dataset.col];});
+      q('scrStyle').value=cfg.style;q('scrDraw').value=cfg.draw;q('scr3d').value=cfg.d3;q('scrSec').value=cfg.sec||'map';q('scrSection').checked=cfg.section;q('scrHint').checked=cfg.hint;
     };
     const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(cfg));}catch(error){}};
     const bindRange=(id,key)=>q(id).addEventListener('input',()=>{cfg[key]=Number(q(id).value);sync();apply();save();});
     bindRange('scrUi','ui');bindRange('scrCanvas','canvas');bindRange('scrTool','tool');bindRange('scrDrawer','drawer');
-    [['scrStyle','style'],['scrDraw','draw'],['scr3d','d3']].forEach(([id,key])=>q(id).addEventListener('change',()=>{cfg[key]=q(id).value;apply();save();try{drawView();}catch(e){}try{real3DDraw();}catch(e){}}));
+    [['scrStyle','style'],['scrDraw','draw'],['scr3d','d3'],['scrSec','sec']].forEach(([id,key])=>q(id).addEventListener('change',()=>{cfg[key]=q(id).value;apply();save();try{drawView();}catch(e){}try{real3DDraw();}catch(e){}}));
     q('scrSection').addEventListener('change',()=>{cfg.section=q('scrSection').checked;apply();save();});
     q('scrHint').addEventListener('change',()=>{cfg.hint=q('scrHint').checked;apply();save();});
-    q('scrReset').addEventListener('click',()=>{cfg={...defaults};sync();apply();save();});
+    const dcChanged=()=>{apply();save();try{drawView();}catch(e){}sync();};
+    dlg.querySelectorAll('[data-dc]').forEach(i=>i.addEventListener('input',()=>{cfg.dc=cfg.dc||{};cfg.dc[i.dataset.dc]=Number(i.value);dcChanged();}));
+    dlg.querySelectorAll('[data-dcc]').forEach(i=>i.addEventListener('input',()=>{cfg.dc=cfg.dc||{};cfg.dc[i.dataset.dcc]=i.value;dcChanged();}));
+    dlg.querySelectorAll('[data-dcr]').forEach(i=>i.addEventListener('click',()=>{cfg.dc=cfg.dc||{};cfg.dc[i.dataset.dcr]='';dcChanged();}));
+    dlg.querySelectorAll('[data-dcb]').forEach(i=>i.addEventListener('change',()=>{cfg.dc=cfg.dc||{};cfg.dc[i.dataset.dcb]=i.checked;dcChanged();}));
+    dlg.querySelectorAll('[data-dcs]').forEach(i=>i.addEventListener('change',()=>{cfg.dc=cfg.dc||{};cfg.dc[i.dataset.dcs]=i.value;dcChanged();}));
+    dlg.querySelectorAll('[data-col]').forEach(inp=>inp.addEventListener('input',()=>{cfg.colors=cfg.colors||{};cfg.colors[inp.dataset.col]=inp.value;applyColors();save();}));
+    q('scrColReset').addEventListener('click',()=>{cfg.colors={};sync();applyColors();save();});
+    q('scrReset').addEventListener('click',()=>{cfg={...defaults,colors:{},layout:{},btns:{},order:null,dc:{}};sync();apply();save();});
     const close=()=>dlg.classList.add('hidden');
     q('scrClose').addEventListener('click',close);dlg.addEventListener('click',event=>{if(event.target===dlg)close();});
     $('screenButton').addEventListener('click',()=>{sync();dlg.classList.remove('hidden');});
@@ -3856,20 +4046,19 @@ body.hide-hint #canvasHint{display:none}
     $('canvas').addEventListener('pointerup',endDrag);$('canvas').addEventListener('pointercancel',endDrag);
     renderImportPanel();
   }
+  function selectCutGroup(n) {
+    const group=lastCutGroups.find(g=>g.n===n);
+    if(!group)return;
+    selectedCutKey=selectedCutKey===group.key?null:group.key;
+    const cut=group.first;
+    if(selectedCutKey&&cut.pocket&&cut.region){selectPocketRegion(...cut.region);}
+    else if(selectedCutKey&&cut.contourId>0){selectedPocketRegion=null;state.selectedContour=cut.contourId;renderTemplateButtons();drawView();}
+    else drawView();
+  }
   function handleCanvasClick(event) {
     if(suppressCanvasClick){suppressCanvasClick=false;return;}
     const cutEl=activeView==='profile'?(event.target.closest?.('[data-cutno]')||document.elementFromPoint(event.clientX,event.clientY)?.closest?.('[data-cutno]')):null;
-    if(cutEl){
-      const group=lastCutGroups.find(g=>g.n===Number(cutEl.dataset.cutno));
-      if(group){
-        selectedCutKey=selectedCutKey===group.key?null:group.key;
-        const cut=group.first;
-        if(selectedCutKey&&cut.pocket&&cut.region){selectPocketRegion(...cut.region);}
-        else if(selectedCutKey&&cut.contourId>0){selectedPocketRegion=null;state.selectedContour=cut.contourId;renderTemplateButtons();drawView();}
-        else drawView();
-      }
-      return;
-    }
+    if(cutEl){selectCutGroup(Number(cutEl.dataset.cutno));return;}
     if(activeTool==='ruler'&&activeView==='2d'){rulerClick(event);return;}
     const hitTarget=event.target.closest('[data-pocket-region],[data-contour],[data-vector],[data-imp]')?event.target:document.elementFromPoint(event.clientX,event.clientY)||event.target;
     if(activeView==='2d'&&state.objectType==='facade'){

@@ -1,5 +1,5 @@
 // ФасадЛаб: офлайн-режим. Кэшируем оболочку приложения; обновления подтягиваются в фоне.
-const CACHE='fasadlab-v88';
+const CACHE='fasadlab-v95';
 const SHELL=['./','index.html','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png','icons/icon-maskable-512.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));});
