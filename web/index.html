@@ -72,7 +72,7 @@ button.active,.primary,.footer-primary{background:#356761;border-color:#356761;c
 .facade-contour-entry{display:flex;align-items:center;gap:5px}
 .facade-contour-entry .vector-row{flex:1;min-width:0;min-height:34px}
 .facade-contour-entry .contour-delete{flex:none;width:34px;height:34px;padding:3px;color:#8c4e45}
-.facade-contour-entry .contour-delete:hover{background:#eee2dc;border-color:#b88b80}
+.facade-contour-entry .contour-rename{color:#4a6a86}.facade-contour-entry .contour-delete:hover{background:#eee2dc;border-color:#b88b80}
 .panel-body,.vector-settings,.cut-list,.style-actions{color:#383831}
 .field label{color:#68645b}
 .vector-row{background:#e6e1d7}
@@ -355,6 +355,13 @@ footer{min-height:40px;padding:2px 8px}footer button{height:34px}
 .screen-dialog{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:12px}
 .screen-dialog.hidden{display:none}
 .screen-card{width:min(420px,100%);max-height:100%;overflow:auto;background:#f1ede4;border:1px solid #a79f90;border-radius:12px;padding:14px 16px;box-shadow:0 12px 40px rgba(0,0,0,.35);zoom:1}
+.screen-card h4{margin:10px 0 2px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.screen-card select{width:100%;padding:6px;font:inherit}
+.screen-row:has(select){display:block}.screen-row:has(select) label{display:block;margin-bottom:3px}
+body.ui-contrast{--bg:#f4f4f2;--panel:#ffffff;--panel2:#e9e9e6;--line:#2b2b2b;--text:#000;--muted:#333;--blue:#00478f;--green:#006b2e;--red:#b00020;--cyan:#006a80;--purple:#5a2a8a;--grid:#8a8a8a}
+body.ui-contrast{background:#e4e4e1;color:#000}body.ui-contrast header{background:#fff;border-bottom:2px solid #000}body.ui-contrast .panel{border-width:2px;background:#fff}body.ui-contrast .screen-card{background:#fff;border:2px solid #000}
+body.ui-contrast .panel,body.ui-contrast button,body.ui-contrast input,body.ui-contrast select{border-color:#2b2b2b}
+body.ui-contrast .panel h2,body.ui-contrast .panel h3,body.ui-contrast label{font-weight:700}
 .screen-card h3{margin:0 0 8px;font-size:16px}
 .screen-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 10px;margin:10px 0}
 .screen-row label{font-weight:600}.screen-row output{font-variant-numeric:tabular-nums;color:#356761;font-weight:700}
@@ -377,7 +384,7 @@ body.hide-hint #canvasHint{display:none}
 <header>
   <div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9.5 34 7l6 4v29L8 42Z" stroke-width="1.5"/><path d="m12 13 23-2v24l-23 2Z" stroke-width="1.1"/><path d="M17 17 27 16v16l-10 1Z" stroke-width=".9"/><path d="m29 8 3-4 3 2-2 4M30 9l-9 15 3 2 10-14m-13 12-1 4 4-2" stroke-width="1.5"/><path d="m10 11 3-2m24 29 2-2M12 40l2-1" stroke-width=".7"/></g></svg></div><div><div class="brand-name"><span>Фасад</span>Лаб</div><div class="sub">Редактор мебельных фасадов</div></div></div>
   <div class="view-tabs header-tabs" aria-label="Виды изделия"><button data-view="3d" title="Объёмная модель обработки — вращайте мышью или пальцем, масштаб — колесом или щипком">3D</button><button class="active" data-view="2d">Вид сверху</button><button data-view="profile">Разрез</button></div><div class="view-tabs header-tabs nest-tab" aria-label="Раскрой"><button data-view="nest">Карта листа</button></div>
-  <div class="header-actions"><button id="openProject" title="Открыть проект">Открыть</button><button id="saveProject" title="Сохранить проект">Сохранить</button><span class="header-sep" aria-hidden="true"></span><button id="screenButton" title="Настройка экрана: масштаб, высота чертежа, размер кнопок">Экран</button><button id="cutterLibraryButton" title="Открыть библиотеку фрез">Фрезы</button><span class="header-sep" aria-hidden="true"></span><button id="aboutButton" title="О программе">О программе</button></div>
+  <div class="header-actions"><button id="openProject" title="Открыть проект">Открыть</button><button id="saveProject" title="Сохранить проект">Сохранить</button><span class="header-sep" aria-hidden="true"></span><button id="screenButton" title="Меню: экран, стиль интерфейса, стиль чертежа, 3D">Меню</button><button id="cutterLibraryButton" title="Открыть библиотеку фрез">Фрезы</button><span class="header-sep" aria-hidden="true"></span><button id="aboutButton" title="О программе">О программе</button></div>
 </header>
 <main class="app">
   <aside class="column left-scroll">
@@ -692,11 +699,11 @@ body.hide-hint #canvasHint{display:none}
 <section id="printDocument" class="print-document" aria-hidden="true"></section>
 <input id="projectPicker" type="file" accept=".json,application/json">
 <input id="vectorPicker" type="file" accept=".svg,.dxf,.dwg,image/svg+xml,application/dxf"><input id="artProjectPicker" type="file" accept=".art" hidden>
-<input id="artcamToolPicker" type="file" accept=".tdb" multiple hidden><input id="dxfCutterPicker" type="file" accept=".dxf" hidden><input id="cuttersJsonPicker" type="file" accept=".json,application/json" hidden><input id="scanCameraPicker" type="file" accept="image/*" capture="environment" hidden><input id="scanFilePicker" type="file" accept="image/*,.svg,image/svg+xml" hidden>
+<input id="artcamToolPicker" type="file" accept=".tdb" multiple hidden><input id="dxfCutterPicker" type="file" accept=".dxf" hidden><input id="dxfCatalogPicker" type="file" accept=".dxf" hidden><input id="cuttersJsonPicker" type="file" accept=".json,application/json" hidden><input id="scanCameraPicker" type="file" accept="image/*" capture="environment" hidden><input id="scanFilePicker" type="file" accept="image/*,.svg,image/svg+xml" hidden>
 <div id="stylesOverlay" class="modal-overlay hidden"><section class="modal-card styles-dialog" role="dialog" aria-modal="true" aria-labelledby="stylesDialogTitle"><button class="modal-close" id="closeStyles" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="stylesDialogTitle">Шаблоны изделий</h2><p>Выберите тип шаблона и примените сохранённые настройки к изделию.</p></div><div class="styles-dialog-controls"><label class="field" for="styleTypeFilter">Тип изделия<select id="styleTypeFilter"><option value="facade">Фасад</option><option value="vitrina">Витрина</option><option value="profile">Профиль</option><option value="tsulaga">Цулага</option><option value="comb">Гребёнка</option></select></label><div class="field"><label for="styleName">Название нового шаблона</label><input id="styleName" aria-label="Название сохраняемого шаблона" maxlength="48" value="Мой шаблон" placeholder="Название шаблона"></div></div><div class="styles-io"><button type="button" id="importStyles" title="Загрузить шаблоны из файла (.json стиля, или проект/фасад из пакета ArtCAM)">⇧ Импорт</button><button type="button" id="exportAllStyles" title="Скачать все шаблоны одним файлом, чтобы передать другим">⇩ Экспорт всех</button><input type="file" id="stylesImportPicker" accept=".json,application/json" multiple hidden></div>
 <div class="style-small-box"><div class="sharp-title">Малые размеры</div><div class="fields"><div class="field"><label for="styleMinSide">Критичный размер, мм (меньшая сторона; 0 — только если не помещается)</label><input id="styleMinSide" type="number" min="0" max="3000" step="10" value="0"></div></div><div class="sharp-title">Вектора стиля</div><div id="styleMarkList" class="style-mark-list"></div><div class="sub">🪟 — начало окна витрины: когда фасад превращают в витрину, окно берётся от этого вектора, всё внутри него вырезается насквозь.</div><div class="sub">Когда вектора убраны, внутри оставшегося автоматически делается выборка до самой глубокой фрезы.</div><div class="sub">🟢 всегда остаётся · 🔴 можно убрать (убирается на малом размере) · 🔵 программа решает сама: убирает только если иначе не помещается. Убираются сначала самые внутренние.</div></div>
 <button id="saveTemplate" class="primary" type="button">＋ Сохранить текущие настройки как шаблон</button><div id="stylesList" class="styles-list" aria-live="polite"></div><button class="primary" id="closeStylesFooter" type="button">Готово</button></section></div>
-<div id="cutterLibraryOverlay" class="modal-overlay hidden"><section class="modal-card cutter-library-card" role="dialog" aria-modal="true" aria-labelledby="cutterLibraryTitle"><button class="modal-close" id="closeCutterLibrary" aria-label="Закрыть">×</button><div class="cutter-library-heading"><div><strong id="cutterLibraryTitle">Библиотека фрез</strong><p>Из .TDB читается реальный профиль режущей кромки: узорные, фасонные и конические фрезы показываются своей формой в виде сверху, в разрезе и в карточке. Профили по параметрам (Ogee, Roman Ogee, Roundover) считаются точно; приблизительные помечены «≈».</p></div><div class="cutter-card-actions"><button id="importArtcamCutters" type="button">Импорт ArtCAM .TDB</button><button id="importCuttersJson" type="button" title="Загрузить набор фрез из файла .json (например, от другого человека)">Импорт набора</button><button id="exportCuttersJson" type="button" title="Сохранить все ваши фрезы в файл .json, чтобы передать другим">Экспорт набора</button><button id="importDxfCutter" type="button" title="Открытый вектор — половина профиля фрезы, как в ArtCAM Custom Form">Фреза из профиля DXF</button></div></div><div id="customCutterEditor" class="cutter-library-form hidden"><strong>Редактирование импортированной фрезы</strong><div class="field"><label for="customCutterName">Название</label><input id="customCutterName" maxlength="40"></div><div class="fields"><div class="field"><label for="customCutterShape">Тип профиля</label><select id="customCutterShape"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="roundover">Радиус кромки (скругление)</option><option value="wave">Волновая / другая</option><option value="form">Профиль из ArtCAM</option></select></div><div class="field"><label for="customCutterWidth">Диаметр / ширина, мм</label><input id="customCutterWidth" type="number" min="0.1" step="0.1"></div></div><div class="cutter-card-actions"><button id="saveCustomCutter" class="primary" type="button">Сохранить изменения</button><button id="cancelCutterEdit" type="button">Отмена</button></div></div><h3 class="cutter-catalog-title">Стандартные и импортированные фрезы</h3><div class="field"><input id="cutterSearch" type="search" placeholder="Поиск по названию или группе" aria-label="Поиск фрезы"><div class="cutter-card-meta" id="cutterCount"></div></div><div id="customCutterList" class="cutter-catalog"></div><div class="notice">Профиль узорных фрез (Custom Form) читается из .TDB точно: линии и дуги в долях диаметра. Для Ogee, Roman Ogee, Roundover и Veining контур считается по параметрам из файла (диаметр, радиус дуги, внутренний диаметр, ступень) по определению ArtCAM; для Raised Panel смысл параметров в файле не раскрыт, поэтому форма приблизительная (помечена «≈»). Незнакомые типы фрез и другие версии базы не отбрасываются: фреза добавляется по названию и размеру (тоже с «≈»). Параметры резания не импортируются; проверьте инструмент и обработку в ArtCAM.</div><button class="primary" id="closeCutterLibraryFooter">Готово</button></section></div>
+<div id="cutterLibraryOverlay" class="modal-overlay hidden"><section class="modal-card cutter-library-card" role="dialog" aria-modal="true" aria-labelledby="cutterLibraryTitle"><button class="modal-close" id="closeCutterLibrary" aria-label="Закрыть">×</button><div class="cutter-library-heading"><div><strong id="cutterLibraryTitle">Библиотека фрез</strong><p>Из .TDB читается реальный профиль режущей кромки: узорные, фасонные и конические фрезы показываются своей формой в виде сверху, в разрезе и в карточке. Профили по параметрам (Ogee, Roman Ogee, Roundover) считаются точно; приблизительные помечены «≈».</p></div><div class="cutter-card-actions"><button id="importArtcamCutters" type="button">Импорт ArtCAM .TDB</button><button id="importCuttersJson" type="button" title="Загрузить набор фрез из файла .json (например, от другого человека)">Импорт набора</button><button id="exportCuttersJson" type="button" title="Сохранить все ваши фрезы в файл .json, чтобы передать другим">Экспорт набора</button><button id="importDxfCatalog" type="button" title="Один DXF с несколькими фрезами: каждая фреза — рисунок профиля с подписью рядом. Все добавятся в каталог">Каталог фрез из DXF</button><button id="addStandardCutter" type="button" title="Создать популярную стандартную фрезу по типу и диаметру">＋ Стандартная фреза</button><button id="importDxfCutter" type="button" title="Открытый вектор — половина профиля фрезы, как в ArtCAM Custom Form">Фреза из профиля DXF</button></div></div><div id="standardCutterForm" class="cutter-library-form hidden"><strong>Стандартная фреза</strong><div class="fields"><div class="field"><label for="stdType">Тип</label><select id="stdType"></select></div><div class="field"><label for="stdDia">Диаметр, мм</label><input id="stdDia" type="number" min="1" max="200" step="0.1" value="12"></div></div><div class="fields"><div class="field"><label for="stdParam" id="stdParamLabel">Параметр</label><input id="stdParam" type="number" min="0" step="0.1" value="5"></div><div class="field"><label for="stdName">Название (необязательно)</label><input id="stdName" maxlength="60"></div></div><div class="sub" id="stdHint"></div><div class="cutter-card-actions"><button id="saveStandardCutter" class="primary" type="button">Добавить в каталог</button><button id="cancelStandardCutter" type="button">Отмена</button></div></div><div id="customCutterEditor" class="cutter-library-form hidden"><strong>Редактирование импортированной фрезы</strong><div class="field"><label for="customCutterName">Название</label><input id="customCutterName" maxlength="40"></div><div class="fields"><div class="field"><label for="customCutterShape">Тип профиля</label><select id="customCutterShape"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="roundover">Радиус кромки (скругление)</option><option value="wave">Волновая / другая</option><option value="form">Профиль из ArtCAM</option></select></div><div class="field"><label for="customCutterWidth">Диаметр / ширина, мм</label><input id="customCutterWidth" type="number" min="0.1" step="0.1"></div></div><div class="cutter-card-actions"><button id="saveCustomCutter" class="primary" type="button">Сохранить изменения</button><button id="cancelCutterEdit" type="button">Отмена</button></div></div><h3 class="cutter-catalog-title">Стандартные и импортированные фрезы</h3><div class="field"><input id="cutterSearch" type="search" placeholder="Поиск по названию или группе" aria-label="Поиск фрезы"><div class="cutter-card-meta" id="cutterCount"></div></div><div id="customCutterList" class="cutter-catalog"></div><div class="notice">Профиль узорных фрез (Custom Form) читается из .TDB точно: линии и дуги в долях диаметра. Для Ogee, Roman Ogee, Roundover и Veining контур считается по параметрам из файла (диаметр, радиус дуги, внутренний диаметр, ступень) по определению ArtCAM; для Raised Panel смысл параметров в файле не раскрыт, поэтому форма приблизительная (помечена «≈»). Незнакомые типы фрез и другие версии базы не отбрасываются: фреза добавляется по названию и размеру (тоже с «≈»). Параметры резания не импортируются; проверьте инструмент и обработку в ArtCAM.</div><button class="primary" id="closeCutterLibraryFooter">Готово</button></section></div>
 
 <div id="aboutOverlay" class="modal-overlay hidden"><section class="modal-card"><button class="modal-close" id="closeAbout" aria-label="Закрыть">×</button><div class="brand-name"><span>Фасад</span>Лаб</div><p>Редактор фасадов, профилей и карт раскроя.</p><div class="about-credit"><b>Программист</b><span>L3xik0</span><b>Дополнительный агент</b><span>Евгений Жуков</span><b>Версия</b><span>0.7.1</span></div><button class="primary" id="aboutOk">Закрыть</button></section></div>
 <div id="scanOverlay" class="modal-overlay hidden"><section class="modal-card scan-dialog" role="dialog" aria-modal="true" aria-labelledby="scanTitle"><button class="modal-close" id="scanClose" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="scanTitle">Скан по фото</h2><p>Фото или снимок камеры: «Разрез фасада» — программа найдёт вырезы и выставит вектора с фрезами из вашей библиотеки; «Рисунок» — обведёт линии и смонтирует их в текущий фасад. На Android кнопка камеры открывает снимок сразу, «Выбрать изображение» — галерею или файл.</p></div><div class="scan-actions"><button type="button" id="scanCameraBtn">📷 Снять на камеру</button><button type="button" id="scanFileBtn">🖼 Выбрать изображение…</button></div><div id="scanEmpty" class="styles-empty">Изображение ещё не загружено. Снимите чертёж камерой или выберите фото / скан.</div><div id="scanWork" class="hidden"><div class="scan-preview"><canvas id="scanCanvas"></canvas></div><div class="scan-controls"><label class="field"><span>Порог яркости <b id="scanThresholdVal">128</b></span><input id="scanThreshold" type="range" min="0" max="255" value="128"></label><label class="field"><span>Точность обводки, px <b id="scanToleranceVal">1.5</b></span><input id="scanTolerance" type="range" min="0.3" max="5" step="0.1" value="1.5"></label><label class="field"><span>Отсечь мелочь, px <b id="scanMinSizeVal">4</b></span><input id="scanMinSize" type="range" min="0" max="30" step="1" value="4"></label><label class="field"><span id="scanWidthLabel">Реальная ширина чертежа, мм</span><input id="scanWidthMm" type="number" min="1" max="3000" value="600"></label><label class="field scan-invert"><span>Инверсия (светлые линии на тёмном)</span><input id="scanInvert" type="checkbox"></label><div id="scanSectionControls" class="hidden" style="grid-column:1/-1;display:grid;gap:10px 14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))"><label class="field"><span>Что на снимке</span><select id="scanPart"><option value="full">Весь фасад (от края до края)</option><option value="left">Левая часть: от левого края фасада</option><option value="right">Правая часть: до правого края фасада</option><option value="custom">Участок из середины (задать смещение)</option></select></label><label class="field"><span>Масштаб снимка</span><select id="scanScaleBy"><option value="thick">По толщине фасада (низ находится сам)</option><option value="width">По ширине между зелёными линиями</option></select></label><label class="field" id="scanThicknessField"><span>Реальная толщина фасада, мм</span><input id="scanThicknessMm" type="number" min="1" max="100" step="0.1" value="19"></label><label class="field hidden" id="scanOffsetField"><span>Смещение от левого края фасада до начала участка, мм</span><input id="scanOffsetMm" type="number" min="0" max="3000" step="0.5" value="0"></label><label class="field"><span>Начало участка на снимке <b id="scanStartVal">0%</b></span><input id="scanStart" type="range" min="0" max="100" step="0.1" value="0"></label><label class="field"><span>Конец участка на снимке <b id="scanEndVal">100%</b></span><input id="scanEnd" type="range" min="0" max="100" step="0.1" value="100"></label><div class="sub" style="grid-column:1/-1">Зелёные линии на снимке — границы участка. Совместите левую с краем фасада (или с тем местом, откуда нужно считать), правую — с концом: всё за линиями игнорируется. «Реальная ширина» — ширина именно между зелёными линиями.</div></div></div><div class="sub" id="scanStats">Контуров: 0</div><div class="scan-crop-row"><span class="sub" id="scanCropHint">Проведите пальцем или мышью по фото — область обрежется, обводка будет только внутри неё.</span><button type="button" id="scanCropReset">✂ Сбросить выделение</button></div></div><div class="scan-modes"><label><input type="radio" name="scanMode" value="section" checked> Разрез фасада → определить вектора и выставить фрезы из имеющихся</label><label><input type="radio" name="scanMode" value="add"> Рисунок → смонтировать в текущий фасад (опорные контуры)</label></div><div class="sub scan-mode-hint" id="scanModeHint"></div><div class="cutter-card-actions"><button type="button" id="scanCancel">Отмена</button><button type="button" id="scanApply" class="primary">Создать контуры</button></div></section></div>
@@ -1988,7 +1995,7 @@ body.hide-hint #canvasHint{display:none}
     const parentSelect=$('vectorParent'),previousParent=parentSelect.value;
     parentSelect.innerHTML=vectorRows.filter(vector=>vector.shape!=='free').map((vector,index)=>`<option value="${vector.id}">${esc(vector.name||`Вектор ${index+1}`)}</option>`).join('');
     parentSelect.value=vectorRows.some(vector=>vector.shape!=='free'&&String(vector.id)===previousParent)?previousParent:(vectorRows.some(vector=>vector.shape!=='free'&&vector.id===state.selectedContour)?String(state.selectedContour):(vectorRows.find(vector=>vector.shape!=='free')?String(vectorRows.find(vector=>vector.shape!=='free').id):'0'));
-    $('facadeContourList').innerHTML=`<div class="facade-contour-entry"><button type="button" class="vector-row${state.selectedContour===0?' active':''}" data-select-contour="0" aria-pressed="${state.selectedContour===0}"><span class="vector-number">1</span><span>${typeLabel(state.objectType,state.kind)}</span><span class="vector-meta">основной контур</span></button></div>${state.contours.filter(item=>!item.cornerOf).map((contour,index)=>`<div class="facade-contour-entry"><button type="button" class="vector-row${contour.id===state.selectedContour?' active':''}" data-select-contour="${contour.id}" aria-pressed="${contour.id===state.selectedContour}"><span class="vector-number">${index+2}</span><span>${esc(contour.name||`Вектор ${index+2}`)}</span><span class="vector-meta">${esc(contour.direction==='out'?'наружу':'внутрь')} · ${esc(contour.offset)} мм${styleMarkOf(contour)==='remove'?' · 🔴':styleMarkOf(contour)==='auto'?' · 🔵':''}</span></button><button type="button" class="contour-delete" data-delete-contour="${contour.id}" title="Удалить ${esc(contour.name||`Вектор ${index+2}`)} и вложенные векторы" aria-label="Удалить ${esc(contour.name||`Вектор ${index+2}`)}">×</button></div>`).join('')}`;
+    $('facadeContourList').innerHTML=`<div class="facade-contour-entry"><button type="button" class="vector-row${state.selectedContour===0?' active':''}" data-select-contour="0" aria-pressed="${state.selectedContour===0}"><span class="vector-number">1</span><span>${typeLabel(state.objectType,state.kind)}</span><span class="vector-meta">основной контур</span></button></div>${state.contours.filter(item=>!item.cornerOf).map((contour,index)=>`<div class="facade-contour-entry"><button type="button" class="vector-row${contour.id===state.selectedContour?' active':''}" data-select-contour="${contour.id}" aria-pressed="${contour.id===state.selectedContour}"><span class="vector-number">${index+2}</span><span>${esc(contour.name||`Вектор ${index+2}`)}</span><span class="vector-meta">${esc(contour.direction==='out'?'наружу':'внутрь')} · ${esc(contour.offset)} мм${styleMarkOf(contour)==='remove'?' · 🔴':styleMarkOf(contour)==='auto'?' · 🔵':''}</span></button><button type="button" class="contour-delete contour-rename" data-rename-contour="${contour.id}" title="Переименовать «${esc(contour.name||`Вектор ${index+2}`)}»" aria-label="Переименовать вектор">✎</button><button type="button" class="contour-delete" data-delete-contour="${contour.id}" title="Удалить ${esc(contour.name||`Вектор ${index+2}`)} и вложенные векторы" aria-label="Удалить ${esc(contour.name||`Вектор ${index+2}`)}">×</button></div>`).join('')}`;
     renderSavedTemplates();renderPlanes();
     if(syncControls)syncContourControls();
     renderQuickOffsetHint();
@@ -2328,7 +2335,7 @@ body.hide-hint #canvasHint{display:none}
     const visible=state.layers;
     $('canvas').style.backgroundImage=visible.underlay?'':'none';
     const textureDefs=`<pattern id="boardgrain" width="36" height="32" patternUnits="userSpaceOnUse"><rect width="36" height="32" fill="#f2efe7"/><path d="m-3 8 9-4m-6 11 12-5m4 14 12-13m-2 21 14-15m-7-14 9-8M5 27l8-9m13-20 4-4" fill="none" stroke="#79746a" stroke-width=".65" stroke-opacity=".12"/><path d="m4 12 5-3m13 18 6-6m-1-17 4-3" fill="none" stroke="#fff" stroke-width=".8" stroke-opacity=".5"/></pattern><pattern id="mdfgrain" width="24" height="22" patternUnits="userSpaceOnUse"><rect width="24" height="22" fill="#e9e5dc"/><path d="m3 6 1 0m8 3 1 0m6-5 1 0M6 17l1 0m11 1 1 0m-7-12 .5 0" stroke="#79746a" stroke-width="1" stroke-opacity=".2"/></pattern><pattern id="veneergrain" width="90" height="48" patternUnits="userSpaceOnUse"><rect width="90" height="48" fill="#e9e4d9"/><path d="M-4 8C18 2 30 14 52 8S76 4 94 8M-4 23C18 17 30 29 52 23s24-4 42 0M-4 39c22-6 34 6 56 0s24-4 42 0" fill="none" stroke="#807565" stroke-width=".8" stroke-opacity=".2"/></pattern>`;
-    const texMode=visible.underlay&&['pencil','graphite','paper','mdf','veneer','plain'].includes(state.facadeTexture)?state.facadeTexture:null,pencilMode=texMode;
+    const texMode=visible.underlay&&['pencil','graphite','paper','mdf','veneer','plain'].includes(effTexture())&&!document.body.classList.contains('draw-crisp')?effTexture():null,pencilMode=texMode;
     // Настройки текстур: цвет поверхности, зерно, штриховка, тени вокруг векторов, цвет линий. У каждой текстуры свой характер.
     const TEXCFG={
       pencil:{top:'#f8f3e8',bot:'#e6dec9',line:'#3a3833',wob:0,hatch:.24,cross:.13,grain:'speck',grainOp:.4,edge:['#2e2b26',.26,34],inner:['hatch',.3],shadow:['#2b2924',.32,6,2.4,3,3.2],hi:.7,groove:'hatch',sheen:.5},
@@ -2339,7 +2346,7 @@ body.hide-hint #canvasHint{display:none}
       plain:{top:'#f1efe9',bot:'#d3d0c6',line:'#464950',wob:0,hatch:0,cross:0,grain:'fine',grainOp:.5,edge:['#4a4a48',.2,30],inner:['tone',.05],shadow:['#222',.3,7,2.6,3.2,3.6],hi:.9,groove:'cut',cut:'#5a5d63',sheen:.55}
     };
     const cfg=TEXCFG[texMode]||TEXCFG.pencil,verticalGrain=!/гориз/i.test(String(state.grain||''));
-    const textureFill=visible.underlay?(texMode?'url(#pencilBase)':({paper:'url(#boardgrain)',mdf:'url(#mdfgrain)',veneer:'url(#veneergrain)',plain:'#e8e3d9'}[state.facadeTexture]||'url(#boardgrain)')):'#f2efe7';
+    const textureFill=visible.underlay?(texMode?'url(#pencilBase)':({paper:'url(#boardgrain)',mdf:'url(#mdfgrain)',veneer:'url(#veneergrain)',plain:'#e8e3d9'}[effTexture()]||'url(#boardgrain)')):'#f2efe7';
     const grainFilters={
       speck:`<feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="9" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 .2  0 0 0 0 .18  0 0 0 0 .15  -2.4 0 0 0 1.3" result="gm"/><feComposite in="gm" in2="SourceAlpha" operator="in"/>`,
       fibers:`<feTurbulence type="fractalNoise" baseFrequency=".06 .35" numOctaves="3" seed="5" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 .42  0 0 0 0 .32  0 0 0 0 .18  -3 0 0 0 1.75" result="gm"/><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="2" result="f"/><feColorMatrix in="f" type="matrix" values="0 0 0 0 .3  0 0 0 0 .24  0 0 0 0 .14  -2.6 0 0 0 1.4" result="fm"/><feMerge result="mm"><feMergeNode in="gm"/><feMergeNode in="fm"/></feMerge><feComposite in="mm" in2="SourceAlpha" operator="in"/>`,
@@ -3689,18 +3696,34 @@ body.hide-hint #canvasHint{display:none}
   }
 
   // ===== Настройка экрана: масштаб интерфейса, высота чертежа, размер кнопок =====
+  function effTexture(){return document.body.classList.contains('draw-crisp')?'plain':state.facadeTexture;}
+  function crispPass(){
+    if(!document.body.classList.contains('draw-crisp'))return;
+    document.querySelectorAll('#drawing path').forEach(el=>{
+      const st=el.getAttribute('stroke');if(!st||st==='none'||st==='transparent')return;
+      const w=parseFloat(el.getAttribute('stroke-width'));if(!(w>0))return;
+      if(el.dataset.crisp)return;el.dataset.crisp='1';
+      if(w>3){el.setAttribute('stroke-opacity',String(Math.min(.3,(parseFloat(el.getAttribute('stroke-opacity'))||1)*.45)));}
+      else{el.setAttribute('stroke-width','1');el.setAttribute('vector-effect','non-scaling-stroke');el.setAttribute('stroke-linecap','butt');}
+    });
+    const svg=$('drawing');if(svg)svg.setAttribute('shape-rendering','geometricPrecision');
+  }
   function bindScreenSettings() {
-    const KEY='fasadlab-screen',defaults={ui:100,canvas:46,tool:68,drawer:88,section:true,hint:false};
+    const KEY='fasadlab-screen',defaults={ui:100,canvas:46,tool:68,drawer:88,section:true,hint:false,style:'classic',draw:'classic',d3:'color'};
     let cfg={...defaults};
     try{Object.assign(cfg,JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(error){}
     const dlg=document.createElement('div');dlg.className='screen-dialog hidden';dlg.id='screenDialog';
-    dlg.innerHTML=`<div class="screen-card" role="dialog" aria-label="Настройка экрана"><h3>Настройка экрана</h3>
+    dlg.innerHTML=`<div class="screen-card" role="dialog" aria-label="Меню"><h3>Меню</h3><h4>Экран</h4>
       <div class="screen-row"><label for="scrUi">Размер интерфейса</label><output id="scrUiV"></output><input id="scrUi" type="range" min="60" max="160" step="5"></div>
       <div class="screen-row"><label for="scrCanvas">Высота чертежа (телефон стоя)</label><output id="scrCanvasV"></output><input id="scrCanvas" type="range" min="25" max="75" step="1"></div>
       <div class="screen-row"><label for="scrTool">Размер кнопок инструментов</label><output id="scrToolV"></output><input id="scrTool" type="range" min="52" max="100" step="2"></div>
       <div class="screen-row"><label for="scrDrawer">Ширина выезжающих панелей</label><output id="scrDrawerV"></output><input id="scrDrawer" type="range" min="60" max="95" step="1"></div>
       <label class="screen-check"><input id="scrSection" type="checkbox">Показывать панель «Разрез изделия»</label>
       <label class="screen-check"><input id="scrHint" type="checkbox">Скрыть подсказку под чертежом</label>
+      <h4>Стиль</h4>
+      <div class="screen-row"><label for="scrStyle">Стиль интерфейса</label><select id="scrStyle"><option value="classic">Классический</option><option value="contrast">Контрастный</option></select></div>
+      <div class="screen-row"><label for="scrDraw">Стиль чертежа</label><select id="scrDraw"><option value="classic">Классический</option><option value="crisp">Чёткий: тонкие линии, фреза полупрозрачная</option></select></div>
+      <div class="screen-row"><label for="scr3d">3D-вид</label><select id="scr3d"><option value="color">Цветной (глубина по цвету)</option><option value="mono">Свет и тень</option></select></div>
       <div class="screen-actions"><button type="button" id="scrReset">Сбросить</button><button type="button" id="scrClose" class="primary">Готово</button></div></div>`;
     document.body.appendChild(dlg);
     const q=id=>dlg.querySelector('#'+id);
@@ -3716,17 +3739,19 @@ body.hide-hint #canvasHint{display:none}
     const apply=()=>{
       const root=document.documentElement.style;
       root.setProperty('--canvas-h',cfg.canvas);root.setProperty('--tool-w',cfg.tool);root.setProperty('--drawer-w',cfg.drawer);
+      document.body.classList.toggle('ui-contrast',cfg.style==='contrast');document.body.classList.toggle('draw-crisp',cfg.draw==='crisp');document.body.classList.toggle('mono3d',cfg.d3==='mono');
       document.body.classList.toggle('hide-section',!cfg.section);document.body.classList.toggle('hide-hint',!!cfg.hint);
       fitBody();window.dispatchEvent(new Event('resize'));
     };
     const sync=()=>{
       q('scrUi').value=cfg.ui;q('scrUiV').textContent=`${cfg.ui}%`;q('scrCanvas').value=cfg.canvas;q('scrCanvasV').textContent=`${cfg.canvas}%`;
       q('scrTool').value=cfg.tool;q('scrToolV').textContent=`${cfg.tool} px`;q('scrDrawer').value=cfg.drawer;q('scrDrawerV').textContent=`${cfg.drawer}%`;
-      q('scrSection').checked=cfg.section;q('scrHint').checked=cfg.hint;
+      q('scrStyle').value=cfg.style;q('scrDraw').value=cfg.draw;q('scr3d').value=cfg.d3;q('scrSection').checked=cfg.section;q('scrHint').checked=cfg.hint;
     };
     const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(cfg));}catch(error){}};
     const bindRange=(id,key)=>q(id).addEventListener('input',()=>{cfg[key]=Number(q(id).value);sync();apply();save();});
     bindRange('scrUi','ui');bindRange('scrCanvas','canvas');bindRange('scrTool','tool');bindRange('scrDrawer','drawer');
+    [['scrStyle','style'],['scrDraw','draw'],['scr3d','d3']].forEach(([id,key])=>q(id).addEventListener('change',()=>{cfg[key]=q(id).value;apply();save();try{drawView();}catch(e){}try{real3DDraw();}catch(e){}}));
     q('scrSection').addEventListener('change',()=>{cfg.section=q('scrSection').checked;apply();save();});
     q('scrHint').addEventListener('change',()=>{cfg.hint=q('scrHint').checked;apply();save();});
     q('scrReset').addEventListener('click',()=>{cfg={...defaults};sync();apply();save();});
@@ -5667,6 +5692,164 @@ body.hide-hint #canvasHint{display:none}
   $('cancelCutterEdit').addEventListener('click',()=>{
     editingCutterId=null;$('customCutterEditor').classList.add('hidden');$('footerStatus').textContent='Редактирование фрезы отменено';
   });
+
+  // ===== Каталог фрез из одного DXF: профили с подписями рядом =====
+  function dxfCatalogCutters(text) {
+    const lines=text.replace(/^﻿/,'').split(/\r?\n/).map(l=>l.trim()),ents=[];let sec='',cur=null;
+    for(let i=0;i+1<lines.length;i+=2){
+      const c=lines[i],v=lines[i+1];
+      if(c==='0'&&v==='SECTION'){sec='?';cur=null;continue;}
+      if(c==='2'&&sec==='?'){sec=v;continue;}
+      if(c==='0'&&sec==='ENTITIES'&&v!=='ENDSEC'&&v!=='EOF'){cur={t:v,d:[]};ents.push(cur);continue;}
+      if(c==='0'&&v==='ENDSEC'){sec='';cur=null;continue;}
+      if(cur&&sec==='ENTITIES')cur.d.push([c,v]);
+    }
+    const num=(e,code,i=0)=>{const r=e.d.filter(p=>p[0]===code);return r.length>i?Number(r[i][1]):NaN;};
+    const STEP=.02,items=[],labels=[];
+    const dense=(a,b)=>{const n=Math.max(1,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/STEP)),out=[];for(let i=0;i<=n;i++)out.push([a[0]+(b[0]-a[0])*i/n,a[1]+(b[1]-a[1])*i/n]);return out;};
+    const arcPts=(cx,cy,r,a0,a1)=>{if(a1<=a0)a1+=360;const n=Math.max(8,Math.ceil(r*(a1-a0)*Math.PI/180/STEP)),out=[];for(let i=0;i<=n;i++){const a=(a0+(a1-a0)*i/n)*Math.PI/180;out.push([cx+r*Math.cos(a),cy+r*Math.sin(a)]);}return out;};
+    const bulgePts=(p,q,b)=>{
+      if(Math.abs(b)<1e-9)return dense(p,q);
+      const dx=q[0]-p[0],dy=q[1]-p[1],c=Math.hypot(dx,dy),th=4*Math.atan(b),r=c/(2*Math.sin(th/2)),h=r*Math.cos(th/2);
+      const cx=(p[0]+q[0])/2-dy/c*h,cy=(p[1]+q[1])/2+dx/c*h,a0=Math.atan2(p[1]-cy,p[0]-cx),R=Math.abs(r),n=Math.max(8,Math.ceil(R*Math.abs(th)/STEP)),out=[];
+      for(let i=0;i<=n;i++)out.push([cx+R*Math.cos(a0+th*i/n),cy+R*Math.sin(a0+th*i/n)]);return out;
+    };
+    const splinePts=e=>{
+      const deg=num(e,'71'),knots=e.d.filter(p=>p[0]==='40').map(p=>Number(p[1])),xs=e.d.filter(p=>p[0]==='10').map(p=>Number(p[1])),ys=e.d.filter(p=>p[0]==='20').map(p=>Number(p[1]));
+      const ws=e.d.filter(p=>p[0]==='41').map(p=>Number(p[1]));
+      if(!(deg>=1)||knots.length!==xs.length+deg+1)return xs.map((x,i)=>[x,ys[i]]);
+      const out=[],t0=knots[deg],t1=knots[knots.length-deg-1];
+      for(let k=0;k<=600;k++){
+        const t=Math.min(t1-1e-9,t0+(t1-t0)*k/600);let span=deg;
+        for(let i=deg;i<knots.length-deg-1;i++)if(t>=knots[i])span=i;
+        const N=[1];const left=[],right=[];
+        for(let j=1;j<=deg;j++){left[j]=t-knots[span+1-j];right[j]=knots[span+j]-t;let saved=0;for(let r=0;r<j;r++){const tmp=N[r]/(right[r+1]+left[j-r]||1e-12);N[r]=saved+right[r+1]*tmp;saved=left[j-r]*tmp;}N[j]=saved;}
+        let X=0,Y=0,Wt=0;for(let j=0;j<=deg;j++){const idx=span-deg+j,w=ws[idx]??1;X+=N[j]*xs[idx]*w;Y+=N[j]*ys[idx]*w;Wt+=N[j]*w;}
+        if(Wt)out.push([X/Wt,Y/Wt]);
+      }
+      return out;
+    };
+    ents.forEach(e=>{
+      if(e.t==='LINE')items.push(dense([num(e,'10'),num(e,'20')],[num(e,'11'),num(e,'21')]));
+      else if(e.t==='ARC')items.push(arcPts(num(e,'10'),num(e,'20'),num(e,'40'),num(e,'50'),num(e,'51')));
+      else if(e.t==='CIRCLE')items.push(arcPts(num(e,'10'),num(e,'20'),num(e,'40'),0,360));
+      else if(e.t==='LWPOLYLINE'){
+        const v=[];e.d.forEach(([c,val])=>{if(c==='10')v.push([Number(val),0,0]);else if(c==='20'&&v.length)v[v.length-1][1]=Number(val);else if(c==='42'&&v.length)v[v.length-1][2]=Number(val);});
+        const closed=(num(e,'70')||0)&1;let out=[];
+        for(let i=1;i<v.length;i++)out=out.concat(bulgePts(v[i-1],v[i],v[i-1][2]));
+        if(closed&&v.length>=2)out=out.concat(bulgePts(v[v.length-1],v[0],v[v.length-1][2]));
+        if(out.length)items.push(out);
+      }else if(e.t==='SPLINE'){const p=splinePts(e);if(p.length)items.push(p);}
+      else if(e.t==='MTEXT'||e.t==='TEXT'){
+        const raw=e.d.filter(p=>p[0]==='1').map(p=>p[1]).join(' ');
+        const t=raw.replace(/\\A\d;/g,'').replace(/\\P/g,' ').replace(/\{|\}|\\[A-Za-z][^;]*;/g,'').replace(/\s+/g,' ').trim();
+        if(t)labels.push({x:num(e,'10'),y:num(e,'20'),t});
+      }
+    });
+    const valid=items.filter(p=>p.length&&p.every(q=>Number.isFinite(q[0])&&Number.isFinite(q[1])));
+    const B=valid.map(p=>{let a=1e18,b=1e18,c=-1e18,d=-1e18;p.forEach(([x,y])=>{if(x<a)a=x;if(x>c)c=x;if(y<b)b=y;if(y>d)d=y;});return[a,b,c,d];});
+    const par=valid.map((_,i)=>i),find=i=>{while(par[i]!==i){par[i]=par[par[i]];i=par[i];}return i;},m=1.5;
+    for(let i=0;i<valid.length;i++)for(let j=i+1;j<valid.length;j++){const a=B[i],b=B[j];if(a[0]-m<=b[2]&&b[0]-m<=a[2]&&a[1]-m<=b[3]&&b[1]-m<=a[3])par[find(i)]=find(j);}
+    const groups=new Map();valid.forEach((_,i)=>{const r=find(i);if(!groups.has(r))groups.set(r,[]);groups.get(r).push(i);});
+    const clusters=[];
+    groups.forEach(idx=>{const x0=Math.min(...idx.map(i=>B[i][0])),y0=Math.min(...idx.map(i=>B[i][1])),x1=Math.max(...idx.map(i=>B[i][2])),y1=Math.max(...idx.map(i=>B[i][3]));if(x1-x0>=3&&y1-y0>=3&&x1-x0<=500)clusters.push({idx,b:[x0,y0,x1,y1]});});
+    const cand=[];
+    clusters.forEach((c,ci)=>{const cy=(c.b[1]+c.b[3])/2;labels.forEach((l,li)=>{const dx=l.x-c.b[2],dy=Math.abs(l.y-cy);if(dx>=-6&&dx<90&&dy<16)cand.push([dx+4*dy,ci,li]);});});
+    cand.sort((a,b)=>a[0]-b[0]);const usedC=new Set(),usedL=new Set();
+    cand.forEach(([,ci,li])=>{if(usedC.has(ci)||usedL.has(li))return;clusters[ci].label=labels[li].t;usedC.add(ci);usedL.add(li);});
+    clusters.sort((a,b)=>{const ra=Math.round((a.b[1]+a.b[3])/60),rb=Math.round((b.b[1]+b.b[3])/60);return ra!==rb?rb-ra:a.b[0]-b.b[0];});
+    const tools=[];let unnamed=0;
+    clusters.forEach(c=>{
+      const [x0,y0,x1,y1]=c.b,W=x1-x0,R=W/2,cx=(x0+x1)/2,BINS=100,right=new Array(BINS+1).fill(-1e9),left=new Array(BINS+1).fill(-1e9);
+      c.idx.forEach(i=>valid[i].forEach(([x,y])=>{const dxr=x-cx,k=Math.min(BINS,Math.round(Math.abs(dxr)/R*BINS)),arr=dxr>=0?right:left;if(y>arr[k])arr[k]=y;}));
+      const fill=a=>{let last=null;for(let k=0;k<a.length;k++){if(a[k]>-1e8)last=a[k];else if(last!==null)a[k]=last;}for(let k=a.length-1;k>=0;k--)if(a[k]<-1e8)a[k]=k+1<a.length?a[k+1]:0;return a;};
+      fill(right);fill(left);
+      let asym=0;for(let k=0;k<BINS;k++)asym=Math.max(asym,Math.abs(right[k]-left[k]));
+      const env=right.map((v,k)=>asym<.6?Math.max(v,left[k]):v),top=Math.max(...env),lift=env.map(v=>top-v);
+      const profile=[];for(let i=0;i<=48;i++){const pos=i/48*BINS,lo=Math.floor(pos),hi=Math.min(BINS,lo+1),v=lift[lo]+(lift[hi]-lift[lo])*(pos-lo);profile.push([Number((i/48).toFixed(5)),Number((v/R).toFixed(5))]);}
+      const height=Math.max(...lift);
+      let name=c.label;
+      if(!name||/^не установлена/i.test(name)){unnamed++;name=`${name?'Не установлена':'Без названия'} ${unnamed} (Ø${Number(W.toFixed(2))})`;}
+      const tool={name:name.slice(0,80),shape:'form',width:Number(W.toFixed(3)),profile,profileRadius:Number(R.toFixed(4)),profileHeight:Number(height.toFixed(3)),source:'DXF',group:name.split(' ')[0].slice(0,30),exact:true};
+      tool.note=cutterAutoNote(tool);
+      tools.push(tool);
+    });
+    return tools;
+  }
+  // Тип фрезы по форме профиля и стартовые ориентиры для МДФ (не данные производителя)
+  function cutterAutoNote(tool) {
+    const R=tool.profileRadius||tool.width/2,H=tool.profileHeight||0,pr=tool.profile||[];
+    const ratio=H/R;let kind='form';
+    if(!pr.length||H<.15)kind='flat';
+    else{
+      let lin=0,circ=0,flatc=0;pr.forEach(([x,y])=>{const yy=y*R;lin=Math.max(lin,Math.abs(yy-H*x));circ=Math.max(circ,Math.abs(yy-R*(1-Math.sqrt(Math.max(0,1-x*x)))));if(yy<.04*H)flatc++;});
+      lin/=H;circ/=R;flatc/=pr.length;
+      if(lin<.07)kind='cone';else if(circ<.12&&ratio>.85&&ratio<1.15)kind='ball';else if(circ<.12&&ratio<=1.15)kind='round';else if(flatc>.55&&ratio<.9)kind='flatround';else if(ratio<.35)kind='shallow';
+    }
+    const T={flat:['Прямая (концевая)','пазы, четверти, выборка фона, раскрой по контуру'],ball:['Шаровая (полусфера)','полукруглые пазы и каннелюры, галтели, выборка с радиусным дном'],round:['Радиусная / галтельная','скруглённый паз, выборка с радиусным дном, мягкий переход кромки'],cone:['Коническая / V-образная','фаска, гравировка, V-паз, рустовка и обработка острых углов'],flatround:['Плоская с радиусом кромки','выборка плоского дна со скруглёнными стенками, филёнка с мягкой кромкой'],shallow:['Мелкий фасонный профиль','декоративная кромка фасада, пологий скос или раскладка по краю филёнки'],form:['Фасонная (профильная)','профиль филёнки или рамки фасада: ступени, галтели и выпуклые участки формируются проходом вдоль контура']}[kind];
+    const D=tool.width,rpm=D<=12?18000:D<=25?16000:D<=40?12000:10000,feed=D<=12?[3,5]:D<=25?[2.5,4]:D<=40?[2,3.5]:[1.5,3];
+    const step=Math.round(Math.min(Math.max(H,3),D<=12?6:8)*10)/10,passes=H>0?Math.max(1,Math.ceil(H/step-.02)):1;
+    const angle=kind==='cone'?` Угол ≈${Math.round(2*Math.atan(R/H)*180/Math.PI)}°.`:'';
+    return `${T[0]}, Ø${Number(D.toFixed(2))} мм${H>0?`, высота профиля ${H.toFixed(1)} мм`:''}.${angle} Для МДФ: ${T[1]}. МДФ: ${rpm} об/мин, подача ${feed[0]}–${feed[1]} м/мин, за проход до ${step} мм${passes>1?` (${passes} прох. на полный профиль)`:''}. Ориентир, подберите по станку и пробному прогону.`;
+  }
+  $('importDxfCatalog').addEventListener('click',()=>$('dxfCatalogPicker').click());
+  $('dxfCatalogPicker').addEventListener('change',async event=>{
+    const file=event.target.files[0];if(!file)return;
+    try{
+      const found=dxfCatalogCutters(await file.text());
+      if(!found.length)throw new Error('в чертеже не найдено профилей (нужны замкнутые или составные контуры шириной от 3 мм)');
+      const key=t=>`${t.name.toLocaleLowerCase()}|${Number(t.width).toFixed(2)}`,known=new Set(customCutters.map(key));
+      let nextId=Math.max(0,...customCutters.map(t=>t.id)),added=[],dup=0;
+      found.forEach(t=>{if(known.has(key(t))){dup++;return;}known.add(key(t));added.push({...t,id:++nextId});});
+      if(!added.length)throw new Error('все фрезы из чертежа уже есть в каталоге');
+      customCutters=[...customCutters,...added];persistCustomCutters();renderCutterOptions();renderProfileBands();renderTemplateButtons();
+      $('footerStatus').textContent=`Из чертежа добавлено фрез: ${added.length}${dup?`, пропущено дублей: ${dup}`:''}. Проверьте названия и рисунки в «Фрезы».`;
+    }catch(error){alert(`Не удалось прочитать каталог фрез: ${error.message}`);$('footerStatus').textContent='Каталог фрез не импортирован';}
+    finally{$('dxfCatalogPicker').value='';}
+  });
+  // ===== Популярные стандартные фрезы по типу и диаметру =====
+  const STANDARD_CUTTERS={
+    flat:{label:'Прямая концевая',param:null,hint:'Плоское дно, вертикальные стенки.',make:(D)=>null,shape:'flat'},
+    ball:{label:'Шаровая (ball nose)',param:null,hint:'Полусфера: радиус = половина диаметра.',make:(D)=>null,shape:'round'},
+    vbit:{label:'V-образная (угол, °)',param:{label:'Угол, °',value:90,min:10,max:170},hint:'Фаска, гравировка, V-паз. Угол между гранями.',make:(D,a)=>tdbConeProfile(D/2,a/2)},
+    chamfer:{label:'Фасочная (угол, °, носик Ø)',param:{label:'Угол, °',value:45,min:10,max:170},hint:'Коническая с плоским носиком Ø = 1/3 диаметра: фаска кромки.',make:(D,a)=>tdbConeProfile(D/2,a/2,D/3)},
+    roundover:{label:'Скругление кромки (roundover, радиус R)',param:{label:'Радиус R, мм',value:5,min:.5,max:100},hint:'Четверть окружности радиусом R на кромке.',make:(D,r)=>tdbApproximateFormProfile('tpmDB_RoundoverTool',D/2,r,r)},
+    cove:{label:'Галтельная (cove / core box)',param:null,hint:'Вогнутый профиль по дуге.',make:(D)=>tdbApproximateFormProfile('tpmDB_CoveTool',D/2,D/2*.9,0)},
+    ogee:{label:'Огив (ogee), радиус дуги R',param:{label:'Радиус дуги R, мм',value:4,min:.5,max:50},hint:'S-образный профиль филёнки, внутренний Ø = Ø − 4R.',make:(D,r)=>tdbDerivedFormProfile('tpmDB_OgeeTool',D,r,Math.max(0,D-4*r),0)},
+    romanogee:{label:'Римский огив (roman ogee), радиус дуги R',param:{label:'Радиус дуги R, мм',value:3,min:.5,max:50},hint:'Огив с ступенькой; внутренний Ø = Ø − 4R − 2·ступень.',make:(D,r)=>tdbDerivedFormProfile('tpmDB_RomanOgeeTool',D,r,Math.max(0,D-4*r-2*Math.min(r,2)),Math.min(r,2))},
+    panel:{label:'Филёночная (raised panel, приблизительно)',param:{label:'Высота профиля, мм',value:12,min:2,max:60},hint:'Плавный профиль филёнки; форма приблизительная.',make:(D,h)=>tdbApproximateFormProfile('tpmDB_RaisedPanelTool',D/2,h,0)}
+  };
+  function refreshStandardForm() {
+    const type=STANDARD_CUTTERS[$('stdType').value];if(!type)return;
+    const p=type.param;
+    $('stdParam').parentElement.classList.toggle('hidden',!p);
+    if(p){$('stdParamLabel').textContent=p.label;$('stdParam').value=$('stdParam').dataset.type===$('stdType').value?$('stdParam').value:p.value;$('stdParam').dataset.type=$('stdType').value;}
+    $('stdHint').textContent=type.hint;
+  }
+  $('stdType').innerHTML=Object.entries(STANDARD_CUTTERS).map(([k,t])=>`<option value="${k}">${esc(t.label)}</option>`).join('');
+  $('stdType').addEventListener('change',refreshStandardForm);
+  $('addStandardCutter').addEventListener('click',()=>{$('standardCutterForm').classList.remove('hidden');refreshStandardForm();$('standardCutterForm').scrollIntoView({block:'nearest'});});
+  $('cancelStandardCutter').addEventListener('click',()=>$('standardCutterForm').classList.add('hidden'));
+  $('saveStandardCutter').addEventListener('click',()=>{
+    try{
+      const key=$('stdType').value,type=STANDARD_CUTTERS[key],D=Number($('stdDia').value),p=type.param?Number($('stdParam').value):0;
+      if(!(D>=1&&D<=200))throw new Error('диаметр от 1 до 200 мм');
+      if(type.param&&!(p>=type.param.min&&p<=type.param.max))throw new Error(`${type.param.label}: от ${type.param.min} до ${type.param.max}`);
+      const dName=Number(D.toFixed(2)),name=($('stdName').value.trim()||`${type.label.replace(/\s*\(.*$/,'')}${type.param?` ${type.param.value===p?'':''}${p}${/°/.test(type.param.label)?'°':' мм'}`:''} Ø${dName}`).slice(0,60);
+      let tool;
+      if(type.shape)tool={name,shape:type.shape,width:D,source:'Стандарт',group:'Стандартные',exact:true};
+      else{
+        const prof=type.make(D,p);if(!prof)throw new Error('такой профиль при этих размерах построить нельзя (проверьте радиус и диаметр)');
+        const height=Math.max(...prof.points.map(pt=>pt[1]))*prof.radius;
+        tool={name,shape:'form',width:Number((prof.radius*2).toFixed(4)),profile:prof.points,profileRadius:Number(prof.radius.toFixed(4)),profileHeight:Number(height.toFixed(3)),source:'Стандарт',group:'Стандартные',exact:key!=='panel',approx:key==='panel'};
+        tool.note=cutterAutoNote(tool);
+      }
+      if(customCutters.some(t=>t.name===tool.name&&Number(t.width)===tool.width))throw new Error('такая фреза уже есть в каталоге');
+      customCutters=[...customCutters,{...tool,id:Math.max(0,...customCutters.map(t=>t.id))+1}];persistCustomCutters();
+      renderCutterOptions();renderProfileBands();renderTemplateButtons();$('standardCutterForm').classList.add('hidden');
+      $('footerStatus').textContent=`Фреза «${tool.name}» добавлена в каталог`;
+    }catch(error){alert(`Фреза не создана: ${error.message}`);}
+  });
   $('exportCuttersJson').addEventListener('click',()=>{
     if(!customCutters.length){alert('В каталоге нет своих или импортированных фрез для экспорта.');return;}
     download('fasadlab_cutters.json',JSON.stringify({fasadlabCutters:1,cutters:customCutters.map(({id,...rest})=>rest)},null,1),'application/json');
@@ -5931,7 +6114,18 @@ body.hide-hint #canvasHint{display:none}
   $('newStyle').addEventListener('change',prefillNewSize);
   renderNewStyleOptions();
   $('selectedContour').addEventListener('change',event=>{state.selectedImport=-1;state.selectedContour=Number(event.target.value);renderTemplateButtons();drawView();});
+  function renameContour(id) {
+    const contour=state.contours.find(c=>c.id===id);if(!contour)return;
+    const answer=prompt('Название вектора (например: «Рамка», «Окно», «Четверть»):',contour.name||'');
+    if(answer===null)return;
+    const name=answer.trim().slice(0,40);if(!name||name===contour.name)return;
+    snapshot();contour.name=name;renderTemplateButtons();drawView();
+    $('footerStatus').textContent=`Вектор переименован: «${name}»`;
+  }
+  $('facadeContourList').addEventListener('dblclick',event=>{const row=event.target.closest('[data-select-contour]');if(row&&Number(row.dataset.selectContour)>0)renameContour(Number(row.dataset.selectContour));});
   $('facadeContourList').addEventListener('click',event=>{
+    const renameButton=event.target.closest('[data-rename-contour]');
+    if(renameButton){renameContour(Number(renameButton.dataset.renameContour));return;}
     const deleteButton=event.target.closest('[data-delete-contour]');
     if(deleteButton){
       deleteContourById(Number(deleteButton.dataset.deleteContour));
@@ -7342,16 +7536,16 @@ body.hide-hint #canvasHint{display:none}
   function real3DInitGL(){
     const canvas=$('real3DCanvas'),gl=canvas.getContext('webgl',{antialias:true,alpha:false})||canvas.getContext('experimental-webgl');if(!gl)throw new Error('WebGL недоступен в этом режиме приложения.');if(!gl.getExtension('OES_element_index_uint'))throw new Error('Видеодрайвер не поддерживает 32-битные индексы 3D-сетки.');
     const vs=`attribute vec3 aPosition;attribute vec3 aNormal;uniform float uYaw;uniform float uPitch;uniform float uZoom;uniform float uAspect;uniform vec2 uPan;varying vec3 vNormal;varying float vDepth;varying float vCut;void main(){float cy=cos(uYaw),sy=sin(uYaw),cp=cos(uPitch),sp=sin(uPitch);vec3 p=vec3(cy*aPosition.x+sy*aPosition.y,-sy*sp*aPosition.x+cy*sp*aPosition.y+cp*aPosition.z,-sy*cp*aPosition.x+cy*cp*aPosition.y-sp*aPosition.z);vec3 n=vec3(cy*aNormal.x+sy*aNormal.y,-sy*sp*aNormal.x+cy*sp*aNormal.y+cp*aNormal.z,-sy*cp*aNormal.x+cy*cp*aNormal.y-sp*aNormal.z);gl_Position=vec4((p.x*uZoom+uPan.x)/uAspect,p.y*uZoom+uPan.y, (p.z+1.4)/3.0, 1.0);vNormal=normalize(n);vDepth=p.z;vCut=max(0.0,-aPosition.z);}`;
-    const fs=`precision mediump float;varying vec3 vNormal;varying float vDepth;varying float vCut;void main(){vec3 n=normalize(vNormal);vec3 light=normalize(vec3(-.45,.7,1.0));float diffuse=max(dot(n,light),0.0);float shade=.62+.38*diffuse;float d=clamp(vCut*30.0,0.0,1.0);vec3 shallow=vec3(.20,.78,.82);vec3 mid=vec3(.98,.76,.20);vec3 deep=vec3(.91,.24,.16);vec3 col=mix(shallow,mid,smoothstep(.03,.48,d));col=mix(col,deep,smoothstep(.48,1.0,d));if(vCut<.002)col=vec3(.78,.82,.86);if(n.z<.15)col*=.72;col*=shade;gl_FragColor=vec4(col,1.0);}`;
+    const fs=`precision mediump float;uniform float uMono;varying vec3 vNormal;varying float vDepth;varying float vCut;void main(){vec3 n=normalize(vNormal);vec3 light=normalize(vec3(-.45,.7,1.0));float diffuse=max(dot(n,light),0.0);float shade=.62+.38*diffuse;float d=clamp(vCut*30.0,0.0,1.0);vec3 shallow=vec3(.20,.78,.82);vec3 mid=vec3(.98,.76,.20);vec3 deep=vec3(.91,.24,.16);vec3 col=mix(shallow,mid,smoothstep(.03,.48,d));col=mix(col,deep,smoothstep(.48,1.0,d));if(vCut<.002)col=vec3(.78,.82,.86);if(n.z<.15)col*=.72;col*=shade;if(uMono>.5){float dd=clamp(vCut*30.0,0.0,1.0);float d2=max(dot(n,normalize(vec3(-.55,.6,-.75))),0.0);float sh=.2+.8*d2;vec3 base=vec3(.88,.86,.82)*(1.0-.3*dd);col=base*sh;}gl_FragColor=vec4(col,1.0);}`;
     function compile(type,source){const sh=gl.createShader(type);gl.shaderSource(sh,source);gl.compileShader(sh);if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(sh));return sh;}
     const program=gl.createProgram();gl.attachShader(program,compile(gl.VERTEX_SHADER,vs));gl.attachShader(program,compile(gl.FRAGMENT_SHADER,fs));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(program));gl.useProgram(program);
-    real3DGL={gl,canvas,program,attrs:{p:gl.getAttribLocation(program,'aPosition'),n:gl.getAttribLocation(program,'aNormal')},uniforms:{yaw:gl.getUniformLocation(program,'uYaw'),pitch:gl.getUniformLocation(program,'uPitch'),zoom:gl.getUniformLocation(program,'uZoom'),aspect:gl.getUniformLocation(program,'uAspect'),pan:gl.getUniformLocation(program,'uPan')}};
+    real3DGL={gl,canvas,program,attrs:{p:gl.getAttribLocation(program,'aPosition'),n:gl.getAttribLocation(program,'aNormal')},uniforms:{yaw:gl.getUniformLocation(program,'uYaw'),pitch:gl.getUniformLocation(program,'uPitch'),zoom:gl.getUniformLocation(program,'uZoom'),aspect:gl.getUniformLocation(program,'uAspect'),pan:gl.getUniformLocation(program,'uPan'),mono:gl.getUniformLocation(program,'uMono')}};
   }
-  function real3DDraw(){if(!real3DGL||!real3DModel)return;const {gl,canvas,program,attrs,uniforms}=real3DGL,dpr=Math.min(window.devicePixelRatio||1,2),width=Math.max(1,Math.floor(canvas.clientWidth*dpr)),height=Math.max(1,Math.floor(canvas.clientHeight*dpr));if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}gl.viewport(0,0,width,height);gl.enable(gl.DEPTH_TEST);gl.clearColor(.95,.93,.88,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);gl.uniform1f(uniforms.yaw,real3DYaw);gl.uniform1f(uniforms.pitch,real3DPitch);gl.uniform1f(uniforms.zoom,real3DZoom);gl.uniform1f(uniforms.aspect,width/height);gl.uniform2f(uniforms.pan,real3DPanX,real3DPanY);
+  function real3DDraw(){if(!real3DGL||!real3DModel)return;const {gl,canvas,program,attrs,uniforms}=real3DGL,dpr=Math.min(window.devicePixelRatio||1,2),width=Math.max(1,Math.floor(canvas.clientWidth*dpr)),height=Math.max(1,Math.floor(canvas.clientHeight*dpr));if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;}gl.viewport(0,0,width,height);gl.enable(gl.DEPTH_TEST);gl.clearColor(.95,.93,.88,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);gl.uniform1f(uniforms.yaw,real3DYaw);gl.uniform1f(uniforms.pitch,real3DPitch);gl.uniform1f(uniforms.zoom,real3DZoom);gl.uniform1f(uniforms.aspect,width/height);gl.uniform2f(uniforms.pan,real3DPanX,real3DPanY);gl.uniform1f(uniforms.mono,document.body.classList.contains('mono3d')?1:0);
     const drawM=m=>{function attr(name,data,size){const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);gl.enableVertexAttribArray(name);gl.vertexAttribPointer(name,size,gl.FLOAT,false,0,0);return b;}if(!m.buffers){m.buffers=[attr(attrs.p,m.positions,3),attr(attrs.n,m.normals,3)];m.index=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,m.index);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,m.indices,gl.STATIC_DRAW);}else{gl.bindBuffer(gl.ARRAY_BUFFER,m.buffers[0]);gl.vertexAttribPointer(attrs.p,3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ARRAY_BUFFER,m.buffers[1]);gl.vertexAttribPointer(attrs.n,3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,m.index);}gl.drawElements(gl.TRIANGLES,m.indices.length,gl.UNSIGNED_INT,0);};
     drawM(real3DModel);if(real3DPatch){gl.clear(gl.DEPTH_BUFFER_BIT);drawM(real3DPatch);}
   }
-  function openReal3D(){const overlay=$('real3DOverlay');overlay.classList.remove('hidden');$('real3DStatus').textContent='Расчёт поверхности и профилей фрез…';try{real3DModel=real3DBuild();if(!real3DGL)real3DInitGL();real3DYaw=-.58;real3DPitch=.56;real3DZoom=1.08;real3DPanX=0;real3DPanY=0;real3DPatch=null;real3DDraw();$('real3DInfo').textContent=`${real3DModel.w} × ${real3DModel.h} × ${real3DModel.thick} мм · ${real3DModel.prism?'сквозной вырез по контуру':`${real3DModel.passes} траекторий · сетка ${real3DModel.nx} × ${real3DModel.ny}`}`;$('real3DStatus').textContent=real3DModel.prism?'Цулага вырезана насквозь по контуру: углы торцов и радиусы как на чертеже. Тяните — вращение.':'Цветовая карта глубины: голубой — мелко, жёлтый — средне, красный — глубоко.';}catch(e){$('real3DStatus').textContent='Ошибка построения: '+e.message;console.error(e);}}
+  function openReal3D(){const overlay=$('real3DOverlay');overlay.classList.remove('hidden');$('real3DStatus').textContent='Расчёт поверхности и профилей фрез…';try{real3DModel=real3DBuild();if(!real3DGL)real3DInitGL();real3DYaw=-.58;real3DPitch=.56;real3DZoom=1.08;real3DPanX=0;real3DPanY=0;real3DPatch=null;real3DDraw();$('real3DInfo').textContent=`${real3DModel.w} × ${real3DModel.h} × ${real3DModel.thick} мм · ${real3DModel.prism?'сквозной вырез по контуру':`${real3DModel.passes} траекторий · сетка ${real3DModel.nx} × ${real3DModel.ny}`}`;$('real3DStatus').textContent=real3DModel.prism?'Цулага вырезана насквозь по контуру: углы торцов и радиусы как на чертеже. Тяните — вращение.':(document.body.classList.contains('mono3d')?'Свет и тень: глубина видна по затемнению, цвет не используется.':'Цветовая карта глубины: голубой — мелко, жёлтый — средне, красный — глубоко.');}catch(e){$('real3DStatus').textContent='Ошибка построения: '+e.message;console.error(e);}}
   $('real3DReset').addEventListener('click',()=>{real3DYaw=-.58;real3DPitch=.56;real3DZoom=1.08;real3DPanX=0;real3DPanY=0;real3DPatch=null;real3DDraw();});
   // Управление 3D: тянуть — вращение; правая кнопка / Shift / кнопка «✥» / два пальца — двигать деталь; колесо и щипок — масштаб к курсору.
   const real3DNdc=(clientX,clientY)=>{const r=$('real3DCanvas').getBoundingClientRect();return{x:(clientX-r.left)/r.width*2-1,y:-((clientY-r.top)/r.height*2-1),aspect:r.width/r.height,w:r.width,h:r.height};};
@@ -7688,6 +7882,7 @@ body.hide-hint #canvasHint{display:none}
   $('combDimsToggle').addEventListener('click',()=>{showCombDims=!showCombDims;updateMeasureStrip();renderRulers();});
   $('canvas').addEventListener('pointermove',event=>{if(activeTool==='ruler'&&rulerPending&&activeView==='2d'){const raw=canvasPointFromEvent(event);if(Number.isFinite(raw.x))renderRulers(rulerSnap(raw));}});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&rulerPending){rulerPending=null;$('footerStatus').textContent='Линейка: щёлкните первую точку';renderRulers();}});
+  {const baseDrawViewCrisp=drawView;drawView=function(...args){const result=baseDrawViewCrisp.apply(this,args);try{crispPass();}catch(error){}return result;};}
   {const baseDrawViewRuler=drawView;drawView=function(...args){const result=baseDrawViewRuler.apply(this,args);try{updateMeasureStrip();renderRulers();}catch(error){}return result;};}
   renderCutterOptions();renderTemplateButtons();syncInputs();renderProfileBands();renderCuttingList();renderDesignList();updateObjectTypeView();drawView();setObjectInfoVisible(true);
   enhanceCutterSelects();updateExtraCutterPreviews();
