@@ -67,7 +67,8 @@ button.active,.primary,.footer-primary{background:#356761;border-color:#356761;c
 .profile-band-row{display:grid;gap:11px}
 #combSettings{padding:0;gap:12px}
 #combSettings .fields{grid-template-columns:minmax(0,1fr)}
-#vectorSettingsContent .fields{grid-template-columns:minmax(0,1fr)}
+#vectorSettingsContent .fields,#vectorCutterContent .fields,#sharpCornerContent .fields{grid-template-columns:minmax(0,1fr)}
+#sharpCornerContent .sharp-box{margin:0;padding:0;border:0}#sharpCornerContent .sharp-title{display:none}
 .facade-contour-list{display:grid;gap:5px;max-height:190px;overflow:auto}
 .facade-contour-entry{display:flex;align-items:center;gap:5px}
 .facade-contour-entry .vector-row{flex:1;min-width:0;min-height:34px}
@@ -209,6 +210,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 .pocket-select-area:hover{fill-opacity:.12}
 .pocket-select-area.active{fill:#5d9b91;fill-opacity:.2}
 .pocket-select-area.configured{fill:#c58c55;fill-opacity:.2}
+.pocket-select-area.rust-pick{fill:#a45f40;fill-opacity:.06}.pocket-select-area.rust-on{fill:#a45f40;fill-opacity:.22}.pocket-select-area.rust-on.rust-pick{fill-opacity:.32}
 .pocket-select-area.configured.active{fill-opacity:.32}
 .pocket-select-area.configured.back{fill:#5b86b0}
 
@@ -252,7 +254,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 .ref-item .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.ref-item .meta{font-size:10px;color:#6c6a62}
 #refSettings{margin-top:8px}#refCount{font-size:11px}
 
-#importSettingsPanel{display:none}body.import-selected #importSettingsPanel{display:block}body.import-selected #vectorSettingsPanel{display:none!important}
+#importSettingsPanel{display:none}body.import-selected #importSettingsPanel{display:block}body.import-selected #vectorSettingsPanel,body.import-selected #vectorCutterPanel,body.import-selected #sharpCornerPanel{display:none!important}
 
 .profile-preview-title{display:flex;align-items:center;gap:8px}.section-tools{margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500}.section-tools button{min-width:26px;height:22px;padding:0 6px;font-size:13px;line-height:1}#sectionZoomValue{min-width:38px;text-align:center}
 #profilePreview{touch-action:none;cursor:grab}#profilePreview.panning{cursor:grabbing}
@@ -287,6 +289,11 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
 .edge-toggle{position:absolute;top:50%;z-index:30;width:22px;height:64px;margin-top:-32px;padding:0;display:grid;place-items:center;font-size:12px;line-height:1;color:#fff;background:#356761;border:1px solid #2a504b;opacity:.88;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 .edge-toggle:hover{opacity:1}
 .edge-toggle.left{left:-4px;border-radius:0 9px 9px 0}.edge-toggle.right{right:-4px;border-radius:9px 0 0 9px}
+.inline-3d .real3d-foot{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;padding:3px 38px;font-size:10.5px;line-height:1.25}
+.inline-3d .real3d-hint{display:none}.inline-3d .real3d-foot.help-open .real3d-hint{display:inline}
+.real3d-help{min-width:26px;height:22px;padding:0 6px;font-size:12px;line-height:1;border-radius:11px}
+.inline-3d .real3d-foot span,.inline-3d #real3DStatus{font-size:11px!important;line-height:1.25}
+#real3DStatus{flex:1 1 150px;min-width:0}
 .real3d-actions{flex-wrap:wrap;gap:6px}.real3d-actions button{min-width:34px;white-space:nowrap;padding-left:10px;padding-right:10px}@media(max-width:700px){.real3d-actions{flex-wrap:nowrap;gap:4px;width:100%;justify-content:space-between}.real3d-actions button{font-size:12.5px;min-height:34px;min-width:30px;padding-left:6px;padding-right:6px;flex:0 1 auto}}.real3d-actions button.active{background:#2d6a5e;color:#fff}
 @media(max-width:700px){.edge-toggle{width:28px;height:72px}}
 .nest-tab{margin-left:10px}
@@ -391,9 +398,42 @@ body.hide-hint #canvasHint{display:none}
 }
 @media (min-width:821px) and (min-height:521px){.app{height:calc(var(--vh,1vh)*100 - 105px)}}
 .import-new{border-color:#356761;background:#e3efec;color:#24524c}.import-new:hover{background:#d3e6e1}
+#lockScreen{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;background:#d6d1c7;padding:16px}
+#lockScreen.hidden{display:none}
+#lockScreen form{width:min(340px,100%);background:#f1ede4;border:1px solid #a79f90;border-radius:14px;padding:22px 20px;box-shadow:0 12px 40px rgba(0,0,0,.25);text-align:center}
+#lockScreen h2{margin:0 0 4px;font-size:22px;color:#302f2a}#lockScreen p{margin:0 0 14px;color:#78746b;font-size:14px}
+#lockScreen input{width:100%;box-sizing:border-box;text-align:center;font-size:26px;letter-spacing:.35em;padding:10px;border:2px solid #bcb4a7;border-radius:10px;background:#fff;color:#302f2a}
+#lockScreen button{width:100%;margin-top:12px;padding:12px;font-size:17px;border-radius:10px;border:0;background:#356761;color:#fff;cursor:pointer}
+#lockScreen .lock-err{min-height:20px;margin-top:8px;color:#a34942;font-size:14px}
 </style>
 </head>
 <body>
+<div id="lockScreen" role="dialog" aria-modal="true" aria-label="Вход">
+  <form id="lockForm" autocomplete="off"><h2>ФасадЛаб</h2><p>Введите пароль</p>
+    <input id="lockInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="off" aria-label="Пароль">
+    <div class="lock-err" id="lockErr" aria-live="polite"></div>
+    <button type="submit">Войти</button></form>
+</div>
+<script>
+(function(){
+  /* Пароль = сегодняшние день и месяц по часам устройства: 26 октября → 2610. */
+  const box=document.getElementById('lockScreen'),input=document.getElementById('lockInput'),err=document.getElementById('lockErr'),form=document.getElementById('lockForm');
+  const pad=n=>String(n).padStart(2,'0');
+  const today=()=>{const d=new Date();return {key:`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`,pass:`${pad(d.getDate())}${pad(d.getMonth()+1)}`};};
+  const setInert=on=>{['header','main','footer'].forEach(sel=>{const el=document.querySelector(sel);if(el){if(on)el.setAttribute('inert','');else el.removeAttribute('inert');}});};
+  const unlock=()=>{box.classList.add('hidden');setInert(false);};
+  let remembered=null;try{remembered=localStorage.getItem('fasadlab-unlock');}catch(e){}
+  if(remembered===today().key){box.classList.add('hidden');return;}
+  document.addEventListener('DOMContentLoaded',()=>{if(!box.classList.contains('hidden'))setInert(true);});
+  setTimeout(()=>{try{input.focus();}catch(e){}},50);
+  form.addEventListener('submit',event=>{
+    event.preventDefault();
+    const t=today();
+    if(input.value.trim()===t.pass){try{localStorage.setItem('fasadlab-unlock',t.key);}catch(e){}unlock();}
+    else{err.textContent='Неверный пароль';input.value='';input.focus();}
+  });
+})();
+</script>
 <header>
   <div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9.5 34 7l6 4v29L8 42Z" stroke-width="1.5"/><path d="m12 13 23-2v24l-23 2Z" stroke-width="1.1"/><path d="M17 17 27 16v16l-10 1Z" stroke-width=".9"/><path d="m29 8 3-4 3 2-2 4M30 9l-9 15 3 2 10-14m-13 12-1 4 4-2" stroke-width="1.5"/><path d="m10 11 3-2m24 29 2-2M12 40l2-1" stroke-width=".7"/></g></svg></div><div><div class="brand-name"><span>Фасад</span>Лаб</div><div class="sub">Редактор мебельных фасадов</div></div></div>
   <div class="view-tabs header-tabs" aria-label="Виды изделия"><button data-view="3d" title="Объёмная модель обработки — вращайте мышью или пальцем, масштаб — колесом или щипком">3D</button><button class="active" data-view="2d">Вид сверху</button><button data-view="profile">Разрез</button></div><div class="view-tabs header-tabs nest-tab" aria-label="Раскрой"><button data-view="nest">Карта листа</button></div>
@@ -469,7 +509,7 @@ body.hide-hint #canvasHint{display:none}
     </section>
     <section class="panel canvas-panel">
       <div id="canvas" class="canvas"><svg id="drawing" viewBox="0 0 800 800" role="img" aria-label="Чертёж фасада"></svg></div>
-      <div id="real3DOverlay" class="inline-3d hidden"><div class="real3d-head"><div><strong id="real3DTitle">3D-модель обработки</strong><div id="real3DInfo">Поверхность построена по выбранным фрезам и глубинам.</div></div><div class="real3d-actions"><button id="real3DZoomOut" type="button" aria-label="Отдалить" title="Отдалить">−</button><button id="real3DZoomIn" type="button" aria-label="Приблизить" title="Приблизить">＋</button><button id="real3DPan" type="button" aria-pressed="false" title="Двигать деталь (или правая кнопка / Shift / два пальца)">✥</button><button id="real3DQuality" type="button" title="Качество 3D: быстро (грубее, не виснет) / высокое (мелкая сетка). Нажмите, чтобы переключить">Быстро</button><button id="real3DTop" type="button" title="Вид сверху">Сверху</button><button id="real3DDetail" type="button" title="Мелкая сетка вокруг центра экрана">Детально</button><button id="real3DReset" type="button" title="Сбросить вид">Сброс</button></div></div><canvas id="real3DCanvas" aria-label="Вращаемая трёхмерная модель фрезерованного фасада"></canvas><div class="real3d-foot"><span>Тяните — вращение · ✥ / правая кнопка / два пальца — двигать</span><span>Колесо или щипок — масштаб к курсору</span><span id="real3DStatus">Подготовка геометрии…</span></div></div>
+      <div id="real3DOverlay" class="inline-3d hidden"><div class="real3d-head"><div><strong id="real3DTitle">3D-модель обработки</strong><div id="real3DInfo">Поверхность построена по выбранным фрезам и глубинам.</div></div><div class="real3d-actions"><button id="real3DZoomOut" type="button" aria-label="Отдалить" title="Отдалить">−</button><button id="real3DZoomIn" type="button" aria-label="Приблизить" title="Приблизить">＋</button><button id="real3DPan" type="button" aria-pressed="false" title="Двигать деталь (или правая кнопка / Shift / два пальца)">✥</button><button id="real3DQuality" type="button" title="Качество 3D: быстро (грубее, не виснет) / высокое (мелкая сетка). Нажмите, чтобы переключить">Быстро</button><button id="real3DTop" type="button" title="Вид сверху">Сверху</button><button id="real3DDetail" type="button" title="Мелкая сетка вокруг центра экрана">Детально</button><button id="real3DReset" type="button" title="Сбросить вид">Сброс</button></div></div><canvas id="real3DCanvas" aria-label="Вращаемая трёхмерная модель фрезерованного фасада"></canvas><div class="real3d-foot"><button id="real3DHelp" type="button" class="real3d-help" aria-expanded="false" title="Подсказка по управлению">?</button><span class="real3d-hint">Тяните — вращение · ✥ / правая кнопка / два пальца — двигать</span><span class="real3d-hint">Колесо или щипок — масштаб к курсору</span><span id="real3DStatus">Подготовка геометрии…</span></div></div>
       <div class="canvas-bottom"><div class="sel-info" id="selInfo" aria-live="polite"></div><span class="bottom-tools"><div class="edit-actions" aria-label="Действия редактирования"><button id="undo" type="button" title="Отменить (Ctrl+Z)" aria-label="Назад">↶</button><button id="redo" type="button" title="Повторить (Ctrl+Y)" aria-label="Вперёд">↷</button></div><button id="openStyles" type="button" title="Шаблоны фасадов, профилей и гребёнок">Стили</button><span id="validity" class="good" title="Проверка геометрии">● Проверка пройдена</span><span class="tool-options"><label id="toolValueLabel" for="toolValue">Значение, мм</label><input id="toolValue" type="number" min="0" step="0.5" value="10" title="Радиус скругления / размер фаски / расстояние смещения"><span class="sub" id="toolHint">Выбор и выборка</span></span></span><span id="canvasHint">Выберите инструмент, чтобы добавить вектор</span><span class="zoom"><button class="icon-button" id="zoomOut" aria-label="Уменьшить">−</button><span id="zoomValue">100%</span><button class="icon-button" id="zoomIn" aria-label="Увеличить">＋</button><button class="icon-button" id="zoomReset" aria-label="Сбросить масштаб">⛶</button></span></div>
     </section>
     <section class="panel dock" aria-label="Данные чертежа и инструменты">
@@ -549,6 +589,12 @@ body.hide-hint #canvasHint{display:none}
           <div class="field"><label for="vectorCorner">Радиус угла, мм</label><input id="vectorCorner" type="number" min="0" max="200" step="1" value="0"></div>
         </div>
         <div class="fields hidden" id="vectorRiseField"><div class="field"><label for="vectorRise">Подъём арки, мм (0 — авто: полукруг)</label><input id="vectorRise" type="number" min="0" step="1" value="0"></div></div>
+        <button class="primary" id="applyVectorGeometry" type="button">Применить к вектору</button>
+      </div>
+    </section>
+    <section class="panel" id="vectorCutterPanel">
+      <div class="panel-title"><span>Фреза</span><span class="panel-title-actions"><span class="sub" id="cutterPanelLabel"></span></span></div>
+      <div class="vector-settings" id="vectorCutterContent">
         <div class="field"><label for="vectorCutter">Фреза / профиль</label><select id="vectorCutter"><option value="none">Не выбрана</option><option value="v90">V-фреза 90°</option><option value="flat">Прямая фреза</option><option value="round">Радиусная фреза</option><option value="roundover">Радиус кромки (скругление)</option><option value="wave">Волновой профиль</option></select></div>
         <div id="vectorCutterPreview" class="cutter-preview" aria-live="polite"></div>
         <div class="fields">
@@ -561,14 +607,19 @@ body.hide-hint #canvasHint{display:none}
         <div class="notice vector-note hidden" id="vectorEngraveInfo"></div>
         <div class="fields">
           <div class="field"><label for="vectorAllowance">Припуск, мм</label><input id="vectorAllowance" type="number" min="0" step="0.05" value="0"></div>
-          <div class="field"><label for="vectorStepdown">Глубина прохода, мм</label><input id="vectorStepdown" type="number" min="0" step="0.1" value="0" placeholder="0 — за раз"></div>
+          <div class="field hidden"><label for="vectorStepdown">Глубина прохода, мм</label><input id="vectorStepdown" type="number" min="0" step="0.1" value="0" placeholder="0 — за раз"></div>
         </div>
-        <div class="field"><label for="vectorFeed">Направление резания</label><select id="vectorFeed"><option value="climb">Попутное (climb)</option><option value="conventional">Встречное (conventional)</option></select></div>
+        <div class="field hidden"><label for="vectorFeed">Направление резания</label><select id="vectorFeed"><option value="climb">Попутное (climb)</option><option value="conventional">Встречное (conventional)</option></select></div>
         <div class="notice vector-note" id="vectorCutSideInfo"></div>
         <div id="additionalVectorCutters"></div>
         <button type="button" id="addVectorCutter">＋ Добавить фрезу к вектору</button>
         <div class="notice vector-note">Эскиз сечения рассчитывается по выбранному типу фрезы и размерам. Сверьте форму режущей кромки с чертежом вашей фрезы перед обработкой.</div>
         <button class="primary" id="applyVectorSettings">Применить к вектору</button>
+      </div>
+    </section>
+    <section class="panel hidden" id="sharpCornerPanel">
+      <div class="panel-title">Острые углы <span class="sub">стрелки в углах вектора</span></div>
+      <div class="vector-settings" id="sharpCornerContent">
         <div class="sharp-box" id="sharpCornerBox">
           <div class="sharp-title">Острый угол</div>
           <div class="fields">
@@ -631,7 +682,7 @@ body.hide-hint #canvasHint{display:none}
       </div>
     </section>
     <section class="panel hidden" id="rustSettingsPanel">
-      <div class="panel-title">Русты <span class="sub">диагонали до первого вектора</span></div>
+      <div class="panel-title">Русты <span class="sub">диагонали между векторами</span></div>
       <div class="vector-settings">
         <div class="field"><label for="rustCutter">Фреза / профиль</label><select id="rustCutter"><option value="v90">V-фреза 90°</option></select></div>
         <div class="cutter-preview" id="rustCutterPreview" aria-live="polite"></div>
@@ -639,7 +690,10 @@ body.hide-hint #canvasHint{display:none}
           <div class="field"><label for="rustDiameter">Диаметр, мм</label><input id="rustDiameter" type="number" min="1" max="80" step="0.5" value="6"></div>
           <div class="field"><label for="rustDepth">Глубина реза, мм</label><input id="rustDepth" type="number" min="0.1" max="1000" step="0.1" value="3"></div>
         </div>
-        <div class="notice vector-note" id="rustInfo">Русты идут от четырёх углов фасада до углов первого вектора «внутрь» и сами следуют за ним при изменении отступа. Повторное нажатие кнопки «Русты» убирает их.</div>
+        <div class="notice vector-note" id="rustInfo">Русты идут от четырёх углов внешнего вектора (или фасада) до углов внутреннего и следуют за ним при изменении отступа. Нажмите «Выбрать области», затем щёлкайте области между векторами на чертеже: повторный щелчок снимает область. Без выбора русты идут от фасада до первого вектора «внутрь». Повторное нажатие кнопки «Русты» убирает их.</div>
+        <button type="button" id="rustPick" aria-pressed="false">Выбрать области на чертеже</button>
+        <div class="notice vector-note" id="rustRegionsInfo"></div>
+        <button type="button" id="rustResetRegions">Сбросить: до первого вектора</button>
         <button type="button" id="removeRusts">Убрать русты</button>
       </div>
     </section>
@@ -1125,7 +1179,7 @@ body.hide-hint #canvasHint{display:none}
   // Смещение траектории центра фрезы от вектора (как в ArtCAM «Profile»): снаружи +R+припуск, внутри −(R+припуск), вдоль 0.
   function passDelta(pass) {
     if(!pass||pass.side==='on'||!pass.side)return 0;
-    const distance=Number(pass.diameter)/2+Math.max(0,Number(pass.allowance)||0);
+    const distance=(pass.engrave?engraveHalfWidth(pass):Number(pass.diameter)/2)+Math.max(0,Number(pass.allowance)||0);
     return pass.side==='outside'?distance:-distance;
   }
   function passSideText(pass) {
@@ -1168,30 +1222,42 @@ body.hide-hint #canvasHint{display:none}
   // ---------- Гравировка ----------
   // Фреза идёт по линии самого вектора (центр точно по вектору), глубина — полная глубина фрезы.
   // В каждом углу — выход по диагонали наружу или внутрь на полуширину реза, глубина уходит в 0: угол получается острым.
-  function engraveTipDepth(shape,D,R,h) {
+  function engraveTipDepth(shape,D,R,h,H) {
     if(!shape||shape==='flat')return D;
     const n=Math.min(1,Math.max(0,h/R));
-    return Math.max(0,Math.min(D,D-cutterReliefDepth(shape,n,D,2*R)));
+    return Math.max(0,Math.min(D,D-cutterReliefDepth(shape,n,D,2*R,H)));
+  }
+  // Полуширина реза на поверхности при полной глубине D: у V-фрезы или фасонной она меньше радиуса, пока кромка не дошла до D.
+  // Центр фрезы при гравировке стоит на этом расстоянии от вектора, чтобы край канавки шёл точно по линии.
+  function engraveHalfWidth(pass) {
+    const R=Number(pass.diameter)/2,shape=cutterShape(pass.cutter);
+    const D=Math.min(Number(pass.depth),Number(state.thickness)||Number(pass.depth)),H=Math.max(0,Number(pass.formHeight)||0);
+    if(!shape||shape==='flat'||!(R>0)||!(D>0))return R;
+    const full=n=>D-cutterReliefDepth(shape,n,D,2*R,H)>=D-1e-4;
+    if(!full(.9999))return R;
+    let lo=0,hi=1;
+    for(let k=0;k<40;k++){const mid=(lo+hi)/2;if(full(mid))hi=mid;else lo=mid;}
+    return Math.max(R*hi,R*.02);
   }
   function engraveGeometry(contour,pass) {
     if(!pass||!pass.engrave||contour.shape!=='rect')return null;
     const B=getContourBounds(contour.id),R=Number(pass.diameter)/2,D=Math.min(Number(pass.depth),Number(state.thickness)||Number(pass.depth)),shape=cutterShape(pass.cutter);
     if(!(B.width>2*R*0.05)||!(R>0))return{error:'вектор слишком мал'};
-    const al=Number(pass.allowance)||0,S0=Math.max(0,Number(pass.engraveStart)||0);
+    const al=Number(pass.allowance)||0,S0=Math.max(0,Number(pass.engraveStart)||0),HF=Math.max(0,Number(pass.formHeight)||0),W=engraveHalfWidth(pass);
     // Гравировка = проход «внутри вектора» (центр фрезы на R+припуск внутрь) + выход из угла пути по диагонали к острому углу стенки.
-    const corners=SHARP_CORNERS.map(([sx,sy],i)=>{const kx=sx>0?B.x:B.x+B.width,ky=sy>0?B.y:B.y+B.height,fx=kx+sx*(R+al),fy=ky+sy*(R+al);return{i,from:{x:fx,y:fy},to:{x:fx-sx*R,y:fy-sy*R},full:{x:fx-sx*R,y:fy-sy*R}};});
+    const corners=SHARP_CORNERS.map(([sx,sy],i)=>{const kx=sx>0?B.x:B.x+B.width,ky=sy>0?B.y:B.y+B.height,fx=kx+sx*(W+al),fy=ky+sy*(W+al);return{i,from:{x:fx,y:fy},to:{x:fx-sx*W,y:fy-sy*W},full:{x:fx-sx*W,y:fy-sy*W}};});
     // острый угол режется только в диапазоне глубин от S0 до D: там, где кончик фрезы мельче S0, выход обрезается
     let tS=1;
     if(S0>0){
       if(S0>=D)return{error:'начало острого угла глубже глубины реза'};
-      tS=0;for(let k=1;k<=40;k++){const t=k/40;if(engraveTipDepth(shape,D,R,R*(1-t))>=S0)tS=t;else break;}
+      tS=0;for(let k=1;k<=40;k++){const t=k/40;if(engraveTipDepth(shape,D,R,W*(1-t),HF)>=S0)tS=t;else break;}
       corners.forEach(cn=>{cn.to={x:cn.from.x+(cn.full.x-cn.from.x)*tS,y:cn.from.y+(cn.full.y-cn.from.y)*tS};});
     }
     const ring=[0,3,2,1],start=0;
     let d='';
     ring.forEach((idx,n)=>{const c=corners[idx];d+=`${n?'L':'M'} ${c.from.x} ${c.from.y} L ${c.to.x} ${c.to.y} L ${c.from.x} ${c.from.y} `;});
     d+=`L ${corners[ring[0]].from.x} ${corners[ring[0]].from.y}`;
-    return{rc:{x:B.x,y:B.y,w:B.width,h:B.height},hw:R,R,D,z0:D,shape,corners,ring,start,pathD:d.trim(),spikeDepth:t=>engraveTipDepth(shape,D,R,R*(1-t))};
+    return{rc:{x:B.x,y:B.y,w:B.width,h:B.height},hw:W,R,W,D,z0:D,shape,corners,ring,start,pathD:d.trim(),spikeDepth:t=>engraveTipDepth(shape,D,R,W*(1-t),HF)};
   }
   function engraveMarkup(eg,pass,scale,ox,oy,cutterValue) {
     const P=p=>[ox+p.x*scale,oy+p.y*scale],c=eg.corners,ring=eg.ring;
@@ -1216,6 +1282,7 @@ body.hide-hint #canvasHint{display:none}
   }
   // Стрелка направления обхода: попутное — снаружи против часовой, внутри по часовой; встречное — наоборот.
   function passDirectionArrow(contour,pass,scale,originX,originY,bounds) {
+    return '';
     if(!pass||pass.side==='on'||!pass.side)return '';
     const geometry=offsetContourGeometry(contour,bounds,passDelta(pass));
     if(!geometry)return '';
@@ -2258,12 +2325,12 @@ body.hide-hint #canvasHint{display:none}
     ['vectorShape','vectorDirection','vectorOffset','vectorCorner','vectorRise'].forEach(id=>$(id).disabled=disabled||isBase||contour?.shape==='free');
     ['vectorCutter','vectorDiameter','vectorDepth','applyVectorSettings','vectorCutSide','vectorAllowance','vectorStepdown','vectorFeed'].forEach(id=>$(id).disabled=disabled);
     $('vectorSettingsTitle').textContent=isBase?typeLabel(state.objectType,state.kind):'Вектор';
-    $('selectedVectorLabel').textContent=isBase?'':(contour?.name||'');
+    $('selectedVectorLabel').textContent=isBase?'':(contour?.name||'');$('cutterPanelLabel').textContent=isBase?'основной контур':(contour?.name||'');
     if(isBase){
       syncSharpBox(null);[...$('vectorCutSide').options].forEach(o=>{o.disabled=o.value.startsWith('engrave');});$('vectorEngraveStartField').classList.add('hidden');$('vectorEngraveInfo').classList.add('hidden');
       renderAdditionalVectorCutters(null,true);$('vectorRiseField').classList.add('hidden');
       $('vectorCutter').previousElementSibling.textContent='Фреза основного контура';
-      $('applyVectorSettings').textContent='Применить к основному контуру';
+      $('applyVectorSettings').textContent='Применить к основному контуру';$('applyVectorGeometry').textContent='Применить к основному контуру';
       $('vectorCutter').value=state.outerCutter||'none';$('vectorDiameter').value=state.outerDiameter||6;$('vectorDepth').value=state.outerDepth||3;setFormHeightField(state.outerFormHeight);
       $('vectorCutSide').value=state.outerSide||'on';$('vectorAllowance').value=state.outerAllowance||0;$('vectorStepdown').value=state.outerStepdown||0;$('vectorFeed').value=state.outerFeed||'climb';
       renderCutSideInfo();
@@ -2272,7 +2339,7 @@ body.hide-hint #canvasHint{display:none}
     if(!contour){syncSharpBox(null);renderAdditionalVectorCutters(null);return;}
     $('vectorCutter').previousElementSibling.textContent='Фреза / профиль';
     [...$('vectorCutSide').options].forEach(o=>{o.disabled=o.value.startsWith('engrave')&&contour.shape!=='rect';});
-    $('applyVectorSettings').textContent='Применить к вектору';
+    $('applyVectorSettings').textContent='Применить к вектору';$('applyVectorGeometry').textContent='Применить к вектору';
     syncSharpBox(contour);
     $('vectorShape').value=contour.shape;$('vectorDirection').value=contour.direction;$('vectorRise').value=Number(contour.rise)||0;updateRiseField();
     $('vectorOffset').value=contour.offset;$('vectorCorner').value=contour.corner;
@@ -2288,7 +2355,7 @@ body.hide-hint #canvasHint{display:none}
     $('profileSettings').classList.toggle('hidden',type!=='profile');
     $('combSettings').classList.toggle('hidden',type!=='comb');
     $('typeSettingsPanel').classList.toggle('hidden',type==='facade'||(type==='profile'&&state.kind==='tsulaga')||activeView==='nest');
-    $('vectorSettingsPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest');
+    $('vectorSettingsPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest');$('vectorCutterPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest');$('sharpCornerPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest'||$('sharpCornerBox').classList.contains('hidden'));
     $('pocketSettingsPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest'||!selectedPocketRegion);
     $('outerRadiusSetting').classList.toggle('hidden',type!=='facade');
     $('quickOffsetControls').classList.toggle('hidden',type!=='facade');
@@ -2307,7 +2374,7 @@ body.hide-hint #canvasHint{display:none}
       panel.classList.toggle('hidden',activeView==='nest'?panel.id!=='cuttingPanel':panel.id==='cuttingPanel');
     });
     $('typeSettingsPanel').classList.toggle('hidden',type==='facade'||(type==='profile'&&state.kind==='tsulaga')||activeView==='nest');
-    $('vectorSettingsPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest');
+    $('vectorSettingsPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest');$('vectorCutterPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest');$('sharpCornerPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest'||$('sharpCornerBox').classList.contains('hidden'));
     document.querySelector('.templates-strip').style.display=activeView!=='nest'&&activeView!=='3d'?'':'none';document.querySelector('.templates-strip').classList.toggle('simple',type!=='facade');document.querySelector('.tool-options').style.display=type==='facade'&&activeView!=='nest'&&activeView!=='3d'?'':'none';
     $('pocketSettingsPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest'||!selectedPocketRegion);
     renderRustSettings();
@@ -2414,7 +2481,7 @@ body.hide-hint #canvasHint{display:none}
       return `<g data-contour="${contour.id}">${cornerArrow}${pencilContourUnder(contour,path,passes,contourBounds)}${grooves}<path data-role="vecg" d="${path}" fill="none" stroke="#656159" stroke-width="${selected?1.7:1.2}" stroke-opacity=".34" stroke-dasharray="5 1 1 1" transform="translate(.8 -.7)" vector-effect="non-scaling-stroke"/><path data-role="vec" d="${path}" fill="none" stroke="${pencil}" stroke-width="${selected?1.9:1.35}" stroke-opacity="${selected?.95:.66}" stroke-dasharray="5 1 1 1" stroke-linecap="round" vector-effect="non-scaling-stroke"/><title>${esc(contour.name)} · ${passes.map(pass=>`${cutterLabel(pass.cutter)} · ${pass.diameter} × ${pass.depth} мм${passSideText(pass)}`).join('; ')||'без фрезеровки'}</title></g>`;
     }).join('');
     const outerPseudo={shape:state.outerCornerRadius>0||state.outerCorners?'round':'rect',corner:Number(state.outerCornerRadius)||0,cornerSet:state.outerCorners};
-    const outerGroove=visible.outer?outerContourCutterPasses().map(pass=>{const outerPath=(isTs||pass.side==='on')?outer:passToolPath(outerPseudo,pass,scale,x,y,{x:0,y:0,width:state.width,height:state.height});const mark=(!isTs&&pass.side!=='on')?`<path d="${outerPath}" fill="none" stroke="#a45f40" stroke-width="1" stroke-opacity=".7" stroke-dasharray="1 3" vector-effect="non-scaling-stroke"/>${passDirectionArrow(outerPseudo,pass,scale,x,y,{x:0,y:0,width:state.width,height:state.height})}`:'';return (formGrooveMarkup(outerPath,pass.cutter,pass.diameter,pass.depth,scale)||`<path d="${outerPath}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,pass.diameter*scale)}" stroke-opacity=".14"/>`)+mark;}).join(''):'';
+    const outerGroove=visible.outer?outerContourCutterPasses().map(pass=>{const outerPath=(isTs||pass.side==='on')?outer:passToolPath(outerPseudo,pass,scale,x,y,{x:0,y:0,width:state.width,height:state.height});const mark=(!isTs&&pass.side!=='on')?`<path data-role="traj" d="${outerPath}" fill="none" stroke="#a45f40" stroke-width="1" stroke-opacity=".7" stroke-dasharray="1 3" vector-effect="non-scaling-stroke"/>${passDirectionArrow(outerPseudo,pass,scale,x,y,{x:0,y:0,width:state.width,height:state.height})}`:'';return (formGrooveMarkup(outerPath,pass.cutter,pass.diameter,pass.depth,scale)||`<path data-role="swath" d="${outerPath}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,pass.diameter*scale)}" stroke-opacity=".14"/>`)+mark;}).join(''):'';
     const pocketRegions=state.objectType==='facade'?state.contours.flatMap(contour=>{
       const candidates=[getPocketRegion(pocketEffectiveParentId(contour.id),contour.id)];
       if(!pocketHasInnerIsland(contour.id))candidates.push(getPocketRegion(contour.id,contour.id,'inside'));
@@ -2423,7 +2490,7 @@ body.hide-hint #canvasHint{display:none}
         const parentPath=region.regionType==='inside'?contourPath(contour,scale,x,y,getContourBounds(contour.id)):region.parent?contourPath(region.parent,scale,x,y,getContourBounds(region.parent.id)):outer;
         const islandPath=region.regionType==='inside'?'':contourPath(contour,scale,x,y,getContourBounds(contour.id));
         const description=region.regionType==='inside'?`Центральная область внутри «${region.islandName}»`:`Область между «${region.outerName}» и «${region.islandName}»`;
-        return `<path class="pocket-select-area${configured?' configured':''}${getPocketForRegion(region)?.back?' back':''}${selected?' active':''}" data-pocket-region="${region.parentId}:${region.islandId}:${region.regionType}" d="${parentPath}${islandPath?` ${islandPath}`:''}" fill-rule="evenodd" aria-label="${esc(description)}"><title>${esc(description)} · доступная ширина ${region.gapWidth} мм</title></path>`;
+        return `<path class="pocket-select-area${configured?' configured':''}${state.rust&&region.regionType==='ring'&&rustHasRegion(region)?' rust-on':''}${rustPickMode?' rust-pick':''}${getPocketForRegion(region)?.back?' back':''}${selected?' active':''}" data-pocket-region="${region.parentId}:${region.islandId}:${region.regionType}" d="${parentPath}${islandPath?` ${islandPath}`:''}" fill-rule="evenodd" aria-label="${esc(description)}"><title>${esc(description)} · доступная ширина ${region.gapWidth} мм</title></path>`;
       });
     }).join(''):'';
     let operation='';
@@ -2433,7 +2500,7 @@ body.hide-hint #canvasHint{display:none}
         const offset=bandCoord(band,across),[sa,sb]=bandSpan(band);
         const cx=vertical?x+offset*scale:x+dw/2,cy=vertical?y+dh/2:y+offset*scale;
         const bandPath=vertical?`M ${cx} ${y+sa*scale} V ${y+sb*scale}`:`M ${x+sa*scale} ${cy} H ${x+sb*scale}`;
-        return formGrooveMarkup(bandPath,band.cutter,Number(band.cutterWidth),Number(band.depth),scale)+`<path d="${bandPath}" stroke="#625f57" stroke-width="1.35" stroke-dasharray="5 1 1 1" vector-effect="non-scaling-stroke"><title>Вектор профиля · отступ ${band.offset} мм · фреза ${band.cutterWidth} мм · глубина ${band.depth} мм</title></path>`;
+        return formGrooveMarkup(bandPath,band.cutter,Number(band.cutterWidth),Number(band.depth),scale)+`<path data-role="vec" d="${bandPath}" stroke="#625f57" stroke-width="1.35" stroke-dasharray="5 1 1 1" vector-effect="non-scaling-stroke"><title>Вектор профиля · отступ ${band.offset} мм · фреза ${band.cutterWidth} мм · глубина ${band.depth} мм</title></path>`;
       }).join('');
     }else if(state.objectType==='comb'){
       const cuts=[];
@@ -2443,16 +2510,16 @@ body.hide-hint #canvasHint{display:none}
           ?`M ${x+pass.position*scale} ${y-halfCutter} V ${y+dh+halfCutter}`
           :`M ${x-halfCutter} ${y+pass.position*scale} H ${x+dw+halfCutter}`;
         const color=pass.extra?'#a45f40':'#625f57';
-        return (formGrooveMarkup(path,state.combCutter,Number(state.combCutWidth),Number(state.combCutDepth),scale)||`<path data-comb-pass="${pass.axis}" data-extra="${pass.extra}" d="${path}" stroke="#77736b" stroke-width="${Math.max(1.1,state.combCutWidth*scale)}" stroke-opacity=".23" stroke-dasharray="${pass.extra?'2 1':'3 1.5'}"/>`)+`<path data-comb-pass="${pass.axis}" data-extra="${pass.extra}" d="${path}" stroke="${color}" stroke-width="${pass.extra?1.5:1.1}" stroke-opacity="${pass.extra?'.95':'.75'}" stroke-dasharray="${pass.extra?'2 1 1 1':'5 1 1 1'}"/>`;
+        return (formGrooveMarkup(path,state.combCutter,Number(state.combCutWidth),Number(state.combCutDepth),scale)||`<path data-role="swath" data-comb-pass="${pass.axis}" data-extra="${pass.extra}" d="${path}" stroke="#77736b" stroke-width="${Math.max(1.1,state.combCutWidth*scale)}" stroke-opacity=".23" stroke-dasharray="${pass.extra?'2 1':'3 1.5'}"/>`)+`<path data-role="vec" data-comb-pass="${pass.axis}" data-extra="${pass.extra}" d="${path}" stroke="${color}" stroke-width="${pass.extra?1.5:1.1}" stroke-opacity="${pass.extra?'.95':'.75'}" stroke-dasharray="${pass.extra?'2 1 1 1':'5 1 1 1'}"/>`;
       }).join('');
     }
     const rustPaths=state.objectType==='facade'&&state.rust?rustLines().map(vector=>customVectorSvgPath(vector)):[];
     const rustMarkup=rustPaths.map(path=>{
       const r=state.rust;
-      const groove=formGrooveMarkup(path,r.cutter,r.diameter,r.depth,scale)||`<path d="${path}" fill="none" stroke="#77736b" stroke-width="${Math.max(1,Math.min(16,r.diameter*scale))}" stroke-opacity="${Math.min(.34,.14+r.depth/Math.max(state.thickness,1)*.2)}" stroke-linecap="round"/>`;
-      return `<g data-rust="1">${groove}<path d="${path}" fill="none" stroke="#625f57" stroke-opacity=".75" stroke-width="1.3" stroke-dasharray="5 1 1 1" vector-effect="non-scaling-stroke"><title>Руст · ${esc(cutterLabel(r.cutter))} · Ø ${r.diameter} мм · глубина ${r.depth} мм</title></path></g>`;
+      const groove=formGrooveMarkup(path,r.cutter,r.diameter,r.depth,scale)||`<path d="${path}" fill="none" data-role="swath" stroke="#77736b" stroke-width="${Math.max(1,Math.min(16,r.diameter*scale))}" stroke-opacity="${Math.min(.34,.14+r.depth/Math.max(state.thickness,1)*.2)}" stroke-linecap="round"/>`;
+      return `<g data-rust="1">${groove}<path data-role="vec" d="${path}" fill="none" stroke="#625f57" stroke-opacity=".75" stroke-width="1.3" stroke-dasharray="5 1 1 1" vector-effect="non-scaling-stroke"><title>Руст · ${esc(cutterLabel(r.cutter))} · Ø ${r.diameter} мм · глубина ${r.depth} мм</title></path></g>`;
     }).join('');
-    const extra=rustMarkup+state.customVectors.map((vector,index)=>`<g data-vector="${index}"><path d="${customVectorSvgPath(vector)}" fill="none" stroke="#625f57" stroke-opacity=".3" stroke-width="1.2" stroke-dasharray="5 1 1 1" transform="translate(.7 -.7)" vector-effect="non-scaling-stroke"/><path d="${customVectorSvgPath(vector)}" fill="none" stroke="${index===state.selectedVector?'#a45f40':'#625f57'}" stroke-opacity="${index===state.selectedVector?'.95':'.68'}" stroke-width="${index===state.selectedVector?1.9:1.35}" stroke-dasharray="5 1 1 1" vector-effect="non-scaling-stroke"/></g>`).join('');
+    const extra=rustMarkup+state.customVectors.map((vector,index)=>`<g data-vector="${index}"><path data-role="vecg" d="${customVectorSvgPath(vector)}" fill="none" stroke="#625f57" stroke-opacity=".3" stroke-width="1.2" stroke-dasharray="5 1 1 1" transform="translate(.7 -.7)" vector-effect="non-scaling-stroke"/><path data-role="vec" d="${customVectorSvgPath(vector)}" fill="none" stroke="${index===state.selectedVector?'#a45f40':'#625f57'}" stroke-opacity="${index===state.selectedVector?'.95':'.68'}" stroke-width="${index===state.selectedVector?1.9:1.35}" stroke-dasharray="5 1 1 1" vector-effect="non-scaling-stroke"/></g>`).join('');
     const imported=importedMarkup(x,y,scale,W,H);
     svg.setAttribute('viewBox','0 0 800 800');
     const minorCell=10*scale,majorCell=50*scale;
@@ -2461,7 +2528,7 @@ body.hide-hint #canvasHint{display:none}
       <pattern id="graphMajor" width="${majorCell}" height="${majorCell}" x="${x}" y="${y}" patternUnits="userSpaceOnUse"><path d="M ${majorCell} 0 H 0 V ${majorCell}" fill="none" stroke="#75766e" stroke-width="1" opacity=".36"/></pattern>
       <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M 0 0 L 6 3 L 0 6 Z" fill="#625f57"/></marker></defs>
       <rect width="800" height="800" fill="#f8f6ef"/><rect width="800" height="800" fill="url(#graphMinor)"/><rect width="800" height="800" fill="url(#graphMajor)"/>
-      ${outerGroove}${visible.outer?`<path data-contour="0" d="${outer}" fill="${textureFill}" stroke="#625f57" stroke-opacity="${state.selectedContour===0?'.95':'.75'}" stroke-width="${state.selectedContour===0?2.2:1.8}" stroke-dasharray="6 1 1 1" vector-effect="non-scaling-stroke"/><path d="${outer}" fill="none" stroke="#625f57" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="3 1 1 1" transform="translate(1.1 -1)"/>`:''}${pencilSurface}${pocketRegions}
+      ${outerGroove}${visible.outer?`<path data-role="outline" data-contour="0" d="${outer}" fill="${textureFill}" stroke="#625f57" stroke-opacity="${state.selectedContour===0?'.95':'.75'}" stroke-width="${state.selectedContour===0?2.2:1.8}" stroke-dasharray="6 1 1 1" vector-effect="non-scaling-stroke"/><path data-role="vecg" d="${outer}" fill="none" stroke="#625f57" stroke-opacity=".28" stroke-width=".8" stroke-dasharray="3 1 1 1" transform="translate(1.1 -1)"/>`:''}${pencilSurface}${pocketRegions}
       ${state.objectType==='facade'&&visible.inner?(texMode?(cfg.wob?`<g filter="url(#pencilWobble)">${contours}</g>`:contours):contours):''}${state.objectType==='facade'&&visible.details?extra:''}${imported}${operation}${tsCut}${dimensionGroup}${labels}`);
     $('dimensions').textContent=`${W} × ${H} мм`;
     const operationCount=state.objectType==='facade'?state.contours.length+1:operationVectorPaths().length;
@@ -3768,6 +3835,12 @@ body.hide-hint #canvasHint{display:none}
           if(dc.vcol&&el.getAttribute('stroke')!=='#a45f40')el.setAttribute('stroke',dc.vcol);
           return;
         }
+        if(role==='outline'){
+          el.setAttribute('stroke-width',String(dc.ow));el.setAttribute('stroke-opacity','1');
+          if(dc.solid)el.removeAttribute('stroke-dasharray');
+          if(dc.ocol)el.setAttribute('stroke',dc.ocol);
+          return;
+        }
         if(role==='traj'){
           el.setAttribute('stroke-width',String(dc.tw));el.setAttribute('stroke-opacity','1');el.setAttribute('stroke',dc.tcol||'#1f7a6d');
           if(dc.tdash==='solid')el.removeAttribute('stroke-dasharray');else el.setAttribute('stroke-dasharray',dc.tdash==='dash'?'6 3':'1 3');
@@ -3851,7 +3924,7 @@ body.hide-hint #canvasHint{display:none}
       b.style.setProperty('height',`${window.innerHeight/z}px`,'important');
       b.style.setProperty('min-width','0','important');b.style.setProperty('max-width','none','important');b.style.setProperty('max-height','none','important');
     };
-    const PANELS=[['newDesignPanel','Новое изделие',1],['configPanel','Основа',0],['vectorListPanel','Список векторов',0],['planesPanel','Плоскости',1],['referenceListPanel','Эталоны',1],['designListPanel','Список изделий',1],['layersPanel','Слои',1],['infoPanel','Свойства фасада',1],['importSettingsPanel','Настройки импорта',0],['vectorSettingsPanel','Вектор',0],['cuttingPanel','Раскрой / резка',0]];
+    const PANELS=[['newDesignPanel','Новое изделие',1],['configPanel','Основа',0],['vectorListPanel','Список векторов',0],['planesPanel','Плоскости',1],['referenceListPanel','Эталоны',1],['designListPanel','Список изделий',1],['layersPanel','Слои',1],['infoPanel','Свойства фасада',1],['importSettingsPanel','Настройки импорта',0],['vectorSettingsPanel','Вектор (форма и отступ)',0],['vectorCutterPanel','Фреза вектора',0],['sharpCornerPanel','Острые углы',0],['cuttingPanel','Раскрой / резка',0]];
     const BTNS=[['generateStyle','Кнопка «Генератор стиля»'],['scanDrawing','Кнопка «Скан по фото»'],['importAsNew','Кнопка «Импорт чертежа как изделие»']];
     let colorStyle=document.getElementById('userColors');
     if(!colorStyle){colorStyle=document.createElement('style');colorStyle.id='userColors';document.head.appendChild(colorStyle);}
@@ -4067,6 +4140,13 @@ body.hide-hint #canvasHint{display:none}
       if(activeTool==='delete'){applyDeleteTool(event,hitTarget);return;}
     }
     const pocketElement=hitTarget.closest('[data-pocket-region]');
+    if(rustPickMode&&state.rust&&activeView==='2d'){
+      if(!pocketElement){$('footerStatus').textContent='Щёлкните область между соседними векторами';return;}
+      const [pId,iId,rType='ring']=pocketElement.dataset.pocketRegion.split(':');
+      const region=getPocketRegion(Number(pId),Number(iId),rType);
+      if(!region||region.regionType!=='ring'){$('footerStatus').textContent='Для рустов нужна область между двумя векторами';return;}
+      toggleRustRegion(region);return;
+    }
     if(activeView==='2d'&&activeTool==='pocket'){
       if(!pocketElement){$('footerStatus').textContent='Щёлкните область между соседними векторами';return;}
       const [parentId,islandId,regionType='ring']=pocketElement.dataset.pocketRegion.split(':');
@@ -5171,6 +5251,7 @@ body.hide-hint #canvasHint{display:none}
     const box=$('sharpCornerBox');if(!box)return;
     const rectLike=!!contour&&contour.shape==='rect'&&!contour.cornerOf,isCorner=!!contour?.cornerOf;
     box.classList.toggle('hidden',!contour||(contour.shape==='free'&&!contour.cornerOf));
+    {const sp=$('sharpCornerPanel');if(sp)sp.classList.toggle('hidden',box.classList.contains('hidden')||state.objectType!=='facade'||activeView==='nest');}
     ['sharpDirField','sharpMethodField','sharpSmallField','sharpDepthField'].forEach(id=>$(id).classList.toggle('hidden',isCorner));
     $('addSharpCorner').classList.toggle('hidden',isCorner);
     $('addSharpCorner').disabled=!rectLike;
@@ -5367,12 +5448,19 @@ body.hide-hint #canvasHint{display:none}
   }
   function rustLines() {
     if(state.objectType!=='facade'||!state.rust)return [];
-    const first=rustFirstContour();
-    if(!first)return [];
-    const b=getContourBounds(first.id),W=Number(state.width),H=Number(state.height),r=v=>Math.round(v*100)/100;
-    if(!(b.width>0&&b.height>0)||(b.x<=1e-6&&b.y<=1e-6&&b.x+b.width>=W-1e-6&&b.y+b.height>=H-1e-6))return [];
-    return [[0,0,b.x,b.y],[W,0,b.x+b.width,b.y],[W,H,b.x+b.width,b.y+b.height],[0,H,b.x,b.y+b.height]]
-      .map(([x1,y1,x2,y2])=>({type:'line',points:[{x:r(x1),y:r(y1)},{x:r(x2),y:r(y2)}]}));
+    const W=Number(state.width),H=Number(state.height),r=v=>Math.round(v*100)/100,out=[];
+    rustActiveRegions().forEach(reg=>{
+      const island=state.contours.find(item=>item.id===reg.i);
+      if(!island||island.direction!=='in')return;
+      const b=getContourBounds(island.id),o=reg.p===0?{x:0,y:0,width:W,height:H}:(state.contours.some(item=>item.id===reg.p)?getContourBounds(reg.p):null);
+      if(!o||!(b.width>0&&b.height>0)||!(o.width>0&&o.height>0))return;
+      const eps=1e-6;
+      if(b.x<o.x-eps||b.y<o.y-eps||b.x+b.width>o.x+o.width+eps||b.y+b.height>o.y+o.height+eps)return;
+      if(Math.abs(b.x-o.x)<eps&&Math.abs(b.y-o.y)<eps&&Math.abs(b.width-o.width)<eps&&Math.abs(b.height-o.height)<eps)return;
+      [[o.x,o.y,b.x,b.y],[o.x+o.width,o.y,b.x+b.width,b.y],[o.x+o.width,o.y+o.height,b.x+b.width,b.y+b.height],[o.x,o.y+o.height,b.x,b.y+b.height]]
+        .forEach(([x1,y1,x2,y2])=>out.push({type:'line',points:[{x:r(x1),y:r(y1)},{x:r(x2),y:r(y2)}]}));
+    });
+    return out;
   }
   function allCustomVectors() {return [...state.customVectors,...rustLines()];}
   // ===== Витрина (четверть под стекло) и Цулага (радиус кромки) =====
@@ -5554,7 +5642,27 @@ body.hide-hint #canvasHint{display:none}
     if(!value||typeof value!=='object')return null;
     const cutter=typeof value.cutter==='string'&&cutterShape(value.cutter)?value.cutter:'v90';
     const diameter=Number(value.diameter),depth=Number(value.depth);
-    return{cutter,diameter:Number.isFinite(diameter)&&diameter>0?diameter:6,depth:Number.isFinite(depth)&&depth>0?depth:3};
+    const regions=Array.isArray(value.regions)?value.regions.map(r=>({p:Number(r?.p)||0,i:Number(r?.i)||0})).filter(r=>r.i>0):[];
+    return{cutter,diameter:Number.isFinite(diameter)&&diameter>0?diameter:6,depth:Number.isFinite(depth)&&depth>0?depth:3,regions};
+  }
+  let rustPickMode=false;
+  function rustActiveRegions() {
+    if(!state.rust)return [];
+    const list=Array.isArray(state.rust.regions)?state.rust.regions:[];
+    if(list.length)return list;
+    const first=rustFirstContour();
+    return first?[{p:0,i:first.id}]:[];
+  }
+  function rustHasRegion(region) {return !!state.rust&&rustActiveRegions().some(r=>r.p===region.parentId&&r.i===region.islandId);}
+  function toggleRustRegion(region) {
+    snapshot();
+    let list=Array.isArray(state.rust.regions)?[...state.rust.regions]:[];
+    if(!list.length)list=rustActiveRegions().map(r=>({...r}));
+    const index=list.findIndex(r=>r.p===region.parentId&&r.i===region.islandId);
+    if(index>=0)list.splice(index,1);else list.push({p:region.parentId,i:region.islandId});
+    state.rust={...state.rust,regions:list};
+    renderRustSettings();drawView();
+    $('footerStatus').textContent=index>=0?`Русты убраны из области «${region.outerName}» → «${region.islandName}»`:`Русты добавлены: «${region.outerName}» → «${region.islandName}»`;
   }
   function renderRustSettings() {
     const panel=$('rustSettingsPanel');
@@ -5567,6 +5675,10 @@ body.hide-hint #canvasHint{display:none}
     if(document.activeElement!==$('rustDiameter'))$('rustDiameter').value=state.rust.diameter;
     if(document.activeElement!==$('rustDepth'))$('rustDepth').value=state.rust.depth;
     $('rustCutterPreview').innerHTML=cutterSelectionPreview($('rustCutter').value,state.rust.diameter,state.rust.depth);
+    {const regs=rustActiveRegions().map(reg=>{const isl=state.contours.find(item=>item.id===reg.i);if(!isl)return null;const par=reg.p===0?'Фасад':(state.contours.find(item=>item.id===reg.p)?.name||'Вектор');return `${par} → ${isl.name||('Вектор '+(state.contours.indexOf(isl)+2))}`;}).filter(Boolean);
+      $('rustRegionsInfo').textContent=regs.length?`Области рустов: ${regs.join('; ')}`:'Областей нет: создайте вектор «внутрь» или выберите область.';
+      $('rustPick').setAttribute('aria-pressed',String(rustPickMode));$('rustPick').classList.toggle('active',rustPickMode);$('rustPick').textContent=rustPickMode?'Выбор включён — щёлкайте области (нажмите, чтобы закончить)':'Выбрать области на чертеже';
+      $('rustResetRegions').classList.toggle('hidden',!(state.rust.regions&&state.rust.regions.length));}
     const missing=!rustFirstContour();
     $('rustInfo').textContent=missing?'Создайте вектор «внутрь» — русты идут до первого вектора.':'Русты идут от четырёх углов фасада до углов первого вектора «внутрь» и сами следуют за ним при изменении отступа. Повторное нажатие кнопки «Русты» убирает их.';
   }
@@ -5576,7 +5688,7 @@ body.hide-hint #canvasHint{display:none}
     if(state.rust){state.rust=null;$('footerStatus').textContent='Русты убраны';}
     else{
       const last=state.contours.length?state.contours.find(item=>item.direction==='in'):null;
-      state.rust={cutter:'v90',diameter:6,depth:Math.min(3,Number(state.thickness)||3)};
+      state.rust={cutter:'v90',diameter:6,depth:Math.min(3,Number(state.thickness)||3),regions:[]};
       $('footerStatus').textContent=last?'Русты добавлены: выберите фрезу и глубину справа':'Русты включены — создайте вектор «внутрь», до него пойдут диагонали';
     }
     renderRustSettings();drawView();
@@ -5589,7 +5701,7 @@ body.hide-hint #canvasHint{display:none}
       if(tool){$('rustDiameter').value=tool.width;const d=profileToolDepth(cutter);if(d)$('rustDepth').value=d;}
     }
     const diameter=Number($('rustDiameter').value),depth=Number($('rustDepth').value);
-    state.rust={cutter,diameter:Number.isFinite(diameter)&&diameter>0?diameter:state.rust.diameter,depth:Number.isFinite(depth)&&depth>0?depth:state.rust.depth};
+    state.rust={...state.rust,cutter,diameter:Number.isFinite(diameter)&&diameter>0?diameter:state.rust.diameter,depth:Number.isFinite(depth)&&depth>0?depth:state.rust.depth};
     $('rustCutterPreview').innerHTML=cutterSelectionPreview(cutter,state.rust.diameter,state.rust.depth);
     drawView();
   }
@@ -6194,7 +6306,9 @@ body.hide-hint #canvasHint{display:none}
   ['vectorCutSide','vectorAllowance','vectorFeed','vectorDiameter','vectorDepth','vectorCutter','vectorEngraveStart'].forEach(id=>$(id).addEventListener('input',renderCutSideInfo));
   ['vectorCutSide','vectorCutter','vectorEngraveStart'].forEach(id=>$(id).addEventListener('change',renderCutSideInfo));
   ['rustDiameter','rustDepth'].forEach(id=>$(id).addEventListener('blur',()=>{if(state.rust)$(id).value=id==='rustDiameter'?state.rust.diameter:state.rust.depth;}));
-  $('addRusts').addEventListener('click',toggleRusts);$('removeRusts').addEventListener('click',toggleRusts);
+  $('addRusts').addEventListener('click',toggleRusts);$('removeRusts').addEventListener('click',()=>{rustPickMode=false;toggleRusts();});
+  $('rustPick').addEventListener('click',()=>{rustPickMode=!rustPickMode;renderRustSettings();if(rustPickMode){activeTool='select';$('footerStatus').textContent='Щёлкайте области между векторами: русты пойдут в углы этих областей';}drawView();});
+  $('rustResetRegions').addEventListener('click',()=>{if(!state.rust)return;snapshot();state.rust={...state.rust,regions:[]};renderRustSettings();drawView();$('footerStatus').textContent='Русты: от фасада до первого вектора';});
   ['rustCutter','rustDiameter','rustDepth'].forEach(id=>{
     let armed=true;
     $(id).addEventListener('focus',()=>{armed=true;});
@@ -6208,7 +6322,7 @@ body.hide-hint #canvasHint{display:none}
   ['vectorDiameter','vectorDepth','vectorFormHeight'].forEach(id=>$(id).addEventListener('input',renderVectorCutterPreview));
   $('toggleInfo').addEventListener('click',()=>setObjectInfoVisible($('objectInfo').classList.contains('hidden')));
   $('addSharpCorner').addEventListener('click',addSharpCorners);$('sharpDir').addEventListener('change',()=>syncSharpBox(state.contours.find(item=>item.id===state.selectedContour)));$('removeSharpCorners').addEventListener('click',removeSharpCorners);$('removeSharpOne').addEventListener('click',removeSharpOne);
-  $('applyVectorSettings').addEventListener('click',applyContourSettings);$('vectorShape').addEventListener('change',updateRiseField);
+  $('applyVectorSettings').addEventListener('click',applyContourSettings);$('applyVectorGeometry').addEventListener('click',applyContourSettings);$('vectorShape').addEventListener('change',updateRiseField);
   $('addVectorCutter').addEventListener('click',()=>{
     const contour=state.contours.find(item=>item.id===state.selectedContour);
     const isBase=!contour&&state.objectType==='facade'&&state.selectedContour===0;
@@ -7623,7 +7737,7 @@ body.hide-hint #canvasHint{display:none}
           const eg=pass.engrave?engraveGeometry(contour,pass):null;
           if(eg&&!eg.error){
             const shape=cutterShape(pass.cutter),width=Number(pass.diameter);
-            if(shape&&width>0&&eg.D>0)eg.corners.forEach(cn=>passes.push({ramp:true,ax:cn.from.x,ay:cn.from.y,bx:cn.to.x,by:cn.to.y,zAt:eg.spikeDepth,minCut:Math.max(0,Number(pass.engraveStart)||0),shape,width,depth:eg.D,name:'Острый угол'}));
+            if(shape&&width>0&&eg.D>0)eg.corners.forEach((cn,ci)=>{const [sx,sy]=SHARP_CORNERS[ci];passes.push({miter:true,cx:cn.from.x,cy:cn.from.y,sx,sy,W:eg.hw,minCut:Math.max(0,Number(pass.engraveStart)||0),shape,width,depth:eg.D,formHeight:Math.max(0,Number(pass.formHeight)||0),name:'Острый угол'});});
           }
           push(passDelta(pass)?passToolPath(contour,pass,1,0,0,bounds):d,pass,contour.name||'Вектор');
         });
@@ -7703,7 +7817,7 @@ body.hide-hint #canvasHint{display:none}
     const gridStep=real3DHQ?Math.max(.7,Math.min(1.25,minWidth/5)):Math.max(2,Math.min(3,minWidth/2)),gridCap=real3DHQ?560:240,gridMin=real3DHQ?180:120,X0=win?win.x0:0,Y0=win?win.y0:0,XW=win?win.x1-win.x0:w,YH=win?win.y1-win.y0:h,nx=win?win.n:Math.max(gridMin,Math.min(gridCap,Math.ceil(w/gridStep))),ny=win?win.n:Math.max(gridMin,Math.min(gridCap,Math.ceil(h/gridStep)));
     const pocketSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');pocketSvg.style.cssText='position:absolute;left:-10000px;top:-10000px';document.body.appendChild(pocketSvg);const pocketRegions=(state.pockets||[]).map(pocket=>{const region=getPocketRegion(pocket.parentId,pocket.islandId,pocket.regionType||'ring');if(!region||pocket.back||cutterShape(pocket.cutter)!=='flat')return null;const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',region.outerPath+' '+region.innerPath);path.setAttribute('fill-rule','evenodd');pocketSvg.appendChild(path);return{path,depth:Math.min(Number(pocket.depth)||0,thick)};}).filter(Boolean);
     const heights=new Float32Array((nx+1)*(ny+1));
-    for(let j=0;j<=ny;j++){const y=Y0+YH*j/ny;for(let i=0;i<=nx;i++){const x=X0+XW*i/nx;let z=0;for(const pass of passes){if(pass.ramp){const dx=pass.bx-pass.ax,dy=pass.by-pass.ay,den=dx*dx+dy*dy,t=den?Math.max(0,Math.min(1,((x-pass.ax)*dx+(y-pass.ay)*dy)/den)):0,dist=Math.hypot(x-pass.ax-dx*t,y-pass.ay-dy*t),normalized=dist/(pass.width/2);if(normalized<1){const rz=cutterReliefDepth(pass.shape,normalized,pass.depth,pass.width,pass.formHeight)-(pass.depth-pass.zAt(t));if(rz>=(pass.minCut||0))z=Math.max(z,rz);}continue;}const dist=real3DPathDistance(x,y,pass.index),normalized=dist/(pass.width/2);if(normalized<1)z=Math.max(z,cutterReliefDepth(pass.shape,normalized,pass.depth,pass.width,pass.formHeight));}for(const pocket of pocketRegions){try{if(pocket.path.isPointInFill(new DOMPoint(x,y)))z=Math.max(z,pocket.depth);}catch(e){}}heights[j*(nx+1)+i]=Math.min(thick,z);}}pocketSvg.remove();
+    for(let j=0;j<=ny;j++){const y=Y0+YH*j/ny;for(let i=0;i<=nx;i++){const x=X0+XW*i/nx;let z=0;for(const pass of passes){if(pass.miter){const a=(pass.cx-x)*pass.sx,bb=(pass.cy-y)*pass.sy;if(a>=0&&bb>=0&&a<pass.W&&bb<pass.W){const rz=cutterReliefDepth(pass.shape,Math.max(a,bb)/(pass.width/2),pass.depth,pass.width,pass.formHeight);if(rz>=(pass.minCut||0))z=Math.max(z,rz);}continue;}if(pass.ramp){const dx=pass.bx-pass.ax,dy=pass.by-pass.ay,den=dx*dx+dy*dy,t=den?Math.max(0,Math.min(1,((x-pass.ax)*dx+(y-pass.ay)*dy)/den)):0,dist=Math.hypot(x-pass.ax-dx*t,y-pass.ay-dy*t),normalized=dist/(pass.width/2);if(normalized<1){const rz=cutterReliefDepth(pass.shape,normalized,pass.depth,pass.width,pass.formHeight)-(pass.depth-pass.zAt(t));if(rz>=(pass.minCut||0))z=Math.max(z,rz);}continue;}const dist=real3DPathDistance(x,y,pass.index),normalized=dist/(pass.width/2);if(normalized<1)z=Math.max(z,cutterReliefDepth(pass.shape,normalized,pass.depth,pass.width,pass.formHeight));}for(const pocket of pocketRegions){try{if(pocket.path.isPointInFill(new DOMPoint(x,y)))z=Math.max(z,pocket.depth);}catch(e){}}heights[j*(nx+1)+i]=Math.min(thick,z);}}pocketSvg.remove();
     const maxDim=Math.max(w,h),zScale=1.35/maxDim,positions=[],normals=[],indices=[];
     const H=(i,j)=>heights[j*(nx+1)+i];
     for(let j=0;j<=ny;j++)for(let i=0;i<=nx;i++){
@@ -7735,6 +7849,7 @@ body.hide-hint #canvasHint{display:none}
     drawM(real3DModel);if(real3DPatch){gl.clear(gl.DEPTH_BUFFER_BIT);drawM(real3DPatch);}
   }
   function openReal3D(){const overlay=$('real3DOverlay');overlay.classList.remove('hidden');$('real3DStatus').textContent='Расчёт поверхности и профилей фрез…';try{real3DModel=real3DBuild();if(!real3DGL)real3DInitGL();real3DYaw=-.58;real3DPitch=.56;real3DZoom=1.08;real3DPanX=0;real3DPanY=0;real3DPatch=null;real3DDraw();$('real3DInfo').textContent=`${real3DModel.w} × ${real3DModel.h} × ${real3DModel.thick} мм · ${real3DModel.prism?'сквозной вырез по контуру':`${real3DModel.passes} траекторий · сетка ${real3DModel.nx} × ${real3DModel.ny}`}`;$('real3DStatus').textContent=real3DModel.prism?'Цулага вырезана насквозь по контуру: углы торцов и радиусы как на чертеже. Тяните — вращение.':(document.body.classList.contains('mono3d')?'Свет и тень: глубина видна по затемнению, цвет не используется.':'Цветовая карта глубины: голубой — мелко, жёлтый — средне, красный — глубоко.');}catch(e){$('real3DStatus').textContent='Ошибка построения: '+e.message;console.error(e);}}
+  $('real3DHelp').addEventListener('click',()=>{const f=document.querySelector('.real3d-foot'),open=!f.classList.contains('help-open');f.classList.toggle('help-open',open);$('real3DHelp').setAttribute('aria-expanded',String(open));});
   $('real3DReset').addEventListener('click',()=>{real3DYaw=-.58;real3DPitch=.56;real3DZoom=1.08;real3DPanX=0;real3DPanY=0;real3DPatch=null;real3DDraw();});
   // Управление 3D: тянуть — вращение; правая кнопка / Shift / кнопка «✥» / два пальца — двигать деталь; колесо и щипок — масштаб к курсору.
   const real3DNdc=(clientX,clientY)=>{const r=$('real3DCanvas').getBoundingClientRect();return{x:(clientX-r.left)/r.width*2-1,y:-((clientY-r.top)/r.height*2-1),aspect:r.width/r.height,w:r.width,h:r.height};};
@@ -7777,7 +7892,7 @@ body.hide-hint #canvasHint{display:none}
         pinch=d;center=c;real3DDraw();return;
       }
       if(mode==='pan'&&last){const n=real3DNdc(e.clientX,e.clientY);real3DPanX+=(e.clientX-last.x)/n.w*2*n.aspect;real3DPanY-=(e.clientY-last.y)/n.h*2;last={x:e.clientX,y:e.clientY};real3DDraw();return;}
-      if(mode==='rotate'&&real3DDrag){real3DYaw=real3DDrag.yaw+(e.clientX-real3DDrag.x)*.009;real3DPitch=Math.max(.08,Math.min(1.52,real3DDrag.pitch+(e.clientY-real3DDrag.y)*.008));real3DPatch=null;real3DDraw();}
+      if(mode==='rotate'&&real3DDrag){real3DYaw=real3DDrag.yaw-(e.clientX-real3DDrag.x)*.009;real3DPitch=Math.max(.08,Math.min(1.52,real3DDrag.pitch+(e.clientY-real3DDrag.y)*.008));real3DPatch=null;real3DDraw();}
     });
     const up=e=>{pts.delete(e.pointerId);if(pts.size===0){if(mode!=='rotate')real3DScheduleDetail(150);else real3DScheduleDetail(350);mode=null;real3DDrag=null;last=null;}else if(pts.size===1){mode='pan';const [p]=[...pts.values()];last={x:p.x,y:p.y};}};
     canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);
