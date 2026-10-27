@@ -397,6 +397,33 @@ body.hide-hint #canvasHint{display:none}
 .app>.left-scroll,.app>.right-scroll{width:min(calc(var(--drawer-w,88)*1vw),380px)!important}
 }
 @media (min-width:821px) and (min-height:521px){.app{height:calc(var(--vh,1vh)*100 - 105px)}}
+/* ПК: панель инструментов целиком, сворачивание, настройки размеров */
+.hv-strip{display:flex;align-items:center;justify-content:center;position:relative;height:16px;flex:none;margin:0}
+.hv-toggle{width:64px;height:16px;margin:0;padding:0;display:grid;place-items:center;font-size:11px;line-height:1;color:#fff;background:#356761;border:1px solid #2a504b;opacity:.88;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.hv-toggle:hover{opacity:1}
+.hv-strip.top .hv-toggle{border-radius:0 0 9px 9px;border-top:0}
+.hv-strip.bottom .hv-toggle{border-radius:9px 9px 0 0;border-bottom:0}
+.hv-label{white-space:nowrap}
+.hv-mini{width:26px;height:22px;margin:0 6px 0 0;padding:0;display:inline-grid;place-items:center;vertical-align:middle;font-size:11px;line-height:1;color:#fff;background:#356761;border:1px solid #2a504b;border-radius:7px;cursor:pointer;opacity:.9}
+.hv-mini:hover{opacity:1}
+#toggleDock{min-width:34px}
+@media(max-width:820px){.hv-mini{width:34px;height:28px;font-size:13px}}
+.hv-label{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:600;color:#69716f;display:none}
+@media(max-width:820px){.hv-strip{height:24px}.hv-toggle{width:88px;height:24px;font-size:13px}}
+body.hide-dock .dock{display:none!important}
+.profile-preview-panel.sec-collapsed .profile-preview svg,.profile-preview-panel.sec-collapsed .section-tools{display:none!important}
+.profile-preview-panel.sec-collapsed{height:auto!important;min-height:0!important;padding-bottom:5px!important}
+@media (min-width:821px) and (min-height:521px){
+.dock .manual-tool-grid{height:auto!important;grid-template-columns:repeat(auto-fill,minmax(calc(var(--tool-w,68)*1px),1fr))!important}
+.dock .manual-tool-grid>*{min-height:calc(var(--tool-w,68)*.82px)}
+.dock .import-tool-grid{height:auto!important}
+/* */
+.phone-only{display:none!important}
+.app{grid-template-columns:calc(var(--drawer-w,88)/88*290px) minmax(320px,1fr) calc(var(--drawer-w,88)/88*300px)!important}
+body.hide-left .app{grid-template-columns:0 minmax(0,1fr) calc(var(--drawer-w,88)/88*300px)!important}
+body.hide-right .app{grid-template-columns:calc(var(--drawer-w,88)/88*290px) minmax(0,1fr) 0!important}
+body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important}
+}
 .import-new{border-color:#356761;background:#e3efec;color:#24524c}.import-new:hover{background:#d3e6e1}
 #lockScreen{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;background:#d6d1c7;padding:16px}
 #lockScreen.hidden{display:none}
@@ -443,7 +470,7 @@ body.hide-hint #canvasHint{display:none}
   <aside class="column left-scroll">
     <section class="panel" id="newDesignPanel">
       <div class="panel-title">Новое изделие</div>
-      <div class="panel-body design-actions"><button id="newProject" class="primary">＋ Новое</button><label class="mode-select"><select id="newObjectType" aria-label="Тип нового изделия" title="Тип нового изделия"><option value="facade">Фасад</option><option value="vitrina">Витрина</option><option value="tsulaga">Цулага</option><option value="profile">Профиль</option><option value="comb">Гребёнка</option></select></label>
+      <div class="panel-body design-actions"><button id="newProject" class="primary">＋ Новое</button><label class="mode-select"><select id="newObjectType" aria-label="Тип нового изделия" title="Тип нового изделия"><option value="facade">Фасад</option><option value="vitrina">Витрина</option><option value="tsulaga">Цулага</option><option value="pilaster">Пилястра</option><option value="profile">Профиль</option><option value="comb">Гребёнка</option></select></label>
         <div class="new-options">
           <label class="field new-style"><span>Стиль (вектора поставятся сами)</span><select id="newStyle" aria-label="Стиль нового изделия"><option value="">Без стиля</option></select></label>
           <label class="field"><span>Ширина, мм</span><input id="newWidth" type="number" min="1" max="3000" value="596"></label>
@@ -505,12 +532,12 @@ body.hide-hint #canvasHint{display:none}
   <section class="center">
     <button type="button" class="edge-toggle left" id="toggleLeftCol" title="Свернуть / развернуть левую панель" aria-label="Левая панель" aria-pressed="false">◀</button><button type="button" class="edge-toggle right" id="toggleRightCol" title="Свернуть / развернуть правую панель" aria-label="Правая панель" aria-pressed="false">▶</button>
     <section class="panel profile-preview-panel" aria-label="Разрез изделия и действия редактирования">
-      <div class="profile-preview"><div class="profile-preview-title">Разрез изделия<span class="section-tools"><button type="button" id="sectionZoomOut" title="Уменьшить" aria-label="Уменьшить разрез">−</button><span id="sectionZoomValue">100%</span><button type="button" id="sectionZoomIn" title="Приблизить" aria-label="Приблизить разрез">+</button><button type="button" id="sectionFit" title="Показать разрез целиком (двойной щелчок по разрезу)">⟲</button><button type="button" id="sectionExpand" title="Увеличить область разреза" aria-pressed="false">⤢ Крупнее</button></span></div><svg id="profilePreview" viewBox="0 0 800 100" role="img" aria-label="Компактный разрез текущего изделия"></svg></div>
+      <div class="profile-preview"><div class="profile-preview-title"><button type="button" class="hv-mini" id="sectionCollapse" title="Свернуть / развернуть разрез" aria-pressed="false">▲</button><span class="sec-title-text">Разрез изделия</span><span class="section-tools"><button type="button" id="sectionZoomOut" title="Уменьшить" aria-label="Уменьшить разрез">−</button><span id="sectionZoomValue">100%</span><button type="button" id="sectionZoomIn" title="Приблизить" aria-label="Приблизить разрез">+</button><button type="button" id="sectionFit" title="Показать разрез целиком (двойной щелчок по разрезу)">⟲</button><button type="button" id="sectionExpand" title="Увеличить область разреза" aria-pressed="false">⤢ Крупнее</button></span></div><svg id="profilePreview" viewBox="0 0 800 100" role="img" aria-label="Компактный разрез текущего изделия"></svg></div>
     </section>
     <section class="panel canvas-panel">
       <div id="canvas" class="canvas"><svg id="drawing" viewBox="0 0 800 800" role="img" aria-label="Чертёж фасада"></svg></div>
       <div id="real3DOverlay" class="inline-3d hidden"><div class="real3d-head"><div><strong id="real3DTitle">3D-модель обработки</strong><div id="real3DInfo">Поверхность построена по выбранным фрезам и глубинам.</div></div><div class="real3d-actions"><button id="real3DZoomOut" type="button" aria-label="Отдалить" title="Отдалить">−</button><button id="real3DZoomIn" type="button" aria-label="Приблизить" title="Приблизить">＋</button><button id="real3DPan" type="button" aria-pressed="false" title="Двигать деталь (или правая кнопка / Shift / два пальца)">✥</button><button id="real3DQuality" type="button" title="Качество 3D: быстро (грубее, не виснет) / высокое (мелкая сетка). Нажмите, чтобы переключить">Быстро</button><button id="real3DTop" type="button" title="Вид сверху">Сверху</button><button id="real3DDetail" type="button" title="Мелкая сетка вокруг центра экрана">Детально</button><button id="real3DReset" type="button" title="Сбросить вид">Сброс</button></div></div><canvas id="real3DCanvas" aria-label="Вращаемая трёхмерная модель фрезерованного фасада"></canvas><div class="real3d-foot"><button id="real3DHelp" type="button" class="real3d-help" aria-expanded="false" title="Подсказка по управлению">?</button><span class="real3d-hint">Тяните — вращение · ✥ / правая кнопка / два пальца — двигать</span><span class="real3d-hint">Колесо или щипок — масштаб к курсору</span><span id="real3DStatus">Подготовка геометрии…</span></div></div>
-      <div class="canvas-bottom"><div class="sel-info" id="selInfo" aria-live="polite"></div><span class="bottom-tools"><div class="edit-actions" aria-label="Действия редактирования"><button id="undo" type="button" title="Отменить (Ctrl+Z)" aria-label="Назад">↶</button><button id="redo" type="button" title="Повторить (Ctrl+Y)" aria-label="Вперёд">↷</button></div><button id="openStyles" type="button" title="Шаблоны фасадов, профилей и гребёнок">Стили</button><span id="validity" class="good" title="Проверка геометрии">● Проверка пройдена</span><span class="tool-options"><label id="toolValueLabel" for="toolValue">Значение, мм</label><input id="toolValue" type="number" min="0" step="0.5" value="10" title="Радиус скругления / размер фаски / расстояние смещения"><span class="sub" id="toolHint">Выбор и выборка</span></span></span><span id="canvasHint">Выберите инструмент, чтобы добавить вектор</span><span class="zoom"><button class="icon-button" id="zoomOut" aria-label="Уменьшить">−</button><span id="zoomValue">100%</span><button class="icon-button" id="zoomIn" aria-label="Увеличить">＋</button><button class="icon-button" id="zoomReset" aria-label="Сбросить масштаб">⛶</button></span></div>
+      <div class="canvas-bottom"><div class="sel-info" id="selInfo" aria-live="polite"></div><span class="bottom-tools"><div class="edit-actions" aria-label="Действия редактирования"><button id="undo" type="button" title="Отменить (Ctrl+Z)" aria-label="Назад">↶</button><button id="redo" type="button" title="Повторить (Ctrl+Y)" aria-label="Вперёд">↷</button><button id="toggleDock" type="button" title="Свернуть / развернуть панель инструментов" aria-label="Панель инструментов" aria-pressed="false">▼</button></div><button id="openStyles" type="button" title="Шаблоны фасадов, профилей и гребёнок">Стили</button><span id="validity" class="good" title="Проверка геометрии">● Проверка пройдена</span><span class="tool-options"><label id="toolValueLabel" for="toolValue">Значение, мм</label><input id="toolValue" type="number" min="0" step="0.5" value="10" title="Радиус скругления / размер фаски / расстояние смещения"><span class="sub" id="toolHint">Выбор и выборка</span></span></span><span id="canvasHint">Выберите инструмент, чтобы добавить вектор</span><span class="zoom"><button class="icon-button" id="zoomOut" aria-label="Уменьшить">−</button><span id="zoomValue">100%</span><button class="icon-button" id="zoomIn" aria-label="Увеличить">＋</button><button class="icon-button" id="zoomReset" aria-label="Сбросить масштаб">⛶</button></span></div>
     </section>
     <section class="panel dock" aria-label="Данные чертежа и инструменты">
       <div class="canvas-heading dock-head"><div><strong id="viewTitle">Чертёж фасада</strong><div class="sub" id="viewSubtitle">Размеры в мм · векторы готовы к проверке</div></div><div class="canvas-heading-actions"><div class="stats"><span id="dimensions">596 × 716 мм</span><span id="vectorCount">Контуров: 2</span></div></div></div>
@@ -525,8 +552,8 @@ body.hide-hint #canvasHint{display:none}
       <button class="manual-tool facade-tool" type="button" data-tool="delete" title="Удалить выбранный или указанный щелчком вектор, русты и выборку" aria-label="Удалить"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 9h18M12 9V5h8v4m3 0-1 18H10L9 9m4 4v10m6-10v10"/></svg><span>Удалить</span></button>
       <button class="manual-tool facade-tool" type="button" data-tool="pocket" title="Быстрая выборка: щёлкните область между векторами — выборка создаётся с текущими настройками" aria-label="Выборка"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 6h22v20H5Z"/><path d="M11 12h10v8H11Z" fill="currentColor" fill-opacity=".25"/></svg><span>Выборка</span></button>
       <button class="manual-tool facade-tool" type="button" id="addRusts" title="Русты: диагонали от углов фасада до углов первого вектора (повторное нажатие пересоздаёт их)" aria-label="Добавить русты"><svg viewBox="0 0 32 32"><path d="M4 4h24v24H4Z"/><path d="M11 11h10v10H11Z"/><path d="M4 4l7 7M28 4l-7 7M28 28l-7-7M4 28l7-7"/></svg><span>Русты</span></button>
-      <button class="manual-tool facade-tool" type="button" id="importLoad" title="Импорт SVG / DXF: загрузить векторный файл" aria-label="Импорт SVG или DXF"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4v14M10 12l6 6 6-6"/><path d="M5 20v6h22v-6"/></svg><span>Импорт</span></button>
       <button class="manual-tool" type="button" id="toggleVitrina" title="Превратить фасад в витрину (рамка, четверть, окно) и обратно. Размеры, вектора и фрезы сохраняются, добавляются рамка, четверть и окно; отмена — ↶" aria-label="Фасад в витрину"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="24" height="24" rx="2"/><rect x="10" y="10" width="12" height="12"/><path d="m10 22 12-12"/></svg><span id="toggleVitrinaLabel">В витрину</span></button>
+      <button class="manual-tool facade-tool" type="button" id="importLoad" title="Импорт SVG / DXF: загрузить векторный файл" aria-label="Импорт SVG или DXF"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4v14M10 12l6 6 6-6"/><path d="M5 20v6h22v-6"/></svg><span>Импорт</span></button>
     </div>
     <div class="manual-tool-grid import-tool-grid" aria-label="Импорт SVG и DXF">
       <button class="manual-tool" type="button" id="importTool" title="Панель импорта: положение, размер, поворот, выравнивание, массив" aria-label="Панель импорта" aria-expanded="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h22M5 16h22M5 23h22"/><circle cx="11" cy="9" r="2.5" fill="#fbfaf6"/><circle cx="21" cy="16" r="2.5" fill="#fbfaf6"/><circle cx="13" cy="23" r="2.5" fill="#fbfaf6"/></svg><span>Панель</span></button>
@@ -539,7 +566,8 @@ body.hide-hint #canvasHint{display:none}
       <button class="manual-tool" type="button" id="qCenter" title="Поставить в центр фасада" aria-label="Поставить в центр фасада" data-q-need="1"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h22v22H5z"/><path d="M16 11v10M11 16h10"/></svg><span>В центр</span></button>
       <button class="manual-tool" type="button" id="qNative" title="Превратить выбранный импорт в основные векторы: отступ, выборка, стили" aria-label="Забрать в основные векторы" data-q-need="1"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h22v22H5z"/><path d="M10 10h12v12H10z"/><path d="M16 4v6"/></svg><span>Забрать</span></button>
       <button class="manual-tool" type="button" id="qDel" title="Удалить выбранный импорт" aria-label="Удалить выбранный импорт" data-q-need="1"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9h18M12 9V5h8v4m3 0-1 18H10L9 9"/></svg><span>Удалить</span></button>
-    </div></div></section>
+    </div>
+</div></section>
   </section>
   <aside class="column right-scroll">
     <section class="panel" id="infoPanel"><div class="panel-title">Свойства фасада <button id="toggleInfo" aria-expanded="false">Показать</button></div><div class="info-list hidden" id="objectInfo">
@@ -662,6 +690,54 @@ body.hide-hint #canvasHint{display:none}
         <div class="notice vector-note">Витрина = рамка с окном. Вектор «Четверть» и «Окно» и выборки строятся автоматически: между ними выбирается четверть под стекло, внутри окна — сквозной вырез. Размеры фасада меняйте в блоке «Основа». Выборки можно тонко настроить, выбрав область на чертеже.</div>
       </div>
     </section>
+    <section class="panel hidden" id="pilasterSettingsPanel">
+      <div class="panel-title">Пилястра <span class="sub">линии-канавки</span></div>
+      <div class="vector-settings">
+        <div class="fields">
+          <div class="field"><label for="pOrient">Направление линий</label><select id="pOrient"><option value="v">Вдоль высоты (вертикально)</option><option value="h">Вдоль ширины (горизонтально)</option></select></div>
+          <div class="field"><label for="pCount">Количество линий</label><input id="pCount" type="number" min="1" max="60" step="1" value="3"></div>
+        </div>
+        <div id="pLineCutterBox"><div class="field"><label for="pEdgeCutter">Фреза</label><select id="pEdgeCutter"><option value="flat">Прямая фреза</option></select></div>
+        <div id="pEdgeCutterPreview" class="cutter-preview hidden" aria-live="polite"></div></div>
+        <div class="fields">
+          <div class="field"><label for="pStripW" id="pStripWLabel">Ø фрезы (ширина линии), мм</label><input id="pStripW" type="number" min="1" step="0.5" value="6"></div>
+          <div class="field"><label for="pDepth">Глубина, мм</label><input id="pDepth" type="number" min="0.1" step="0.1" value="3"></div>
+        </div>
+        <div class="fields">
+          <div class="field"><label for="pGap">Промежуток между, мм (0 — поровну)</label><input id="pGap" type="number" min="0" step="0.5" value="0"></div>
+          <div class="field"><label for="pLength">Длина линии, мм (0 — по отступам)</label><input id="pLength" type="number" min="0" step="1" value="0"></div>
+        </div>
+        <div class="fields">
+          <div class="field"><label for="pSide" id="pSideLabel">Отступ от боковых краёв, мм</label><input id="pSide" type="number" min="0" step="0.5" value="30"></div>
+          <div class="field"><label for="pTop" id="pTopLabel">Отступ сверху, мм</label><input id="pTop" type="number" min="0" step="0.5" value="100"></div>
+        </div>
+        <div class="fields">
+          <div class="field"><label for="pBottom" id="pBottomLabel">Отступ снизу, мм</label><input id="pBottom" type="number" min="0" step="0.5" value="100"></div>
+        </div>
+        <label class="check-row"><input id="pThrough" type="checkbox"> Прорезать насквозь</label>
+        <label class="check-row"><input id="pExtra" type="checkbox"> Дополнительные варианты</label>
+        <div id="pExtraBox" class="hidden">
+          <div class="fields">
+            <div class="field"><label for="pForm">Форма</label><select id="pForm"><option value="line">Линия (по центру фрезой)</option><option value="strip">Полоска-контур (с выборкой дна)</option></select></div>
+            <div class="field" id="pEndsField"><label for="pEnds">Концы полоски</label><select id="pEnds"><option value="rect">Прямые</option><option value="chamfer">Скошенные</option><option value="round">Скруглённые</option></select></div>
+          </div>
+          <div id="pStripBox">
+            <div class="fields">
+              <div class="field"><label for="pDia">Прямая фреза дна Ø, мм</label><input id="pDia" type="number" min="1" step="0.5" value="6"></div>
+            </div>
+            <label class="check-row"><input id="pBottomOn" type="checkbox" checked> Выбрать дно полоски (прямой фрезой)</label>
+            <div class="field"><label for="pStripCutter">Профиль кромки полоски (лицевая сторона)</label><select id="pStripCutter"><option value="none">Без профиля</option></select></div>
+            <div id="pStripCutterPreview" class="cutter-preview hidden" aria-live="polite"></div>
+            <div class="fields" id="pSEdgeFields">
+              <div class="field"><label for="pSDia">Ширина фрезы, мм</label><input id="pSDia" type="number" min="1" step="0.5" value="6"></div>
+              <div class="field"><label for="pSDepth">Глубина, мм</label><input id="pSDepth" type="number" min="0.1" step="0.1" value="2"></div>
+            </div>
+          </div>
+        </div>
+        <div class="notice" id="pilasterInfo"></div>
+        <div class="notice vector-note">Пилястра = заготовка заданного размера и ровные линии (канавки) с отступами от краёв. Каждая линия — один вектор, фреза идёт центром по линии; ширина канавки равна диаметру фрезы. Линии пересчитываются при любой правке панели.</div>
+      </div>
+    </section>
     <section class="panel hidden" id="tsulagaSettingsPanel">
       <div class="panel-title">Цулага <span class="sub">вырезается из листа</span></div>
       <div class="vector-settings">
@@ -762,12 +838,12 @@ body.hide-hint #canvasHint{display:none}
   <div class="import-row"><span class="grp">Выровнять</span><button type="button" data-imp-align="cx">По центру ↔</button><button type="button" data-imp-align="cy">По центру ↕</button><button type="button" data-imp-align="c">В центр</button><button type="button" data-imp-align="l">Влево</button><button type="button" data-imp-align="r">Вправо</button><button type="button" data-imp-align="t">Вверх</button><button type="button" data-imp-align="b">Вниз</button></div>
   <div class="import-row"><span class="grp">Массив</span><label>Кол-во <input id="impCount" type="number" min="2" max="200" step="1" value="3"></label><label>Шаг X <input id="impStepX" type="number" step="1" value="50"></label><label>Шаг Y <input id="impStepY" type="number" step="1" value="0"></label><button type="button" id="impArray">Создать копии</button><span class="sub" style="color:#6c6a62">Мышью: выберите «Выбор» и тяните вектор по макету</span></div>
 </div>
-<footer><span>●</span><span class="footer-status" id="footerStatus">Готово к работе</span><span class="footer-spacer"></span><button id="checkGeometry" title="Проверить геометрию">✓<span class="hm"> Проверить</span></button><span class="menu-wrap"><button id="exportMenuButton" type="button" aria-haspopup="true" aria-expanded="false" title="Другие форматы экспорта">⇩<span class="hm"> Форматы</span> ▾</button><span id="exportMenu" class="export-menu" role="menu"><button id="exportDocument" type="button" title="Скачать PDF-файл: вид сверху, разрез и спецификация для ArtCAM">▤ PDF</button><button id="exportCuttingPanel">▤ Карта DXF</button><button id="exportArtcam" type="button" title="ZIP: DXF со слоями по операциям, SVG, PDF, таблицы операций и файл фасада (его можно загрузить в «Стили»)">⇩ Пакет ArtCAM</button></span></span><button class="footer-primary" id="exportFooter">⇩ Экспорт DXF</button><button class="footer-primary" id="exportFile" type="button" title="Экспорт чертежа в SVG">⇩ SVG</button></footer>
+<footer><span>●</span><span class="footer-status" id="footerStatus">Готово к работе</span><span class="footer-spacer"></span><button id="checkGeometry" title="Проверить геометрию">✓<span class="hm"> Проверить</span></button><span class="menu-wrap"><button id="exportMenuButton" type="button" aria-haspopup="true" aria-expanded="false" title="Другие форматы экспорта">⇩<span class="hm"> Форматы</span> ▾</button><span id="exportMenu" class="export-menu" role="menu"><button id="exportDocument" type="button" title="Скачать PDF-файл: вид сверху, разрез и спецификация для ArtCAM">▤ PDF</button><button id="exportCuttingPanel">▤ Карта DXF</button><button id="export3dZip" type="button" title="ZIP с 3D-моделью обработки: OBJ (Y вверх), STL (Z вверх), GLB; миллиметры. Детализация как в окне 3D">⬡ 3D-архив</button><button id="exportArtcam" type="button" title="ZIP с папками: «Форматы» (DXF со слоями по операциям, SVG), «Документы» (PDF, таблицы операций, файл фасада для «Стилей»), «3D» (OBJ, STL, GLB)">⇩ Пакет ArtCAM</button></span></span><button class="footer-primary" id="exportFooter">⇩ Экспорт DXF</button><button class="footer-primary" id="exportFile" type="button" title="Экспорт чертежа в SVG">⇩ SVG</button></footer>
 <section id="printDocument" class="print-document" aria-hidden="true"></section>
 <input id="projectPicker" type="file" accept=".json,application/json">
 <input id="vectorPicker" type="file" accept=".svg,.dxf,.dwg,image/svg+xml,application/dxf"><input id="artProjectPicker" type="file" accept=".art" hidden>
 <input id="artcamToolPicker" type="file" accept=".tdb" multiple hidden><input id="dxfCutterPicker" type="file" accept=".dxf" hidden><input id="dxfCatalogPicker" type="file" accept=".dxf" hidden><input id="cuttersJsonPicker" type="file" accept=".json,application/json" hidden><input id="scanCameraPicker" type="file" accept="image/*" capture="environment" hidden><input id="scanFilePicker" type="file" accept="image/*,.svg,image/svg+xml" hidden>
-<div id="stylesOverlay" class="modal-overlay hidden"><section class="modal-card styles-dialog" role="dialog" aria-modal="true" aria-labelledby="stylesDialogTitle"><button class="modal-close" id="closeStyles" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="stylesDialogTitle">Шаблоны изделий</h2><p>Выберите тип шаблона и примените сохранённые настройки к изделию.</p></div><div class="styles-dialog-controls"><label class="field" for="styleTypeFilter">Тип изделия<select id="styleTypeFilter"><option value="facade">Фасад</option><option value="vitrina">Витрина</option><option value="profile">Профиль</option><option value="tsulaga">Цулага</option><option value="comb">Гребёнка</option></select></label><div class="field"><label for="styleName">Название нового шаблона</label><input id="styleName" aria-label="Название сохраняемого шаблона" maxlength="48" value="Мой шаблон" placeholder="Название шаблона"></div></div><div class="styles-io"><button type="button" id="importStyles" title="Загрузить шаблоны из файла (.json стиля, или проект/фасад из пакета ArtCAM)">⇧ Импорт</button><button type="button" id="exportAllStyles" title="Скачать все шаблоны одним файлом, чтобы передать другим">⇩ Экспорт всех</button><input type="file" id="stylesImportPicker" accept=".json,application/json" multiple hidden></div>
+<div id="stylesOverlay" class="modal-overlay hidden"><section class="modal-card styles-dialog" role="dialog" aria-modal="true" aria-labelledby="stylesDialogTitle"><button class="modal-close" id="closeStyles" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="stylesDialogTitle">Шаблоны изделий</h2><p>Выберите тип шаблона и примените сохранённые настройки к изделию.</p></div><div class="styles-dialog-controls"><label class="field" for="styleTypeFilter">Тип изделия<select id="styleTypeFilter"><option value="facade">Фасад</option><option value="vitrina">Витрина</option><option value="profile">Профиль</option><option value="tsulaga">Цулага</option><option value="pilaster">Пилястра</option><option value="comb">Гребёнка</option></select></label><div class="field"><label for="styleName">Название нового шаблона</label><input id="styleName" aria-label="Название сохраняемого шаблона" maxlength="48" value="Мой шаблон" placeholder="Название шаблона"></div></div><div class="styles-io"><button type="button" id="importStyles" title="Загрузить шаблоны из файла (.json стиля, или проект/фасад из пакета ArtCAM)">⇧ Импорт</button><button type="button" id="exportAllStyles" title="Скачать все шаблоны одним файлом, чтобы передать другим">⇩ Экспорт всех</button><input type="file" id="stylesImportPicker" accept=".json,application/json" multiple hidden></div>
 <div class="style-small-box"><div class="sharp-title">Малые размеры</div><div class="fields"><div class="field"><label for="styleMinSide">Критичный размер, мм (меньшая сторона; 0 — только если не помещается)</label><input id="styleMinSide" type="number" min="0" max="3000" step="10" value="0"></div></div><div class="sharp-title">Вектора стиля</div><div id="styleMarkList" class="style-mark-list"></div><div class="sub">🪟 — начало окна витрины: когда фасад превращают в витрину, окно берётся от этого вектора, всё внутри него вырезается насквозь.</div><div class="sub">Когда вектора убраны, внутри оставшегося автоматически делается выборка до самой глубокой фрезы.</div><div class="sub">🟢 всегда остаётся · 🔴 можно убрать (убирается на малом размере) · 🔵 программа решает сама: убирает только если иначе не помещается. Убираются сначала самые внутренние.</div></div>
 <button id="saveTemplate" class="primary" type="button">＋ Сохранить текущие настройки как шаблон</button><div id="stylesList" class="styles-list" aria-live="polite"></div><button class="primary" id="closeStylesFooter" type="button">Готово</button></section></div>
 <div id="cutterLibraryOverlay" class="modal-overlay hidden"><section class="modal-card cutter-library-card" role="dialog" aria-modal="true" aria-labelledby="cutterLibraryTitle"><button class="modal-close" id="closeCutterLibrary" aria-label="Закрыть">×</button><div class="cutter-library-heading"><div><strong id="cutterLibraryTitle">Библиотека фрез</strong><p>Из .TDB читается реальный профиль режущей кромки: узорные, фасонные и конические фрезы показываются своей формой в виде сверху, в разрезе и в карточке. Профили по параметрам (Ogee, Roman Ogee, Roundover) считаются точно; приблизительные помечены «≈».</p></div><div class="cutter-card-actions"><button id="importArtcamCutters" type="button">Импорт ArtCAM .TDB</button><button id="importCuttersJson" type="button" title="Загрузить набор фрез из файла .json (например, от другого человека)">Импорт набора</button><button id="exportCuttersJson" type="button" title="Сохранить все ваши фрезы в файл .json, чтобы передать другим">Экспорт набора</button><button id="importDxfCatalog" type="button" title="Один DXF с несколькими фрезами: каждая фреза — рисунок профиля с подписью рядом. Все добавятся в каталог">Каталог фрез из DXF</button><button id="addStandardCutter" type="button" title="Создать популярную стандартную фрезу по типу и диаметру">＋ Стандартная фреза</button><button id="importDxfCutter" type="button" title="Открытый вектор — половина профиля фрезы, как в ArtCAM Custom Form">Фреза из профиля DXF</button></div></div><div id="standardCutterForm" class="cutter-library-form hidden"><strong>Стандартная фреза</strong><div class="fields"><div class="field"><label for="stdType">Тип</label><select id="stdType"></select></div><div class="field"><label for="stdDia">Диаметр, мм</label><input id="stdDia" type="number" min="1" max="200" step="0.1" value="12"></div></div><div class="fields"><div class="field"><label for="stdParam" id="stdParamLabel">Параметр</label><input id="stdParam" type="number" min="0" step="0.1" value="5"></div><div class="field"><label for="stdName">Название (необязательно)</label><input id="stdName" maxlength="60"></div></div><div class="sub" id="stdHint"></div><div class="cutter-card-actions"><button id="saveStandardCutter" class="primary" type="button">Добавить в каталог</button><button id="cancelStandardCutter" type="button">Отмена</button></div></div><div id="customCutterEditor" class="cutter-library-form hidden"><strong>Редактирование импортированной фрезы</strong><div class="field"><label for="customCutterName">Название</label><input id="customCutterName" maxlength="40"></div><div class="fields"><div class="field"><label for="customCutterShape">Тип профиля</label><select id="customCutterShape"><option value="round">Круглая / радиусная</option><option value="flat">Прямая</option><option value="v90">V-фреза 90°</option><option value="roundover">Радиус кромки (скругление)</option><option value="wave">Волновая / другая</option><option value="form">Профиль из ArtCAM</option></select></div><div class="field"><label for="customCutterWidth">Диаметр / ширина, мм</label><input id="customCutterWidth" type="number" min="0.1" step="0.1"></div></div><div class="cutter-card-actions"><button id="saveCustomCutter" class="primary" type="button">Сохранить изменения</button><button id="cancelCutterEdit" type="button">Отмена</button></div></div><h3 class="cutter-catalog-title">Стандартные и импортированные фрезы</h3><div class="field"><input id="cutterSearch" type="search" placeholder="Поиск по названию или группе" aria-label="Поиск фрезы"><div class="cutter-card-meta" id="cutterCount"></div></div><div id="customCutterList" class="cutter-catalog"></div><div class="notice">Профиль узорных фрез (Custom Form) читается из .TDB точно: линии и дуги в долях диаметра. Для Ogee, Roman Ogee, Roundover и Veining контур считается по параметрам из файла (диаметр, радиус дуги, внутренний диаметр, ступень) по определению ArtCAM; для Raised Panel смысл параметров в файле не раскрыт, поэтому форма приблизительная (помечена «≈»). Незнакомые типы фрез и другие версии базы не отбрасываются: фреза добавляется по названию и размеру (тоже с «≈»). Параметры резания не импортируются; проверьте инструмент и обработку в ArtCAM.</div><button class="primary" id="closeCutterLibraryFooter">Готово</button></section></div>
@@ -1055,7 +1131,7 @@ body.hide-hint #canvasHint{display:none}
     profileAxis:'vertical',profileBands:[{id:1,side:'left',offset:10,cutter:'round',cutterWidth:6,depth:4.4}],selectedProfileBand:1,
     combDirection:'vertical',combStart:25,combEnd:25,combPitch:12,combCutter:'round',combCutWidth:3,combCutDepth:2,combBeforeStep:false,combAfterStep:false,combMode:'planes',combFirstWhole:true,combLastWhole:true,outerCornerRadius:0,
     facadeTexture:'pencil',
-    outerCorners:null,outerSide:'on',outerFormHeight:0,outerAllowance:0,outerFeed:'climb',outerStepdown:0,rust:null,kind:null,kindSig:null,vitrina:null,tsulaga:null,outerCutter:'none',outerDiameter:6,outerDepth:3,outerAdditionalCutters:[],
+    outerCorners:null,outerSide:'on',outerFormHeight:0,outerAllowance:0,outerFeed:'climb',outerStepdown:0,rust:null,kind:null,kindSig:null,vitrina:null,tsulaga:null,pilaster:null,outerCutter:'none',outerDiameter:6,outerDepth:3,outerAdditionalCutters:[],
     customVectors:[], contours:[], pockets:[], selectedContour:0, importedPaths:[], selectedVector:-1, selectedImport:-1, zoom:100,
     layers:{outer:true,inner:true,details:true,corners:true,dimensions:true,text:true,underlay:true},
     sheetWidth:2440,sheetHeight:1220,sheetThickness:19,sheetMargin:10,partGap:5,cuttingItems:[]
@@ -1448,6 +1524,8 @@ body.hide-hint #canvasHint{display:none}
       vEdgeCutter:`<option value="none">Без профиля</option><option value="roundover">Радиус кромки (скругление)</option><option value="round">Радиусная фреза</option><option value="v90">V-фреза 90°</option><option value="flat">Прямая фреза</option>${customOptions}`,
       rustCutter:`<option value="v90">V-фреза 90°</option><option value="flat">Прямая фреза</option><option value="round">Радиусная фреза</option>${customOptions}`
     };
+    options.pStripCutter=options.vEdgeCutter;
+    options.pEdgeCutter=options.vectorCutter.replace('<option value="none">Не выбрана</option>','');
     Object.entries(options).forEach(([id,markup])=>{const select=$(id),value=select.value;select.innerHTML=markup;if([...select.options].some(option=>option.value===value))select.value=value;});
     const builtinCards=builtinCutterShapes.map(shape=>`<article class="cutter-card"><div class="cutter-card-preview">${cutterToolIllustration(shapeToolProfile(shape,10))}</div><div><div class="cutter-card-name">${esc(cutterLabel(shape))}</div><div class="cutter-card-meta">Профиль режущей кромки типа</div></div></article>`).join('');
     $('customCutterList').dataset.builtin=builtinCards;
@@ -1954,6 +2032,7 @@ body.hide-hint #canvasHint{display:none}
       if(bounds.x<-1e-6||bounds.y<-1e-6||bounds.x+bounds.width>state.width+1e-6||bounds.y+bounds.height>state.height+1e-6)issues.push(`Вектор ${index+2} выходит за границы фасада.`);
     });
     if(state.kind==='vitrina')issues.push(...vitrinaIssues());
+    if(state.kind==='pilaster')issues.push(...pilasterIssues());
     if(state.kind==='tsulaga'&&state.objectType==='profile')issues.push(...tsulagaIssues());
     if(state.objectType==='facade'&&state.rust&&(!cutterShape(state.rust.cutter)||!(state.rust.depth>0)||state.rust.depth>state.thickness))issues.push('Проверьте фрезу и глубину рустов; глубина не должна превышать толщину плиты.');
     if(state.objectType==='facade')state.pockets.forEach((pocket,index)=>{
@@ -2066,7 +2145,7 @@ body.hide-hint #canvasHint{display:none}
     }).join(''):'<div class="sub">Пока нет областей: создайте вложенный вектор.</div>';
   }
   function renderTemplateButtons(syncControls=true) {
-    const vectorRows=[{id:0,name:state.kind==='vitrina'?'Основа витрины':'Основа фасада',type:'rect',cutter:'none'},...state.contours];
+    const vectorRows=[{id:0,name:state.kind==='vitrina'?'Основа витрины':state.kind==='pilaster'?'Основа пилястры':'Основа фасада',type:'rect',cutter:'none'},...state.contours];
     const vectorCount=state.objectType==='profile'?state.profileBands.length:vectorRows.filter(vector=>!vector.cornerOf).length;
     $('vectorListCount').textContent=`${vectorCount} ${vectorCount===1?'вектор':vectorCount>1&&vectorCount<5?'вектора':'векторов'}`;
     $('selectedContour').innerHTML=vectorRows.filter(vector=>!vector.cornerOf).map((vector,index)=>`<option value="${vector.id}">${esc(vector.name||`Вектор ${index+1}`)}${index===0?' · основной':''}</option>`).join('');
@@ -2304,6 +2383,7 @@ body.hide-hint #canvasHint{display:none}
     if(error){$('pocketWarning').textContent=error;$('pocketWarning').classList.remove('hidden');$('footerStatus').textContent=error;return;}
     const previousPocket=getPocketForRegion(region),pocket={parentId:region.parentId,islandId:region.islandId,regionType:region.regionType,cutter,diameter,depth,stepover,passDepth,back:$('pocketBack').checked};
     if(previousPocket?.vitrina)pocket.vitrina=true;
+    if(previousPocket?.pilaster)pocket.pilaster=true;
     const existingIndex=state.pockets.findIndex(item=>item.islandId===region.islandId&&(item.regionType||'ring')===region.regionType);
     snapshot();
     if(existingIndex<0)state.pockets.push(pocket);else state.pockets[existingIndex]=pocket;
@@ -2363,9 +2443,9 @@ body.hide-hint #canvasHint{display:none}
     $('facadeVectorControls').classList.toggle('hidden',type!=='facade');
     $('profileVectorControls').classList.toggle('hidden',type!=='profile');
     document.querySelector('.tool-options').style.display=type==='facade'?'':'none';
-    $('vectorListTitle').textContent=type==='facade'?(state.kind==='vitrina'?'Контуры витрины':'Контуры фасада'):type==='comb'?'Проходы гребёнки':'Векторы профиля';
-    $('objectTypeName').textContent=type==='facade'?(state.kind==='vitrina'?'Витрина':'Фасад'):type==='profile'&&state.kind==='tsulaga'?'Цулага':type==='comb'?'Фасад-гребёнка':'Профиль';
-    $('dimensionHelp').textContent=type==='facade'?(state.kind==='vitrina'?'Укажите ширину, высоту и толщину витрины. Четверть и окно строятся автоматически.':'Укажите ширину, высоту и толщину фасада. Векторы добавляются и редактируются отдельно.'):type==='comb'?'Шаг задаёт расстояние между проходами; первый и последний отступы ограничивают область размещения. Полосы идут по всей длине заготовки.':state.kind==='tsulaga'?'Размеры цулаги считаются по её форме (ширина полосы, длина, угол торца) и здесь только показываются.':'Каждый профиль — отдельный вектор: задайте край, отступ и свои фрезу, ширину и глубину.';
+    $('vectorListTitle').textContent=type==='facade'?(state.kind==='vitrina'?'Контуры витрины':state.kind==='pilaster'?'Линии пилястры':'Контуры фасада'):type==='comb'?'Проходы гребёнки':'Векторы профиля';
+    $('objectTypeName').textContent=type==='facade'?(state.kind==='vitrina'?'Витрина':state.kind==='pilaster'?'Пилястра':'Фасад'):type==='profile'&&state.kind==='tsulaga'?'Цулага':type==='comb'?'Фасад-гребёнка':'Профиль';
+    $('dimensionHelp').textContent=type==='facade'?(state.kind==='vitrina'?'Укажите ширину, высоту и толщину витрины. Четверть и окно строятся автоматически.':state.kind==='pilaster'?'Укажите размеры и толщину пилястры. Линии строятся автоматически по отступам, длине и количеству.':'Укажите ширину, высоту и толщину фасада. Векторы добавляются и редактируются отдельно.'):type==='comb'?'Шаг задаёт расстояние между проходами; первый и последний отступы ограничивают область размещения. Полосы идут по всей длине заготовки.':state.kind==='tsulaga'?'Размеры цулаги считаются по её форме (ширина полосы, длина, угол торца) и здесь только показываются.':'Каждый профиль — отдельный вектор: задайте край, отступ и свои фрезу, ширину и глубину.';
     [...document.querySelectorAll('.panel[data-origin="left"]')].forEach(panel=>{
       const availableInSheet=panel.id==='designListPanel'||panel.id==='newDesignPanel';
       panel.classList.toggle('hidden',activeView==='nest'&&!availableInSheet);
@@ -2375,7 +2455,7 @@ body.hide-hint #canvasHint{display:none}
     });
     $('typeSettingsPanel').classList.toggle('hidden',type==='facade'||(type==='profile'&&state.kind==='tsulaga')||activeView==='nest');
     $('vectorSettingsPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest');$('vectorCutterPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest');$('sharpCornerPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest'||$('sharpCornerBox').classList.contains('hidden'));
-    document.querySelector('.templates-strip').style.display=activeView!=='nest'&&activeView!=='3d'?'':'none';document.querySelector('.templates-strip').classList.toggle('simple',type!=='facade');document.querySelector('.tool-options').style.display=type==='facade'&&activeView!=='nest'&&activeView!=='3d'?'':'none';
+    document.querySelector('.templates-strip').style.display=activeView!=='nest'&&activeView!=='3d'?'':'none';{const tb=$('toggleDock');if(tb)tb.style.display=activeView!=='nest'&&activeView!=='3d'?'':'none';}document.querySelector('.templates-strip').classList.toggle('simple',type!=='facade');document.querySelector('.tool-options').style.display=type==='facade'&&activeView!=='nest'&&activeView!=='3d'?'':'none';
     $('pocketSettingsPanel').classList.toggle('hidden',type!=='facade'||activeView==='nest'||!selectedPocketRegion);
     renderRustSettings();
     renderKindPanels();
@@ -2574,6 +2654,12 @@ body.hide-hint #canvasHint{display:none}
     return `M ${a} ${top} C ${a+w*.12} ${top+d*.18} ${a+w*.15} ${deep} ${half} ${deep} C ${b-w*.15} ${deep} ${b-w*.12} ${top+d*.18} ${b} ${top}`;
   }
   let selectedCutKey=null,lastCutGroups=[];
+  // Фреза подсвечена на разрезе, если выбрана щелчком по ней, либо выбран её вектор / плоскость (выборка) в списках и на чертеже.
+  const cutIsSelected=cut=>{
+    if(cut.pocket){const r=selectedPocketRegion,c=cut.region||[];return !!r&&c[0]===r.parentId&&c[1]===r.islandId&&c[2]===(r.regionType||'ring');}
+    return !selectedPocketRegion&&cut.contourId===state.selectedContour;
+  };
+  const groupIsSelected=g=>g.members.every(m=>m.pocket||m.contourId!==undefined)?g.members.some(cutIsSelected):g.key===selectedCutKey;
   function spreadChips(xs,min,max,gap){
     const r=xs.slice();
     for(let i=0;i<r.length;i++)r[i]=Math.max(r[i],i?r[i-1]+gap:min);
@@ -2664,7 +2750,7 @@ body.hide-hint #canvasHint{display:none}
         for(let k=0;k<=16;k++){const nn=-1+2*k/16,rd=cutterReliefDepth(cut.shape,Math.max(-.9999,Math.min(.9999,nn)),d,cut.width,cut.formHeight);pts.push(`${(cx+nn*hw).toFixed(2)} ${(y+rd*scale).toFixed(2)}`);}
         return `M ${cx-hw} ${y-14} V ${y} L ${pts.join(' L ')} L ${cx+hw} ${y} V ${y-14}`;};
       const cmarks=cgroups.map(g=>{
-        const sel=g.key===selectedCutKey,col=sel?'#0a6cf0':'#a45f40';
+        const sel=groupIsSelected(g),col=sel?'#0a6cf0':'#a45f40';
         const parts=g.members.map(m=>{
           const cx=left+m.center*scale,hw=Math.max(1,m.width*scale/2),dd=Math.min(m.depth,state.thickness)*scale;
           return `<path d="${toolC(m,cx)}" fill="${col}" fill-opacity="${sel?.45:.16}" stroke="${col}" stroke-width="${sel?1.8:1}" stroke-dasharray="${sel?'':'3 2'}"/><rect x="${cx-hw-4}" y="${y-20}" width="${2*hw+8}" height="${dd+24}" fill="transparent"/>`;
@@ -2718,7 +2804,7 @@ body.hide-hint #canvasHint{display:none}
       const chipXs=mapMode?spreadChips(groups.map(g=>left+g.first.center*scale),30,770,30):[];
       const band=mapMode&&groups.length?`<rect x="14" y="30" width="772" height="36" rx="6" fill="#efe9dc" stroke="#b9ae98" stroke-width="1"/><text x="22" y="26" font-size="9.5" font-weight="700" fill="#7b7466">ФРЕЗЫ · нажмите номер</text>`:'';
       const marks=band+groups.map((g,gi)=>{
-        const sel=g.key===selectedCutKey,col=sel?'#0a6cf0':'#a45f40';
+        const sel=groupIsSelected(g),col=sel?'#0a6cf0':'#a45f40';
         if(mapMode){
           const chx=chipXs[gi],cxm=left+g.first.center*scale,sil=g.members.map(m=>`<path d="${tool(m,left+m.center*scale)}" fill="${col}" fill-opacity="${sel?.45:.14}" stroke="${col}" stroke-width="${sel?2.4:1.1}" stroke-dasharray="${sel?'':'4 2'}"/>`).join('');
           return `<g data-cutno="${g.n}" style="cursor:pointer">${sil}<path d="M ${chx} 60 V 80 L ${cxm} 104 V ${y-16}" fill="none" stroke="${col}" stroke-width="${sel?1.8:.9}"/><circle cx="${chx}" cy="48" r="17" fill="transparent"/><circle cx="${chx}" cy="48" r="12" fill="${sel?'#0a6cf0':'#fff'}" stroke="${col}" stroke-width="1.5"/><text x="${chx}" y="52.5" font-size="${g.n>9?11:13}" font-weight="700" text-anchor="middle" fill="${sel?'#fff':'#7a3e24'}" pointer-events="none">${g.n}</text></g>`;
@@ -2730,10 +2816,10 @@ body.hide-hint #canvasHint{display:none}
       const maxRows=14,rows=groups.slice(0,maxRows),tableTop=mapMode?bottom+100+165:bottom+92,ph=18;
       const nameOf=g=>{const c=g.first;return c.pocket?(c.name||'Выборка'):(c.name||'Контур');};
       const head=`<text x="80" y="${tableTop}" font-size="11" font-weight="700" fill="#56615e">ФРЕЗЫ В СЕЧЕНИИ — нажмите номер на разрезе или строку</text><g font-size="10.5" font-weight="700" fill="#69716f"><text x="80" y="${tableTop+ph}">№</text><text x="104" y="${tableTop+ph}">Вектор</text><text x="270" y="${tableTop+ph}">Фреза · Ø</text><text x="400" y="${tableTop+ph}">Глубина</text><text x="470" y="${tableTop+ph}">Левый край X</text><text x="570" y="${tableTop+ph}">Ширина</text><text x="640" y="${tableTop+ph}">Срез, мм²</text></g>`;
-      const body=rows.map((g,i)=>{const ty=tableTop+ph*2+i*ph,sel=g.key===selectedCutKey,c=g.first;
+      const body=rows.map((g,i)=>{const ty=tableTop+ph*2+i*ph,sel=groupIsSelected(g),c=g.first;
         return `<g data-cutno="${g.n}" style="cursor:pointer" font-size="11" fill="${sel?'#0a6cf0':'#35413f'}" font-weight="${sel?700:400}">${sel?`<rect x="74" y="${ty-13}" width="660" height="${ph}" fill="#0a6cf0" fill-opacity=".1"/>`:''}<text x="80" y="${ty}" font-weight="700">${g.n}</text><text x="104" y="${ty}">${esc(String(nameOf(g)).slice(0,24))}${g.members.length>1?` ×${g.members.length}`:''}</text><text x="270" y="${ty}">${esc(String(cutterLabel(c.cutter||'flat')).slice(0,14))} Ø${fmt(c.width)}</text><text x="400" y="${ty}">${fmt(g.d)}</text><text x="470" y="${ty}">${fmt(g.from)}</text><text x="570" y="${ty}">${fmt(c.width)}</text><text x="640" y="${ty}">${fmt(g.area)}</text></g>`;}).join('');
       const more=groups.length>maxRows?`<text x="80" y="${tableTop+ph*2+rows.length*ph}" font-size="10.5" fill="#69716f">…и ещё ${groups.length-maxRows} фрез (нажмите их номер на разрезе)</text>`:'';
-      const selG=groups.find(g=>g.key===selectedCutKey);
+      const selG=groups.find(groupIsSelected);
       const detail=selG?`<text x="80" y="${tableTop+ph*2+(rows.length+(more?1:0))*ph+6}" font-size="11.5" font-weight="700" fill="#0a6cf0">№${selG.n}: «${esc(nameOf(selG))}» · ${esc(cutterLabel(selG.first.cutter||'flat'))} Ø${fmt(selG.first.width)} · глубина ${fmt(selG.d)} мм</text><text x="80" y="${tableTop+ph*2+(rows.length+(more?1:0))*ph+24}" font-size="11" fill="#0a6cf0">левый край на X = ${fmt(selG.from)} мм (до ${fmt(selG.to)} мм)${selG.members.length>1?' · такая же фреза с другой стороны вектора не дублируется':''}</text>`:'';
       return{marks,table:groups.length?head+body+more+detail:'',height:Math.max(540,tableTop+ph*2+(rows.length+3)*ph+30)};
     })();
@@ -2937,7 +3023,7 @@ body.hide-hint #canvasHint{display:none}
     syncInputs();renderProfileBands();renderCuttingList();updateObjectTypeView();renderTemplateButtons();drawView();
     $('footerStatus').textContent=`Открыто изделие «${state.name}»`;
   }
-  const NEW_KIND_TYPES={facade:{objectType:'facade',kind:null,w:596,h:716,name:'Фасад'},vitrina:{objectType:'facade',kind:'vitrina',w:596,h:716,name:'Витрина'},tsulaga:{objectType:'profile',kind:'tsulaga',w:40,h:300,name:'Цулага'},profile:{objectType:'profile',kind:null,w:596,h:716,name:'Профиль'},comb:{objectType:'comb',kind:null,w:596,h:716,name:'Гребёнка'}};
+  const NEW_KIND_TYPES={facade:{objectType:'facade',kind:null,w:596,h:716,name:'Фасад'},vitrina:{objectType:'facade',kind:'vitrina',w:596,h:716,name:'Витрина'},tsulaga:{objectType:'profile',kind:'tsulaga',w:40,h:300,name:'Цулага'},pilaster:{objectType:'facade',kind:'pilaster',w:150,h:1200,name:'Пилястра'},profile:{objectType:'profile',kind:null,w:596,h:716,name:'Профиль'},comb:{objectType:'comb',kind:null,w:596,h:716,name:'Гребёнка'}};
   const styleKey=style=>style.kind||style.objectType||'facade';
   function renderNewStyleOptions() {
     const type=$('newObjectType').value,select=$('newStyle'),previous=select.value;
@@ -2959,7 +3045,7 @@ body.hide-hint #canvasHint{display:none}
     const choice=NEW_KIND_TYPES[$('newObjectType').value]||NEW_KIND_TYPES.facade,type=choice.objectType;
     const style=$('newStyle').value!==''?savedStyles[Number($('newStyle').value)]:null;
     selectedPocketRegion=null;
-    const base=()=>({...initialState,name:style?.name&&style.name.length<=40?style.name:choice.name,objectType:type,kind:choice.kind,kindSig:null,vitrina:choice.kind==='vitrina'?sanitizeVitrina(null):null,tsulaga:choice.kind==='tsulaga'?sanitizeTsulaga({stripWidth:width,straight:height}):null,width,height,thickness:Number(style?.thickness)>0?Number(style.thickness):initialState.thickness,
+    const base=()=>({...initialState,name:style?.name&&style.name.length<=40?style.name:choice.name,objectType:type,kind:choice.kind,kindSig:null,vitrina:choice.kind==='vitrina'?sanitizeVitrina(null):null,pilaster:choice.kind==='pilaster'?sanitizePilaster(null):null,tsulaga:choice.kind==='tsulaga'?sanitizeTsulaga({stripWidth:width,straight:height}):null,width,height,thickness:Number(style?.thickness)>0?Number(style.thickness):initialState.thickness,
       profileBands:initialState.profileBands.map(band=>({...band})),customVectors:[],contours:[],pockets:[],rust:null,importedPaths:[],layers:{...initialState.layers},cuttingItems:order});
     state=base();
     activeDesignId=`design-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
@@ -3782,6 +3868,23 @@ body.hide-hint #canvasHint{display:none}
     $('toggleLeftCol').addEventListener('click',()=>{document.body.classList.toggle('hide-left');if(phone&&!document.body.classList.contains('hide-left'))document.body.classList.add('hide-right');apply();});
     $('toggleRightCol').addEventListener('click',()=>{document.body.classList.toggle('hide-right');if(phone&&!document.body.classList.contains('hide-right'))document.body.classList.add('hide-left');apply();});
     apply();
+    // Стрелка показывает, куда уйдёт панель: если панель выше чертежа — вверх, если ниже — вниз; у свёрнутой наоборот.
+    const arrowFor=(el,collapsed)=>{const c=document.querySelector('.canvas-panel');if(!el||!c)return collapsed?'▼':'▲';const above=el.getBoundingClientRect().top<c.getBoundingClientRect().top;return(above!==collapsed)?'▲':'▼';};
+    const secKey='fasadlab-seccol',sb=$('sectionCollapse'),pnl=document.querySelector('.profile-preview-panel'),dockKey='fasadlab-dock',db=$('toggleDock'),dockEl=document.querySelector('.dock');
+    const syncArrows=()=>{
+      const c=pnl.classList.contains('sec-collapsed');sb.textContent=arrowFor(pnl,c);sb.setAttribute('aria-pressed',String(c));sb.title=c?'Развернуть разрез':'Свернуть разрез';
+      const h=document.body.classList.contains('hide-dock');
+      // свёрнутая панель инструментов скрыта, поэтому направление берём по её сохранённому месту: порядок задаётся в настройках
+      const order=(()=>{try{const o=JSON.parse(localStorage.getItem('fasadlab-screen')||'{}').corder;return Array.isArray(o)?o:['section','canvas','dock'];}catch(e){return['section','canvas','dock'];}})();
+      const dockAbove=order.indexOf('dock')<order.indexOf('canvas');
+      db.textContent=(dockAbove!==h)?'▲':'▼';db.setAttribute('aria-pressed',String(h));db.title=h?'Развернуть панель инструментов':'Свернуть панель инструментов';
+    };
+    const saveFold=()=>{try{localStorage.setItem(secKey,pnl.classList.contains('sec-collapsed')?'1':'0');localStorage.setItem(dockKey,document.body.classList.contains('hide-dock')?'1':'0');}catch(error){}syncArrows();setTimeout(()=>window.dispatchEvent(new Event('resize')),30);};
+    try{if(localStorage.getItem(secKey)==='1')pnl.classList.add('sec-collapsed');if(localStorage.getItem(dockKey)==='1')document.body.classList.add('hide-dock');}catch(error){}
+    sb.addEventListener('click',()=>{pnl.classList.toggle('sec-collapsed');saveFold();});
+    db.addEventListener('click',()=>{document.body.classList.toggle('hide-dock');saveFold();});
+    window.addEventListener('fl-center-order',()=>requestAnimationFrame(syncArrows));window.addEventListener('resize',syncArrows);
+    saveFold();
   }
   // Масштаб двумя пальцами (щипок) и перемещение чертежа на сенсорном экране: вид сверху, разрез, карта листа.
   function bindCanvasPinch() {
@@ -3873,9 +3976,9 @@ body.hide-hint #canvasHint{display:none}
     const dlg=document.createElement('div');dlg.className='screen-dialog hidden';dlg.id='screenDialog';
     dlg.innerHTML=`<div class="screen-card" role="dialog" aria-label="Меню"><h3>Меню</h3><details class="scr-det"><summary>Экран</summary>
       <div class="screen-row"><label for="scrUi">Размер интерфейса</label><output id="scrUiV"></output><input id="scrUi" type="range" min="60" max="160" step="5"></div>
-      <div class="screen-row"><label for="scrCanvas">Высота чертежа (телефон стоя)</label><output id="scrCanvasV"></output><input id="scrCanvas" type="range" min="25" max="75" step="1"></div>
+      <div class="screen-row phone-only"><label for="scrCanvas">Высота чертежа (только телефон)</label><output id="scrCanvasV"></output><input id="scrCanvas" type="range" min="25" max="75" step="1"></div>
       <div class="screen-row"><label for="scrTool">Размер кнопок инструментов</label><output id="scrToolV"></output><input id="scrTool" type="range" min="52" max="100" step="2"></div>
-      <div class="screen-row"><label for="scrDrawer">Ширина выезжающих панелей</label><output id="scrDrawerV"></output><input id="scrDrawer" type="range" min="60" max="95" step="1"></div>
+      <div class="screen-row"><label for="scrDrawer">Ширина боковых панелей</label><output id="scrDrawerV"></output><input id="scrDrawer" type="range" min="60" max="95" step="1"></div>
       <label class="screen-check"><input id="scrSection" type="checkbox">Показывать панель «Разрез изделия»</label>
       <label class="screen-check"><input id="scrHint" type="checkbox">Скрыть подсказку под чертежом</label>
       </details>
@@ -3964,9 +4067,19 @@ body.hide-hint #canvasHint{display:none}
       const ord=getOrder(),key=el=>{const i=ord.indexOf(el.id);return i<0?1000+Number(el.dataset.ord):i;};
       [left,right].forEach(aside=>[...aside.children].filter(el=>el.dataset.ord!==undefined).sort((a,b)=>key(a)-key(b)).forEach(el=>aside.appendChild(el)));
       BTNS.forEach(([id])=>{const el=document.getElementById(id);if(el)el.classList.toggle('user-hidden',!!(cfg.btns&&cfg.btns[id]));});
+      applyCenterOrder();
     };
+    const CBLOCKS=[['section','Разрез изделия (сверху)','.profile-preview-panel'],['canvas','Чертёж','.canvas-panel'],['dock','Панель инструментов','.dock']];
+    const cOrder=()=>{const base=CBLOCKS.map(b=>b[0]),cur=Array.isArray(cfg.corder)?cfg.corder.filter(x=>base.includes(x)):[];base.forEach(x=>{if(!cur.includes(x))cur.push(x);});return cur;};
+    const applyCenterOrder=()=>{const o=cOrder();CBLOCKS.forEach(([id,,sel])=>{const el=document.querySelector(sel);if(el)el.style.order=String(o.indexOf(id)+1);});window.dispatchEvent(new Event('fl-center-order'));};
+    const moveCenter=(id,dir)=>{const o=cOrder(),i=o.indexOf(id),j=i+dir;if(j<0||j>=o.length)return;[o[i],o[j]]=[o[j],o[i]];cfg.corder=o;applyCenterOrder();save();buildPanelRows();};
     const buildPanelRows=()=>{
       const box=q('scrPanels');box.innerHTML='';
+      {const head=document.createElement('div');head.className='scr-note';head.textContent='Блоки в центре (сверху вниз):';box.appendChild(head);
+       cOrder().forEach(id=>{const meta=CBLOCKS.find(b=>b[0]===id);const row=document.createElement('div');row.className='scr-prow';
+         row.innerHTML=`<span>${meta[1]}</span><span class="scr-mv"><button type="button" data-cmv="-1" title="Выше">▲</button><button type="button" data-cmv="1" title="Ниже">▼</button></span>`;
+         row.querySelectorAll('[data-cmv]').forEach(btn=>btn.addEventListener('click',()=>moveCenter(id,Number(btn.dataset.cmv))));box.appendChild(row);});
+       const h2=document.createElement('div');h2.className='scr-note';h2.textContent='Боковые вкладки:';box.appendChild(h2);}
       PANELS.forEach(([id,name,hideable])=>{
         const el=document.getElementById(id);if(!el)return;
         const side=sideOf(id)||el.dataset.origin||'left',hidden=!!(cfg.layout[id]&&cfg.layout[id].hide);
@@ -4308,7 +4421,7 @@ body.hide-hint #canvasHint{display:none}
     const issues=geometryIssues();
     const warn=issues.length?` ⚠ Замечание: ${issues[0]}${issues.length>1?` (и ещё ${issues.length-1})`:''}`:'';
     try{
-      download(`${state.kind==='tsulaga'?'tsulaga':state.kind==='vitrina'?'vitrina':'fasad'}_${state.width}x${state.height}.dxf`,createDxfExport(),'application/dxf;charset=utf-8');
+      download(`${state.kind==='tsulaga'?'tsulaga':state.kind==='vitrina'?'vitrina':state.kind==='pilaster'?'pilastra':'fasad'}_${state.width}x${state.height}.dxf`,createDxfExport(),'application/dxf;charset=utf-8');
       $('footerStatus').textContent='DXF сохранён в миллиметрах для импорта в ArtCAM'+warn;
     }catch(error){$('footerStatus').textContent='DXF не экспортирован';alert(`Не удалось создать DXF: ${error.message}`);}
   }
@@ -4483,9 +4596,10 @@ body.hide-hint #canvasHint{display:none}
       $('footerStatus').textContent='Собираю пакет: DXF, SVG, PDF и проект…';
       let pdfBytes=null;try{pdfBytes=await exportDocument(true);}catch(e){pdfBytes=null;}
       const base=`artcam_${artcamSlug(state.name||typeLabel(state.objectType,state.kind),20).toLowerCase()}_${state.width}x${state.height}`;
-      const zip=makeZip([{name:`${base}.dxf`,data:encoder.encode(pack.dxf)},{name:`${base}_operations.txt`,data:encoder.encode(texts.text)},{name:`${base}_operations.csv`,data:encoder.encode(texts.csv)},{name:`${base}.svg`,data:encoder.encode(createSvgExport())},...(pdfBytes?[{name:`${base}.pdf`,data:pdfBytes}]:[]),{name:`${base}_project.json`,data:encoder.encode(JSON.stringify(state,null,2))}]);
+      let mesh=null,meshError='';try{mesh=build3DFiles(['obj','stl','glb']);}catch(e){meshError=e.message;}
+      const zip=makeZip([{name:`Форматы/${base}.dxf`,data:encoder.encode(pack.dxf)},{name:`Форматы/${base}.svg`,data:encoder.encode(createSvgExport())},{name:`Документы/${base}_operations.txt`,data:encoder.encode(texts.text)},{name:`Документы/${base}_operations.csv`,data:encoder.encode(texts.csv)},...(pdfBytes?[{name:`Документы/${base}.pdf`,data:pdfBytes}]:[]),{name:`Документы/${base}_project.json`,data:encoder.encode(JSON.stringify(state,null,2))},...(mesh?mesh.files.map(f=>({name:`3D/${f.name}`,data:f.data})):[])]);
       download(`${base}.zip`,zip,'application/zip');
-      $('footerStatus').textContent=`Пакет ArtCAM сохранён: DXF (${pack.operations.length} операций), SVG, ${pdfBytes?'PDF, ':''}таблицы и файл фасада для «Стилей»`+warn;
+      $('footerStatus').textContent=`Пакет ArtCAM сохранён: папки «Форматы» (DXF, SVG), «Документы» (${pdfBytes?'PDF, ':''}таблицы, файл фасада для «Стилей»)${mesh?' и «3D» (OBJ, STL, GLB)':meshError?`; 3D не добавлено: ${meshError}`:''}`+warn;
     }catch(error){$('footerStatus').textContent='Пакет ArtCAM не создан';alert(`Не удалось создать пакет ArtCAM: ${error.message}`);}
   }
   function download(name,content,type) {
@@ -4698,7 +4812,7 @@ body.hide-hint #canvasHint{display:none}
   function saveProject() {stateFromInputs();download(`${state.name.replace(/[<>:"/\\|?*]/g,'_')||'fasad'}.json`,JSON.stringify(state,null,2),'application/json');$('footerStatus').textContent='Проект сохранён в файл JSON';}
   function applyProject(project) {
     if(!project||typeof project!=='object'||Array.isArray(project))throw new Error('Файл проекта повреждён или имеет неверный формат.');
-    const allowed=['name','template','width','height','thickness','inset','secondInset','panelInset','radius','profileDepth','profilePitch','profileLand','profileRadius','material','grain','symmetry','profileType','toolPreset','roughDiameter','roughPass','roughRpm','roughFeed','finishDiameter','finishPass','finishRpm','finishFeed','objectType','profileAxis','profileBands','selectedProfileBand','profileCutter','profileSide','profileOffset','profileBandWidth','profileCutWidth','profileCutDepth','outerCornerRadius','rust','kind','kindSig','vitrina','tsulaga','outerCutter','outerDiameter','outerDepth','outerFormHeight','outerAdditionalCutters','outerSide','outerAllowance','outerFeed','outerStepdown','outerCorners','combDirection','combCutter','combStart','combEnd','combPitch','combCutWidth','combCutDepth','combBeforeStep','combAfterStep','combMode','combFirstWhole','combLastWhole','facadeTexture','sheetWidth','sheetHeight','sheetThickness','sheetMargin','partGap','cuttingItems','customVectors','contours','pockets','importedPaths','layers'];
+    const allowed=['name','template','width','height','thickness','inset','secondInset','panelInset','radius','profileDepth','profilePitch','profileLand','profileRadius','material','grain','symmetry','profileType','toolPreset','roughDiameter','roughPass','roughRpm','roughFeed','finishDiameter','finishPass','finishRpm','finishFeed','objectType','profileAxis','profileBands','selectedProfileBand','profileCutter','profileSide','profileOffset','profileBandWidth','profileCutWidth','profileCutDepth','outerCornerRadius','rust','kind','kindSig','vitrina','tsulaga','pilaster','outerCutter','outerDiameter','outerDepth','outerFormHeight','outerAdditionalCutters','outerSide','outerAllowance','outerFeed','outerStepdown','outerCorners','combDirection','combCutter','combStart','combEnd','combPitch','combCutWidth','combCutDepth','combBeforeStep','combAfterStep','combMode','combFirstWhole','combLastWhole','facadeTexture','sheetWidth','sheetHeight','sheetThickness','sheetMargin','partGap','cuttingItems','customVectors','contours','pockets','importedPaths','layers'];
     snapshot();allowed.forEach(key=>{if(project[key]!==undefined)state[key]=project[key];});
     {const pv=project.preVitrina;state.preVitrina=pv&&typeof pv==='object'&&Array.isArray(pv.contours)&&Array.isArray(pv.pockets)?{contours:pv.contours,pockets:pv.pockets,name:String(pv.name||'Фасад').slice(0,40)}:null;}
     state.combBeforeStep=project.combBeforeStep===true;state.combAfterStep=project.combAfterStep===true;state.combMode=project.combMode==='planes'?'planes':'legacy';state.combFirstWhole=project.combFirstWhole!==false;state.combLastWhole=project.combLastWhole!==false;
@@ -4755,7 +4869,7 @@ body.hide-hint #canvasHint{display:none}
     state.cuttingItems=Array.isArray(state.cuttingItems)?state.cuttingItems.filter(item=>item&&typeof item.name==='string'&&Number.isFinite(Number(item.width))&&Number(item.width)>0&&Number.isFinite(Number(item.height))&&Number(item.height)>0&&Number.isFinite(Number(item.thickness))&&Number(item.thickness)>0&&Number.isInteger(Number(item.quantity))&&Number(item.quantity)>0&&Array.isArray(item.contours)).map((item,index)=>({
       id:typeof item.id==='string'?item.id:`cut-loaded-${index+1}`,name:item.name.slice(0,48),width:Number(item.width),height:Number(item.height),thickness:Number(item.thickness),
       objectType:['facade','profile','comb'].includes(item.objectType)?item.objectType:'facade',
-      kind:['vitrina','tsulaga'].includes(item.kind)?item.kind:null,tsulaga:item.kind==='tsulaga'?sanitizeTsulaga(item.tsulaga):null,
+      kind:['vitrina','tsulaga','pilaster'].includes(item.kind)?item.kind:null,tsulaga:item.kind==='tsulaga'?sanitizeTsulaga(item.tsulaga):null,
       outerCornerRadius:Number(item.outerCornerRadius)||0,outerCorners:normalizeCornerSet(item.outerCorners),quantity:Math.min(1000,Number(item.quantity)),
       contours:item.contours.filter(contour=>Number.isInteger(contour?.id)&&Number.isInteger(contour?.parentId)&&CONTOUR_SHAPES.includes(contour.shape)&&(contour.shape!=='free'||validFreeContour(contour))&&['in','out'].includes(contour.direction)&&Number.isFinite(Number(contour.offset))&&Number.isFinite(Number(contour.corner))),
       pockets:Array.isArray(item.pockets)?item.pockets.filter(pocket=>Number.isInteger(pocket?.parentId)&&Number.isInteger(pocket?.islandId)&&item.contours.some(contour=>contour.id===pocket.islandId&&contour.parentId===pocket.parentId&&contour.direction==='in')&&Number.isFinite(Number(pocket?.diameter))&&Number(pocket.diameter)>0&&Number.isFinite(Number(pocket?.depth))&&Number(pocket.depth)>0&&Number.isFinite(Number(pocket?.stepover))&&Number(pocket.stepover)>=5&&Number(pocket.stepover)<=90&&Number.isFinite(Number(pocket?.passDepth))&&Number(pocket.passDepth)>0&&cutterShape(pocket?.cutter)==='flat').map(pocket=>({...pocket,diameter:Number(pocket.diameter),depth:Number(pocket.depth),stepover:Number(pocket.stepover),passDepth:Number(pocket.passDepth)})):[],
@@ -4771,7 +4885,7 @@ body.hide-hint #canvasHint{display:none}
   }
   function render() {stateFromInputs();drawView();}
   function renderSavedTemplates() {
-    const type=$('styleTypeFilter').value,baseType=type==='vitrina'?'facade':type==='tsulaga'?'profile':type,icon=baseType==='facade'?iconSvg('frame','#625f57'):baseType==='profile'?'<svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#625f57" stroke-width="2"><path d="M9 12h46v40H9zM20 12v40m12-40v40m12-40v40"/></g></svg>':'<svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#625f57" stroke-width="2"><path d="M9 12v40M20 12v40M31 12v40M42 12v40M53 12v40"/></g></svg>';
+    const type=$('styleTypeFilter').value,baseType=type==='vitrina'||type==='pilaster'?'facade':type==='tsulaga'?'profile':type,icon=baseType==='facade'?iconSvg('frame','#625f57'):baseType==='profile'?'<svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#625f57" stroke-width="2"><path d="M9 12h46v40H9zM20 12v40m12-40v40m12-40v40"/></g></svg>':'<svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#625f57" stroke-width="2"><path d="M9 12v40M20 12v40M31 12v40M42 12v40M53 12v40"/></g></svg>';
     const matches=savedStyles.map((style,index)=>({style,index})).filter(({style})=>styleKey(style)===type);
     $('stylesList').innerHTML=matches.map(({style,index})=>`<article class="style-card"><button class="style-card-apply" type="button" data-style="${index}" title="Применить шаблон ${esc(style.name)}">${icon}<span><strong>${esc(style.name||'Шаблон без названия')}</strong><br><span class="sub">${esc(typeLabel(style.objectType||'facade',style.kind))} · ${esc(style.width||0)} × ${esc(style.height||0)} мм</span></span></button><button class="style-card-delete style-card-export" type="button" data-export-style="${index}" aria-label="Экспорт шаблона" title="Скачать этот шаблон файлом">⇩</button><button class="style-card-delete" type="button" data-delete-style="${index}" aria-label="Удалить шаблон ${esc(style.name||'без названия')}" title="Удалить шаблон">×</button></article>`).join('')||`<div class="styles-empty">Для типа «${esc(typeLabel(baseType,type==='vitrina'||type==='tsulaga'?type:null))}» шаблонов пока нет.</div>`;
   }
@@ -4873,7 +4987,7 @@ body.hide-hint #canvasHint{display:none}
       const scale=mode==='absolute'||mode==='prune'?1:Math.min(Number.isFinite(style.width)&&style.width>0?state.width/style.width:1,Number.isFinite(style.height)&&style.height>0?state.height/style.height:1);
       const ids=new Map([[0,0]]);
       candidate={objectType:type,outerCornerRadius:Number(style.outerCornerRadius||0)*scale,outerCorners:normalizeCornerSet(style.outerCorners)?normalizeCornerSet(style.outerCorners).map(c=>({...c,r:Math.round(c.r*scale*100)/100})):null,contours:src.map(contour=>{const id=nextContourId++;ids.set(contour.id,id);return{...contour,id,parentId:ids.get(contour.parentId)||0,offset:Math.round(Number(contour.offset)*scale*100)/100,corner:Math.round(Number(contour.corner)*scale*100)/100,cornerSet:normalizeCornerSet(contour.cornerSet)?normalizeCornerSet(contour.cornerSet).map(item=>({...item,r:Math.round(item.r*scale*100)/100})):undefined};})};
-      Object.assign(candidate,facadeStyleExtras(style,ids,candidate.contours),{kind:style.kind==='vitrina'?'vitrina':null,kindSig:null,vitrina:style.kind==='vitrina'?sanitizeVitrina(style.vitrina):null,tsulaga:null});
+      Object.assign(candidate,facadeStyleExtras(style,ids,candidate.contours),{kind:style.kind==='vitrina'?'vitrina':style.kind==='pilaster'?'pilaster':null,kindSig:null,vitrina:style.kind==='vitrina'?sanitizeVitrina(style.vitrina):null,pilaster:style.kind==='pilaster'?sanitizePilaster(style.pilaster):null,tsulaga:null});
       styleCornerQueue=src.filter(c=>cornerOld.some(k=>k.cornerOf===c.id)).map(c=>{const first=cornerOld.find(k=>k.cornerOf===c.id);return{id:ids.get(c.id),cfg:c.sharpCfg||{dir:first.cornerDir||'',small:Number(first.diameter)||3,depth:Number(first.depth)||0,main:0}};}).filter(e=>e.id);
       if(removedCount){
         styleBuildNote=`убрано векторов: ${removedCount}`;
@@ -4930,7 +5044,7 @@ body.hide-hint #canvasHint{display:none}
     const style={name:String(name).slice(0,48),objectType:src.objectType,width:src.width,height:src.height};
     style.thickness=src.thickness;
     style.minSide=Math.max(0,Number(minSideValue)||0);style.autoPocket=true;
-    if(src.kind)Object.assign(style,{kind:src.kind,vitrina:src.kind==='vitrina'?{...src.vitrina}:undefined,tsulaga:src.kind==='tsulaga'?{...src.tsulaga}:undefined});
+    if(src.kind)Object.assign(style,{kind:src.kind,vitrina:src.kind==='vitrina'?{...src.vitrina}:undefined,pilaster:src.kind==='pilaster'?{...src.pilaster}:undefined,tsulaga:src.kind==='tsulaga'?{...src.tsulaga}:undefined});
     if(src.objectType==='facade')Object.assign(style,{outerCornerRadius:src.outerCornerRadius,outerCorners:src.outerCorners?JSON.parse(JSON.stringify(src.outerCorners)):null,contours:JSON.parse(JSON.stringify(src.contours)),outerCutter:src.outerCutter,outerDiameter:src.outerDiameter,outerDepth:src.outerDepth,outerFormHeight:src.outerFormHeight||0,outerAdditionalCutters:JSON.parse(JSON.stringify(src.outerAdditionalCutters||[])),rust:src.rust?{...src.rust}:null,pockets:JSON.parse(JSON.stringify(src.pockets||[]))});
     else if(src.objectType==='profile')Object.assign(style,{profileAxis:src.profileAxis,profileBands:JSON.parse(JSON.stringify(src.profileBands))});
     else Object.assign(style,{combDirection:src.combDirection,combStart:src.combStart,combEnd:src.combEnd,combPitch:src.combPitch,combCutter:src.combCutter,combCutWidth:src.combCutWidth,combCutDepth:src.combCutDepth,combBeforeStep:src.combBeforeStep,combAfterStep:src.combAfterStep,combMode:src.combMode==='planes'?'planes':'legacy',combFirstWhole:src.combFirstWhole!==false,combLastWhole:src.combLastWhole!==false});
@@ -5023,6 +5137,7 @@ body.hide-hint #canvasHint{display:none}
   function generateStyle() {
     stateFromInputs();
     if(state.objectType==='facade'&&state.kind==='vitrina')return generateVitrinaStyle();
+    if(state.objectType==='facade'&&state.kind==='pilaster'){generatorFail('Для пилястры случайный стиль не нужен: задайте линии в панели «Пилястра».');return;}
     if(state.objectType==='profile'&&state.kind==='tsulaga')return generateTsulagaStyle();
     if(state.objectType==='profile')return generateProfileStyle();
     if(state.objectType==='comb')return generateCombStyle();
@@ -5105,7 +5220,7 @@ body.hide-hint #canvasHint{display:none}
   }
   function generateFacadeStyle() {
     stateFromInputs();
-    if(state.objectType!=='facade'||state.kind==='vitrina')return;
+    if(state.objectType!=='facade'||state.kind==='vitrina'||state.kind==='pilaster')return;
     const W=Number(state.width),H=Number(state.height),T=Number(state.thickness),minSide=Math.min(W,H);
     if(!(minSide>=120)){const message='Фасад слишком мал для генерации стиля (минимум 120 мм по меньшей стороне).';$('footerStatus').textContent=message;alert(message);return;}
     const rnd=Math.random,pick=list=>list[Math.floor(rnd()*list.length)],between=(a,b)=>a+(b-a)*rnd(),round=v=>Math.round(v*10)/10;
@@ -5486,18 +5601,103 @@ body.hide-hint #canvasHint{display:none}
   }
   function typeLabel(objectType,kind) {
     if(kind==='vitrina'&&objectType==='facade')return 'Витрина';
+    if(kind==='pilaster'&&objectType==='facade')return 'Пилястра';
     if(kind==='tsulaga'&&objectType==='profile')return 'Цулага';
     return({facade:'Фасад',profile:'Профиль',comb:'Гребёнка'})[objectType]||'Изделие';
   }
   function typeGenitive(objectType,kind) {
     if(kind==='vitrina'&&objectType==='facade')return 'витрины';
+    if(kind==='pilaster'&&objectType==='facade')return 'пилястры';
     if(kind==='tsulaga'&&objectType==='profile')return 'цулаги';
     return({facade:'фасада',profile:'профиля',comb:'гребёнки'})[objectType]||'изделия';
   }
   function normalizeKind() {
     if(state.kind==='vitrina'&&state.objectType==='facade')state.vitrina=sanitizeVitrina(state.vitrina);
     else if(state.kind==='tsulaga'&&state.objectType==='profile')state.tsulaga=sanitizeTsulaga(state.tsulaga);
-    else{state.kind=null;state.vitrina=null;state.tsulaga=null;}
+    else if(state.kind==='pilaster'&&state.objectType==='facade')state.pilaster=sanitizePilaster(state.pilaster);
+    else{state.kind=null;state.vitrina=null;state.tsulaga=null;state.pilaster=null;}
+  }
+  // ===== Пилястра: заготовка и ровные полоски с отступами от краёв =====
+  function sanitizePilaster(v) {
+    v=v&&typeof v==='object'?v:{};
+    const num=(value,fallback,min=0,max=100000)=>Number.isFinite(Number(value))&&Number(value)>=min&&Number(value)<=max&&value!==''&&value!==null?Number(value):fallback;
+    return{
+      orient:v.orient==='h'?'h':'v',count:Math.round(num(v.count,3,1,60)),stripW:num(v.stripW,6,1),gap:num(v.gap,0,0),
+      side:num(v.side,30,0),top:num(v.top,100,0),bottom:num(v.bottom,100,0),length:num(v.length,0,0),
+      depth:num(v.depth,3,.1),through:v.through===true,
+      cutter:typeof v.cutter==='string'&&v.cutter!=='none'&&cutterShape(v.cutter)?v.cutter:'flat',
+      extra:v.extra===true,form:v.form==='strip'?'strip':'line',ends:['rect','chamfer','round'].includes(v.ends)?v.ends:'rect',
+      dia:num(v.dia,6,1),bottomOn:v.bottomOn!==false,
+      sCutter:typeof v.sCutter==='string'&&(v.sCutter==='none'||cutterShape(v.sCutter))?v.sCutter:'none',sDia:num(v.sDia,6,1),sDepth:num(v.sDepth,2,.1)
+    };
+  }
+  // Раскладка полосок в миллиметрах. «Поперёк» — по направлению ряда полосок, «вдоль» — по их длине.
+  function pilasterLayout(p,W,H) {
+    const vertical=p.orient!=='h',across=vertical?W:H,along=vertical?H:W;
+    const usable=across-2*p.side,count=p.count;
+    const gap=p.gap>0?p.gap:(count>1?(usable-count*p.stripW)/(count-1):0);
+    const block=count*p.stripW+(count-1)*Math.max(0,gap);
+    const start=p.gap>0||count===1?p.side+(usable-block)/2:p.side;
+    const len=p.length>0?p.length:along-p.top-p.bottom;
+    const strips=[];
+    for(let i=0;i<count;i++){
+      const a=start+i*(p.stripW+gap);
+      strips.push(vertical?{x:a,y:p.top,w:p.stripW,h:len}:{x:p.top,y:a,w:len,h:p.stripW});
+    }
+    return{strips,gap,len,usable,block,vertical,along,across};
+  }
+  function pilasterIsStrip(p) {return !!(p&&p.extra&&p.form==='strip');}
+  function pilasterShapePath(ends,w,h) {
+    const f=n=>Number(n.toFixed(9)),k=.5522847;
+    if(ends==='chamfer'){const c=Math.min(w,h)/2,cx=f(c/w),cy=f(c/h);return `M ${cx} 0 L ${f(1-cx)} 0 L 1 ${cy} L 1 ${f(1-cy)} L ${f(1-cx)} 1 L ${cx} 1 L 0 ${f(1-cy)} L 0 ${cy} Z`;}
+    if(ends==='round'){
+      const r=Math.min(w,h)/2,rx=f(r/w),ry=f(r/h),ax=f(rx*(1-k)),ay=f(ry*(1-k));
+      return `M ${rx} 0 L ${f(1-rx)} 0 C ${f(1-ax)} 0 1 ${ay} 1 ${ry} L 1 ${f(1-ry)} C 1 ${f(1-ay)} ${f(1-ax)} 1 ${f(1-rx)} 1 L ${rx} 1 C ${ax} 1 0 ${f(1-ay)} 0 ${f(1-ry)} L 0 ${ry} C 0 ${ay} ${ax} 0 ${rx} 0 Z`;
+    }
+    return 'M 0 0 L 1 0 L 1 1 L 0 1 Z';
+  }
+  function pilasterGeometry(p,W,H,thickness) {
+    const lay=pilasterLayout(p,W,H),contours=[],pockets=[],strip=pilasterIsStrip(p);
+    if(!(lay.len>0&&lay.gap>=-1e-9&&lay.strips.length))return{contours,pockets};
+    const depth=p.through?thickness:Math.min(p.depth,thickness),edge=p.sCutter!=='none';
+    lay.strips.forEach((r,i)=>{
+      const id=nextContourId++,vertical=lay.vertical;
+      if(strip){
+        contours.push({id,name:`Полоска ${i+1}`,parentId:0,shape:'free',direction:'in',offset:1,corner:0,
+          rel:{x:Number((r.x/W).toFixed(12)),y:Number((r.y/H).toFixed(12)),w:Number((r.w/W).toFixed(12)),h:Number((r.h/H).toFixed(12))},
+          freeD:pilasterShapePath(p.ends,r.w,r.h),cutter:edge?p.sCutter:'none',diameter:edge?p.sDia:6,depth:edge?p.sDepth:3,additionalCutters:[],pilaster:true});
+        if(p.bottomOn||p.through)pockets.push({parentId:id,islandId:id,regionType:'inside',cutter:'flat',diameter:p.dia,depth,stepover:40,passDepth:Math.min(2,depth),back:false,pilaster:true});
+        return;
+      }
+      // линия по центру полоски: вертикальная — «0 0 → 0 1», горизонтальная — «0 0 → 1 0» (в долях габарита линии)
+      const rel=vertical?{x:(r.x+r.w/2)/W,y:r.y/H,w:0,h:r.h/H}:{x:r.x/W,y:(r.y+r.h/2)/H,w:r.w/W,h:0};
+      Object.keys(rel).forEach(k=>{rel[k]=Number(rel[k].toFixed(12));});
+      contours.push({id,name:`Линия ${i+1}`,parentId:0,shape:'free',direction:'in',offset:1,corner:0,rel,
+        freeD:vertical?'M 0 0 L 0 1':'M 0 0 L 1 0',cutter:p.cutter,diameter:p.stripW,depth,side:'on',additionalCutters:[],pilaster:true});
+    });
+    return{contours,pockets};
+  }
+  function applyPilasterGeometry() {
+    state.contours=state.contours.filter(contour=>!contour.pilaster);
+    state.pockets=(state.pockets||[]).filter(pocket=>!pocket.pilaster&&state.contours.some(contour=>contour.id===pocket.islandId));
+    selectedPocketRegion=null;
+    if(state.kind!=='pilaster'||!state.pilaster)return;
+    const g=pilasterGeometry(state.pilaster,Number(state.width),Number(state.height),Number(state.thickness)||19);
+    state.contours.push(...g.contours);state.pockets.push(...g.pockets);
+    if(g.contours.length)state.selectedContour=g.contours[0].id;
+  }
+  function pilasterIssues() {
+    const p=state.pilaster,issues=[];
+    if(state.kind!=='pilaster'||!p)return issues;
+    const W=Number(state.width),H=Number(state.height),lay=pilasterLayout(p,W,H),vertical=lay.vertical;
+    if(lay.usable<=0)issues.push(vertical?'Боковые отступы больше заготовки — уменьшите отступ.':'Отступы сверху и снизу больше заготовки — уменьшите отступ.');
+    else if(p.count*p.stripW>lay.usable+1e-6)issues.push(`${p.count} полосок по ${p.stripW} мм не помещаются между отступами (доступно ${Math.round(lay.usable*100)/100} мм).`);
+    else if(lay.gap<-1e-9||(p.gap>0&&lay.block>lay.usable+1e-6))issues.push('Полоски с заданным промежутком не помещаются между отступами — уменьшите промежуток или количество.');
+    if(!(lay.len>0))issues.push('Длина линии получилась нулевой — уменьшите отступы от торцов.');
+    else if(p.length>0&&p.top+p.length>lay.along+1e-6)issues.push('Заданная длина линии выходит за заготовку — уменьшите длину или отступ.');
+    if(pilasterIsStrip(p)&&(p.bottomOn)&&p.dia>p.stripW+1e-6)issues.push(`Фреза дна Ø ${p.dia} мм шире полоски (${p.stripW} мм) — дно не выберется.`);
+    if(!p.through&&p.depth>=Number(state.thickness))issues.push('Глубина линии должна быть меньше толщины заготовки (или включите «насквозь»).');
+    return issues;
   }
   // Возвращает вектора и выборки витрины для заданной толщины. Идентификаторы берутся из nextContourId.
   function vitrinaGeometry(v,thickness) {
@@ -5587,6 +5787,8 @@ body.hide-hint #canvasHint{display:none}
     const ts=state.kind==='tsulaga'&&state.objectType==='profile';
     $('width').readOnly=ts;$('height').readOnly=ts;
     $('width').title=$('height').title=ts?'Габарит считается автоматически по форме цулаги':'';
+    const isP=state.kind==='pilaster'&&state.objectType==='facade'&&activeView!=='nest';
+    $('pilasterSettingsPanel').classList.toggle('hidden',!isP);
     $('vitrinaSettingsPanel').classList.toggle('hidden',!isV);
     $('tsulagaSettingsPanel').classList.toggle('hidden',!isT);
     if(isV){
@@ -5599,6 +5801,26 @@ body.hide-hint #canvasHint{display:none}
       $('vEdgeFields').classList.toggle('hidden',v.edgeCutter==='none');
       const issues=vitrinaIssues();
       $('vitrinaInfo').textContent=issues[0]||`Окно ${Math.max(0,state.width-2*v.frame)} × ${Math.max(0,state.height-2*v.frame)} мм · четверть ${v.quarterW} × ${v.quarterD} мм${v.back?' с тыльной стороны':''} · остаётся ${Math.max(0,state.thickness-v.quarterD)} мм материала`;
+    }
+    if(isP){
+      const p=state.pilaster,active=document.activeElement,set=(id,value)=>{if(active!==$(id))$(id).value=value;};
+      const hz=p.orient==='h';
+      $('pSideLabel').textContent=hz?'Отступ от верхнего и нижнего краёв, мм':'Отступ от боковых краёв, мм';
+      $('pTopLabel').textContent=hz?'Отступ слева, мм':'Отступ сверху, мм';$('pBottomLabel').textContent=hz?'Отступ справа, мм':'Отступ снизу, мм';
+      set('pCount',p.count);set('pStripW',p.stripW);set('pGap',p.gap);set('pLength',p.length);set('pSide',p.side);set('pTop',p.top);set('pBottom',p.bottom);
+      set('pDepth',p.depth);
+      $('pOrient').value=p.orient;$('pThrough').checked=p.through;
+      const st=pilasterIsStrip(p);
+      $('pExtra').checked=p.extra;$('pExtraBox').classList.toggle('hidden',!p.extra);$('pForm').value=p.form;
+      $('pStripBox').classList.toggle('hidden',!st);$('pEndsField').classList.toggle('hidden',!st);$('pLineCutterBox').classList.toggle('hidden',st);
+      $('pStripWLabel').textContent=st?'Ширина полоски, мм':'Ø фрезы (ширина линии), мм';
+      set('pDia',p.dia);set('pSDia',p.sDia);set('pSDepth',p.sDepth);$('pEnds').value=p.ends;$('pBottomOn').checked=p.bottomOn;
+      $('pStripCutter').value=p.sCutter;if($('pStripCutter').value!==p.sCutter)$('pStripCutter').value='none';
+      $('pSEdgeFields').classList.toggle('hidden',p.sCutter==='none');
+
+      $('pEdgeCutter').value=p.cutter;if($('pEdgeCutter').value!==p.cutter)$('pEdgeCutter').value='flat';
+      const lay=pilasterLayout(p,Number(state.width),Number(state.height)),issues=pilasterIssues(),r2=n=>Math.round(n*100)/100;
+      $('pilasterInfo').textContent=issues[0]||`${p.count} ${(n=>st?(n%10===1&&n%100!==11?'полоска':(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?'полоски':'полосок')):(n%10===1&&n%100!==11?'линия':(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?'линии':'линий')))(p.count)} длиной ${r2(lay.len)} мм · ${st?'ширина':'фреза Ø'} ${p.stripW} · промежуток ${r2(lay.gap)} мм · ${p.through?'насквозь':'глубина '+p.depth+' мм'}${hz?' · горизонтально':''}`;
     }
     if(isT){
       const t=state.tsulaga,active=document.activeElement;
@@ -5621,6 +5843,7 @@ body.hide-hint #canvasHint{display:none}
   }
   function kindSignature() {
     if(state.kind==='vitrina')return JSON.stringify(['v',state.vitrina,state.width,state.height,state.thickness]);
+    if(state.kind==='pilaster')return JSON.stringify(['p',state.pilaster,state.width,state.height,state.thickness]);
     if(state.kind==='tsulaga')return JSON.stringify(['t',state.tsulaga]);
     return null;
   }
@@ -5629,13 +5852,14 @@ body.hide-hint #canvasHint{display:none}
     const signature=kindSignature();
     if(signature===state.kindSig)return;
     if(state.kind==='vitrina')applyVitrinaGeometry();
+    else if(state.kind==='pilaster')applyPilasterGeometry();
     else if(state.kind==='tsulaga'){applyTsulagaGeometry();renderProfileBands();}
     state.kindSig=signature;
   }
   function changeKindSettings(kind,mutate) {
     if(state.kind!==kind)return;
     snapshot();mutate();
-    if(kind==='vitrina')state.vitrina=sanitizeVitrina(state.vitrina);else state.tsulaga=sanitizeTsulaga(state.tsulaga);
+    if(kind==='vitrina')state.vitrina=sanitizeVitrina(state.vitrina);else if(kind==='pilaster')state.pilaster=sanitizePilaster(state.pilaster);else state.tsulaga=sanitizeTsulaga(state.tsulaga);
     syncKindGeometry();renderTemplateButtons();drawView();
   }
   function sanitizeRust(value) {
@@ -6296,6 +6520,14 @@ body.hide-hint #canvasHint{display:none}
     }));
   });
   ['vBack','vThrough'].forEach(id=>$(id).addEventListener('change',event=>{event.stopPropagation();changeKindSettings('vitrina',()=>{state.vitrina[id==='vBack'?'back':'through']=$(id).checked;});}));
+  [['pCount','count'],['pStripW','stripW'],['pGap','gap'],['pLength','length'],['pSide','side'],['pTop','top'],['pBottom','bottom'],['pDepth','depth'],['pOrient','orient'],['pEdgeCutter','cutter'],['pForm','form'],['pEnds','ends'],['pDia','dia'],['pStripCutter','sCutter'],['pSDia','sDia'],['pSDepth','sDepth']].forEach(([id,key])=>{
+    ['input','change'].forEach(type=>$(id).addEventListener(type,event=>{
+      event.stopPropagation();
+      const raw=$(id).value;if(raw==='')return;
+      changeKindSettings('pilaster',()=>{state.pilaster[key]=$(id).tagName==='SELECT'?raw:Number(raw);});
+    }));
+  });
+  [['pThrough','through'],['pExtra','extra'],['pBottomOn','bottomOn']].forEach(([id,key])=>$(id).addEventListener('change',event=>{event.stopPropagation();changeKindSettings('pilaster',()=>{state.pilaster[key]=$(id).checked;});}));
   [['tWidth','stripWidth'],['tStraight','straight'],['tAngle','angle'],['tDiameter','diameter'],['tCutDia','cutDia'],['tEdges','edges']].forEach(([id,key])=>{
     ['input','change'].forEach(type=>$(id).addEventListener(type,event=>{
       event.stopPropagation();
@@ -6435,7 +6667,7 @@ body.hide-hint #canvasHint{display:none}
       return;
     }
     const selectButton=event.target.closest('[data-select-contour]');
-    if(selectButton){state.selectedImport=-1;state.selectedContour=Number(selectButton.dataset.selectContour);renderTemplateButtons();drawView();}
+    if(selectButton){state.selectedImport=-1;selectedPocketRegion=null;state.selectedContour=Number(selectButton.dataset.selectContour);renderTemplateButtons();drawView();}
   });
   $('designList').addEventListener('click',event=>{const deleteButton=event.target.closest('[data-delete-design]');if(deleteButton){deleteDesign(deleteButton.dataset.deleteDesign);return;}const button=event.target.closest('[data-design-id]');if(button)activateDesign(button.dataset.designId);});
   $('cutterLibraryButton').addEventListener('click',()=>$('cutterLibraryOverlay').classList.remove('hidden'));
@@ -7833,9 +8065,100 @@ body.hide-hint #canvasHint{display:none}
     const sideStart=positions.length/3;const sideNormal=idx=>{const i=idx%(nx+1),j=Math.floor(idx/(nx+1));if(j===0)return[0,1,0];if(i===nx)return[1,0,0];if(j===ny)return[0,-1,0];return[-1,0,0];};for(const idx of edge){positions.push(positions[idx*3],positions[idx*3+1],positions[idx*3+2]);normals.push(...sideNormal(idx));}for(const idx of edge){positions.push(positions[idx*3],positions[idx*3+1],baseZ);normals.push(...sideNormal(idx));}const edgeN=edge.length;
     for(let k=0;k<edgeN;k++){const n=(k+1)%edgeN,a=sideStart+k,b=sideStart+n,c=sideStart+edgeN+k,d=sideStart+edgeN+n;indices.push(a,b,c,b,d,c);}
     // Bottom face.
-    const bottomStart=positions.length/3;positions.push(-w/2/maxDim,-h/2/maxDim,baseZ,w/2/maxDim,-h/2/maxDim,baseZ,w/2/maxDim,h/2/maxDim,baseZ,-w/2/maxDim,h/2/maxDim,baseZ);for(let i=0;i<4;i++)normals.push(0,0,-1);indices.push(bottomStart,bottomStart+2,bottomStart+1,bottomStart,bottomStart+3,bottomStart+2);
-    return{positions:new Float32Array(positions),normals:new Float32Array(normals),indices:new Uint32Array(indices),w,h,thick,nx,ny,passes:passes.length};
+    const bottomStart=positions.length/3;positions.push(0,0,baseZ);normals.push(0,0,-1);for(let k=0;k<edgeN;k++){const n2=(k+1)%edgeN;indices.push(bottomStart,sideStart+edgeN+k,sideStart+edgeN+n2);}
+    // Неснятые «островки»: маленькие участки на уровне поверхности, целиком окружённые срезом — перемычки между проходами фрез.
+    // Такие остаются и на станке (круглая фреза не добирает угол между двумя проходами), поэтому показываем предупреждение.
+    const islands=[];{
+      const cellA=(XW/nx)*(YH/ny),seen=new Uint8Array(heights.length),W1=nx+1;
+      for(let start=0;start<heights.length;start++){
+        if(seen[start]||heights[start]>=.05)continue;
+        const stack=[start],cells=[];let border=false,ringDepth=0,ringCount=0;seen[start]=1;
+        while(stack.length&&cells.length<400){
+          const k=stack.pop();cells.push(k);const i=k%W1,j=(k-i)/W1;
+          if(i===0||j===0||i===nx||j===ny)border=true;
+          [[1,0],[-1,0],[0,1],[0,-1]].forEach(([di,dj])=>{const ii=i+di,jj=j+dj;if(ii<0||jj<0||ii>nx||jj>ny)return;const q=jj*W1+ii;
+            if(heights[q]<.05){if(!seen[q]){seen[q]=1;stack.push(q);}}else{ringDepth+=heights[q];ringCount++;}});
+        }
+        if(stack.length){ // слишком большой участок — это основная плоскость, дальше не разбираем
+          while(stack.length){stack.pop();}
+          continue;}
+        if(!border&&cells.length*cellA<=60&&ringCount&&ringDepth/ringCount>=1){
+          let sx=0,sy=0;cells.forEach(k=>{sx+=k%W1;sy+=Math.floor(k/W1);});
+          islands.push({x:X0+XW*(sx/cells.length)/nx,y:Y0+YH*(sy/cells.length)/ny,area:cells.length*cellA,depth:ringDepth/ringCount});
+        }
+      }
+    }
+    return{positions:new Float32Array(positions),normals:new Float32Array(normals),indices:new Uint32Array(indices),w,h,thick,nx,ny,passes:passes.length,islands};
   }
+
+  // ===== Экспорт 3D-модели обработки: OBJ / STL / GLB (в миллиметрах, замкнутая заготовка) =====
+  function build3DFiles(formats) {
+    {
+      const files=[],model=real3DBuild();
+      const maxDim=Math.max(model.w,model.h),zScale=1.35/maxDim,thick=model.thick,P=model.positions,N=model.normals,I=model.indices;
+      const count=P.length/3,X=new Float64Array(count),Y=new Float64Array(count),Z=new Float64Array(count);
+      for(let k=0;k<count;k++){X[k]=P[k*3]*maxDim;Y[k]=P[k*3+1]*maxDim;Z[k]=P[k*3+2]/zScale+thick;} // низ заготовки z=0, лицевая поверхность z=толщина
+      // Порядок обхода каждого треугольника приводим к внешней нормали (по нормалям вершин).
+      const tris=new Uint32Array(I.length),topCount=(model.nx+1)*(model.ny+1);
+      for(let t=0;t<I.length;t+=3){
+        let a=I[t],b=I[t+1],c=I[t+2];
+        const ux=X[b]-X[a],uy=Y[b]-Y[a],uz=Z[b]-Z[a],vx=X[c]-X[a],vy=Y[c]-Y[a],vz=Z[c]-Z[a];
+        const nx=uy*vz-uz*vy,ny=uz*vx-ux*vz,nz=ux*vy-uy*vx;
+        const sx=N[a*3]+N[b*3]+N[c*3],sy=N[a*3+1]+N[b*3+1]+N[c*3+1],sz=N[a*3+2]+N[b*3+2]+N[c*3+2];
+        const isTop=model.nx>0&&a<topCount&&b<topCount&&c<topCount; // верхняя поверхность — карта высот: нормаль всегда вверх
+        if(isTop?nz<0:nx*sx+ny*sy+nz*sz<0){const tmp=b;b=c;c=tmp;}
+        tris[t]=a;tris[t+1]=b;tris[t+2]=c;
+      }
+      const name=`${(state.name||'fasadlab').replace(/[^\wа-яА-ЯёЁ.-]+/g,'_')}_3d`;
+      const notes=`${tris.length/3} треугольников, ${model.w.toFixed(0)}×${model.h.toFixed(0)}×${thick} мм`;
+      if(formats.includes('obj')){
+        const lines=[`# ФасадЛаб: ${name}, миллиметры, Y вверх`,`o ${name}`];
+        for(let k=0;k<count;k++)lines.push(`v ${X[k].toFixed(3)} ${Z[k].toFixed(3)} ${(-Y[k]).toFixed(3)}`);
+        for(let k=0;k<count;k++)lines.push(`vn ${N[k*3].toFixed(4)} ${N[k*3+2].toFixed(4)} ${(-N[k*3+1]).toFixed(4)}`);
+        for(let t=0;t<tris.length;t+=3){const a=tris[t]+1,b=tris[t+1]+1,c=tris[t+2]+1;lines.push(`f ${a}//${a} ${b}//${b} ${c}//${c}`);} // поворот Z-вверх → Y-вверх сохраняет обход
+        files.push({name:`${name}.obj`,data:new TextEncoder().encode(lines.join('\n'))});
+      }
+      if(formats.includes('stl')){
+        const buf=new ArrayBuffer(84+50*(tris.length/3)),dv=new DataView(buf);
+        const head=`FasadLab ${name}`;for(let i=0;i<head.length&&i<80;i++)dv.setUint8(i,head.charCodeAt(i)&127);
+        dv.setUint32(80,tris.length/3,true);let o=84;
+        for(let t=0;t<tris.length;t+=3){
+          const a=tris[t],b=tris[t+1],c=tris[t+2],ux=X[b]-X[a],uy=Y[b]-Y[a],uz=Z[b]-Z[a],vx=X[c]-X[a],vy=Y[c]-Y[a],vz=Z[c]-Z[a];
+          let nx=uy*vz-uz*vy,ny=uz*vx-ux*vz,nz=ux*vy-uy*vx;const l=Math.hypot(nx,ny,nz)||1;nx/=l;ny/=l;nz/=l;
+          dv.setFloat32(o,nx,true);dv.setFloat32(o+4,ny,true);dv.setFloat32(o+8,nz,true);o+=12;
+          for(const v of [a,b,c]){dv.setFloat32(o,X[v],true);dv.setFloat32(o+4,Y[v],true);dv.setFloat32(o+8,Z[v],true);o+=12;}
+          dv.setUint16(o,0,true);o+=2;
+        }
+        files.push({name:`${name}.stl`,data:new Uint8Array(buf)});
+      }
+      if(formats.includes('glb')){
+        const pos=new Float32Array(count*3),nor=new Float32Array(count*3);
+        const mn=[Infinity,Infinity,Infinity],mx=[-Infinity,-Infinity,-Infinity];
+        for(let k=0;k<count;k++){const x=X[k]/1000,y=Z[k]/1000,z=-Y[k]/1000;pos[k*3]=x;pos[k*3+1]=y;pos[k*3+2]=z;[x,y,z].forEach((v,i)=>{mn[i]=Math.min(mn[i],v);mx[i]=Math.max(mx[i],v);});nor[k*3]=N[k*3];nor[k*3+1]=N[k*3+2];nor[k*3+2]=-N[k*3+1];}
+        const idx=new Uint32Array(tris.length);for(let t=0;t<tris.length;t+=3){idx[t]=tris[t];idx[t+1]=tris[t+1];idx[t+2]=tris[t+2];}
+        const bin=new Uint8Array(pos.byteLength+nor.byteLength+idx.byteLength);bin.set(new Uint8Array(pos.buffer),0);bin.set(new Uint8Array(nor.buffer),pos.byteLength);bin.set(new Uint8Array(idx.buffer),pos.byteLength+nor.byteLength);
+        const json={asset:{version:'2.0',generator:'ФасадЛаб'},scene:0,scenes:[{nodes:[0]}],nodes:[{mesh:0,name}],meshes:[{name,primitives:[{attributes:{POSITION:0,NORMAL:1},indices:2,mode:4}]}],
+          buffers:[{byteLength:bin.byteLength}],bufferViews:[{buffer:0,byteOffset:0,byteLength:pos.byteLength,target:34962},{buffer:0,byteOffset:pos.byteLength,byteLength:nor.byteLength,target:34962},{buffer:0,byteOffset:pos.byteLength+nor.byteLength,byteLength:idx.byteLength,target:34963}],
+          accessors:[{bufferView:0,componentType:5126,count,type:'VEC3',min:mn,max:mx},{bufferView:1,componentType:5126,count,type:'VEC3'},{bufferView:2,componentType:5125,count:idx.length,type:'SCALAR'}],
+          materials:[{name:'MDF',pbrMetallicRoughness:{baseColorFactor:[.82,.74,.62,1],metallicFactor:0,roughnessFactor:.85},doubleSided:true}]};
+        json.meshes[0].primitives[0].material=0;
+        let jb=new TextEncoder().encode(JSON.stringify(json));const jpad=(4-jb.length%4)%4;if(jpad){const t=new Uint8Array(jb.length+jpad).fill(32);t.set(jb);jb=t;}
+        const bpad=(4-bin.length%4)%4,total=12+8+jb.length+8+bin.length+bpad,out=new Uint8Array(total),dv=new DataView(out.buffer);
+        dv.setUint32(0,0x46546C67,true);dv.setUint32(4,2,true);dv.setUint32(8,total,true);dv.setUint32(12,jb.length,true);dv.setUint32(16,0x4E4F534A,true);out.set(jb,20);
+        const o=20+jb.length;dv.setUint32(o,bin.length+bpad,true);dv.setUint32(o+4,0x004E4942,true);out.set(bin,o+8);
+        files.push({name:`${name}.glb`,data:out});
+      }
+      return{files,notes,name};
+    }
+  }
+  function export3DArchive() {
+    try{
+      const {files,notes,name}=build3DFiles(['obj','stl','glb']);
+      download(`${name}.zip`,makeZip(files),'application/zip');
+      $('footerStatus').textContent=`3D-архив сохранён (OBJ, STL, GLB): ${notes}. Детализация как в окне 3D (${real3DHQ?'высокая':'быстро'}).`;
+    }catch(error){$('footerStatus').textContent=`3D-экспорт не удался: ${error.message}`;alert(`3D-экспорт не удался: ${error.message}`);}
+  }
+  $('export3dZip').addEventListener('click',export3DArchive);
   function real3DInitGL(){
     const canvas=$('real3DCanvas'),gl=canvas.getContext('webgl',{antialias:true,alpha:false})||canvas.getContext('experimental-webgl');if(!gl)throw new Error('WebGL недоступен в этом режиме приложения.');if(!gl.getExtension('OES_element_index_uint'))throw new Error('Видеодрайвер не поддерживает 32-битные индексы 3D-сетки.');
     const vs=`attribute vec3 aPosition;attribute vec3 aNormal;uniform float uYaw;uniform float uPitch;uniform float uZoom;uniform float uAspect;uniform vec2 uPan;varying vec3 vNormal;varying float vDepth;varying float vCut;void main(){float cy=cos(uYaw),sy=sin(uYaw),cp=cos(uPitch),sp=sin(uPitch);vec3 p=vec3(cy*aPosition.x+sy*aPosition.y,-sy*sp*aPosition.x+cy*sp*aPosition.y+cp*aPosition.z,-sy*cp*aPosition.x+cy*cp*aPosition.y-sp*aPosition.z);vec3 n=vec3(cy*aNormal.x+sy*aNormal.y,-sy*sp*aNormal.x+cy*sp*aNormal.y+cp*aNormal.z,-sy*cp*aNormal.x+cy*cp*aNormal.y-sp*aNormal.z);gl_Position=vec4((p.x*uZoom+uPan.x)/uAspect,p.y*uZoom+uPan.y, (p.z+1.4)/3.0, 1.0);vNormal=normalize(n);vDepth=p.z;vCut=max(0.0,-aPosition.z);}`;
@@ -7848,7 +8171,7 @@ body.hide-hint #canvasHint{display:none}
     const drawM=m=>{function attr(name,data,size){const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);gl.enableVertexAttribArray(name);gl.vertexAttribPointer(name,size,gl.FLOAT,false,0,0);return b;}if(!m.buffers){m.buffers=[attr(attrs.p,m.positions,3),attr(attrs.n,m.normals,3)];m.index=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,m.index);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,m.indices,gl.STATIC_DRAW);}else{gl.bindBuffer(gl.ARRAY_BUFFER,m.buffers[0]);gl.vertexAttribPointer(attrs.p,3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ARRAY_BUFFER,m.buffers[1]);gl.vertexAttribPointer(attrs.n,3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,m.index);}gl.drawElements(gl.TRIANGLES,m.indices.length,gl.UNSIGNED_INT,0);};
     drawM(real3DModel);if(real3DPatch){gl.clear(gl.DEPTH_BUFFER_BIT);drawM(real3DPatch);}
   }
-  function openReal3D(){const overlay=$('real3DOverlay');overlay.classList.remove('hidden');$('real3DStatus').textContent='Расчёт поверхности и профилей фрез…';try{real3DModel=real3DBuild();if(!real3DGL)real3DInitGL();real3DYaw=-.58;real3DPitch=.56;real3DZoom=1.08;real3DPanX=0;real3DPanY=0;real3DPatch=null;real3DDraw();$('real3DInfo').textContent=`${real3DModel.w} × ${real3DModel.h} × ${real3DModel.thick} мм · ${real3DModel.prism?'сквозной вырез по контуру':`${real3DModel.passes} траекторий · сетка ${real3DModel.nx} × ${real3DModel.ny}`}`;$('real3DStatus').textContent=real3DModel.prism?'Цулага вырезана насквозь по контуру: углы торцов и радиусы как на чертеже. Тяните — вращение.':(document.body.classList.contains('mono3d')?'Свет и тень: глубина видна по затемнению, цвет не используется.':'Цветовая карта глубины: голубой — мелко, жёлтый — средне, красный — глубоко.');}catch(e){$('real3DStatus').textContent='Ошибка построения: '+e.message;console.error(e);}}
+  function openReal3D(){const overlay=$('real3DOverlay');overlay.classList.remove('hidden');$('real3DStatus').textContent='Расчёт поверхности и профилей фрез…';try{real3DModel=real3DBuild();if(!real3DGL)real3DInitGL();real3DYaw=-.58;real3DPitch=.56;real3DZoom=1.08;real3DPanX=0;real3DPanY=0;real3DPatch=null;real3DDraw();$('real3DInfo').textContent=`${real3DModel.w} × ${real3DModel.h} × ${real3DModel.thick} мм · ${real3DModel.prism?'сквозной вырез по контуру':`${real3DModel.passes} траекторий · сетка ${real3DModel.nx} × ${real3DModel.ny}`}${real3DModel.islands&&real3DModel.islands.length?` · ⚠ неснятых перемычек: ${real3DModel.islands.length} (около ${real3DModel.islands[0].x.toFixed(0)}, ${real3DModel.islands[0].y.toFixed(0)} мм)`:''}`;$('real3DStatus').textContent=real3DModel.prism?'Цулага вырезана насквозь по контуру: углы торцов и радиусы как на чертеже. Тяните — вращение.':(document.body.classList.contains('mono3d')?'Свет и тень: глубина видна по затемнению, цвет не используется.':'Цветовая карта глубины: голубой — мелко, жёлтый — средне, красный — глубоко.');if(real3DModel.islands&&real3DModel.islands.length)$('real3DStatus').textContent+=' Неснятая перемычка — не ошибка просмотра: два прохода круглой фрезой не добирают угол между собой и на станке она тоже останется. Уберёт «Выборка» между этими векторами или больший перекрывающий припуск.';}catch(e){$('real3DStatus').textContent='Ошибка построения: '+e.message;console.error(e);}}
   $('real3DHelp').addEventListener('click',()=>{const f=document.querySelector('.real3d-foot'),open=!f.classList.contains('help-open');f.classList.toggle('help-open',open);$('real3DHelp').setAttribute('aria-expanded',String(open));});
   $('real3DReset').addEventListener('click',()=>{real3DYaw=-.58;real3DPitch=.56;real3DZoom=1.08;real3DPanX=0;real3DPanY=0;real3DPatch=null;real3DDraw();});
   // Управление 3D: тянуть — вращение; правая кнопка / Shift / кнопка «✥» / два пальца — двигать деталь; колесо и щипок — масштаб к курсору.
@@ -7914,7 +8237,7 @@ body.hide-hint #canvasHint{display:none}
     catch(error){$('footerStatus').textContent=`Не удалось восстановить автосохранённое изделие: ${error.message}`;alert(`Автосохранённое изделие повреждено: ${error.message}`);}
   }
   // ---- Выбор фрезы с рисунком профиля: обычные <select> остаются под капотом, поверх — список с картинками ----
-  const CUTTER_SELECT_SELECTOR='#vectorCutter,#combCutter,#vEdgeCutter,#rustCutter,#pocketCutter,#isCutter,[data-band-cutter],[data-extra-shape]';
+  const CUTTER_SELECT_SELECTOR='#vectorCutter,#combCutter,#vEdgeCutter,#pEdgeCutter,#pStripCutter,#rustCutter,#pocketCutter,#isCutter,[data-band-cutter],[data-extra-shape]';
   function cutterThumb(value) {
     if(value==='none')return '<svg viewBox="0 0 120 78" aria-hidden="true"><path d="M 8 25 H 112" stroke="#8d887e" stroke-width="2" stroke-dasharray="4 3" fill="none"/></svg>';
     const shape=cutterShape(value);
@@ -8014,8 +8337,10 @@ body.hide-hint #canvasHint{display:none}
     const edge=$('vEdgeCutter').value!=='none';
     $('vEdgeCutterPreview').classList.toggle('hidden',!edge);
     $('vEdgeCutterPreview').innerHTML=edge?cutterSelectionPreview($('vEdgeCutter').value,$('vEdgeDia').value,$('vEdgeDepth').value):'';
+    $('pEdgeCutterPreview').classList.remove('hidden');$('pEdgeCutterPreview').innerHTML=cutterSelectionPreview($('pEdgeCutter').value,$('pStripW').value,$('pDepth').value);
+    const ps=$('pStripCutter').value!=='none';$('pStripCutterPreview').classList.toggle('hidden',!ps);$('pStripCutterPreview').innerHTML=ps?cutterSelectionPreview($('pStripCutter').value,$('pSDia').value,$('pSDepth').value):'';
   }
-  ['combCutter','combCutWidth','combCutDepth','vEdgeCutter','vEdgeDia','vEdgeDepth'].forEach(id=>['input','change'].forEach(type=>$(id).addEventListener(type,()=>setTimeout(updateExtraCutterPreviews,0))));
+  ['combCutter','combCutWidth','combCutDepth','vEdgeCutter','vEdgeDia','vEdgeDepth','pEdgeCutter','pStripW','pDepth','pStripCutter','pSDia','pSDepth'].forEach(id=>['input','change'].forEach(type=>$(id).addEventListener(type,()=>setTimeout(updateExtraCutterPreviews,0))));
   // Сворачиваемые панели слева и справа: «Скрыть / Показать» есть у всех панелей.
   (function setupCollapsiblePanels(){
     let saved={};try{saved=JSON.parse(localStorage.getItem('fasadlab-collapsed-panels')||'{}')||{};}catch(error){saved={};}
@@ -8133,7 +8458,7 @@ body.hide-hint #canvasHint{display:none}
   }
   function updateMeasureStrip() {
     $('combDimsToggle').style.display=state.objectType==='comb'?'':'none';
-    $('toggleVitrina').style.display=state.objectType==='facade'?'':'none';
+    $('toggleVitrina').style.display=state.objectType==='facade'&&state.kind!=='pilaster'?'':'none';
     $('toggleVitrinaLabel').textContent=state.kind==='vitrina'?'В фасад':'В витрину';
     $('combDimsToggle').classList.toggle('active',showCombDims);
     $('rulerTool').classList.toggle('active',activeTool==='ruler');
