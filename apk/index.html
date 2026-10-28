@@ -413,7 +413,7 @@ body.hide-hint #canvasHint{display:none}
 .sd-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.sd-tabs button{padding:8px 2px;font-size:13px;min-height:40px}.sd-tabs button.active{background:var(--blue);color:#fff;border-color:var(--blue)}.sd-box.sd-off{display:none}
 .sd-box{border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:7px;background:#faf8f1;min-width:0}.sd-box h3{margin:0;font-size:13px}.sd-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.sd-row label,.sd-blk label{display:flex;flex-direction:column;font-size:11px;gap:2px;min-width:0}.sd-row input,.sd-row select,.sd-blk input,.sd-blk select{height:36px;min-width:0;width:100%;padding:0 6px;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:6px}.sd-row input[type=checkbox]{width:auto;height:auto}.sd-chk{font-size:12px}.sd-chk input[type=checkbox],.sd-box input[type=checkbox]{width:20px;height:20px;min-width:20px;flex:none;margin:0;padding:0}.sd-chk span{display:flex;gap:6px;align-items:center}
 .sd-palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:6px}.sd-card{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px;font-size:11px;line-height:1.15;text-align:center;min-width:0;background:#fff}.sd-card svg{width:100%;height:50px}.sd-card b{font-weight:650;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sd-card span{color:#6b675e}
-.sd-blk{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 40px;gap:4px;align-items:end;border-top:1px dashed var(--line);padding-top:6px}.sd-blk.sel{background:#eef3fa;border-radius:6px}.sd-blk .nm{grid-column:1/-1;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;min-width:0}.sd-blk .nm select{flex:1;min-width:0}.sd-blk .nm [data-dup]{height:36px;width:40px;padding:0;flex:none}.sd-blk [data-del]{height:36px;padding:0}.sd-dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none}.sd-presets button{padding:4px 8px;min-height:32px;font-size:12px}
+.sd-item{display:flex;align-items:center;gap:6px;border-top:1px dashed var(--line);padding:4px 2px;font-size:12px;cursor:pointer;min-width:0}.sd-item.sel{background:#eef3fa;border-radius:6px}.sd-item .sd-it{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sd-item button{width:36px;height:34px;padding:0;flex:none}.sd-selhint{font-size:12px;color:#6b675e}.sd-box select{height:36px;min-width:0;width:100%;padding:0 6px;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:6px}.sd-blk{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 40px;gap:4px;align-items:end;border-top:1px dashed var(--line);padding-top:6px}.sd-blk.sel{background:#eef3fa;border-radius:6px}.sd-blk .nm{grid-column:1/-1;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;min-width:0}.sd-blk .nm select{flex:1;min-width:0}.sd-blk .nm [data-dup]{height:36px;width:40px;padding:0;flex:none}.sd-blk [data-del]{height:36px;padding:0}.sd-dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none}.sd-presets button{padding:4px 8px;min-height:32px;font-size:12px}
 @media(max-width:800px){.sd-main{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(190px,42%) minmax(0,1fr);gap:8px}.sd-left{min-height:0}.sd-stage{min-height:0}.sd-tools button{padding:5px 8px;font-size:12px;min-height:34px;min-width:40px}.sd-info{display:none}.guide-dialog.sd-dialog{padding:8px 8px calc(8px + env(safe-area-inset-bottom))}}
 .guide-dialog{width:min(1000px,100%);max-height:calc(100vh - 40px);grid-template-rows:auto auto minmax(0,1fr);padding:18px 20px;overflow:hidden}.gd-head{display:flex;align-items:center;gap:10px;min-width:0}.gd-head h2{flex:1;min-width:0}.guide-dialog .gd-head .modal-close{position:static;flex:none;width:38px;height:38px;padding:0;display:grid;place-items:center;line-height:1}
 .guide-dialog h2{margin:0;font-size:20px}.guide-dialog h2 .sub{font-size:12px;font-weight:400;margin-left:6px}
@@ -884,19 +884,20 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
 <div id="sdInfo" class="sd-info" aria-live="polite"></div></div>
 <div class="sd-right"><div class="sd-tabs" id="sdTabs"><button type="button" data-sdtab="blocks" class="active">Блоки</button><button type="button" data-sdtab="size">Размеры</button><button type="button" data-sdtab="ref">Эталон</button><button type="button" data-sdtab="move">Перенос</button></div>
 <div class="sd-pane">
-<div class="sd-box" data-sdsec="size"><h3>Размеры разреза</h3><div class="sd-row"><label>До филёнки, мм<input id="sdL" type="number" min="5" max="300" step="1" value="40"></label><label>Толщина, мм<input id="sdT" type="number" min="1" max="100" step="0.5" value="19"></label><label>Шаг сетки<select id="sdGrid"><option value="0.5">0,5 мм</option><option value="1" selected>1 мм</option><option value="2">2 мм</option><option value="5">5 мм</option></select></label></div>
+<div class="sd-box" data-sdsec="size"><h3>Размеры разреза</h3><div class="sd-row"><label>До филёнки, мм<input id="sdL" type="text" inputmode="decimal" autocomplete="off" inputmode="decimal" value="40"></label><label>Толщина, мм<input id="sdT" type="text" inputmode="decimal" autocomplete="off" inputmode="decimal" value="19"></label><label>Шаг сетки<select id="sdGrid"><option value="0.5">0,5 мм</option><option value="1" selected>1 мм</option><option value="2">2 мм</option><option value="5">5 мм</option></select></label></div>
 <p class="sub">Слева — край фасада, справа синяя пунктирная линия — конец профиля и начало филёнки. Колесо мыши или щипок — масштаб, перетаскивание пустого места — сдвиг.</p></div>
+<div class="sd-box" data-sdsec="blocks" id="sdSelBox"></div>
 <div class="sd-box" data-sdsec="blocks"><h3>Фрезы — нажмите, блок встанет на чертёж</h3><div id="sdPalette" class="sd-palette"></div>
-<div class="sd-row"><label>Ширина для прямой / радиусной / V, мм<input id="sdWidth" type="number" min="0.2" step="0.1" value="6"></label><label>Глубина, мм<input id="sdDepth" type="number" min="0.1" step="0.1" value="3"></label></div>
+<div class="sd-row"><label>Ширина для прямой / радиусной / V, мм<input id="sdWidth" type="text" inputmode="decimal" autocomplete="off" inputmode="decimal" value="6"></label><label>Глубина, мм<input id="sdDepth" type="text" inputmode="decimal" autocomplete="off" inputmode="decimal" value="3"></label></div>
 <div class="sd-tools sd-presets"><span class="sub">Готовые:</span><button type="button" data-sd-preset="round">Завал</button><button type="button" data-sd-preset="chamfer">Фаска</button><button type="button" data-sd-preset="rabbet">Четверть</button><button type="button" data-sd-preset="groove">Паз</button><button type="button" data-sd-preset="vgroove">V-канавка</button><button type="button" data-sd-preset="bead">Валик</button><button type="button" id="sdClearBlocks">Очистить</button></div>
-<p class="sub">Блоки «прилипают» к краю, к концу профиля и друг к другу. Потяните блок — он едет вдоль края, квадратик внизу блока меняет глубину.</p>
-<div id="sdBlocks" class="sd-blocks"></div></div>
+<p class="sub">Блоки «прилипают» к краю, к концу профиля и друг к другу. Потяните блок — он едет вдоль края, квадратик внизу блока меняет глубину. Настройки выбранного блока — вверху этой вкладки.</p>
+<h3 style="margin:2px 0 0;font-size:13px">Все блоки</h3><div id="sdBlocks" class="sd-blocks"></div></div>
 <div class="sd-box" data-sdsec="ref"><h3>Эталон: DXF / SVG / рисунок</h3><div class="sd-tools"><button type="button" id="sdImport">⤓ Загрузить DXF / SVG</button><button type="button" id="sdFit" class="primary">⚙ Подобрать фрезы по линии</button></div>
-<div class="sd-row"><label class="sd-chk"><span><input id="sdFlip" type="checkbox"> Перевернуть</span></label><label>Сдвиг по X, мм<input id="sdShift" type="number" step="0.5" value="0"></label><label>Масштаб файла<input id="sdScale" type="number" min="0.001" step="0.01" value="1"></label></div>
+<div class="sd-row"><label class="sd-chk"><span><input id="sdFlip" type="checkbox"> Перевернуть</span></label><label class="sd-chk"><span><input id="sdMirror" type="checkbox"> Отразить (край фасада справа)</span></label><label>Сдвиг по X, мм<input id="sdShift" type="text" inputmode="decimal" autocomplete="off" inputmode="decimal" value="0"></label><label>Масштаб файла<input id="sdScale" type="text" inputmode="decimal" autocomplete="off" inputmode="decimal" value="1"></label></div>
 <p class="sub">Файл — линия поверхности профиля от края фасада или контур разреза, мм. Красная пунктирная линия — эталон. «Подобрать» заменит блоки подходящими фрезами из каталога. Линию можно и нарисовать: инструменты «Линия» и «Дуга» под чертежом.</p><input id="sdFile" type="file" accept=".dxf,.svg,image/svg+xml"></div>
 <div class="sd-box" data-sdsec="move"><h3>Перенести</h3><label class="sd-chk"><span><input id="sdClear" type="checkbox"> очистить прежние вектора фасада</span></label><div class="sd-tools"><button type="button" id="sdToFacade" class="primary">В текущий фасад</button></div>
-<div class="sd-row"><label>Фасад: ширина<input id="sdFW" type="number" min="80" max="3000" value="596"></label><label>высота<input id="sdFH" type="number" min="80" max="3000" value="716"></label></div><div class="sd-tools"><button type="button" id="sdNewFacade">Создать новый фасад</button></div>
-<div class="sd-row"><label>Профиль: ширина, мм<input id="sdPW" type="number" min="1" max="3000" value="40"></label><label>длина, мм<input id="sdPL" type="number" min="1" max="3000" value="1000"></label></div><div class="sd-tools"><button type="button" id="sdNewProfile">Создать профиль (багет)</button><button type="button" id="sdSvgOut">SVG разреза</button><button type="button" id="sdDxfOut">DXF разреза</button></div></div>
+<div class="sd-row"><label>Фасад: ширина<input id="sdFW" type="text" inputmode="decimal" autocomplete="off" value="596"></label><label>высота<input id="sdFH" type="text" inputmode="decimal" autocomplete="off" value="716"></label></div><div class="sd-tools"><button type="button" id="sdNewFacade">Создать новый фасад</button></div>
+<div class="sd-row"><label>Профиль: ширина, мм<input id="sdPW" type="text" inputmode="decimal" autocomplete="off" value="40"></label><label>длина, мм<input id="sdPL" type="text" inputmode="decimal" autocomplete="off" value="1000"></label></div><div class="sd-tools"><button type="button" id="sdNewProfile">Создать профиль (багет)</button><button type="button" id="sdSvgOut">SVG разреза</button><button type="button" id="sdDxfOut">DXF разреза</button></div></div>
 </div></div></div></section></div>
 <div id="stylesOverlay" class="modal-overlay hidden"><section class="modal-card styles-dialog" role="dialog" aria-modal="true" aria-labelledby="stylesDialogTitle"><button class="modal-close" id="closeStyles" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="stylesDialogTitle">Шаблоны изделий</h2><p>Выберите тип шаблона и примените сохранённые настройки к изделию.</p></div><div class="styles-dialog-controls"><label class="field" for="styleTypeFilter">Тип изделия<select id="styleTypeFilter"><option value="facade">Фасад</option><option value="vitrina">Витрина</option><option value="profile">Профиль</option><option value="tsulaga">Цулага</option><option value="pilaster">Пилястра</option><option value="comb">Гребёнка</option></select></label><div class="field"><label for="styleName">Название нового шаблона</label><input id="styleName" aria-label="Название сохраняемого шаблона" maxlength="48" value="Мой шаблон" placeholder="Название шаблона"></div></div><div class="styles-io"><button type="button" id="importStyles" title="Загрузить шаблоны из файла (.json стиля, или проект/фасад из пакета ArtCAM)">⇧ Импорт</button><button type="button" id="exportAllStyles" title="Скачать все шаблоны одним файлом, чтобы передать другим">⇩ Экспорт всех</button><input type="file" id="stylesImportPicker" accept=".json,application/json" multiple hidden></div>
 <div class="style-small-box"><div class="sharp-title">Малые размеры</div><div class="fields"><div class="field"><label for="styleMinSide">Критичный размер, мм (меньшая сторона; 0 — только если не помещается)</label><input id="styleMinSide" type="number" min="0" max="3000" step="10" value="0"></div></div><div class="sharp-title">Вектора стиля</div><div id="styleMarkList" class="style-mark-list"></div><div class="sub">🪟 — начало окна витрины: когда фасад превращают в витрину, окно берётся от этого вектора, всё внутри него вырезается насквозь.</div><div class="sub">Когда вектора убраны, внутри оставшегося автоматически делается выборка до самой глубокой фрезы.</div><div class="sub">🟢 всегда остаётся · 🔴 можно убрать (убирается на малом размере) · 🔵 программа решает сама: убирает только если иначе не помещается. Убираются сначала самые внутренние.</div></div>
@@ -1468,7 +1469,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       points.push(`${(centerX+normalized*half).toFixed(2)} ${(top+relief*scale).toFixed(2)}`);
     }
     const surface=`M 8 ${top} H ${(centerX-half).toFixed(2)} L ${points.join(' L ')} H 112`;
-    return `<svg viewBox="0 0 120 78" role="img" aria-label="${esc(cutterLabel(shape))} — разрез получаемого паза"><path d="${surface} V ${bottom} H 8 Z" fill="#e6e1d7" stroke="#8d887e" stroke-width="1.5"/><path d="${surface}" fill="none" stroke="#8f5545" stroke-width="2"/></svg>`;
+    return `<svg viewBox="0 0 120 78" role="img" aria-label="${esc(cutterLabel(shape))} — разрез получаемого паза"><path d="${surface} V ${bottom} H 8 Z" fill="#e6e1d7" stroke="#8d887e" stroke-width="1"/><path d="${surface}" fill="none" stroke="#8f5545" stroke-width="1.3"/></svg>`;
   }
   // Рисунок самой фрезы (а не паза): профиль режущей кромки встроенного типа, остриём вниз
   function shapeToolProfile(shape,width) {
@@ -2811,7 +2812,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
         const sel=groupIsSelected(g),col=sel?'#0a6cf0':'#a45f40';
         const parts=g.members.map(m=>{
           const cx=left+m.center*scale,hw=Math.max(1,m.width*scale/2),dd=Math.min(m.depth,state.thickness)*scale;
-          return `<path d="${toolC(m,cx)}" fill="${col}" fill-opacity="${sel?.45:.16}" stroke="${col}" stroke-width="${sel?1.8:1}" stroke-dasharray="${sel?'':'3 2'}"/><rect x="${cx-hw-4}" y="${y-20}" width="${2*hw+8}" height="${dd+24}" fill="transparent"/>`;
+          return `<path d="${toolC(m,cx)}" fill="${col}" fill-opacity="${sel?.22:.08}" stroke="${col}" stroke-width="${sel?1.5:.9}" stroke-dasharray="${sel?'':'3 2'}" vector-effect="non-scaling-stroke"/><rect x="${cx-hw-4}" y="${y-20}" width="${2*hw+8}" height="${dd+24}" fill="transparent"/>`;
         }).join('');
         return `<g data-cutno="${g.n}" style="cursor:pointer">${parts}</g>`;
       }).join('');
@@ -2864,12 +2865,12 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       const marks=band+groups.map((g,gi)=>{
         const sel=groupIsSelected(g),col=sel?'#0a6cf0':'#a45f40';
         if(mapMode){
-          const chx=chipXs[gi],cxm=left+g.first.center*scale,sil=g.members.map(m=>`<path d="${tool(m,left+m.center*scale)}" fill="${col}" fill-opacity="${sel?.45:.14}" stroke="${col}" stroke-width="${sel?2.4:1.1}" stroke-dasharray="${sel?'':'4 2'}"/>`).join('');
-          return `<g data-cutno="${g.n}" style="cursor:pointer">${sil}<path d="M ${chx} 60 V 80 L ${cxm} 104 V ${y-16}" fill="none" stroke="${col}" stroke-width="${sel?1.8:.9}"/><circle cx="${chx}" cy="48" r="17" fill="transparent"/><circle cx="${chx}" cy="48" r="12" fill="${sel?'#0a6cf0':'#fff'}" stroke="${col}" stroke-width="1.5"/><text x="${chx}" y="52.5" font-size="${g.n>9?11:13}" font-weight="700" text-anchor="middle" fill="${sel?'#fff':'#7a3e24'}" pointer-events="none">${g.n}</text></g>`;
+          const chx=chipXs[gi],cxm=left+g.first.center*scale,sil=g.members.map(m=>`<path d="${tool(m,left+m.center*scale)}" fill="${col}" fill-opacity="${sel?.2:.07}" stroke="${col}" stroke-width="${sel?1.6:.9}" stroke-dasharray="${sel?'':'4 2'}" vector-effect="non-scaling-stroke"/>`).join('');
+          return `<g data-cutno="${g.n}" style="cursor:pointer">${sil}<path d="M ${chx} 60 V 80 L ${cxm} 104 V ${y-16}" fill="none" stroke="${col}" stroke-width="${sel?1.4:.8}" vector-effect="non-scaling-stroke"/><circle cx="${chx}" cy="48" r="17" fill="transparent"/><circle cx="${chx}" cy="48" r="12" fill="${sel?'#0a6cf0':'#fff'}" stroke="${col}" stroke-width="1.5"/><text x="${chx}" y="52.5" font-size="${g.n>9?11:13}" font-weight="700" text-anchor="middle" fill="${sel?'#fff':'#7a3e24'}" pointer-events="none">${g.n}</text></g>`;
         }
-        const silhouettes=g.members.map(m=>`<path d="${tool(m,left+m.center*scale)}" fill="${col}" fill-opacity="${sel?.45:.14}" stroke="${col}" stroke-width="${sel?2.4:1.1}" stroke-dasharray="${sel?'':'4 2'}"/>`).join('');
+        const silhouettes=g.members.map(m=>`<path d="${tool(m,left+m.center*scale)}" fill="${col}" fill-opacity="${sel?.2:.07}" stroke="${col}" stroke-width="${sel?1.6:.9}" stroke-dasharray="${sel?'':'4 2'}" vector-effect="non-scaling-stroke"/>`).join('');
         const cx=left+g.first.center*scale,ly=y-26-(g.n%3)*15;
-        return `<g data-cutno="${g.n}" style="cursor:pointer">${silhouettes}<path d="M ${cx} ${ly+8} V ${y-16}" stroke="${col}" stroke-width=".8"/><circle cx="${cx}" cy="${ly}" r="12" fill="transparent"/><circle cx="${cx}" cy="${ly}" r="8" fill="${sel?'#0a6cf0':'#fff'}" stroke="${col}" stroke-width="1.1"/><text x="${cx}" y="${ly+3.5}" font-size="${g.n>9?8:9.5}" font-weight="700" text-anchor="middle" fill="${sel?'#fff':'#7a3e24'}" pointer-events="none">${g.n}</text></g>`;
+        return `<g data-cutno="${g.n}" style="cursor:pointer">${silhouettes}<path d="M ${cx} ${ly+8} V ${y-16}" stroke="${col}" stroke-width=".8" vector-effect="non-scaling-stroke"/><circle cx="${cx}" cy="${ly}" r="12" fill="transparent"/><circle cx="${cx}" cy="${ly}" r="8" fill="${sel?'#0a6cf0':'#fff'}" stroke="${col}" stroke-width="1.1"/><text x="${cx}" y="${ly+3.5}" font-size="${g.n>9?8:9.5}" font-weight="700" text-anchor="middle" fill="${sel?'#fff':'#7a3e24'}" pointer-events="none">${g.n}</text></g>`;
       }).join('');
       const maxRows=14,rows=groups.slice(0,maxRows),tableTop=mapMode?bottom+100+165:bottom+92,ph=18;
       const nameOf=g=>{const c=g.first;return c.pocket?(c.name||'Выборка'):(c.name||'Контур');};
@@ -3916,7 +3917,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
   // ===== Чертёж в разрезе: профиль кромки собирается из блоков-фрез (как «лего») =====
   function bindSectionDraw() {
     const KEY='fasadlab-secdraw';
-    let D={L:40,T:19,grid:1,blocks:[],line:[],raw:null,flip:false,shift:0,scale:1,nid:1,fw:596,fh:716,pw:0,pl:1000};
+    let D={mirror:false,L:40,T:19,grid:1,blocks:[],line:[],raw:null,flip:false,shift:0,scale:1,nid:1,fw:596,fh:716,pw:0,pl:1000};
     try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved&&Array.isArray(saved.blocks)&&Array.isArray(saved.line))D={...D,...saved};}catch(e){}
     let tool='move',arcTmp=[],sel=0,geo=null,view={k:1,vx:0,vy:0},snapGuide=null,gesture=null,pinch=null;const ptr=new Map();
     const fmt=v=>Math.round(v*100)/100,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -3936,12 +3937,12 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     const cutterOptions=()=>additionalCutterOptions();
     const cutterName=v=>cutterLabel(v);
     function readInputs(){
-      const n=(id,def)=>{const v=Number($(id).value);return Number.isFinite(v)?v:def;};
-      D.L=clamp(n('sdL',40),5,300);D.T=clamp(n('sdT',19),1,100);D.grid=n('sdGrid',1);D.flip=$('sdFlip').checked;D.shift=n('sdShift',0);D.scale=n('sdScale',1)>0?n('sdScale',1):1;
+      const n=(id,def)=>{const v=Number(String($(id).value).replace(',','.'));return $(id).value!==''&&Number.isFinite(v)?v:def;};
+      D.L=clamp(n('sdL',40),5,300);D.T=clamp(n('sdT',19),1,100);D.grid=n('sdGrid',1);D.flip=$('sdFlip').checked;D.mirror=$('sdMirror').checked;D.shift=n('sdShift',0);D.scale=n('sdScale',1)>0?n('sdScale',1):1;
       D.fw=clamp(n('sdFW',596),80,3000);D.fh=clamp(n('sdFH',716),80,3000);D.pw=n('sdPW',0);D.pl=clamp(n('sdPL',1000),1,3000);
     }
     function writeInputs(){
-      $('sdL').value=D.L;$('sdT').value=D.T;$('sdGrid').value=String(D.grid);$('sdFlip').checked=!!D.flip;$('sdShift').value=D.shift;$('sdScale').value=D.scale;
+      $('sdL').value=D.L;$('sdT').value=D.T;$('sdGrid').value=String(D.grid);$('sdFlip').checked=!!D.flip;$('sdMirror').checked=!!D.mirror;$('sdShift').value=D.shift;$('sdScale').value=D.scale;
       $('sdFW').value=D.fw;$('sdFH').value=D.fh;$('sdPW').value=D.pw||Math.ceil(D.L);$('sdPL').value=D.pl;
     }
     function buildLine(){
@@ -3949,24 +3950,41 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       const pts=D.raw.pts.map(p=>[p[0]*D.scale,p[1]*D.scale]);
       const minX=Math.min(...pts.map(p=>p[0])),minY=Math.min(...pts.map(p=>p[1])),maxY=Math.max(...pts.map(p=>p[1]));
       const up=D.raw.src==='dxf'?!D.flip:D.flip;
-      D.line=pts.map(p=>({x:fmt(p[0]-minX+D.shift),d:fmt(up?maxY-p[1]:p[1]-minY)}));
+      const maxX=Math.max(...pts.map(p=>p[0]));
+      D.line=pts.map(p=>({x:fmt((D.mirror?maxX-p[0]:p[0]-minX)+D.shift),d:fmt(up?maxY-p[1]:p[1]-minY)}));
     }
+    const MODE_TXT={on:'вдоль вектора',out:'снаружи',in:'внутри'};
+    const shiftOf=b=>b.mode==='in'?b.width/2:b.mode==='out'?-b.width/2:0;
+    const resync=b=>{b.pos=fmt(b.center-shiftOf(b));};
+    const setCenter=(b,c)=>{b.center=fmt(clamp(c,0,D.L));b.pos=fmt(Math.max(0,b.center-shiftOf(b)));};
     function addBlock(props){
       const cutter=props.cutter,shape=cutterShape(cutter);
       if(!shape){status('Выберите фрезу из списка.');return null;}
-      const b={id:D.nid++,cutter,width:fmt(Math.max(.2,Number(props.width)||6)),depth:fmt(clamp(Number(props.depth)||3,.1,D.T)),center:fmt(clamp(Number(props.center)||0,0,D.L))};
-      D.blocks.push(b);sel=b.id;return b;
+      const b={id:D.nid++,cutter,mode:props.mode||'on',width:fmt(Math.max(.2,Number(props.width)||6)),depth:fmt(clamp(Number(props.depth)||3,.1,D.T)),center:0,pos:0};
+      setCenter(b,Number(props.center)||0);D.blocks.push(b);sel=b.id;return b;
     }
     function renderBlocks(){
       const box=$('sdBlocks');
-      if(!D.blocks.length){box.innerHTML='<div class="sub">Блоков пока нет. Добавьте фрезу кнопкой «＋ Блок», готовым блоком ниже или нарисуйте/загрузите линию и нажмите «Подобрать фрезы».</div>';return;}
-      box.innerHTML=D.blocks.map((b,i)=>`<div class="sd-blk${b.id===sel?' sel':''}" data-blk="${b.id}"><div class="nm"><span class="sd-dot" style="background:${COLORS[i%COLORS.length]}"></span>${i+1}. <select data-f="cutter" aria-label="Фреза блока ${i+1}">${cutterOptions()}</select><button type="button" data-dup title="Копия справа" aria-label="Копия блока ${i+1}">⧉</button></div>
-      <label>От края, мм<input data-f="center" type="number" step="0.1" min="0" value="${b.center}"></label><label>Ширина, мм<input data-f="width" type="number" step="0.1" min="0.2" value="${b.width}"></label><label>Глубина, мм<input data-f="depth" type="number" step="0.1" min="0.1" value="${b.depth}"></label><button type="button" data-del title="Удалить блок" aria-label="Удалить блок ${i+1}">✕</button></div>`).join('');
-      box.querySelectorAll('.sd-blk').forEach(row=>{const b=D.blocks.find(x=>x.id===Number(row.dataset.blk));const s=row.querySelector('select');if(b&&s)s.value=b.cutter;});
+      if(!D.blocks.length){box.innerHTML='<div class="sub">Блоков пока нет. Нажмите на карточку фрезы выше, на «Готовые» или нарисуйте/загрузите линию и нажмите «Подобрать фрезы».</div>';return;}
+      box.innerHTML=D.blocks.map((b,i)=>`<div class="sd-item${b.id===sel?' sel':''}" data-blk="${b.id}"><span class="sd-dot" style="background:${COLORS[i%COLORS.length]}"></span><span class="sd-it">${i+1}. ${esc(cutterLabel(b.cutter))} · Ø${b.width} · ↓${b.depth} · ${fmt(b.pos)} мм ${MODE_TXT[b.mode]||''}</span><button type="button" data-dup title="Копия справа" aria-label="Копия блока ${i+1}">⧉</button><button type="button" data-del title="Удалить блок" aria-label="Удалить блок ${i+1}">✕</button></div>`).join('');
+    }
+    function renderSel(){
+      const box=$('sdSelBox'),b=D.blocks.find(x=>x.id===sel),idx=D.blocks.indexOf(b);
+      if(!b){box.innerHTML='<h3>Настройки блока</h3><div class="sd-selhint">Нажмите на блок на чертеже или выберите фрезу ниже — здесь появятся его настройки.</div>';return;}
+      const bad=b.pos<-.001;
+      box.innerHTML=`<h3><span class="sd-dot" style="background:${COLORS[idx%COLORS.length]}"></span> Блок ${idx+1}: настройки</h3>
+      <div class="sd-row"><label style="grid-column:1/-1">Фреза<select data-sf="cutter">${cutterOptions()}</select></label>
+      <label>Центр фрезы от края, мм<input data-sf="center" type="text" inputmode="decimal" autocomplete="off" value="${b.center}"></label>
+      <label>Фрезеровать<select data-sf="mode"><option value="on">вдоль вектора</option><option value="out">снаружи вектора (фреза к краю)</option><option value="in">внутри вектора (фреза к центру)</option></select></label>
+      <label>Ширина (Ø), мм<input data-sf="width" type="text" inputmode="decimal" autocomplete="off" value="${b.width}"></label>
+      <label>Глубина, мм<input data-sf="depth" type="text" inputmode="decimal" autocomplete="off" value="${b.depth}"></label></div>
+      <div class="sub">Фреза остаётся на месте и занимает ${fmt(Math.max(0,b.center-b.width/2))}…${fmt(b.center+b.width/2)} мм. Вектор для станка: <b>${fmt(b.pos)} мм от края</b>${bad?' — ⚠ за краем детали, выберите другой режим':''}.</div>
+      <div class="sd-tools"><button type="button" data-sdsel="dup">⧉ Копия</button><button type="button" data-sdsel="del">✕ Удалить блок</button></div>`;
+      box.querySelector('[data-sf=cutter]').value=b.cutter;box.querySelector('[data-sf=mode]').value=b.mode||'on';
     }
     function applyView(){if(!geo)return;view.k=clamp(view.k,.4,14);$('sdSvg').setAttribute('viewBox',`${fmt(view.vx)} ${fmt(view.vy)} ${fmt(geo.W/view.k)} ${fmt(geo.H/view.k)}`);}
     function fitView(){view={k:1,vx:0,vy:0};applyView();}
-    function render(){
+    function render(keepForm){
       const svg=$('sdSvg'),L=D.L,T=D.T,W=820,padL=48,padR=40,padT=60,padB=50;
       const sc=Math.min((W-padL-padR)/L,420/T),x0=padL,y0=padT,H=Math.round(padT+T*sc+padB);
       const first=!geo||geo.H!==H||geo.sc!==sc;
@@ -3983,24 +4001,27 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       const mat=`M ${pts.join(' L ')} V ${y0+T*sc} H ${x0} Z`;
       const blocks=D.blocks.map((b,i)=>{
         const sh=shapeOf(b);if(!sh)return '';const R=b.width/2,col=COLORS[i%COLORS.length],pp=[],act=b.id===sel;
-        const a=b.center-R,z=b.center+R,st=Math.max(.05,Math.min(.3,b.width/60));
-        for(let x=Math.max(0,a);x<=Math.min(L,z)+1e-9;x+=st)pp.push(`${(x0+x*sc).toFixed(2)} ${(y0+Math.min(T,cutterReliefDepth(sh,clamp((x-b.center)/R,-.9999,.9999),Math.min(b.depth,T),b.width))*sc).toFixed(2)}`);
-        const hx=x0+b.center*sc,hy=y0+Math.min(T,b.depth)*sc;
-        return `<path data-blk="${b.id}" style="cursor:ew-resize" d="M ${(x0+Math.max(0,a)*sc).toFixed(2)} ${y0-1} L ${pp.join(' L ')} L ${(x0+Math.min(L,z)*sc).toFixed(2)} ${y0-1} Z" fill="${col}" fill-opacity="${act?.42:.24}" stroke="${col}" stroke-width="${act?2.4:1.4}"/>
-        <g data-blk="${b.id}" style="cursor:ew-resize"><path d="M${hx} ${y0-4} V${y0-15*hs}" stroke="${col}" stroke-width="1.5"/><circle cx="${hx}" cy="${y0-26*hs}" r="${11*hs}" fill="${col}"/><text x="${hx}" y="${y0-26*hs+4*hs}" font-size="${12*hs}" font-weight="700" fill="#fff" text-anchor="middle">${i+1}</text></g>
-        <rect data-depth="${b.id}" x="${hx-7*hs}" y="${hy-7*hs}" width="${14*hs}" height="${14*hs}" rx="3" fill="#fff" stroke="${col}" stroke-width="2" style="cursor:ns-resize"/>`;
+        const a=b.center-R,z=b.center+R,st=Math.max(.05,Math.min(.3,b.width/60)),dd=Math.min(T,b.depth);
+        for(let x=Math.max(0,a);x<=Math.min(L,z)+1e-9;x+=st)pp.push(`${(x0+x*sc).toFixed(2)} ${(y0+Math.min(T,cutterReliefDepth(sh,clamp((x-b.center)/R,-.9999,.9999),dd,b.width))*sc).toFixed(2)}`);
+        const hx=x0+b.center*sc,hy=y0+dd*sc,ax=x0+Math.max(0,a)*sc,zx=x0+Math.min(L,z)*sc;
+        const ne='vector-effect="non-scaling-stroke"';
+        return `<path data-blk="${b.id}" style="cursor:ew-resize" d="M ${ax.toFixed(2)} ${y0} L ${pp.join(' L ')} L ${zx.toFixed(2)} ${y0} Z" fill="${col}" fill-opacity="${act?.2:.1}" stroke="${col}" stroke-width="${act?1.8:1}" ${ne}/>
+        <path d="M${ax.toFixed(2)} ${hy.toFixed(2)} H${zx.toFixed(2)}" stroke="${col}" stroke-width="1" stroke-dasharray="4 3" ${ne} fill="none" opacity=".8"/>
+        <g data-blk="${b.id}" style="cursor:ew-resize"><path d="M${hx} ${y0-4} V${y0-14*hs}" stroke="${col}" stroke-width="1" ${ne}/><circle cx="${hx}" cy="${y0-24*hs}" r="${10*hs}" fill="${col}"/><text x="${hx}" y="${y0-24*hs+3.6*hs}" font-size="${11*hs}" font-weight="700" fill="#fff" text-anchor="middle">${i+1}</text></g>
+        <rect data-depth="${b.id}" x="${hx-6*hs}" y="${hy-6*hs}" width="${12*hs}" height="${12*hs}" rx="2" fill="#fff" stroke="${col}" stroke-width="1.5" ${ne} style="cursor:ns-resize"/>
+        <text x="${zx+4*hs}" y="${hy+4*hs}" font-size="${11*hs}" fill="${col}" style="pointer-events:none">↓${fmt(dd)}</text>`;
       }).join('');
-      const ref=D.line.length>1?`<path d="M ${D.line.map(p=>`${(x0+p.x*sc).toFixed(2)} ${(y0+p.d*sc).toFixed(2)}`).join(' L ')}" fill="none" stroke="#d63a2f" stroke-width="2" stroke-dasharray="6 3" clip-path="url(#sdClip)"/>`:'';
-      const refDots=D.line.length<=60?D.line.map(p=>`<circle cx="${x0+p.x*sc}" cy="${y0+p.d*sc}" r="${3.5*hs}" fill="#d63a2f"/>`).join(''):'';
+      const ref=D.line.length>1?`<path d="M ${D.line.map(p=>`${(x0+p.x*sc).toFixed(2)} ${(y0+p.d*sc).toFixed(2)}`).join(' L ')}" fill="none" stroke="#d63a2f" stroke-width="1.5" stroke-dasharray="6 3" vector-effect="non-scaling-stroke" clip-path="url(#sdClip)"/>`:'';
+      const refDots=!D.raw&&D.line.length<=60?D.line.map(p=>`<circle cx="${x0+p.x*sc}" cy="${y0+p.d*sc}" r="${3.5*hs}" fill="#d63a2f"/>`).join(''):'';
       const tmp=arcTmp.map(p=>`<circle cx="${x0+p.x*sc}" cy="${y0+p.d*sc}" r="${5*hs}" fill="#fff" stroke="#d63a2f" stroke-width="2"/>`).join('');
       const guide=snapGuide!==null?`<path d="M${x0+snapGuide*sc} ${y0-40} V${y0+T*sc+10}" stroke="#2fa05a" stroke-width="2" stroke-dasharray="4 3"/>`:'';
       svg.innerHTML=`<defs><clipPath id="sdClip"><rect x="${x0}" y="${y0-2}" width="${L*sc}" height="${T*sc+4}"/></clipPath><pattern id="sdHatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><path d="M0 0V7" stroke="#77736b" stroke-width=".8" stroke-opacity=".3"/></pattern></defs>
-      <path d="${mat}" fill="#e5e1d8" stroke="#625f57" stroke-width="1.6"/><path d="${mat}" fill="url(#sdHatch)"/><g opacity=".75">${g}</g>${blocks}${ref}${refDots}${tmp}${guide}
+      <path d="${mat}" fill="#e5e1d8" stroke="#2b2924" stroke-width="2.2" vector-effect="non-scaling-stroke"/><path d="${mat}" fill="url(#sdHatch)"/><g opacity=".75">${g}</g>${blocks}${ref}${refDots}${tmp}${guide}
       <path d="M${x0} ${y0-44} V${y0+T*sc+8}" stroke="#222" stroke-width="2.5"/><text x="${x0+4}" y="${y0+T*sc+26}" font-size="13" fill="#333">0 — край фасада</text>
       <path d="M${x0+L*sc} ${y0-44} V${y0+T*sc+8}" stroke="#0a6cf0" stroke-width="2" stroke-dasharray="6 4"/><text x="${x0+L*sc-4}" y="${y0+T*sc+26}" font-size="13" fill="#0a6cf0" text-anchor="end">${fmt(L)} мм — конец профиля (филёнка)</text>
       <text x="${x0-8}" y="${y0+4}" font-size="11" fill="#555" text-anchor="end">0</text><text x="${x0-8}" y="${y0+T*sc+4}" font-size="11" fill="#555" text-anchor="end">${fmt(T)}</text>
       <text x="14" y="${y0+T*sc/2}" font-size="11" fill="#555" transform="rotate(-90 14 ${y0+T*sc/2})" text-anchor="middle">толщина ${fmt(T)} мм ↓</text>`;
-      renderBlocks();
+      if(!keepForm){renderBlocks();renderSel();}
       const parts=[`Блоков: ${D.blocks.length}`];
       if(D.line.length)parts.push(`линия: ${D.line.length} точек`);
       if(tool==='arc')parts.push(`дуга: поставьте ${3-arcTmp.length} точк.`);
@@ -4040,7 +4061,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       const hit=e.target.closest&&e.target.closest('[data-blk],[data-depth]');
       if(hit&&tool==='move'){
         const dep=hit.dataset.depth!==undefined,id=Number(dep?hit.dataset.depth:hit.dataset.blk),b=D.blocks.find(x=>x.id===id);
-        if(b){sel=id;gesture={type:dep?'depth':'blk',id,off:rawMm(e).x-b.center};render();e.preventDefault();return;}
+        if(b){sel=id;gesture={type:dep?'depth':'blk',id,off:rawMm(e).x-b.center};render();setTab('blocks');const pane=document.querySelector('#sdOverlay .sd-pane');if(pane)pane.scrollTop=0;e.preventDefault();return;}
       }
       gesture={type:'pan',sx:e.clientX,sy:e.clientY,lx:e.clientX,ly:e.clientY,moved:false};
     }
@@ -4057,7 +4078,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       if(!gesture)return;
       if(gesture.type==='blk'){
         const b=D.blocks.find(x=>x.id===gesture.id);if(!b)return;
-        b.center=snapBlock(b,rawMm(e).x-gesture.off);render();
+        setCenter(b,snapBlock(b,rawMm(e).x-gesture.off));render();
       }else if(gesture.type==='depth'){
         const b=D.blocks.find(x=>x.id===gesture.id);if(!b)return;
         const gr=Math.max(.05,D.grid);b.depth=fmt(clamp(Math.round(rawMm(e).d/gr)*gr,.1,D.T));render();
@@ -4083,14 +4104,14 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     }
     function addFromPalette(item){
       readInputs();
-      const defW=Math.max(.2,Number($('sdWidth').value)||6),defD=Math.max(.1,Number($('sdDepth').value)||3);
+      const num=id=>Number(String($(id).value).replace(',','.'));const defW=Math.max(.2,num('sdWidth')||6),defD=Math.max(.1,num('sdDepth')||3);
       let width=item.custom?Number(item.width)||defW:defW,depth=item.custom&&item.depth>0?Math.min(item.depth,D.T):defD;
       if(item.value==='roundover'&&!$('sdWidth').dataset.touched)width=Math.max(width,defD*2);
       const edgeType=item.value==='roundover'||item.value==='v90'||(item.custom&&/form/.test(String(cutterShape(item.value))));
       const right=D.blocks.reduce((m,b)=>Math.max(m,b.center+b.width/2),0);
       let center=D.blocks.length?right+width/2:(edgeType?0:width/2);
       if(center+width/2>D.L+1e-9)center=Math.max(width/2,D.L-width/2);
-      const b=addBlock({cutter:item.value,width,depth,center});if(b){save();render();}
+      const b=addBlock({cutter:item.value,width,depth,center});if(b){save();render();setTab('blocks');const pane=document.querySelector('#sdOverlay .sd-pane');if(pane)pane.scrollTop=0;}
     }
     function renderPalette(){
       const items=[['flat','Прямая',6,3],['round','Радиусная',6,3],['v90','V-фреза 90°',8,4],['roundover','Завал (радиус)',10,5]].map(([value,name,w,d])=>({value,name,w,d,custom:false}));
@@ -4106,41 +4127,70 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     }
     function fit(){
       if(D.line.length<2)throw new Error('Сначала нарисуйте линию («Линия» / «Дуга») или загрузите DXF/SVG профиля.');
-      const L=D.L,T=D.T,k=.2,n=Math.ceil(L/k),depth=new Array(n);
-      for(let i=0;i<n;i++)depth[i]=Math.min(T,refDepth((i+.5)*k));
-      const thr=.12,cuts=[];
-      for(let i=0;i<n;){
-        if(depth[i]<=thr){i++;continue;}
-        let j=i;while(j+1<n&&(depth[j+1]>thr||(j+2<n&&depth[j+2]>thr)))j++;
-        const xs=i*k,xe=(j+1)*k;
-        cuts.push({xs,xe,w:xe-xs,center:(xs+xe)/2,D:Math.max(...depth.slice(i,j+1)),truncL:i===0,truncR:j===n-1,i,j});
-        i=j+1;
+      const L=D.L,T=D.T,k=.2,n=Math.max(2,Math.ceil(L/k)),d=new Array(n);
+      for(let q=0;q<n;q++)d[q]=Math.min(T,refDepth((q+.5)*k));
+      const lvl=.12,tolP=.12,minLen=.8,r05=v=>Math.round(v*20)/20;
+      // 1) ровные площадки = прямые фрезы шириной в площадку
+      let flats=[];
+      for(let q=0;q<n;){
+        let r=q;while(r+1<n&&Math.abs(d[r+1]-d[q])<=tolP)r++;
+        if((r-q+1)*k>=minLen-1e-9){
+          let sum=0;for(let t=q;t<=r;t++)sum+=d[t];
+          if(sum/(r-q+1)>lvl)flats.push({a:q,b:r,lv:sum/(r-q+1)});
+          q=r+1;
+        }else q++;
       }
-      if(!cuts.length)throw new Error('Линия лежит на поверхности: вырезов не найдено. Проверьте, что глубина считается вниз от верха (кнопка «Перевернуть»).');
-      const saved=scanSection,cand=candidates(),made=[],notes=[];
-      scanSection={k,depth,widthMm:L};
-      try{
-        cuts.forEach((cut,no)=>{
-          const inner=depth.slice(cut.i+Math.floor((cut.j-cut.i)*.15),cut.j-Math.floor((cut.j-cut.i)*.15)+1),tol=Math.max(.15,.06*cut.D);
-          const flat=cut.w>=1.2&&inner.length>0&&inner.every(v=>Math.abs(v-cut.D)<=tol);
-          if(flat){made.push({cutter:'flat',width:cut.w,depth:cut.D,center:cut.center});notes.push(`№${no+1}: ступенька/паз ${fmt(cut.w)} × ${fmt(cut.D)} мм — прямая фреза`);return;}
-          if(cut.truncL){
-            const D0=Math.max(depth[0],depth[1]||0,depth[2]||0);let err=0,cnt=0;
-            for(let q=0;q*k<=D0*1.1&&q<n;q++){err+=(depth[q]-Math.max(0,D0-q*k))**2;cnt++;}
-            if(D0>=.8&&Math.sqrt(err/Math.max(1,cnt))<.1*D0&&Math.abs(cut.w-D0)<=Math.max(.6,.15*D0)){made.push({cutter:'v90',width:2*D0,depth:D0,center:0});notes.push(`№${no+1}: фаска ${fmt(D0)} мм — V-фреза 90°`);return;}
-            const f=scanFitEdge(cut,'left',cand,T);
-            if(f){made.push({cutter:f.cand.value,width:f.cand.shape==='v90'?Math.min(f.cand.width,2*f.z):f.cand.width,depth:f.z,center:0});notes.push(`№${no+1}: кромка — ${f.cand.name} Ø${fmt(f.cand.width)}`);}
-            else notes.push(`№${no+1}: для кромки фреза не подобрана`);
-            return;
+      for(let q=1;q<flats.length;){const p=flats[q-1],c=flats[q];if(c.a-p.b<=1&&Math.abs(c.lv-p.lv)<=.15){p.b=c.b;p.lv=(p.lv+c.lv)/2;flats.splice(q,1);}else q++;}
+      const made=[],notes=[];
+      flats.forEach(f=>{
+        const a=r05(f.a*k),b=r05((f.b+1)*k),w=Math.max(.2,b-a);
+        made.push({cutter:'flat',width:fmt(w),depth:fmt(Math.min(T,r05(f.lv))),center:fmt((a+b)/2)});
+        notes.push(`ступень ${fmt(a)}…${fmt(b)} мм, глубина ${fmt(r05(f.lv))} — прямая фреза Ø${fmt(w)}`);
+      });
+      const baseAt=u=>made.reduce((m,b)=>u>=b.center-b.width/2-1e-9&&u<=b.center+b.width/2+1e-9?Math.max(m,b.depth):m,0);
+      const base=d.map((_,q)=>baseAt((q+.5)*k));
+      // 2) остаток (скругления, фаски, канавки) подбираем формовыми фрезами
+      const runs=[];
+      for(let q=0;q<n;){
+        if(d[q]-base[q]<=.15){q++;continue;}
+        let r=q;while(r+1<n&&(d[r+1]-base[r+1]>.15||(r+2<n&&d[r+2]-base[r+2]>.15)))r++;
+        if(r-q+1>=2)runs.push([q,r]);
+        q=r+1;
+      }
+      const cands=candidates();
+      runs.forEach(([q,r],no)=>{
+        const ra=q*k,rb=(r+1)*k,span=rb-ra;let zmax=0;for(let t=q;t<=r;t++)zmax=Math.max(zmax,d[t]);if(ra<.35)zmax=Math.max(zmax,refDepth(0));zmax=Math.min(T,Math.max(.2,zmax));
+        const list=cands.slice();
+        ['v90','round','roundover'].forEach(sh=>[2*span,span].forEach(w=>{if(w>=.5&&w<=60)list.push({value:sh,shape:sh,name:cutterLabel(sh),width:fmt(w),maxDepth:Infinity,lib:false});}));
+        const i0=Math.max(0,q-4),i1=Math.min(n-1,r+4);
+        let best=null;
+        const evalCs=(cand,z,cs)=>{
+          const eff=cand.shape==='v90'?Math.min(cand.width,2*z):cand.width;let err=0,m=0;
+          for(let t=i0;t<=i1;t++){const u=(t+.5)*k;let pred=base[t];for(const c of cs)pred=Math.max(pred,scanCandReliefAt(cand,z,u-c));err+=(pred-d[t])**2;m++;}
+          return{eff,rms:Math.sqrt(err/Math.max(1,m))};
+        };
+        for(const cand of list){
+          const z=Math.min(zmax,cand.maxDepth);if(!(z>0))continue;
+          if(cand.shape==='v90'&&cand.width<Math.min(span,2*z)*.8)continue;
+          const eff=cand.shape==='v90'?Math.min(cand.width,2*z):cand.width,half=eff/2,opts=[];
+          const cs=new Set([ra,rb,(ra+rb)/2,ra+half,rb-half]);if(ra<.35)cs.add(0);
+          for(let c=Math.max(0,ra-half);c<=Math.min(L,rb+half)+1e-9;c+=Math.max(.5,span/20))cs.add(fmt(c));
+          cs.forEach(c=>{if(c>=-1e-9&&c<=L+1e-9)opts.push([clamp(c,0,L)]);});
+          if(eff<span*.85&&cand.shape!=='v90'){
+            const pitch=Math.max(eff*.6,.3),count=Math.min(8,Math.ceil((span-eff)/pitch)+1);
+            if(count>=2){const cc=[];for(let t=0;t<count;t++)cc.push(ra+half+(span-eff)*t/(count-1));opts.push(cc);}
           }
-          const f=scanFitCut(cut,cand,T);
-          if(!f){notes.push(`№${no+1}: подходящей фрезы нет`);return;}
-          const w=f.cand.shape==='v90'?Math.min(f.cand.width,2*f.z):f.cand.width;
-          f.centers.forEach(c=>made.push({cutter:f.cand.value,width:w,depth:f.z,center:c}));
-          notes.push(`№${no+1}: ${f.cand.name} Ø${fmt(w)}${f.centers.length>1?`, проходов ${f.centers.length}`:''}`);
-        });
-      }finally{scanSection=saved;}
-      if(!made.length)throw new Error('Фрезы не подобраны: '+(notes.join('; ')||'добавьте фрезы в каталог.'));
+          for(const cc of opts){
+            const ev=evalCs(cand,z,cc),score=ev.rms/Math.max(zmax,.5)+.012*(cc.length-1)+(cand.lib?0:.008)+(String(cand.shape).startsWith('form')?.03:0);
+            if(!best||score<best.score)best={cand,z,cs:cc,eff:ev.eff,rms:ev.rms,score};
+          }
+        }
+        if(!best){notes.push(`участок ${fmt(ra)}…${fmt(rb)} мм: фреза не подобрана`);return;}
+        best.cs.forEach(c=>made.push({cutter:best.cand.value,width:fmt(best.eff),depth:fmt(best.z),center:fmt(c)}));
+        notes.push(`участок ${fmt(ra)}…${fmt(rb)} мм: ${best.cand.name} Ø${fmt(best.eff)}, глубина ${fmt(best.z)}${best.cs.length>1?`, проходов ${best.cs.length}`:''}${best.score>.25?' (приблизительно)':''}`);
+      });
+      if(!made.length)throw new Error('Линия лежит на поверхности или фрезы не подобраны. Проверьте «Перевернуть» / «Отразить» и размеры.');
+      made.sort((a,b)=>a.center-b.center);
       D.blocks=[];made.forEach(addBlock);sel=D.blocks[0]?.id||0;save();render();
       return notes;
     }
@@ -4166,7 +4216,10 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       }
       if(!pts||pts.length<2||pts.some(p=>!Number.isFinite(p[0])||!Number.isFinite(p[1])))throw new Error('Профиль не прочитан: нужна линия или контур разреза.');
       D.raw={src,pts:pts.length>4000?pts.filter((_,i)=>i%Math.ceil(pts.length/4000)===0):pts};D.scale=Math.round(scale*1e4)/1e4;D.shift=0;
-      const w=Math.max(...D.raw.pts.map(p=>p[0]))-Math.min(...D.raw.pts.map(p=>p[0]));
+      {const xs=D.raw.pts.map(p=>p[0]*D.scale),ys=D.raw.pts.map(p=>p[1]*D.scale),x1=Math.min(...xs),x2=Math.max(...xs),span=Math.max(...ys)-Math.min(...ys);
+       const wall=x=>{const v=ys.filter((_,i)=>Math.abs(xs[i]-x)<1e-6);return v.length?Math.max(...v)-Math.min(...v):0;};
+       const first=D.raw.pts[0],last=D.raw.pts[D.raw.pts.length-1],closed=Math.hypot(first[0]-last[0],first[1]-last[1])<1e-6*Math.max(1,x2-x1)*1e3;
+       D.mirror=!!(closed&&wall(x2)>wall(x1)+.5&&wall(x2)>span*.3);D.flip=false;}
       buildLine();
       const lineW=Math.max(...D.line.map(p=>p.x)),maxD=Math.max(...D.line.map(p=>p.d));
       if(lineW>D.L)D.L=Math.min(300,Math.ceil(lineW));
@@ -4195,7 +4248,8 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
         notes.push(`кромка: ${edge.length} ${edge.length===1?'проход':'прохода'} по основному контуру`);
       }
       [...inner].sort((a,b)=>a.center-b.center).forEach(b=>{
-        state.contours=[...state.contours,{id:nextContourId++,name:nextVectorName(),parentId:0,shape:'rect',direction:'in',offset:b.center,corner:0,cutter:b.cutter,diameter:b.width,depth:b.depth,side:'on'}];
+        let mode=b.mode||'on',off=fmt(b.pos!==undefined?b.pos:b.center);if(off<.1){mode='on';off=Math.max(.1,fmt(b.center));}
+        state.contours=[...state.contours,{id:nextContourId++,name:nextVectorName(),parentId:0,shape:'rect',direction:'in',offset:off,corner:0,cutter:b.cutter,diameter:b.width,depth:b.depth,side:mode==='out'?'outside':mode==='in'?'inside':'on'}];
       });
       if(inner.length)notes.push(`добавлено векторов: ${inner.length}`);
       if(opening>0){state.contours=[...state.contours,{id:nextContourId++,name:'Проём (филёнка)',parentId:0,shape:'rect',direction:'in',offset:opening,corner:0,cutter:'none',diameter:6,depth:3}];notes.push(`проём под филёнку: отступ ${fmt(opening)} мм`);}
@@ -4209,7 +4263,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       if(state.objectType!=='profile'||state.kind==='tsulaga')throw new Error('Откройте изделие «Профиль» (не цулагу).');
       stateFromInputs();
       const vertical=state.profileAxis==='vertical',across=vertical?state.width:state.height;
-      const bands=state.profileBands.map(band=>{const c=bandCoord(band,across),near=band.side!=='right'&&band.side!=='bottom';return{cutter:band.cutter,width:Number(band.cutterWidth),depth:Number(band.depth),center:fmt(near?c:across-c)};});
+      const bands=state.profileBands.map(band=>{const c=bandCoord(band,across),near=band.side!=='right'&&band.side!=='bottom',m=band.mode==='inside'?'in':band.mode==='outside'?'out':'on',mm=near?m:(m==='in'?'out':m==='out'?'in':'on');return{cutter:band.cutter,width:Number(band.cutterWidth),depth:Number(band.depth),center:fmt(near?c:across-c),mode:mm,pos:fmt(near?Number(band.offset):across-Number(band.offset))};});
       if(!bands.length)throw new Error('В профиле нет векторов.');
       return{vertical,across,bands,T:Number(state.thickness),name:state.name};
     }
@@ -4250,7 +4304,8 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       let shifted=0;
       state.profileBands=D.blocks.map((b,i)=>{
         const edgeLike=b.center<b.width/2-.01;if(edgeLike)shifted++;
-        return{id:i+1,side:'left',offset:edgeLike?0:fmt(b.center),cutter:b.cutter,cutterWidth:b.width,depth:b.depth,mode:edgeLike?'inside':'on',allowance:0,startMargin:0,endMargin:0,stepdown:0,feed:'climb'};
+        const bm=b.mode==='in'?'inside':b.mode==='out'?'outside':'on';
+        return{id:i+1,side:'left',offset:edgeLike?0:(b.pos>=.01?fmt(b.pos):fmt(b.center)),cutter:b.cutter,cutterWidth:b.width,depth:b.depth,mode:edgeLike?'inside':(b.pos>=.01?bm:'on'),allowance:0,startMargin:0,endMargin:0,stepdown:0,feed:'climb'};
       });
       state.selectedProfileBand=1;
       const issues=geometryIssues();
@@ -4274,7 +4329,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     }
     // ---------- события ----------
     function open(){
-      D.blocks=D.blocks.filter(b=>cutterShape(b.cutter));
+      D.blocks=D.blocks.filter(b=>cutterShape(b.cutter));D.blocks.forEach(b=>{if(b.pos===undefined)b.pos=b.center;if(!b.mode)b.mode='on';});
       if(!D.blocks.length&&!D.line.length)D.T=Number(state.thickness)||19;
       hist=[];redoStack=[];lastSnap=snapNow();lastT=0;syncHistButtons();renderPalette();writeInputs();$('sdOverlay').classList.remove('hidden');geo=null;setTab('blocks');setTool('move');
     }
@@ -4284,7 +4339,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     $('closeSd').addEventListener('click',()=>$('sdOverlay').classList.add('hidden'));
     $('sdOverlay').addEventListener('click',e=>{if(e.target===$('sdOverlay'))$('sdOverlay').classList.add('hidden');});
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sdOverlay').classList.contains('hidden'))$('sdOverlay').classList.add('hidden');});
-    ['sdL','sdT','sdGrid','sdFlip','sdShift','sdScale','sdFW','sdFH','sdPW','sdPL'].forEach(id=>$(id).addEventListener('change',()=>{readInputs();if(['sdFlip','sdShift','sdScale'].includes(id))buildLine();D.blocks.forEach(b=>{b.center=clamp(b.center,0,D.L);b.depth=Math.min(b.depth,D.T);});save();render();}));
+    ['sdL','sdT','sdGrid','sdFlip','sdMirror','sdShift','sdScale','sdFW','sdFH','sdPW','sdPL'].forEach(id=>$(id).addEventListener('change',()=>{readInputs();if(['sdFlip','sdMirror','sdShift','sdScale'].includes(id))buildLine();D.blocks.forEach(b=>{b.center=clamp(b.center,0,D.L);b.depth=Math.min(b.depth,D.T);});save();render();}));
     $('sdSvg').addEventListener('pointerdown',onDown);$('sdSvg').addEventListener('pointermove',onMove);$('sdSvg').addEventListener('pointerup',onUp);$('sdSvg').addEventListener('pointercancel',onUp);
     $('sdSvg').addEventListener('wheel',e=>{e.preventDefault();const q=toView(e);zoomAt(e.deltaY<0?1.2:1/1.2,q.x,q.y);},{passive:false});
     const zoomCenter=f=>{zoomAt(f,view.vx+geo.W/view.k/2,view.vy+geo.H/view.k/2);};
@@ -4303,7 +4358,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       if(typing)return;
       const b=D.blocks.find(x=>x.id===sel);if(!b)return;
       if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();D.blocks=D.blocks.filter(x=>x.id!==b.id);sel=0;save();render();}
-      else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();b.center=fmt(clamp(b.center+(e.key==='ArrowRight'?1:-1)*Math.max(.05,D.grid),0,D.L));save();render();}
+      else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();setCenter(b,b.center+(e.key==='ArrowRight'?1:-1)*Math.max(.05,D.grid));save();render();}
       else if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();b.depth=fmt(clamp(b.depth+(e.key==='ArrowDown'?1:-1)*Math.max(.05,D.grid),.1,D.T));save();render();}
     });
     $('sdUndoPt').addEventListener('click',()=>{if(arcTmp.length)arcTmp.pop();else D.line.pop();D.raw=null;save();render();});
@@ -4320,21 +4375,35 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       else if(p==='bead')addBlock({cutter:'round',width:6,depth:3,center:Math.min(D.L-3,15)});
       save();render();
     }));
-    $('sdBlocks').addEventListener('input',e=>{
-      const row=e.target.closest('.sd-blk'),f=e.target.dataset.f;if(!row||!f)return;
-      const b=D.blocks.find(x=>x.id===Number(row.dataset.blk));if(!b)return;sel=b.id;
-      if(f==='cutter')b.cutter=e.target.value;
-      else{const v=Number(e.target.value);if(!Number.isFinite(v))return;b[f]=f==='center'?clamp(v,0,D.L):f==='depth'?clamp(v,.1,D.T):Math.max(.2,v);}
-      save(true);
-      const keep=document.activeElement,pos=keep&&keep.selectionStart;
-      const html=$('sdBlocks').innerHTML;render();void html;
-      const again=$('sdBlocks').querySelector(`[data-blk="${b.id}"] [data-f="${f}"]`);if(again&&f!=='cutter'){again.focus();try{again.setSelectionRange(pos,pos);}catch(err){}}
+    function editField(b,f,raw,final){
+      if(f==='cutter'){if(!cutterShape(raw))return false;b.cutter=raw;return true;}
+      if(f==='mode'){b.mode=['on','out','in'].includes(raw)?raw:'on';resync(b);return true;}
+      if(raw===''||raw===null)return false;
+      const v=Number(String(raw).replace(',','.'));if(!Number.isFinite(v))return false;
+      if(f==='center'){b.center=final?clamp(v,0,D.L):Math.max(0,v);}
+      else if(f==='width'){if(v<=0)return false;b.width=final?Math.max(.2,v):v;}
+      else if(f==='depth'){if(v<=0)return false;b.depth=final?clamp(v,.1,D.T):Math.min(v,D.T);}
+      resync(b);return true;
+    }
+    $('sdSelBox').addEventListener('input',e=>{
+      const f=e.target.dataset.sf;if(!f)return;const b=D.blocks.find(x=>x.id===sel);if(!b)return;
+      if(f==='cutter'||f==='mode'){if(editField(b,f,e.target.value,true)){save();render();}return;}
+      if(editField(b,f,e.target.value,false)){save(true);render(true);}
+    });
+    $('sdSelBox').addEventListener('change',e=>{
+      const f=e.target.dataset.sf;if(!f||f==='cutter'||f==='mode')return;const b=D.blocks.find(x=>x.id===sel);if(!b)return;
+      editField(b,f,e.target.value,true);save(true);render();
+    });
+    $('sdSelBox').addEventListener('click',e=>{
+      const act=e.target.closest('[data-sdsel]');if(!act)return;const b=D.blocks.find(x=>x.id===sel);if(!b)return;
+      if(act.dataset.sdsel==='del'){D.blocks=D.blocks.filter(x=>x.id!==b.id);sel=0;save();render();}
+      else{const n=addBlock({cutter:b.cutter,width:b.width,depth:b.depth,mode:b.mode,center:Math.min(D.L,b.center+Math.max(b.width,1))});if(n){save();render();}}
     });
     $('sdBlocks').addEventListener('click',e=>{
-      const row=e.target.closest('.sd-blk');if(!row)return;
-      if(e.target.closest('[data-dup]')){const b=D.blocks.find(x=>x.id===Number(row.dataset.blk));if(b){const n=addBlock({cutter:b.cutter,width:b.width,depth:b.depth,center:Math.min(D.L,b.center+Math.max(b.width,1))});if(n){save();render();}}return;}
-      if(e.target.closest('[data-del]')){D.blocks=D.blocks.filter(x=>x.id!==Number(row.dataset.blk));save();render();}
-      else{sel=Number(row.dataset.blk);render();}
+      const row=e.target.closest('.sd-item');if(!row)return;const id=Number(row.dataset.blk),b=D.blocks.find(x=>x.id===id);if(!b)return;
+      if(e.target.closest('[data-dup]')){const n=addBlock({cutter:b.cutter,width:b.width,depth:b.depth,mode:b.mode,center:Math.min(D.L,b.center+Math.max(b.width,1))});if(n){save();render();}return;}
+      if(e.target.closest('[data-del]')){D.blocks=D.blocks.filter(x=>x.id!==id);if(sel===id)sel=0;save();render();return;}
+      sel=id;render();
     });
     $('sdFile').addEventListener('change',async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;try{status(await importFile(file));}catch(error){status('⚠ '+error.message);alert(error.message);}});
     $('sdImport').addEventListener('click',()=>$('sdFile').click());
@@ -4391,7 +4460,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     const buttonsHtml=`<div class="gd-two">
       ${sec('Верхняя панель',li(['<b>3D / Вид сверху / Разрез</b> — переключение видов.','<b>Карта листа</b> — раскрой деталей.','<b>Открыть / Сохранить</b> — проект в файл JSON.','<b>Меню</b> — настройки экрана, порядок и показ панелей, стиль интерфейса и чертежа, 3D-архив.','<b>Фрезы</b> — библиотека фрез, импорт каталога ArtCAM (.TDB).','<b>О программе</b> — версия и эта инструкция.']))}
       ${sec('Нижняя строка чертежа',li(['<b>↶ ↷</b> — отменить / вернуть (Ctrl+Z, Ctrl+Y).','<b>▼ / ▲</b> — свернуть или показать панель инструментов.','<b>Стили</b> — готовые шаблоны фасадов.','<b>● Проверка</b> — состояние геометрии.','<b>Значение, мм</b> — число для скругления, фаски, смещения.']))}
-      ${sec('Чертёж в разрезе (слева, перед импортом)',li(['<b>✎ Чертёж в разрезе</b> — собрать профиль кромки из блоков-фрез: готовые блоки (завал, фаска, четверть, паз), линия и дуга по сетке или загрузка DXF/SVG разреза.','Окно открывается на весь экран: колесо мыши или щипок — масштаб, перетаскивание пустого места — сдвиг. Фрезы — карточки: нажмите, и блок встанет на чертёж; блоки прилипают к краю, к концу профиля и друг к другу.','<b>⚙ Подобрать фрезы по линии</b> — программа сама подберёт фрезы из вашего каталога.','Перенос: в текущий фасад, в новый фасад или в профиль (багет).','<b>▦ Собрать фасад из профиля</b> (в настройках изделия «Профиль») — профиль пилится на 4 планки (усо 45° или встык), планки попадают в заказ раскроя, а фасад-сборка показывает готовую рамку.']))}${sec('Панель инструментов',li(['<b>Выбор</b> — выбрать вектор или область.','<b>Линейка</b> — измерить расстояние между точками.','<b>Замеры</b> — убрать замеры с чертежа.','<b>Скруглить угол / Фаска угла</b> — щёлкнуть рядом с углом вектора.','<b>Смещение</b> — вектор на отступе: внутрь или наружу.','<b>Удалить</b> — вектор, русты, выборку.','<b>Выборка</b> — область между векторами под выбор фрезой.','<b>Русты</b> — диагонали от углов.','<b>Импорт</b> — загрузить SVG / DXF.']))}
+      ${sec('Чертёж в разрезе (слева, перед импортом)',li(['<b>✎ Чертёж в разрезе</b> — собрать профиль кромки из блоков-фрез: готовые блоки (завал, фаска, четверть, паз), линия и дуга по сетке или загрузка DXF/SVG разреза.','Окно открывается на весь экран: колесо мыши или щипок — масштаб, перетаскивание пустого места — сдвиг. Фрезы — карточки: нажмите, и блок встанет на чертёж; блоки прилипают к краю, к концу профиля и друг к другу.','Фреза в блоке стоит там, где нужно получить рисунок, и при смене режима «вдоль / снаружи / внутри» не двигается — меняется только вектор для станка (его положение показано под настройками). Так можно заменить фрезу Ø12 на Ø10 и добавить ещё один вектор. Размеры вводятся руками, запятая тоже работает.','<b>⚙ Подобрать фрезы по линии</b> — программа сама подберёт фрезы из вашего каталога.','Перенос: в текущий фасад, в новый фасад или в профиль (багет).','<b>▦ Собрать фасад из профиля</b> (в настройках изделия «Профиль») — профиль пилится на 4 планки (усо 45° или встык), планки попадают в заказ раскроя, а фасад-сборка показывает готовую рамку.']))}${sec('Панель инструментов',li(['<b>Выбор</b> — выбрать вектор или область.','<b>Линейка</b> — измерить расстояние между точками.','<b>Замеры</b> — убрать замеры с чертежа.','<b>Скруглить угол / Фаска угла</b> — щёлкнуть рядом с углом вектора.','<b>Смещение</b> — вектор на отступе: внутрь или наружу.','<b>Удалить</b> — вектор, русты, выборку.','<b>Выборка</b> — область между векторами под выбор фрезой.','<b>Русты</b> — диагонали от углов.','<b>Импорт</b> — загрузить SVG / DXF.']))}
       ${sec('Нижняя панель экрана',li(['<b>📖 Справочник фрез</b> — виды, как выбрать, как измерить, износ, режимы, калькуляторы.','<b>✓ Проверить</b> — проверка геометрии.','<b>⇩ Форматы</b> — PDF, карта DXF, 3D-архив, пакет ArtCAM.','<b>DXF / SVG</b> — быстрый экспорт чертежа.']))}
       ${sec('Свернуть панели',li(['Стрелки ◀ ▶ у боковых панелей — левая и правая колонки.','▲ в заголовке «Разрез изделия» — свернуть разрез.','Кнопки «Генератор стиля», «Скан по фото» и «Импорт чертежа как изделие» по умолчанию скрыты — включить: Меню → раздел с кнопками → «Показывать».','Порядок панелей и их показ меняются в «Меню → Вкладки».']))}</div>`;
 
