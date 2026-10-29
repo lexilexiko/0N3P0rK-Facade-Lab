@@ -897,6 +897,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
 <p class="sub">Файл — линия поверхности профиля от края фасада или контур разреза, мм. Красная пунктирная линия — эталон. «Подобрать» заменит блоки подходящими фрезами из каталога. Линию можно и нарисовать: инструменты «Линия» и «Дуга» под чертежом.</p><input id="sdFile" type="file" accept=".dxf,.svg,image/svg+xml"></div>
 <div class="sd-box" data-sdsec="move"><h3>Перенести</h3><label class="sd-chk"><span><input id="sdClear" type="checkbox"> очистить прежние вектора фасада</span></label><div class="sd-tools"><button type="button" id="sdToFacade" class="primary">В текущий фасад</button></div>
 <div class="sd-row"><label>Фасад: ширина<input id="sdFW" type="text" inputmode="decimal" autocomplete="off" value="596"></label><label>высота<input id="sdFH" type="text" inputmode="decimal" autocomplete="off" value="716"></label></div><div class="sd-tools"><button type="button" id="sdNewFacade">Создать новый фасад</button></div>
+<div class="sd-row"><label>Свободный: длина полос, мм<input id="sdFL" type="text" inputmode="decimal" autocomplete="off" value="716"></label><label>направление<select id="sdFD"><option value="v">вдоль высоты</option><option value="h">вдоль ширины</option></select></label></div><div class="sd-tools"><button type="button" id="sdFree" title="Чертёж — разрез всего фасада: каждый блок превращается в прямую полосу на всю длину (как гребёнка/профиль)">Создать свободный фасад (повторить разрез)</button></div>
 <div class="sd-row"><label>Профиль: ширина, мм<input id="sdPW" type="text" inputmode="decimal" autocomplete="off" value="40"></label><label>длина, мм<input id="sdPL" type="text" inputmode="decimal" autocomplete="off" value="1000"></label></div><div class="sd-tools"><button type="button" id="sdNewProfile">Создать профиль (багет)</button><button type="button" id="sdSvgOut">SVG разреза</button><button type="button" id="sdDxfOut">DXF разреза</button></div></div>
 </div></div></div></section></div>
 <div id="stylesOverlay" class="modal-overlay hidden"><section class="modal-card styles-dialog" role="dialog" aria-modal="true" aria-labelledby="stylesDialogTitle"><button class="modal-close" id="closeStyles" type="button" aria-label="Закрыть">×</button><div class="styles-dialog-heading"><h2 id="stylesDialogTitle">Шаблоны изделий</h2><p>Выберите тип шаблона и примените сохранённые настройки к изделию.</p></div><div class="styles-dialog-controls"><label class="field" for="styleTypeFilter">Тип изделия<select id="styleTypeFilter"><option value="facade">Фасад</option><option value="vitrina">Витрина</option><option value="profile">Профиль</option><option value="tsulaga">Цулага</option><option value="pilaster">Пилястра</option><option value="comb">Гребёнка</option></select></label><div class="field"><label for="styleName">Название нового шаблона</label><input id="styleName" aria-label="Название сохраняемого шаблона" maxlength="48" value="Мой шаблон" placeholder="Название шаблона"></div></div><div class="styles-io"><button type="button" id="importStyles" title="Загрузить шаблоны из файла (.json стиля, или проект/фасад из пакета ArtCAM)">⇧ Импорт</button><button type="button" id="exportAllStyles" title="Скачать все шаблоны одним файлом, чтобы передать другим">⇩ Экспорт всех</button><input type="file" id="stylesImportPicker" accept=".json,application/json" multiple hidden></div>
@@ -3917,7 +3918,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
   // ===== Чертёж в разрезе: профиль кромки собирается из блоков-фрез (как «лего») =====
   function bindSectionDraw() {
     const KEY='fasadlab-secdraw';
-    let D={mirror:false,L:40,T:19,grid:1,blocks:[],line:[],raw:null,flip:false,shift:0,scale:1,nid:1,fw:596,fh:716,pw:0,pl:1000};
+    let D={mirror:false,L:40,T:19,grid:1,blocks:[],line:[],raw:null,flip:false,shift:0,scale:1,nid:1,fw:596,fh:716,pw:0,pl:1000,fl:716,fd:'v'};
     try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved&&Array.isArray(saved.blocks)&&Array.isArray(saved.line))D={...D,...saved};}catch(e){}
     let tool='move',arcTmp=[],sel=0,geo=null,view={k:1,vx:0,vy:0},snapGuide=null,gesture=null,pinch=null;const ptr=new Map();
     const fmt=v=>Math.round(v*100)/100,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -3939,11 +3940,11 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     function readInputs(){
       const n=(id,def)=>{const v=Number(String($(id).value).replace(',','.'));return $(id).value!==''&&Number.isFinite(v)?v:def;};
       D.L=clamp(n('sdL',40),5,300);D.T=clamp(n('sdT',19),1,100);D.grid=n('sdGrid',1);D.flip=$('sdFlip').checked;D.mirror=$('sdMirror').checked;D.shift=n('sdShift',0);D.scale=n('sdScale',1)>0?n('sdScale',1):1;
-      D.fw=clamp(n('sdFW',596),80,3000);D.fh=clamp(n('sdFH',716),80,3000);D.pw=n('sdPW',0);D.pl=clamp(n('sdPL',1000),1,3000);
+      D.fw=clamp(n('sdFW',596),80,3000);D.fh=clamp(n('sdFH',716),80,3000);D.pw=n('sdPW',0);D.fl=clamp(n('sdFL',716),20,3000);D.fd=$('sdFD').value==='h'?'h':'v';D.pl=clamp(n('sdPL',1000),1,3000);
     }
     function writeInputs(){
       $('sdL').value=D.L;$('sdT').value=D.T;$('sdGrid').value=String(D.grid);$('sdFlip').checked=!!D.flip;$('sdMirror').checked=!!D.mirror;$('sdShift').value=D.shift;$('sdScale').value=D.scale;
-      $('sdFW').value=D.fw;$('sdFH').value=D.fh;$('sdPW').value=D.pw||Math.ceil(D.L);$('sdPL').value=D.pl;
+      $('sdFW').value=D.fw;$('sdFH').value=D.fh;$('sdPW').value=D.pw||Math.ceil(D.L);$('sdPL').value=D.pl;$('sdFL').value=D.fl||716;$('sdFD').value=D.fd||'v';
     }
     function buildLine(){
       if(!D.raw||!D.raw.pts||D.raw.pts.length<2)return;
@@ -4136,7 +4137,9 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
         let r=q;while(r+1<n&&Math.abs(d[r+1]-d[q])<=tolP)r++;
         if((r-q+1)*k>=minLen-1e-9){
           let sum=0;for(let t=q;t<=r;t++)sum+=d[t];
-          if(sum/(r-q+1)>lvl)flats.push({a:q,b:r,lv:sum/(r-q+1)});
+          // снимок: дно скругления — не ступень; ступень ограничена отвесной стенкой (или краем профиля)
+          const sharp=i=>{if(i<0||i>=n)return true;for(let j=1;j<=2;j++){for(const t of[i-j,i+j])if(t>=0&&t<n&&Math.abs(d[t]-d[i])>=.5)return true;}return false;};
+          if(sum/(r-q+1)>lvl&&(!(D.raw&&D.raw.src==='photo')||sharp(q)||sharp(r)||q===0||r===n-1))flats.push({a:q,b:r,lv:sum/(r-q+1)});
           q=r+1;
         }else q++;
       }
@@ -4295,6 +4298,21 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       const style=$('newStyle').value;$('newStyle').value='';
       createDesign();$('newStyle').value=style;
     }
+    function toFree(){
+      checkBlocks();readInputs();
+      const vertical=D.fd!=='h',W=vertical?D.L:D.fl,H=vertical?D.fl:D.L;
+      newDesign('facade',W,H);
+      if(Math.abs(Number(state.thickness)-D.T)>.01)state.thickness=D.T;
+      snapshot();
+      const blocks=[...D.blocks].sort((a,b)=>a.center-b.center);
+      blocks.forEach(b=>{
+        const c=clamp(b.center,0,D.L),rel=vertical?{x:c/W,y:0,w:0,h:1}:{x:0,y:c/H,w:1,h:0};
+        Object.keys(rel).forEach(k=>{rel[k]=Number(rel[k].toFixed(12));});
+        state.contours=[...state.contours,{id:nextContourId++,name:nextVectorName(),parentId:0,shape:'free',direction:'in',offset:1,corner:0,rel,freeD:vertical?'M 0 0 L 0 1':'M 0 0 L 1 0',cutter:b.cutter,diameter:b.width,depth:b.depth,side:'on',additionalCutters:[]}];
+      });
+      normalizeOuterCutter();syncInputs();renderTemplateButtons();drawView();persistActiveDesign();
+      return `Создан свободный фасад ${fmt(W)} × ${fmt(H)} мм: ${blocks.length} ${vertical?'вертикальных':'горизонтальных'} полос на всю длину, фреза центром по линии. Каждая полоса — обычный вектор.`;
+    }
     function toProfile(){
       checkBlocks();readInputs();
       const stripW=D.pw>0?D.pw:Math.ceil(D.L);
@@ -4335,11 +4353,25 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     }
     const wrap=fn=>{try{const m=fn();if(m)status(m);$('footerStatus').textContent=m||'';}catch(error){status('⚠ '+error.message);alert(error.message);}};
     $('sectionDraw').addEventListener('click',open);
+    // Профиль из снимка: линия поверхности (глубина вниз от верха) идёт в тот же подбор фрез, что и DXF
+    window.fasadSectionFromProfile=(pts,thickness)=>{
+      if(!pts||pts.length<2)throw new Error('Профиль по снимку не найден.');
+      D.raw={src:'photo',pts};D.scale=1;D.shift=0;D.mirror=false;D.flip=false;D.blocks=[];sel=0;
+      buildLine();
+      const lineW=Math.max(...D.line.map(q=>q.x)),maxD=Math.max(...D.line.map(q=>q.d));
+      D.L=clamp(Math.ceil(lineW),5,300);D.T=clamp(Math.max(Number(thickness)||0,Math.ceil(maxD)),1,100);
+      writeInputs();open();
+      const notes=fit();
+      if(D.blocks.length>1)D.blocks=D.blocks.filter(b=>b.width>=1);
+      sel=0;save();render();
+      status('Подобрано по снимку: '+D.blocks.length+' блоков. '+notes.join('; '));
+      return D.blocks.length;
+    };
     window.addEventListener('resize',()=>{if(!$('sdOverlay').classList.contains('hidden')&&geo)render();});
     $('closeSd').addEventListener('click',()=>$('sdOverlay').classList.add('hidden'));
     $('sdOverlay').addEventListener('click',e=>{if(e.target===$('sdOverlay'))$('sdOverlay').classList.add('hidden');});
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sdOverlay').classList.contains('hidden'))$('sdOverlay').classList.add('hidden');});
-    ['sdL','sdT','sdGrid','sdFlip','sdMirror','sdShift','sdScale','sdFW','sdFH','sdPW','sdPL'].forEach(id=>$(id).addEventListener('change',()=>{readInputs();if(['sdFlip','sdMirror','sdShift','sdScale'].includes(id))buildLine();D.blocks.forEach(b=>{b.center=clamp(b.center,0,D.L);b.depth=Math.min(b.depth,D.T);});save();render();}));
+    ['sdL','sdT','sdGrid','sdFlip','sdMirror','sdShift','sdScale','sdFW','sdFH','sdPW','sdPL','sdFL','sdFD'].forEach(id=>$(id).addEventListener('change',()=>{readInputs();if(['sdFlip','sdMirror','sdShift','sdScale'].includes(id))buildLine();D.blocks.forEach(b=>{b.center=clamp(b.center,0,D.L);b.depth=Math.min(b.depth,D.T);});save();render();}));
     $('sdSvg').addEventListener('pointerdown',onDown);$('sdSvg').addEventListener('pointermove',onMove);$('sdSvg').addEventListener('pointerup',onUp);$('sdSvg').addEventListener('pointercancel',onUp);
     $('sdSvg').addEventListener('wheel',e=>{e.preventDefault();const q=toView(e);zoomAt(e.deltaY<0?1.2:1/1.2,q.x,q.y);},{passive:false});
     const zoomCenter=f=>{zoomAt(f,view.vx+geo.W/view.k/2,view.vy+geo.H/view.k/2);};
@@ -4409,6 +4441,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     $('sdImport').addEventListener('click',()=>$('sdFile').click());
     $('sdToFacade').addEventListener('click',()=>wrap(()=>{readInputs();return 'Применено к фасаду: '+applyToFacade($('sdClear').checked);}));
     $('sdNewFacade').addEventListener('click',()=>wrap(()=>{checkBlocks();readInputs();newDesign('facade',D.fw,D.fh);const m=applyToFacade(false);$('sdOverlay').classList.add('hidden');return 'Создан фасад '+D.fw+' × '+D.fh+' мм: '+m;}));
+    $('sdFree').addEventListener('click',()=>wrap(()=>{const m=toFree();$('sdOverlay').classList.add('hidden');return m;}));
     $('sdNewProfile').addEventListener('click',()=>wrap(()=>{const m=toProfile();$('sdOverlay').classList.add('hidden');return m;}));
     $('profileToFrame').addEventListener('click',()=>{try{frameInfo();}catch(error){alert(error.message);return;}$('frW').value=D.fw;$('frH').value=D.fh;$('frInfo').textContent='';$('frameOverlay').classList.remove('hidden');});
     const closeFrame=()=>$('frameOverlay').classList.add('hidden');
@@ -4451,6 +4484,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     const typesHtml=`<div class="gd-two">
       ${sec('Фасад',li(['Прямоугольная заготовка с вложенными векторами, выборками, рустами и острыми углами.','Можно превратить в витрину кнопкой «В витрину».']))}
       ${sec('Витрина',li(['Рамка с окном: четверть под стекло, окно насквозь, профиль кромки.','Размеры рамки, четверти и окна задаются в панели «Витрина».']))}
+      ${sec('Свободный фасад из разреза',li(['В «Чертеже в разрезе», вкладка «Размеры»: если нарисован/загружен разрез всего фасада, кнопка «Создать свободный фасад» повторяет его полосами на всю длину.','Каждый блок — прямая полоса (вектор) с той же фрезой, шириной и глубиной; направление — вдоль высоты или ширины, длину полос задаёте сами.','Полосы — обычные векторы: их можно править в списке. Положение — центр фрезы, как на чертеже.']))}
       ${sec('Пилястра',li(['Заготовка с ровными линиями-канавками: направление, количество, отступы, длина, фреза и глубина.','Галочка «Дополнительные варианты» включает полоски-контуры с выборкой дна.']))}
       ${sec('Цулага',li(['Прямая планка для пресса, один угол скруглён, торец под углом, вырезается насквозь.']))}
       ${sec('Профиль',li(['Деталь с продольными полосами разных фрез (профиль по длине).','Каждая полоса — отдельный вектор со своей фрезой.']))}
@@ -4473,7 +4507,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
 
     const exportHtml=`<div class="gd-two">
       ${sec('Что в пакете ArtCAM',li(['<b>Форматы/</b> — DXF (вектора операций по слоям), SVG, STL.','<b>Документы/</b> — спецификация (PDF): размеры, фрезы, глубины, порядок операций.','<b>3D/</b> — архив с моделью обработки (OBJ, STL, GLB).']))}
-      ${sec('Имена слоёв в DXF',li(['Слои называются по операциям: номер, назначение (контур, выборка, русты), фреза, ширина и глубина (например W6 — ширина 6, Z3 — глубина 3).','По имени слоя видно, какую фрезу и на какую глубину назначать в ArtCAM.','Единицы — миллиметры.']))}
+      ${sec('Имена слоёв в DXF',li(['<b>Кнопка DXF внизу:</b> слой = <b>V02_OUT_FLAT_W6_Z3</b>: V02 — номер вектора (как в списке), IN/OUT/ALONG — фреза внутри/снаружи/по линии вектора, FLAT/BALL/V90/ROUNDOVER/WAVE — тип фрезы, W6 — Ø6 мм, Z3 — глубина 3 мм, THRU — сквозной рез, NO_TOOL — фреза не назначена. Если проходов несколько, каждый идёт в свой слой.','Слои называются по операциям: номер, назначение (контур, выборка, русты), фреза, ширина и глубина (например W6 — ширина 6, Z3 — глубина 3).','По имени слоя видно, какую фрезу и на какую глубину назначать в ArtCAM.','Единицы — миллиметры.']))}
       ${sec('Перенос в ArtCAM',li(['1. Распакуйте архив.','2. В ArtCAM создайте модель с теми же размерами и толщиной.','3. Импортируйте DXF из папки «Форматы» (вектора).','4. По спецификации создайте траектории: для каждого слоя — своя фреза и глубина.','5. Просмотрите симуляцию и сохраните траектории для вашего станка.']))}
       ${sec('Отдельные файлы',li(['<b>DXF / SVG</b> внизу — вектора текущего изделия.','<b>Карта DXF</b> — раскладка деталей по листу.','<b>3D-архив ZIP</b> — только модель.','<b>PDF</b> — вид сверху, разрез и спецификация.']))}</div>`;
 
@@ -5439,6 +5473,24 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       return 'M'+pts.map(p=>`${f(p.x)} ${f(p.y)}`).join(' L')+(path.closed?' Z':'');
     }).filter(Boolean);
   }
+  // Имена слоёв DXF/SVG, по которым в ArtCAM сразу понятно, что делать: V02_OUT_FLAT_W6_Z3
+  // = вектор 2, фреза снаружи вектора, прямая, Ø6 мм, глубина 3 мм (_THRU — насквозь).
+  function layerNamer() {
+    const used=new Set(),thickness=Number(state.thickness)||0,meas=value=>String(Number(Number(value).toFixed(2))).replace('.','P').replace('-','M');
+    const sideTag={on:'ALONG',outside:'OUT',inside:'IN'},kindTag={flat:'FLAT',round:'BALL',v90:'V90',roundover:'ROUNDOVER',wave:'WAVE'};
+    return (head,pass)=>{
+      let name=head;
+      if(pass){
+        const thru=thickness>0&&Number(pass.depth)>=thickness-.001;
+        const tool=kindTag[pass.cutter]||artcamSlug(cutterLabel(pass.cutter),10);
+        const tail=`_W${meas(pass.diameter)}_Z${meas(pass.depth)}${thru?'_THRU':''}`;
+        name=`${head}_${sideTag[pass.side||'on']||'ALONG'}_${tool}`.slice(0,Math.max(6,31-tail.length))+tail;
+      }else if(head!=='OUTER')name=`${head}_NO_TOOL`;
+      name=name.replace(/_+/g,'_');let candidate=name,k=2;
+      while(used.has(candidate)){const suffix=`_${k++}`;candidate=name.slice(0,31-suffix.length)+suffix;}
+      used.add(candidate);return candidate;
+    };
+  }
   function createSvgExport() {
     const W=state.width,H=state.height;
     const previous=lastGeometry;
@@ -5446,12 +5498,18 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     const groups=[];
     const add=(id,paths)=>{const list=paths.flatMap(d=>svgPolylines(d.d||d,d.map));if(list.length)groups.push(`<g id="${id}" fill="none" stroke="#000000" stroke-width="0.1">\n${list.map(p=>`<path d="${p}"/>`).join('\n')}\n</g>`);};
     try{
-      add('OUTER',[outerRectPath(0,0,W,H)]);
+      const nameOf=layerNamer();
       if(state.objectType==='facade'){
-        state.contours.forEach((contour,index)=>add('VECTOR_'+(index+1),[contourPath(contour)]));
+        const outerPasses=outerContourCutterPasses();
+        if(outerPasses.length)outerPasses.forEach(pass=>add(nameOf('OUTER',pass),[outerRectPath(0,0,W,H)]));else add('OUTER',[outerRectPath(0,0,W,H)]);
+        state.contours.forEach((contour,index)=>{const path=contourPath(contour),passes=contourCutterPasses(contour),head='V'+String(index+2).padStart(2,'0');if(passes.length)passes.forEach(pass=>add(nameOf(head,pass),[path]));else add(nameOf(head,null),[path]);});
         add('VECTORS',allCustomVectors().map(vector=>customVectorSvgPath(vector)));
         state.importedPaths.forEach((item,index)=>add('IMPORTED_'+(index+1),[{d:item.d,map:importedMapPoint(item,W,H)}]));
-      }else operationVectorPaths().forEach((path,index)=>add('PASS_'+(index+1),[path]));
+      }else{
+        add('OUTER',[outerRectPath(0,0,W,H)]);
+        if(state.objectType==='profile'&&state.kind!=='tsulaga')operationVectorPaths().forEach((path,index)=>{const band=state.profileBands[index],pass=band?{cutter:band.cutter,diameter:Number(band.cutterWidth),depth:Number(band.depth),side:band.mode==='inside'?'inside':band.mode==='outside'?'outside':'on'}:null;add(nameOf('V'+String(index+1).padStart(2,'0'),pass),[path]);});
+        else operationVectorPaths().forEach((path,index)=>add('PASS_'+(index+1),[path]));
+      }
     }finally{lastGeometry=previous;}
     return `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${W}mm" height="${H}mm" viewBox="0 0 ${W} ${H}">\n${groups.join('\n')}\n</svg>\n`;
   }
@@ -5535,13 +5593,16 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
   }
   function createDxfExport() {
     const W=state.width,H=state.height,lines=['0','SECTION','2','HEADER','9','$ACADVER','1','AC1009','9','$INSUNITS','70','4','0','ENDSEC','0','SECTION','2','ENTITIES'];
-    const mapPoint=point=>({x:point.x,y:H-point.y}),previous=lastGeometry;
+    const mapPoint=point=>({x:point.x,y:H-point.y}),previous=lastGeometry,nameOf=layerNamer();
     lastGeometry={x:0,y:0,scale:1,width:W,height:H};
     try{
       if(state.kind==='tsulaga'&&state.objectType==='profile')appendTsulagaDxf(lines,state.tsulaga,'OUTER',mapPoint);
-      else appendDxfPath(lines,outerRectPath(0,0,W,H),'OUTER',mapPoint);
+      else if(state.objectType==='facade'){
+        const outerPasses=outerContourCutterPasses();
+        if(outerPasses.length)outerPasses.forEach(pass=>appendDxfPath(lines,outerRectPath(0,0,W,H),nameOf('OUTER',pass),mapPoint));else appendDxfPath(lines,outerRectPath(0,0,W,H),'OUTER',mapPoint);
+      }else appendDxfPath(lines,outerRectPath(0,0,W,H),'OUTER',mapPoint);
       if(state.objectType==='facade'){
-        state.contours.forEach((contour,index)=>appendDxfPath(lines,contourPath(contour),'VECTOR_'+(index+1),mapPoint));
+        state.contours.forEach((contour,index)=>{const path=contourPath(contour),passes=contourCutterPasses(contour),head='V'+String(index+2).padStart(2,'0');if(passes.length)passes.forEach(pass=>appendDxfPath(lines,path,nameOf(head,pass),mapPoint));else appendDxfPath(lines,path,nameOf(head,null),mapPoint);});
         allCustomVectors().forEach(vector=>{
           if(vector.type==='point'){
             const point=vector.points[0];
@@ -5553,7 +5614,10 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
           appendDxfPath(lines,item.d,'IMPORTED',importedPoint);
           if(item.cutter&&item.cutter!=='none'&&importedHasToolpathOffset(item))appendDxfPath(lines,importedToolPath(item,W,H),'IMPORTED_TOOLPATH',point=>({x:point.x,y:H-point.y}));
         });
-      }else if(state.kind!=='tsulaga')operationVectorPaths().forEach((path,index)=>appendDxfPath(lines,path,'PASS_'+(index+1),mapPoint));
+      }else if(state.kind!=='tsulaga'){
+        if(state.objectType==='profile')operationVectorPaths().forEach((path,index)=>{const band=state.profileBands[index],pass=band?{cutter:band.cutter,diameter:Number(band.cutterWidth),depth:Number(band.depth),side:band.mode==='inside'?'inside':band.mode==='outside'?'outside':'on'}:null;appendDxfPath(lines,path,nameOf('V'+String(index+1).padStart(2,'0'),pass),mapPoint);});
+        else operationVectorPaths().forEach((path,index)=>appendDxfPath(lines,path,'PASS_'+(index+1),mapPoint));
+      }
     }finally{lastGeometry=previous;}
     lines.push('0','ENDSEC','0','EOF');return lines.join('\r\n')+'\r\n';
   }
@@ -5563,7 +5627,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     const warn=issues.length?` ⚠ Замечание: ${issues[0]}${issues.length>1?` (и ещё ${issues.length-1})`:''}`:'';
     try{
       download(`${state.kind==='tsulaga'?'tsulaga':state.kind==='vitrina'?'vitrina':state.kind==='pilaster'?'pilastra':'fasad'}_${state.width}x${state.height}.dxf`,createDxfExport(),'application/dxf;charset=utf-8');
-      $('footerStatus').textContent='DXF сохранён в миллиметрах для импорта в ArtCAM'+warn;
+      $('footerStatus').textContent='DXF сохранён в мм. Слои названы по действию: V02_OUT_FLAT_W6_Z3 = вектор 2, фреза снаружи, плоская Ø6, глубина 3'+warn;
     }catch(error){$('footerStatus').textContent='DXF не экспортирован';alert(`Не удалось создать DXF: ${error.message}`);}
   }
   function exportCuttingDxf() {
@@ -8318,7 +8382,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       try{
         const dxfText=await readDxfFile(file);
         let imported=parseAsciiDxf(dxfText,{excludeLayers:new Set()});
-        const ownLayers=imported.layers.every(layer=>/^(OUTER|VECTOR_\d+|BASE_OUTLINE|OP\d+_.*)$/.test(layer.name));
+        const ownLayers=imported.layers.every(layer=>/^(OUTER|OUTER_.*|VECTOR_\d+|V\d+_.*|VECTORS|BASE_OUTLINE|OP\d+_.*)$/.test(layer.name));
         if(imported.layers.length>1&&!ownLayers){
           const exclude=await askDxfLayers(imported.layers);
           if(!exclude){$('footerStatus').textContent='Импорт DXF отменён';$('vectorPicker').value='';vectorPickerMode='add';return;}
@@ -9013,7 +9077,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
   function scanSyncModeUI(){
     const profile=false,section=scanModeValue()==='section';
     $('scanWidthLabel').textContent=profile?'Реальная высота выделения (сверху вниз), мм':section?'Реальная ширина между зелёными линиями, мм':'Реальная ширина чертежа, мм';
-    $('scanApply').textContent=profile?'Создать фрезу':section?'Создать вектора с фрезами':'Смонтировать контуры';
+    $('scanApply').textContent=profile?'Создать фрезу':section?'Подобрать фрезы в редакторе разреза':'Смонтировать контуры';
     $('scanSectionControls').classList.toggle('hidden',!section);
     $('scanOffsetField').classList.toggle('hidden',$('scanPart').value!=='custom');
     $('scanThicknessField').classList.toggle('hidden',$('scanScaleBy').value!=='thick');
@@ -9055,8 +9119,23 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     if(mode==='section'){
       try{
         scanSection=scanAnalyzeSection();
-        const made=scanApplySection();
-        $('footerStatus').textContent=`Разрез по фото: создано векторов ${made.count}. ${made.notes.join('; ')}.`;
+        const r=scanSection;
+        if(!r||r.error)throw new Error(r?r.error:'Сначала проанализируйте разрез.');
+        // чистые одиночные вырезы (каждый ложится на одну фрезу) — прямое создание; ступени и составные профили — подбор как у DXF
+        if(r.cuts.length&&r.cuts.every(c=>c.err<.1)&&state.objectType==='facade'){
+          const made=scanApplySection();
+          $('footerStatus').textContent=`Разрез по фото: создано векторов ${made.count}. ${made.notes.join('; ')}.`;
+          scanClose();return;
+        }
+        // крайние пиксели у кромки снимка ненадёжны (размытие, срез кадра): берём значение чуть внутри
+        const dp=Array.from(r.depth),nn=dp.length,edge=Math.min(Math.floor(nn/4),Math.max(2,Math.round(.5/r.k)));
+        for(let i=0;i<edge;i++){dp[i]=r.depth[edge];dp[nn-1-i]=r.depth[nn-1-edge];}
+        const pts=[],step=Math.max(1,Math.round(.15/r.k));
+        for(let i=0;i<nn;i+=step)pts.push([i*r.k,dp[i]]);
+        pts.push([(nn-1)*r.k,dp[nn-1]]);
+        const thk=r.thickMode?Number($('scanThicknessMm').value):Number(state.thickness);
+        const count=window.fasadSectionFromProfile(pts,thk);
+        $('footerStatus').textContent=`Разрез по фото передан в редактор разреза: подобрано блоков ${count}. Проверьте и нажмите «В фасад».`;
         scanClose();
       }catch(error){alert(error.message);}
       return;
