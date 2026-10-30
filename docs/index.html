@@ -874,33 +874,54 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
 <input id="artcamToolPicker" type="file" accept=".tdb" multiple hidden><input id="dxfCutterPicker" type="file" accept=".dxf" hidden><input id="dxfCatalogPicker" type="file" accept=".dxf" hidden><input id="cuttersJsonPicker" type="file" accept=".json,application/json" hidden><input id="scanCameraPicker" type="file" accept="image/*" capture="environment" hidden><input id="scanFilePicker" type="file" accept="image/*,.svg,image/svg+xml" hidden>
 <div id="helpOverlay" class="modal-overlay hidden"><section class="modal-card guide-dialog" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="gd-head"><h2 id="helpTitle">Инструкция <span class="sub">ФасадЛаб 1.3</span></h2><button class="modal-close" id="closeHelp" type="button" aria-label="Закрыть">×</button></div><div class="gd-tabs" id="hpTabs" role="tablist"></div><select class="gd-tabsel" id="hpSel" aria-label="Раздел"></select><div class="gd-body" id="hpBody"></div></section></div>
 <div id="guideOverlay" class="modal-overlay hidden"><section class="modal-card guide-dialog" role="dialog" aria-modal="true" aria-labelledby="guideTitle"><div class="gd-head"><h2 id="guideTitle">Справочник фрез <span class="sub">виды · выбор · измерение · износ</span></h2><button class="modal-close" id="closeGuide" type="button" aria-label="Закрыть">×</button></div><div class="gd-tabs" id="gdTabs" role="tablist"></div><select class="gd-tabsel" id="gdSel" aria-label="Раздел"></select><div class="gd-body" id="gdBody"></div></section></div>
-<div id="panelDlg" class="modal-overlay hidden"><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="panelDlgTitle"><button class="modal-close" id="panelDlgClose" type="button" aria-label="Закрыть">×</button><h2 id="panelDlgTitle" style="margin:0 0 8px;padding-right:40px"></h2><div id="panelDlgBody"></div></section></div>
-<div id="handleOverlay" class="modal-overlay hidden"><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="handleTitle"><button class="modal-close" id="closeHandle" type="button" aria-label="Закрыть">×</button><h2 id="handleTitle" style="margin:0 0 8px;padding-right:40px">Встроенная ручка</h2>
+<div id="panelDlg" class="modal-overlay hidden"><section class="modal-card" style="max-height:92%;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y" role="dialog" aria-modal="true" aria-labelledby="panelDlgTitle"><button class="modal-close" id="panelDlgClose" type="button" aria-label="Закрыть">×</button><h2 id="panelDlgTitle" style="margin:0 0 8px;padding-right:40px"></h2><div id="panelDlgBody"></div></section></div>
+<div id="handleOverlay" class="modal-overlay hidden"><section class="modal-card" style="max-height:92%;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y" role="dialog" aria-modal="true" aria-labelledby="handleTitle"><button class="modal-close" id="closeHandle" type="button" aria-label="Закрыть">×</button><h2 id="handleTitle" style="margin:0 0 8px;padding-right:40px">Встроенная ручка</h2>
 <div class="vector-settings">
-<div class="notice vector-note">Сначала идёт выборка у кромки (прямой фрезой, открытая со стороны кромки), затем радиусной фрезой делается радиус по стенке выборки — как в фасадах с врезной ручкой. Всё создаётся обычными векторами и выборкой, их можно править в списках.</div>
+<div class="notice vector-note">Ручка одна на деталь: повторное нажатие «Применить» заменяет прежнюю. Состоит из выборки сверху, вектора фрезы ручки (заходит по вектору, делает ручку и выходит, ничего не задевая) и, если нужно, выборки под накладку сзади. Все размеры настраиваются.</div>
 <div class="fields">
 <div class="field"><label for="hEdge">Кромка с ручкой</label><select id="hEdge"><option value="top">Верхняя</option><option value="bottom">Нижняя</option><option value="left">Левая</option><option value="right">Правая</option></select></div>
-<div class="field"><label for="hMode">Что создать</label><select id="hMode"><option value="both">Выборка + радиус</option><option value="pocket">Только выборка</option><option value="edge">Только радиус по стенке</option></select></div>
+<div class="field"><label for="hVariant">Вариант</label><select id="hVariant"><option value="plain">Без накладки</option><option value="overlay">С накладкой сзади</option></select></div>
 </div>
 <div class="fields">
-<div class="field"><label for="hGrip">Ширина выборки от кромки, мм</label><input id="hGrip" type="number" min="5" step="0.5" value="25"></div>
-<div class="field"><label for="hDepth">Глубина выборки, мм</label><input id="hDepth" type="number" min="0.5" step="0.5" value="12"></div>
+<div class="field"><label for="hLen">Длина ручки, мм (0 — вся кромка)</label><input id="hLen" type="text" inputmode="decimal" autocomplete="off" value="100"></div>
+<div class="field"><label for="hPos">Центр ручки: расстояние от угла детали до середины ручки, мм</label><input id="hPos" type="text" inputmode="decimal" autocomplete="off" value="0"></div>
+</div>
+<p class="sub" style="margin:2px 0 6px">Угол отсчёта: для верхней и нижней кромки — левый, для боковых — верхний. Пример: деталь 300, ручка 100, центр 150 → ручка занимает 100…200.</p>
+<h3 style="margin:8px 0 4px;font-size:13px">Выборка сверху (условная: рисуем только вектор, режимы задаёте в ArtCAM)</h3>
+<div class="fields">
+<div class="field"><label for="hGrip">Ширина от кромки, мм</label><input id="hGrip" type="text" inputmode="decimal" autocomplete="off" value="25"></div>
+<div class="field"><label for="hDepth">Глубина, мм</label><input id="hDepth" type="text" inputmode="decimal" autocomplete="off" value="12"></div>
 </div>
 <div class="fields">
-<div class="field"><label for="hLen">Длина ручки, мм (0 — вся кромка)</label><input id="hLen" type="number" min="0" step="1" value="0"></div>
-<div class="field"><label for="hStart">Отступ от начала, мм (0 — по центру)</label><input id="hStart" type="number" min="0" step="1" value="0"></div>
+<div class="field"><label for="hDia">Фреза выборки Ø, мм (для имени слоя)</label><input id="hDia" type="text" inputmode="decimal" autocomplete="off" value="12"></div>
+<div class="field hidden"><label for="hStep">Шаг фрезы, % Ø</label><input id="hStep" type="text" inputmode="decimal" autocomplete="off" value="40"></div>
+</div>
+<h3 style="margin:8px 0 4px;font-size:13px">Вектор фрезы ручки (П-образный: заход и выход внутри выборки, ход вдоль ручки)</h3>
+<div class="field"><label for="hEdgeCutter">Фреза ручки</label><select id="hEdgeCutter"><option value="round">Радиусная фреза</option></select></div>
+<div class="fields">
+<div class="field"><label for="hEdgeDia">Ø / ширина фрезы, мм</label><input id="hEdgeDia" type="text" inputmode="decimal" autocomplete="off" value="38.1"></div>
+<div class="field"><label for="hEdgeDepth">Глубина прохода, мм</label><input id="hEdgeDepth" type="text" inputmode="decimal" autocomplete="off" value="12"></div>
 </div>
 <div class="fields">
-<div class="field"><label for="hDia">Прямая фреза выборки Ø, мм</label><input id="hDia" type="number" min="2" step="0.5" value="12"></div>
-<div class="field"><label for="hStep">Шаг фрезы, % Ø</label><input id="hStep" type="number" min="10" max="100" step="5" value="40"></div>
+<div class="field"><label for="hRad">Скругление углов выборки, мм (0 — квадрат)</label><input id="hRad" type="text" inputmode="decimal" autocomplete="off" value="6"></div><select id="hShape" class="hidden"><option value="pi">П</option></select>
+<div class="field"><label for="hCenter">Центр фрезы от кромки, мм</label><input id="hCenter" type="text" inputmode="decimal" autocomplete="off" value="25"></div>
 </div>
-<label style="display:flex;align-items:center;gap:8px;margin:8px 0"><input id="hBack" type="checkbox" style="width:20px;height:20px;flex:none"> Выборка с тыльной стороны</label>
-<div class="field"><label for="hEdgeCutter">Фреза под радиус (по стенке выборки)</label><select id="hEdgeCutter"><option value="round">Радиусная фреза</option></select></div>
 <div class="fields">
-<div class="field"><label for="hEdgeDia">Ширина (Ø) радиусной фрезы, мм</label><input id="hEdgeDia" type="number" min="1" step="0.5" value="10"></div>
-<div class="field"><label for="hEdgeDepth">Глубина радиуса, мм (0 — как у выборки)</label><input id="hEdgeDepth" type="number" min="0" step="0.5" value="0"></div>
+<div class="field"><label for="hLead">Точка захода и выхода: на каком расстоянии от кромки, мм (внутри выборки)</label><input id="hLead" type="text" inputmode="decimal" autocomplete="off" value="8"></div>
+<div class="field"><label for="hFit">Длина ручки считать</label><select id="hFit"><option value="outer">по краям реза (ножки внутри)</option><option value="path">по вектору (центры ножек)</option></select></div>
 </div>
-<div class="sd-tools" style="display:flex;gap:8px;margin-top:10px"><button type="button" id="hAdd" class="primary">＋ Добавить ручку</button><button type="button" id="hCancel">Закрыть</button></div>
+<div id="hOverlayBox" class="hidden">
+<h3 style="margin:8px 0 4px;font-size:13px">Накладка сзади (выборка с тыла)</h3>
+<div class="fields">
+<div class="field"><label for="hOvW">Ширина от кромки, мм</label><input id="hOvW" type="text" inputmode="decimal" autocomplete="off" value="35"></div>
+<div class="field"><label for="hOvDepth">Глубина, мм</label><input id="hOvDepth" type="text" inputmode="decimal" autocomplete="off" value="3"></div>
+</div>
+<div class="fields">
+<div class="field"><label for="hOvExtra">Запас по длине с каждой стороны, мм</label><input id="hOvExtra" type="text" inputmode="decimal" autocomplete="off" value="2"></div>
+<div class="field"><label for="hOvDia">Фреза накладки Ø, мм</label><input id="hOvDia" type="text" inputmode="decimal" autocomplete="off" value="12"></div>
+</div>
+</div>
+<div class="sd-tools" style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button type="button" id="hAdd" class="primary">Применить ручку</button><button type="button" id="hRemove">Убрать ручку</button><button type="button" id="hCancel">Закрыть</button></div>
 <div class="notice" id="handleInfo" style="margin-top:8px"></div><style>#handleInfo:empty{display:none}</style>
 </div></section></div>
 <div id="frameOverlay" class="modal-overlay hidden"><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="frameTitle"><button class="modal-close" id="closeFrame" type="button" aria-label="Закрыть">×</button><h2 id="frameTitle" style="margin:0 0 8px;padding-right:40px">Фасад из профиля</h2>
@@ -1220,7 +1241,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     profileAxis:'vertical',profileBands:[{id:1,side:'left',offset:10,cutter:'round',cutterWidth:6,depth:4.4}],selectedProfileBand:1,
     combDirection:'vertical',combStart:25,combEnd:25,combPitch:12,combCutter:'round',combCutWidth:3,combCutDepth:2,combBeforeStep:false,combAfterStep:false,combMode:'planes',combFirstWhole:true,combLastWhole:true,outerCornerRadius:0,
     facadeTexture:'pencil',
-    outerCorners:null,outerSide:'on',outerFormHeight:0,outerAllowance:0,outerFeed:'climb',outerStepdown:0,rust:null,kind:null,kindSig:null,vitrina:null,tsulaga:null,pilaster:null,outerCutter:'none',outerDiameter:6,outerDepth:3,outerAdditionalCutters:[],
+    outerCorners:null,handle:null,outerSide:'on',outerFormHeight:0,outerAllowance:0,outerFeed:'climb',outerStepdown:0,rust:null,kind:null,kindSig:null,vitrina:null,tsulaga:null,pilaster:null,outerCutter:'none',outerDiameter:6,outerDepth:3,outerAdditionalCutters:[],
     customVectors:[], contours:[], pockets:[], selectedContour:0, importedPaths:[], selectedVector:-1, selectedImport:-1, zoom:100,
     layers:{outer:true,inner:true,details:true,corners:true,dimensions:true,text:true,underlay:true},
     sheetWidth:2440,sheetHeight:1220,sheetThickness:19,sheetMargin:10,partGap:5,cuttingItems:[]
@@ -2347,7 +2368,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
   function pocketHasInnerIsland(islandId) {
     const b=getContourBounds(Number(islandId)),eps=1e-6;
     return state.contours.some(item=>{
-      if(item.id===Number(islandId)||item.direction!=='in'||item.handleLip)return false;
+      if(item.id===Number(islandId)||item.direction!=='in'||item.handleLip||item.handle)return false;
       const o=getContourBounds(item.id);
       return o.x>=b.x-eps&&o.y>=b.y-eps&&o.x+o.width<=b.x+b.width+eps&&o.y+o.height<=b.y+b.height+eps&&o.width*o.height<b.width*b.height-eps;
     });
@@ -4526,7 +4547,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       ${sec('Фасад',li(['Прямоугольная заготовка с вложенными векторами, выборками, рустами и острыми углами.','Можно превратить в витрину кнопкой «В витрину».']))}
       ${sec('Витрина',li(['Рамка с окном: четверть под стекло, окно насквозь, профиль кромки.','Размеры рамки, четверти и окна задаются в панели «Витрина».']))}
       ${sec('Свободный фасад из разреза',li(['В «Чертеже в разрезе», вкладка «Размеры»: если нарисован/загружен разрез всего фасада, кнопка «Создать свободный фасад» повторяет его полосами на всю длину.','Каждый блок — прямая полоса (вектор) с той же фрезой, шириной и глубиной; направление — вдоль высоты или ширины, длину полос задаёте сами.','Полосы — обычные векторы: их можно править в списке. Положение — центр фрезы, как на чертеже.']))}
-      ${sec('Встроенная ручка',li(['Кнопка «Ручка» в нижней панели инструментов (у обычного фасада) открывает окно: кромка, ширина и глубина выборки, длина (0 — вся кромка), радиусная фреза.','Порядок как на станке: сначала выборка у кромки прямой фрезой (контур выходит за кромку, чтобы не оставалась перемычка), затем радиусная фреза идёт по стенке выборки — получается радиус ручки. Можно только выборку или только радиус.','Выборка может быть с тыльной стороны. Всё — обычные вектора и выборка, правятся в списках. Слои DXF: V02_POCKET_FLAT_W12_Z12 (выборка), V03_ALONG_BALL_W10_Z12 (радиус).']))}
+      ${sec('Встроенная ручка',li(['Кнопка «Ручка» в нижней панели. Ручка одна на деталь: «Применить» заменяет прежнюю, «Убрать ручку» удаляет.','Состав: выборка сверху (открыта к кромке), вектор фрезы ручки (П-образный: заходит внутри выборки, идёт по ручке и выходит там же, за край детали не выступает) и, в варианте «с накладкой сзади», выборка с тыла.','Положение: длина ручки и расстояние от угла до её середины (пусто — по центру кромки). Пример: деталь 300, ручка 100, центр 150 → 100…200. Всё настраивается: фреза и Ø, глубины, центр фрезы от кромки, заход/выход, запас накладки.','Слои DXF: V02_POCKET_FLAT_W12_Z12 (выборка), V04_ALONG_BALL_W38P1_Z12 (вектор ручки).']))}
       ${sec('Пилястра',li(['Заготовка с ровными линиями-канавками: направление, количество, отступы, длина, фреза и глубина.','Галочка «Дополнительные варианты» включает полоски-контуры с выборкой дна.']))}
       ${sec('Цулага',li(['Прямая планка для пресса, один угол скруглён, торец под углом, вырезается насквозь.']))}
       ${sec('Профиль',li(['Деталь с продольными полосами разных фрез (профиль по длине).','Каждая полоса — отдельный вектор со своей фрезой.']))}
@@ -7098,50 +7119,104 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
   }
   // ===== Встроенная ручка: выборка у кромки + радиус по стенке =====
   function closeHandle2(){$('handleOverlay').classList.add('hidden');}
+  const HANDLE_DEFAULTS={edge:'top',variant:'plain',len:100,pos:0,grip:25,depth:12,dia:12,step:40,cutter:'round',cDia:38.1,cDepth:12,shape:'pi',center:25,lead:8,fit:'outer',ovW:35,ovDepth:3,ovExtra:2,ovDia:12,rad:6};
+  const HANDLE_FIELDS={edge:'hEdge',variant:'hVariant',len:'hLen',pos:'hPos',grip:'hGrip',depth:'hDepth',dia:'hDia',step:'hStep',cutter:'hEdgeCutter',cDia:'hEdgeDia',cDepth:'hEdgeDepth',shape:'hShape',center:'hCenter',lead:'hLead',fit:'hFit',rad:'hRad',ovW:'hOvW',ovDepth:'hOvDepth',ovExtra:'hOvExtra',ovDia:'hOvDia'};
+  function handleWriteForm(h){Object.entries(HANDLE_FIELDS).forEach(([k,id])=>{const e=$(id);e.value=String(h[k]);if(e.tagName==='SELECT'&&e.value!==String(h[k]))e.selectedIndex=0;});handleSyncForm();}
+  function handleReadForm(){
+    const h={};
+    Object.entries(HANDLE_FIELDS).forEach(([k,id])=>{const e=$(id),def=HANDLE_DEFAULTS[k];if(typeof def==='number'){const v=Number(String(e.value).replace(',','.'));h[k]=e.value!==''&&Number.isFinite(v)?v:def;}else h[k]=e.value;});
+    return h;
+  }
+  function handleSyncForm(){$('hOverlayBox').classList.toggle('hidden',$('hVariant').value!=='overlay');}
+  // Убрать прежнюю ручку (контуры, выборки), чтобы на детали была только одна
+  function handleRemoveExisting(){
+    const ids=new Set(state.contours.filter(c=>c.handle).map(c=>c.id));
+    state.contours=state.contours.filter(c=>!c.handle);
+    state.pockets=(state.pockets||[]).filter(k=>!(k.handle||ids.has(k.islandId)));
+    state.handle=null;
+  }
+  function removeHandle(){
+    if(!state.contours.some(c=>c.handle)&&!state.handle){$('handleInfo').textContent='Ручки на детали нет.';return;}
+    snapshot();handleRemoveExisting();selectedPocketRegion=null;renderTemplateButtons();drawView();
+    $('handleInfo').textContent='';$('footerStatus').textContent='Ручка убрана';closeHandle2();
+  }
   function addHandle() {
     if(state.objectType!=='facade'||state.kind)return;
     stateFromInputs();
-    const num=(id,def)=>{const v=Number(String($(id).value).replace(',','.'));return $(id).value!==''&&Number.isFinite(v)?v:def;};
+    const h=handleReadForm();h.shape='pi';
     const W=Number(state.width),H=Number(state.height),thickness=Number(state.thickness)||19;
-    const edge=$('hEdge').value,mode=$('hMode').value,vertical=edge==='left'||edge==='right',along=vertical?H:W,across=vertical?W:H;
-    const grip=num('hGrip',25),depth=Math.min(thickness,num('hDepth',12)),dia=num('hDia',12),step=Math.max(10,Math.min(100,num('hStep',40)));
-    let len=num('hLen',0),start=num('hStart',0);
+    const edge=h.edge,vertical=edge==='left'||edge==='right',along=vertical?H:W,across=vertical?W:H;
     const fail=text=>{$('handleInfo').textContent='⚠ '+text;$('footerStatus').textContent=text;};
-    if(!(grip>=5&&grip<across-5))return fail(`Ширина выборки должна быть от 5 мм и меньше размера детали (${across} мм).`);
-    if(!(depth>0))return fail('Укажите глубину выборки.');
-    if(mode!=='edge'&&!(dia>=2&&dia<=grip+dia))return fail('Укажите Ø фрезы выборки.');
-    const full=!(len>0)||len>=along-1e-9;
-    if(full){len=along;start=0;}else{if(!(start>0))start=(along-len)/2;if(start+len>along+1e-9)return fail(`Ручка длиной ${len} мм с отступом ${start} мм не помещается в кромку ${along} мм.`);}
-    const edgeCutter=$('hEdgeCutter').value,edgeDia=num('hEdgeDia',10),edgeDepth=Math.min(thickness,num('hEdgeDepth',0)>0?num('hEdgeDepth',0):depth);
-    if(mode!=='pocket'&&!cutterShape(edgeCutter))return fail('Выберите радиусную фрезу.');
-    const ext=Math.max(dia,2);                       // выборка выходит за кромку детали, чтобы фреза не оставляла перемычку
-    snapshot();
-    // координаты вдоль кромки (a..a+L) и поперёк (от кромки внутрь), затем в мм детали
-    const rect=(a,len2,c0,c1)=>{ // c0..c1 — поперёк от кромки (может быть <0)
-      let x,y,w,h;
-      if(edge==='top'){x=a;y=c0;w=len2;h=c1-c0;}
-      else if(edge==='bottom'){x=a;y=H-c1;w=len2;h=c1-c0;}
-      else if(edge==='left'){x=c0;y=a;w=c1-c0;h=len2;}
-      else{x=W-c1;y=a;w=c1-c0;h=len2;}
-      return{x:Number((x/W).toFixed(12)),y:Number((y/H).toFixed(12)),w:Number((w/W).toFixed(12)),h:Number((h/H).toFixed(12))};
+    const R=h.cDia/2;
+    if(!(h.grip>=5&&h.grip<across-5))return fail(`Ширина выборки должна быть от 5 мм и меньше размера детали (${across} мм).`);
+    if(!(h.depth>0&&h.depth<=thickness))return fail(`Глубина выборки — от 0 до толщины детали (${thickness} мм).`);
+    if(!(h.dia>=2))return fail('Укажите Ø фрезы выборки (от 2 мм).');
+    if(!cutterShape(h.cutter))return fail('Выберите фрезу ручки.');
+    if(!(h.cDia>=1)||!(h.cDepth>0&&h.cDepth<=thickness))return fail(`Фреза ручки: Ø от 1 мм, глубина от 0 до ${thickness} мм.`);
+    // положение: центр ручки от угла; 0 — по центру кромки; длина 0 — вся кромка
+    let len=h.len;const full=!(len>0)||len>=along-1e-9;if(full)len=along;
+    let center=h.pos>0?h.pos:along/2;
+    const a=center-len/2,b=center+len/2;
+    if(!full&&(a<-1e-9||b>along+1e-9))return fail(`Ручка ${len} мм с центром ${center} мм выходит за кромку ${along} мм (займёт ${Math.round(a*10)/10}…${Math.round(b*10)/10}).`);
+    const legInset=h.fit==='outer'?R:0;           // ножки пути: центры фрезы, чтобы рез не вышел за длину ручки
+    const ua=a+legInset,ub=b-legInset;
+    if(!(ub-ua>=-1e-9)||(h.shape!=='straight'&&ub-ua<1e-6&&h.fit==='outer'&&len<h.cDia))return fail(`Длина ручки ${len} мм меньше Ø фрезы ${h.cDia} мм — увеличьте длину или возьмите меньшую фрезу.`);
+    const ext=Math.max(h.dia,2);
+    snapshot();handleRemoveExisting();
+    // (u вдоль кромки от угла, v от кромки внутрь) -> мм детали
+    const toXY=(u,v)=>edge==='top'?[u,v]:edge==='bottom'?[u,H-v]:edge==='left'?[v,u]:[W-v,u];
+    // контур выборки: прямоугольник, открытый к кромке, с скруглёнными внутренними углами (радиус r)
+    const pocketPath=(u0,u1,v0,v1,r)=>{
+      r=Math.max(0,Math.min(r,(u1-u0)/2-1e-6,(v1-v0)-1e-6));const k=.5522847*r;
+      const seg=r>1e-6
+        ?[['M',[u0,v0]],['L',[u1,v0]],['L',[u1,v1-r]],['C',[u1,v1-r+k],[u1-r+k,v1],[u1-r,v1]],['L',[u0+r,v1]],['C',[u0+r-k,v1],[u0,v1-r+k],[u0,v1-r]],['Z']]
+        :[['M',[u0,v0]],['L',[u1,v0]],['L',[u1,v1]],['L',[u0,v1]],['Z']];
+      const abs=[];seg.forEach(c=>c.slice(1).forEach(q=>abs.push(toXY(q[0],q[1]))));
+      const xs=abs.map(q=>q[0]),ys=abs.map(q=>q[1]),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys),f=n=>Number(n.toFixed(9));
+      const nx=x=>f((x-x0)/(x1-x0)),ny=y=>f((y-y0)/(y1-y0));
+      const d=seg.map(c=>c[0]==='Z'?'Z':c[0]+' '+c.slice(1).map(q=>{const m=toXY(q[0],q[1]);return nx(m[0])+' '+ny(m[1]);}).join(' ')).join(' ');
+      return{d,rel:{x:f(x0/W),y:f(y0/H),w:f((x1-x0)/W),h:f((y1-y0)/H)}};
     };
-    const created=[];
-    if(mode!=='edge'){
-      const id=nextContourId++,a=full?-ext:start,l=full?along+2*ext:len;
-      state.contours=[...state.contours,{id,name:'Выборка под ручку',parentId:0,shape:'free',direction:'in',offset:1,corner:0,rel:rect(a,l,-ext,grip),freeD:'M 0 0 L 1 0 L 1 1 L 0 1 Z',cutter:'none',diameter:6,depth:3,additionalCutters:[],overhang:true}];
-      state.pockets=[...(state.pockets||[]),{parentId:id,islandId:id,regionType:'inside',cutter:'flat',diameter:dia,depth,stepover:step,passDepth:Math.min(2,depth),back:$('hBack').checked}];
-      created.push('выборка');
+    const rectRel=(u0,u1,v0,v1)=>{const p=[toXY(u0,v0),toXY(u1,v1)],x0=Math.min(p[0][0],p[1][0]),x1=Math.max(p[0][0],p[1][0]),y0=Math.min(p[0][1],p[1][1]),y1=Math.max(p[0][1],p[1][1]);const f=n=>Number(n.toFixed(12));return{x:f(x0/W),y:f(y0/H),w:f((x1-x0)/W),h:f((y1-y0)/H)};};
+    const base={parentId:0,direction:'in',offset:1,corner:0,handle:true,handleLip:true,additionalCutters:[]};
+    const uA=full?-ext:a,uB=full?along+ext:b;
+    // 1) выборка сверху
+    const pk1=pocketPath(uA,uB,-ext,h.grip,h.rad);
+    let id=nextContourId++;
+    state.contours=[...state.contours,{...base,id,name:'Выборка под ручку',shape:'free',rel:pk1.rel,freeD:pk1.d,cutter:'none',diameter:6,depth:3,overhang:true}];
+    state.pockets=[...(state.pockets||[]),{parentId:id,islandId:id,regionType:'inside',cutter:'flat',diameter:h.dia,depth:h.depth,stepover:Math.max(10,Math.min(100,h.step)),passDepth:Math.min(2,h.depth),back:false,handle:true}];
+    // 2) накладка сзади
+    if(h.variant==='overlay'){
+      if(!(h.ovW>=5&&h.ovW<across-5)||!(h.ovDepth>0&&h.ovDepth<thickness)||!(h.ovDia>=2)){undoOnce();return fail('Накладка: ширина от 5 мм, глубина меньше толщины, Ø фрезы от 2 мм.');}
+      id=nextContourId++;
+      const o0=full?-ext:Math.max(0,a-h.ovExtra),o1=full?along+ext:Math.min(along,b+h.ovExtra);
+      const pk2=pocketPath(o0,o1,-ext,h.ovW,h.rad);
+      state.contours=[...state.contours,{...base,id,name:'Накладка сзади',shape:'free',rel:pk2.rel,freeD:pk2.d,cutter:'none',diameter:6,depth:3,overhang:true}];
+      state.pockets=[...state.pockets,{parentId:id,islandId:id,regionType:'inside',cutter:'flat',diameter:h.ovDia,depth:h.ovDepth,stepover:Math.max(10,Math.min(100,h.step)),passDepth:Math.min(2,h.ovDepth),back:true,handle:true}];
     }
-    if(mode!=='pocket'){
-      const id=nextContourId++,rel=rect(start,len,grip,grip);
-      state.contours=[...state.contours,{id,name:nextVectorName(),parentId:0,shape:'free',direction:'in',offset:1,corner:0,rel,freeD:vertical?'M 0 0 L 0 1':'M 0 0 L 1 0',cutter:edgeCutter,diameter:edgeDia,depth:edgeDepth,side:'on',additionalCutters:[],handleLip:true}];
-      created.push('радиус по стенке');
-    }
+    // 3) вектор фрезы ручки: заходит и выходит внутри выборки
+    const vC=h.center;let lead=Math.max(1,h.lead);
+    lead=Math.min(lead,h.grip-1);   // точки входа/выхода — внутри выборки, не за кромкой детали
+    if(!(vC>lead+1e-6)){undoOnce();return fail('Центр фрезы от кромки ('+vC+' мм) должен быть дальше точки захода ('+lead+' мм). Увеличьте центр или уменьшите заход.');}
+    const pts=[];
+    if(h.shape==='straight'){pts.push([ua,vC],[ub,vC]);}
+    else if(h.shape==='trap'){const dv=vC-lead;pts.push([ua-dv,lead],[ua,vC],[ub,vC],[ub+dv,lead]);}
+    else{pts.push([ua,lead],[ua,vC],[ub,vC],[ub,lead]);}
+    const xy=pts.map(q=>toXY(q[0],q[1])),xs=xy.map(q=>q[0]),ys=xy.map(q=>q[1]);
+    const bx0=Math.min(...xs),bx1=Math.max(...xs),by0=Math.min(...ys),by1=Math.max(...ys),bw=bx1-bx0,bh=by1-by0,f=n=>Number(n.toFixed(9));
+    const nrm=(v,lo,sz)=>sz>1e-9?f((v-lo)/sz):0;
+    const freeD='M '+xy.map(q=>`${nrm(q[0],bx0,bw)} ${nrm(q[1],by0,bh)}`).join(' L ');
+    // вырожденная ось (прямая): линия идёт по длине 0→1
+    const freeD2=bw<1e-9||bh<1e-9?(bw<1e-9?'M 0 0 L 0 1':'M 0 0 L 1 0'):freeD;
+    id=nextContourId++;
+    const out=xy.some(q=>q[0]<-1e-6||q[1]<-1e-6||q[0]>W+1e-6||q[1]>H+1e-6);
+    state.contours=[...state.contours,{...base,id,name:nextVectorName(),shape:'free',rel:{x:f(bx0/W),y:f(by0/H),w:f(bw/W),h:f(bh/H)},freeD:freeD2,cutter:h.cutter,diameter:h.cDia,depth:h.cDepth,side:'on',overhang:out}];
+    state.handle={...h};
     const issues=geometryIssues();
     if(issues.length){undoOnce();return fail('Не получилось: '+issues[0]);}
-    selectedPocketRegion=null;
+    selectedPocketRegion=null;state.selectedContour=id;
     renderTemplateButtons();drawView();
-    const msg=`Ручка: ${created.join(' + ')}; кромка ${({top:'верхняя',bottom:'нижняя',left:'левая',right:'правая'})[edge]}, длина ${Math.round(len*10)/10} мм, выборка ${grip} × ${depth} мм${$('hBack').checked?' с тыла':''}.`;
+    const msg=`Ручка: ${({top:'верхняя',bottom:'нижняя',left:'левая',right:'правая'})[edge]} кромка, ${Math.round(len*10)/10} мм (${Math.round(a*10)/10}…${Math.round(b*10)/10}), ${h.variant==='overlay'?'с накладкой сзади':'без накладки'}; выборка ${h.grip} × ${h.depth} мм; вектор ручки: ${({pi:'П-образный',trap:'трапеция',straight:'прямой'})[h.shape]}, фреза Ø${h.cDia}.`;
     $('handleInfo').textContent=msg;$('footerStatus').textContent=msg;closeHandle2();
   }
   function kindSignature() {
@@ -7831,7 +7906,9 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     }));
   });
   $('hAdd').addEventListener('click',addHandle);
-  $('handleTool').addEventListener('click',()=>{if(state.objectType!=='facade'||state.kind){$('footerStatus').textContent='Встроенная ручка доступна для обычного фасада';return;}$('handleInfo').textContent='';$('handleOverlay').classList.remove('hidden');});
+  $('handleTool').addEventListener('click',()=>{if(state.objectType!=='facade'||state.kind){$('footerStatus').textContent='Встроенная ручка доступна для обычного фасада';return;}handleWriteForm({...HANDLE_DEFAULTS,...(state.handle||{})});$('hEdge').dataset.prev=$('hEdge').value;if(!state.handle){const ed=$('hEdge').value,al=(ed==='left'||ed==='right')?Number(state.height):Number(state.width);$('hPos').value=String(Math.round(al/2*100)/100);}$('handleInfo').textContent=state.handle?'На детали уже есть ручка: «Применить» заменит её.':'';$('handleOverlay').classList.remove('hidden');});
+  $('hVariant').addEventListener('change',handleSyncForm);
+  $('hEdge').addEventListener('change',()=>{const m=e=>(e==='left'||e==='right')?Number(state.height):Number(state.width);const cur=Number($('hPos').value.replace(',','.')),old=$('hEdge').dataset.prev||'top';if(!($('hPos').value!=='')||Math.abs(cur-m(old)/2)<1e-6)$('hPos').value=String(Math.round(m($('hEdge').value)/2*100)/100);$('hEdge').dataset.prev=$('hEdge').value;});$('hRemove').addEventListener('click',removeHandle);
   const closeHandle=()=>$('handleOverlay').classList.add('hidden');
   $('closeHandle').addEventListener('click',closeHandle);$('hCancel').addEventListener('click',closeHandle);
   [['pThrough','through'],['pExtra','extra'],['pBottomOn','bottomOn']].forEach(([id,key])=>$(id).addEventListener('change',event=>{event.stopPropagation();changeKindSettings('pilaster',()=>{state.pilaster[key]=$(id).checked;});}));
@@ -7868,6 +7945,8 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       if(!first){const m='Острые углы ставятся в углы прямоугольного вектора. Сначала создайте вектор (кнопка «Вектор» в списке контуров).';$('footerStatus').textContent=m;alert(m);return;}
       state.selectedContour=first.id;renderTemplateButtons();drawView();
     }
+    if(selectedPocketRegion){selectedPocketRegion=null;renderTemplateButtons();drawView();} // выбранная область выборки скрывает настройки угла
+    if($('sharpCornerBox').classList.contains('hidden')){const m='Для острых углов выберите прямоугольный вектор (не область между векторами) и нажмите «Острые» ещё раз.';$('footerStatus').textContent=m;alert(m);return;}
     openPanelDlg('sharpCornerPanel','Острые углы');
   });
   $('rustPick').addEventListener('click',()=>{rustPickMode=!rustPickMode;renderRustSettings();if(rustPickMode){activeTool='select';$('footerStatus').textContent='Щёлкайте области между векторами: русты пойдут в углы этих областей';}drawView();});
