@@ -210,7 +210,7 @@ button:hover{border-color:#71847a;background:#d7e0d7;color:#302f2a}
 .pocket-select-area:hover{fill-opacity:.12}
 .pocket-select-area.active{fill:#5d9b91;fill-opacity:.2}
 .pocket-select-area.configured{fill:#c58c55;fill-opacity:.2}
-.pocket-select-area.rust-pick{fill:#a45f40;fill-opacity:.06}.pocket-select-area.rust-on{fill:#a45f40;fill-opacity:.22}.pocket-select-area.rust-on.rust-pick{fill-opacity:.32}
+#rustRegionList button{display:block;width:100%;margin:0 0 6px;text-align:left}#rustRegionList button.active{background:#1254a1;border-color:#1887ff;color:#fff}
 .pocket-select-area.configured.active{fill-opacity:.32}
 .pocket-select-area.configured.back{fill:#5b86b0}
 
@@ -578,7 +578,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       <button class="manual-tool facade-tool" type="button" data-tool="offset" title="Создать вектор со смещением: щёлкните внутри вектора — смещение внутрь, снаружи — наружу" aria-label="Смещение"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h22v18H5Z"/><path d="M11 13h10v8H11Z"/></svg><span>Смещение</span></button>
       <button class="manual-tool facade-tool" type="button" data-tool="delete" title="Удалить выбранный или указанный щелчком вектор, русты и выборку" aria-label="Удалить"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 9h18M12 9V5h8v4m3 0-1 18H10L9 9m4 4v10m6-10v10"/></svg><span>Удалить</span></button>
       <button class="manual-tool facade-tool" type="button" data-tool="pocket" title="Быстрая выборка: щёлкните область между векторами — выборка создаётся с текущими настройками" aria-label="Выборка"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 6h22v20H5Z"/><path d="M11 12h10v8H11Z" fill="currentColor" fill-opacity=".25"/></svg><span>Выборка</span></button>
-      <button class="manual-tool facade-tool" type="button" id="addRusts" title="Русты: диагонали от углов фасада до углов первого вектора (повторное нажатие пересоздаёт их)" aria-label="Добавить русты"><svg viewBox="0 0 32 32"><path d="M4 4h24v24H4Z"/><path d="M11 11h10v10H11Z"/><path d="M4 4l7 7M28 4l-7 7M28 28l-7-7M4 28l7-7"/></svg><span>Русты</span></button>
+      <button class="manual-tool facade-tool" type="button" id="addRusts" title="Русты: выбрать промежуток между векторами в списке или щёлкнуть его на чертеже" aria-label="Добавить русты"><svg viewBox="0 0 32 32"><path d="M4 4h24v24H4Z"/><path d="M11 11h10v10H11Z"/><path d="M4 4l7 7M28 4l-7 7M28 28l-7-7M4 28l7-7"/></svg><span>Русты</span></button>
       <button class="manual-tool" type="button" id="toggleVitrina" title="Превратить фасад в витрину (рамка, четверть, окно) и обратно. Размеры, вектора и фрезы сохраняются, добавляются рамка, четверть и окно; отмена — ↶" aria-label="Фасад в витрину"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="24" height="24" rx="2"/><rect x="10" y="10" width="12" height="12"/><path d="m10 22 12-12"/></svg><span id="toggleVitrinaLabel">В витрину</span></button>
       <button class="manual-tool facade-tool" type="button" id="handleTool" title="Встроенная ручка: выборка у кромки и радиус" aria-label="Встроенная ручка"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h24M4 8v18h24V8"/><path d="M9 8v6c0 2 1 3 3 3h8c2 0 3-1 3-3V8"/></svg><span>Ручка</span></button>
       <button class="manual-tool facade-tool" type="button" id="sharpTool" title="Острые углы: выберите прямоугольный вектор, затем откройте окно настройки" aria-label="Острые углы"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h14l6 6v14H6z"/><path d="M6 6l5 5"/></svg><span>Острые</span></button>
@@ -795,10 +795,11 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
           <div class="field"><label for="rustDiameter">Диаметр, мм</label><input id="rustDiameter" type="number" min="1" max="80" step="0.5" value="6"></div>
           <div class="field"><label for="rustDepth">Глубина реза, мм</label><input id="rustDepth" type="number" min="0.1" max="1000" step="0.1" value="3"></div>
         </div>
-        <div class="notice vector-note" id="rustInfo">Русты идут от четырёх углов внешнего вектора (или фасада) до углов внутреннего и следуют за ним при изменении отступа. Нажмите «Выбрать области», затем щёлкайте области между векторами на чертеже: повторный щелчок снимает область. Без выбора русты идут от фасада до первого вектора «внутрь». Убрать русты — кнопка ниже.</div>
-        <button type="button" id="rustPick" aria-pressed="false">Выбрать области на чертеже</button>
+        <div class="notice vector-note" id="rustInfo">Выберите промежуток в списке или щёлкните его на чертеже. Повторное нажатие снимает русты с этой области.</div>
+        <div id="rustRegionList"></div>
+        <button type="button" id="rustPick" aria-pressed="false">Щёлкнуть на чертеже</button>
         <div class="notice vector-note" id="rustRegionsInfo"></div>
-        <button type="button" id="rustResetRegions">Сбросить: до первого вектора</button>
+        <button type="button" id="rustResetRegions">Снять выбор</button>
         <button type="button" id="removeRusts">Убрать русты</button>
       </div>
     </section>
@@ -877,39 +878,45 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
 <div id="panelDlg" class="modal-overlay hidden"><section class="modal-card" style="max-height:92%;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y" role="dialog" aria-modal="true" aria-labelledby="panelDlgTitle"><button class="modal-close" id="panelDlgClose" type="button" aria-label="Закрыть">×</button><h2 id="panelDlgTitle" style="margin:0 0 8px;padding-right:40px"></h2><div id="panelDlgBody"></div></section></div>
 <div id="handleOverlay" class="modal-overlay hidden"><section class="modal-card" style="max-height:92%;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y" role="dialog" aria-modal="true" aria-labelledby="handleTitle"><button class="modal-close" id="closeHandle" type="button" aria-label="Закрыть">×</button><h2 id="handleTitle" style="margin:0 0 8px;padding-right:40px">Встроенная ручка</h2>
 <div class="vector-settings">
-<div class="notice vector-note">Ручка одна на деталь: повторное нажатие «Применить» заменяет прежнюю. Состоит из выборки сверху, вектора фрезы ручки (заходит по вектору, делает ручку и выходит, ничего не задевая) и, если нужно, выборки под накладку сзади. Все размеры настраиваются.</div>
+<div class="notice vector-note">По чертежу ручки: выборка <b>30 мм от края</b>, под губой фреза уходит ещё на <b>11,5 мм</b>, на дне остаётся <b>4 мм</b>. Остальное считается от выборки и от фрезы 30.0277.01, и каждое число можно поправить. Траектория заходит в выборку, идёт вдоль ручки и выходит — не проходит всю деталь сверху вниз.</div>
 <div class="fields">
-<div class="field"><label for="hEdge">Кромка с ручкой</label><select id="hEdge"><option value="top">Верхняя</option><option value="bottom">Нижняя</option><option value="left">Левая</option><option value="right">Правая</option></select></div>
-<div class="field"><label for="hVariant">Вариант</label><select id="hVariant"><option value="plain">Без накладки</option><option value="overlay">С накладкой сзади</option></select></div>
+<div class="field"><label for="hEdge">Кромка</label><select id="hEdge"><option value="top">Верхняя</option><option value="bottom">Нижняя</option><option value="left">Левая</option><option value="right">Правая</option></select></div>
+<div class="field"><label for="hVariant">Накладка</label><select id="hVariant"><option value="plain">Без накладки</option><option value="overlay">Накладка сзади</option></select></div>
 </div>
 <div class="fields">
 <div class="field"><label for="hLen">Длина ручки, мм (0 — вся кромка)</label><input id="hLen" type="text" inputmode="decimal" autocomplete="off" value="100"></div>
-<div class="field"><label for="hPos">Центр ручки: расстояние от угла детали до середины ручки, мм</label><input id="hPos" type="text" inputmode="decimal" autocomplete="off" value="0"></div>
+<div class="field"><label for="hPos">Середина ручки от левого (или верхнего) угла, мм. 0 — по центру кромки</label><input id="hPos" type="text" inputmode="decimal" autocomplete="off" value="0"></div>
 </div>
-<p class="sub" style="margin:2px 0 6px">Угол отсчёта: для верхней и нижней кромки — левый, для боковых — верхний. Пример: деталь 300, ручка 100, центр 150 → ручка занимает 100…200.</p>
-<h3 style="margin:8px 0 4px;font-size:13px">Выборка сверху (условная: рисуем только вектор, режимы задаёте в ArtCAM)</h3>
+<h3 style="margin:10px 0 4px;font-size:13px">1. Выборка</h3>
+<p class="sub" style="margin:0 0 6px">Прямая фреза снимает карман от кромки, чтобы профильная фреза могла зайти.</p>
 <div class="fields">
-<div class="field"><label for="hGrip">Ширина от кромки, мм</label><input id="hGrip" type="text" inputmode="decimal" autocomplete="off" value="25"></div>
-<div class="field"><label for="hDepth">Глубина, мм</label><input id="hDepth" type="text" inputmode="decimal" autocomplete="off" value="12"></div>
-</div>
-<div class="fields">
-<div class="field"><label for="hDia">Фреза выборки Ø, мм (для имени слоя)</label><input id="hDia" type="text" inputmode="decimal" autocomplete="off" value="12"></div>
-<div class="field hidden"><label for="hStep">Шаг фрезы, % Ø</label><input id="hStep" type="text" inputmode="decimal" autocomplete="off" value="40"></div>
-</div>
-<h3 style="margin:8px 0 4px;font-size:13px">Вектор фрезы ручки (П-образный: заход и выход внутри выборки, ход вдоль ручки)</h3>
-<div class="field"><label for="hEdgeCutter">Фреза ручки</label><select id="hEdgeCutter"><option value="round">Радиусная фреза</option></select></div>
-<div class="fields">
-<div class="field"><label for="hEdgeDia">Ø / ширина фрезы, мм</label><input id="hEdgeDia" type="text" inputmode="decimal" autocomplete="off" value="38.1"></div>
-<div class="field"><label for="hEdgeDepth">Глубина прохода, мм</label><input id="hEdgeDepth" type="text" inputmode="decimal" autocomplete="off" value="12"></div>
+<div class="field"><label for="hGrip">Ширина от края, мм</label><input id="hGrip" type="text" inputmode="decimal" autocomplete="off" value="30"></div>
+<div class="field"><label for="hDepth">Глубина кармана, мм</label><input id="hDepth" type="text" inputmode="decimal" autocomplete="off" value="18"></div>
 </div>
 <div class="fields">
-<div class="field"><label for="hRad">Скругление углов выборки, мм (0 — квадрат)</label><input id="hRad" type="text" inputmode="decimal" autocomplete="off" value="6"></div><select id="hShape" class="hidden"><option value="pi">П</option></select>
-<div class="field"><label for="hCenter">Центр фрезы от кромки, мм</label><input id="hCenter" type="text" inputmode="decimal" autocomplete="off" value="25"></div>
+<div class="field"><label for="hDia">Прямая фреза выборки Ø, мм</label><input id="hDia" type="text" inputmode="decimal" autocomplete="off" value="12"></div>
+<div class="field"><label for="hRad">Скругление углов кармана, мм (0 — прямо)</label><input id="hRad" type="text" inputmode="decimal" autocomplete="off" value="6"></div>
+</div>
+<div class="field hidden"><label for="hStep">Шаг</label><input id="hStep" type="text" value="40"></div>
+<h3 style="margin:10px 0 4px;font-size:13px">2. Фреза ручки</h3>
+<p class="sub" style="margin:0 0 6px">Штатная: арт. 30.0277.01, концевая HM, Ø 38,1 × 22 мм, хвостовик 8, Z2, правое вращение. Профиль по чертежу сечения: плоское дно, скругление дна, стенка Ø38,1 и закруглённое плечо, которое формирует подрез под губой (приблизительно, по размерам чертежа).</p>
+<div class="field"><label for="hEdgeCutter">Фреза</label><select id="hEdgeCutter"><option value="round">Радиусная фреза</option></select></div>
+<div class="fields">
+<div class="field"><label for="hEdgeDia">Ø фрезы, мм</label><input id="hEdgeDia" type="text" inputmode="decimal" autocomplete="off" value="38.1"></div>
+<div class="field"><label for="hEdgeDepth">Глубина прохода этой фрезой, мм (не больше 22)</label><input id="hEdgeDepth" type="text" inputmode="decimal" autocomplete="off" value="18"></div>
+</div>
+<h3 style="margin:10px 0 4px;font-size:13px">3. Траектория</h3>
+<p class="sub" style="margin:0 0 6px">Меняете выборку или форму — линия пересчитывается. Заход и выход остаются внутри выборки.</p>
+<div class="field"><label for="hShape">Форма</label><select id="hShape"><option value="pi">П-образная: заход, ход вдоль, выход</option><option value="straight">Прямая: только ход вдоль</option><option value="trap">Трапеция: заход наискосок</option></select></div>
+<div class="fields">
+<div class="field"><label for="hCenter">Ось фрезы от края, мм</label><input id="hCenter" type="text" inputmode="decimal" autocomplete="off" value="22.5"></div>
+<div class="field"><label for="hLead">Заход и выход: расстояние от края, мм</label><input id="hLead" type="text" inputmode="decimal" autocomplete="off" value="8"></div>
 </div>
 <div class="fields">
-<div class="field"><label for="hLead">Точка захода и выхода: на каком расстоянии от кромки, мм (внутри выборки)</label><input id="hLead" type="text" inputmode="decimal" autocomplete="off" value="8"></div>
-<div class="field"><label for="hFit">Длина ручки считать</label><select id="hFit"><option value="outer">по краям реза (ножки внутри)</option><option value="path">по вектору (центры ножек)</option></select></div>
+<div class="field"><label for="hFit">Как мерить длину</label><select id="hFit"><option value="outer">по краям реза</option><option value="path">по центрам захода</option></select></div>
+<div class="field" style="align-self:end"><button type="button" id="hRecalc">Пересчитать ось и заход от выборки</button></div>
 </div>
+<div class="notice" id="handlePreview"></div>
 <div id="hOverlayBox" class="hidden">
 <h3 style="margin:8px 0 4px;font-size:13px">Накладка сзади (выборка с тыла)</h3>
 <div class="fields">
@@ -921,7 +928,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
 <div class="field"><label for="hOvDia">Фреза накладки Ø, мм</label><input id="hOvDia" type="text" inputmode="decimal" autocomplete="off" value="12"></div>
 </div>
 </div>
-<div class="sd-tools" style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button type="button" id="hAdd" class="primary">Применить ручку</button><button type="button" id="hRemove">Убрать ручку</button><button type="button" id="hCancel">Закрыть</button></div>
+<h3 style="margin:10px 0 4px;font-size:13px">Сечение ручки (симуляция фрезы)</h3><svg id="hSection" viewBox="0 0 100 60" style="width:100%;height:auto;background:#fbf8f1;border:1px solid #cfc7b5;border-radius:8px"></svg><div id="hSectionNote" style="font-size:11px;color:#58574f;margin:4px 0 0"></div><div class="sd-tools" style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button type="button" id="hAdd" class="primary">Применить ручку</button><button type="button" id="hRemove">Убрать ручку</button><button type="button" id="hCancel">Закрыть</button></div>
 <div class="notice" id="handleInfo" style="margin-top:8px"></div><style>#handleInfo:empty{display:none}</style>
 </div></section></div>
 <div id="frameOverlay" class="modal-overlay hidden"><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="frameTitle"><button class="modal-close" id="closeFrame" type="button" aria-label="Закрыть">×</button><h2 id="frameTitle" style="margin:0 0 8px;padding-right:40px">Фасад из профиля</h2>
@@ -1300,6 +1307,24 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     formTableCache.set(profile,table);
     return table;
   }
+  const formUpperCache=new WeakMap();
+  function formUpper(tool,normalized) {
+    let table=formUpperCache.get(tool.profile);
+    if(!table){
+      const profile=tool.profile,steps=256;table=new Float32Array(steps+1).fill(-Infinity);
+      for(let index=0;index+1<profile.length;index++){
+        const [x1,y1]=profile[index],[x2,y2]=profile[index+1],low=Math.min(x1,x2),high=Math.max(x1,x2);
+        for(let step=Math.max(0,Math.ceil(low*steps-1e-9));step<=Math.min(steps,Math.floor(high*steps+1e-9));step++){
+          const x=step/steps,y=high-low<1e-9?Math.max(y1,y2):y1+(y2-y1)*(x-x1)/(x2-x1);
+          if(y>table[step])table[step]=y;
+        }
+      }
+      let previous=0;for(let step=0;step<=steps;step++){if(Number.isFinite(table[step]))previous=table[step];else table[step]=previous;}
+      formUpperCache.set(tool.profile,table);
+    }
+    const position=Math.min(1,Math.max(0,normalized))*(table.length-1),low=Math.floor(position),high=Math.min(table.length-1,low+1);
+    return table[low]+(table[high]-table[low])*(position-low);
+  }
   function formLift(tool,normalized) {
     const table=formLiftTable(tool.profile),position=Math.min(1,Math.max(0,normalized))*(table.length-1),low=Math.floor(position),high=Math.min(table.length-1,low+1);
     return table[low]+(table[high]-table[low])*(position-low);
@@ -1494,6 +1519,8 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       const tool=formTool(shape);
       if(!tool)return 0;
       const diameter=Number(width)>0?Number(width):tool.width;
+      // Фреза с подрезом (ручка): сверху виден только тот участок, где силуэт фрезы выходит на поверхность; остальное скрыто под губой
+      if(tool.undercut&&formUpper(tool,Math.abs(normalized))*diameter/2<depth-1e-6)return 0;
       return Math.max(0,depth-formLift(tool,Math.abs(normalized))*diameter/2);
     }
     // Форма встроенной фрезы зафиксирована диаметром (шар Ø9 всегда шар радиуса 4.5); «Глубина реза» — это отдельно, на сколько фреза
@@ -1625,6 +1652,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     state.outerDepth=Number.isFinite(Number(state.outerDepth))&&Number(state.outerDepth)>0?Number(state.outerDepth):3;
   }
   function renderCutterOptions() {
+    const handleTool=ensureHandleCutter();dropHookCutter();
     const customOptions=customCutterOptionsMarkup();
     const pocketCustomOptions=customCutters.filter(item=>item.shape==='flat').map(item=>`<option value="custom:${item.id}">${esc(item.name)} · Ø ${esc(item.width)} мм</option>`).join('');
     const options={
@@ -4405,7 +4433,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       const pts=outlinePoints().map(p=>[p[0],-p[1]]);pts.push([D.L,-D.T],[0,-D.T],pts[0]);
       const lines=['0','SECTION','2','HEADER','9','$ACADVER','1','AC1009','9','$INSUNITS','70','4','0','ENDSEC','0','SECTION','2','ENTITIES'];
       for(let i=0;i+1<pts.length;i++)lines.push('0','LINE','8','PROFILE','10',String(pts[i][0]),'20',String(pts[i][1]),'30','0','11',String(pts[i+1][0]),'21',String(pts[i+1][1]),'31','0');
-      lines.push('0','ENDSEC','0','EOF');return lines.join('\r\n')+'\r\n';
+      lines.push('0','ENDSEC','0','EOF');return sealDxf(lines);
     }
     // ---------- события ----------
     function open(){
@@ -4547,7 +4575,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       ${sec('Фасад',li(['Прямоугольная заготовка с вложенными векторами, выборками, рустами и острыми углами.','Можно превратить в витрину кнопкой «В витрину».']))}
       ${sec('Витрина',li(['Рамка с окном: четверть под стекло, окно насквозь, профиль кромки.','Размеры рамки, четверти и окна задаются в панели «Витрина».']))}
       ${sec('Свободный фасад из разреза',li(['В «Чертеже в разрезе», вкладка «Размеры»: если нарисован/загружен разрез всего фасада, кнопка «Создать свободный фасад» повторяет его полосами на всю длину.','Каждый блок — прямая полоса (вектор) с той же фрезой, шириной и глубиной; направление — вдоль высоты или ширины, длину полос задаёте сами.','Полосы — обычные векторы: их можно править в списке. Положение — центр фрезы, как на чертеже.']))}
-      ${sec('Встроенная ручка',li(['Кнопка «Ручка» в нижней панели. Ручка одна на деталь: «Применить» заменяет прежнюю, «Убрать ручку» удаляет.','Состав: выборка сверху (открыта к кромке), вектор фрезы ручки (П-образный: заходит внутри выборки, идёт по ручке и выходит там же, за край детали не выступает) и, в варианте «с накладкой сзади», выборка с тыла.','Положение: длина ручки и расстояние от угла до её середины (пусто — по центру кромки). Пример: деталь 300, ручка 100, центр 150 → 100…200. Всё настраивается: фреза и Ø, глубины, центр фрезы от кромки, заход/выход, запас накладки.','Слои DXF: V02_POCKET_FLAT_W12_Z12 (выборка), V04_ALONG_BALL_W38P1_Z12 (вектор ручки).']))}
+      ${sec('Встроенная ручка',li(['Кнопка «Ручка» в нижней панели. Ручка одна на деталь: «Применить» заменяет прежнюю, «Убрать ручку» удаляет.','Состав: выборка сверху (открыта к кромке), вектор фрезы ручки (П-образный: заходит внутри выборки, идёт по ручке и выходит там же, за край детали не выступает) и, в варианте «с накладкой сзади», выборка с тыла.','Положение: длина ручки и расстояние от угла до её середины (пусто — по центру кромки). Пример: деталь 300, ручка 100, центр 150 → 100…200. Всё настраивается: фреза и Ø, глубины, центр фрезы от кромки, заход/выход, запас накладки.','Слои DXF: V02_VYBORKA_POD_RUCHKA (выборка) и V03_FREZA_RUCHKI (вектор фрезы). В ArtCAM это слои, не группы.']))}
       ${sec('Пилястра',li(['Заготовка с ровными линиями-канавками: направление, количество, отступы, длина, фреза и глубина.','Галочка «Дополнительные варианты» включает полоски-контуры с выборкой дна.']))}
       ${sec('Цулага',li(['Прямая планка для пресса, один угол скруглён, торец под углом, вырезается насквозь.']))}
       ${sec('Профиль',li(['Деталь с продольными полосами разных фрез (профиль по длине).','Каждая полоса — отдельный вектор со своей фрезой.']))}
@@ -4570,8 +4598,8 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
 
     const exportHtml=`<div class="gd-two">
       ${sec('Что в пакете ArtCAM',li(['<b>Форматы/</b> — DXF (вектора операций по слоям), SVG, STL.','<b>Документы/</b> — спецификация (PDF): размеры, фрезы, глубины, порядок операций.','<b>3D/</b> — архив с моделью обработки (OBJ, STL, GLB).']))}
-      ${sec('Имена слоёв в DXF',li(['<b>Кнопка DXF внизу:</b> слой = <b>V02_OUT_FLAT_W6_Z3</b>: V02 — номер вектора (как в списке), IN/OUT/ALONG — фреза внутри/снаружи/по линии вектора, FLAT/BALL/V90/ROUNDOVER/WAVE — тип фрезы, W6 — Ø6 мм, Z3 — глубина 3 мм, THRU — сквозной рез, NO_TOOL — фреза не назначена. Если проходов несколько, каждый идёт в свой слой.','Слои называются по операциям: номер, назначение (контур, выборка, русты), фреза, ширина и глубина (например W6 — ширина 6, Z3 — глубина 3).','По имени слоя видно, какую фрезу и на какую глубину назначать в ArtCAM.','Единицы — миллиметры.']))}
-      ${sec('Перенос в ArtCAM',li(['1. Распакуйте архив.','2. В ArtCAM создайте модель с теми же размерами и толщиной.','3. Импортируйте DXF из папки «Форматы» (вектора).','4. По спецификации создайте траектории: для каждого слоя — своя фреза и глубина.','5. Просмотрите симуляцию и сохраните траектории для вашего станка.']))}
+      ${sec('Имена слоёв в DXF',li(['<b>Кнопка DXF внизу:</b> каждый вектор — отдельный слой с именем, например <b>V02_VYBORKA_POD_RU_POCKET_FLAT_W12_Z12</b> или <b>V03_FREZA_RUCHKI_ALONG_BALL_W38P1_Z12</b>. Номер как в списке, дальше имя вектора, сторона (IN/OUT/ALONG/POCKET), тип фрезы, W — диаметр, Z — глубина.','В файле есть таблица слоёв. Без неё ArtCAM кладёт все векторы на один слой, будто имён нет.','В ArtCAM: Векторы → Импорт → назначение <b>Сохранить слои</b> (Preserve layers). Имена смотрите в списке слоёв, не в группах: у группы ArtCAM имени нет.','Единицы — миллиметры.']))}
+      ${sec('Перенос в ArtCAM',li(['1. Распакуйте архив.','2. В ArtCAM создайте модель с теми же размерами и толщиной.','3. Импортируйте DXF: Векторы → Импорт, назначение «Сохранить слои» (Preserve layers). Иначе все векторы лягут в один слой.','4. По спецификации создайте траектории: для каждого слоя — своя фреза и глубина.','5. Просмотрите симуляцию и сохраните траектории для вашего станка.']))}
       ${sec('Отдельные файлы',li(['<b>DXF / SVG</b> внизу — вектора текущего изделия.','<b>Карта DXF</b> — раскладка деталей по листу.','<b>3D-архив ZIP</b> — только модель.','<b>PDF</b> — вид сверху, разрез и спецификация.']))}</div>`;
 
     const artcamHtml=`<p class="gd-lead">В ArtCAM из ФасадЛаб переносится готовый пакет файлов. Названия пунктов меню зависят от версии ArtCAM, ориентируйтесь на подсказки.</p>
@@ -5556,7 +5584,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
         const tail=`_W${meas(pass.diameter)}_Z${meas(pass.depth)}${thru?'_THRU':''}`;
         name=`${head}_${sideTag[pass.side||'on']||'ALONG'}_${tool}`.slice(0,Math.max(6,31-tail.length))+tail;
       }else if(head!=='OUTER')name=`${head}_NO_TOOL`;
-      name=name.replace(/_+/g,'_');let candidate=name,k=2;
+      name=name.replace(/_+/g,'_').slice(0,31);let candidate=name,k=2;
       while(used.has(candidate)){const suffix=`_${k++}`;candidate=name.slice(0,31-suffix.length)+suffix;}
       used.add(candidate);return candidate;
     };
@@ -5570,11 +5598,11 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     try{
       const nameOf=layerNamer();
       if(state.objectType==='facade'){
-        const outerPasses=outerContourCutterPasses();
-        if(outerPasses.length)outerPasses.forEach(pass=>add(nameOf('OUTER',pass),[outerRectPath(0,0,W,H)]));else add('OUTER',[outerRectPath(0,0,W,H)]);
-        state.contours.forEach((contour,index)=>{const path=contourPath(contour),passes=exportContourPasses(contour),head='V'+String(index+2).padStart(2,'0');if(passes.length)passes.forEach(pass=>add(nameOf(head,pass),[path]));else add(nameOf(head,null),[path]);});
-        add('VECTORS',allCustomVectors().map(vector=>customVectorSvgPath(vector)));
-        state.importedPaths.forEach((item,index)=>add('IMPORTED_'+(index+1),[{d:item.d,map:importedMapPoint(item,W,H)}]));
+        const outerPasses=outerContourCutterPasses(),blankName=state.kind==='vitrina'?'Основа витрины':state.kind==='pilaster'?'Основа пилястры':'Основа',outerHead=dxfLayerHead(1,blankName);
+        if(outerPasses.length)outerPasses.forEach(pass=>add(nameOf(outerHead,pass),[outerRectPath(0,0,W,H)]));else add(nameOf(outerHead,null),[outerRectPath(0,0,W,H)]);
+        state.contours.forEach((contour,index)=>{const path=contourPath(contour),passes=exportContourPasses(contour),head=dxfLayerHead(index+2,contour.name||`Вектор ${index+2}`);if(passes.length)passes.forEach(pass=>add(nameOf(head,pass),[path]));else add(nameOf(head,null),[path]);});
+        allCustomVectors().forEach((vector,index)=>add(nameOf(dxfLayerHead(state.contours.length+2+index,vector.type==='point'?`Точка ${index+1}`:`Линия ${index+1}`),null),[customVectorSvgPath(vector)]));
+        state.importedPaths.forEach((item,index)=>add(nameOf(dxfLayerHead(state.contours.length+allCustomVectors().length+2+index,item.name||`Импорт ${index+1}`),null),[{d:item.d,map:importedMapPoint(item,W,H)}]));
       }else{
         add('OUTER',[outerRectPath(0,0,W,H)]);
         if(state.objectType==='profile'&&state.kind!=='tsulaga')operationVectorPaths().forEach((path,index)=>{const band=state.profileBands[index],pass=band?{cutter:band.cutter,diameter:Number(band.cutterWidth),depth:Number(band.depth),side:band.mode==='inside'?'inside':band.mode==='outside'?'outside':'on'}:null;add(nameOf('V'+String(index+1).padStart(2,'0'),pass),[path]);});
@@ -5661,35 +5689,70 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       lines.push('0','SEQEND','8',layer);
     }
   }
+  // ArtCAM заводит векторный слой только из таблицы LAYER. Код 8 на линии без таблицы он не читает.
+  function sealDxf(lines) {
+    const used=new Set(),names=[];
+    const clean=raw=>{
+      let name=String(raw||'0').toUpperCase().replace(/[^A-Z0-9_]/g,'_').replace(/_+/g,'_').replace(/^_+|_+$/g,'')||'L';
+      if(name.length>31)name=name.slice(0,31);
+      if(!used.has(name)){used.add(name);names.push(name);}
+      return name;
+    };
+    for(let i=0;i+1<lines.length;i+=2)if(lines[i]==='8')lines[i+1]=clean(lines[i+1]);
+    if(!names.length)names.push('0');
+    const colors=[1,3,5,4,6,2,30,40,50,60,80,90,110,130,140,150,170,190,210,230];
+    const table=['0','TABLE','2','LAYER','70',String(names.length)];
+    names.forEach((name,index)=>table.push('0','LAYER','2',name,'70','0','62',String(colors[index%colors.length]),'6','CONTINUOUS'));
+    table.push('0','ENDTAB');
+    const ltype=['0','TABLE','2','LTYPE','70','1','0','LTYPE','2','CONTINUOUS','70','0','3','Solid line','72','65','73','0','40','0.0','0','ENDTAB'];
+    const tables=['0','SECTION','2','TABLES',...ltype,...table,'0','ENDSEC'];
+    const at=lines.findIndex((value,index)=>value==='ENTITIES'&&lines[index-1]==='2'&&lines[index-2]==='SECTION'&&lines[index-3]==='0');
+    const out=at<3?lines:[...lines.slice(0,at-3),...tables,...lines.slice(at-3)];
+    return out.join('\r\n')+'\r\n';
+  }
+  function dxfLayerHead(index, label){
+    const num=String(index).padStart(2,'0');
+    const slug=artcamSlug(String(label||'VEKTOR').replace(/[«»"]/g,''),14);
+    return `V${num}_${slug}`;
+  }
   function createDxfExport() {
     const W=state.width,H=state.height,lines=['0','SECTION','2','HEADER','9','$ACADVER','1','AC1009','9','$INSUNITS','70','4','0','ENDSEC','0','SECTION','2','ENTITIES'];
     const mapPoint=point=>({x:point.x,y:H-point.y}),previous=lastGeometry,nameOf=layerNamer();
+    const blankName=state.kind==='vitrina'?'Основа витрины':state.kind==='pilaster'?'Основа пилястры':state.kind==='tsulaga'?'Цулага':'Основа';
     lastGeometry={x:0,y:0,scale:1,width:W,height:H};
     try{
-      if(state.kind==='tsulaga'&&state.objectType==='profile')appendTsulagaDxf(lines,state.tsulaga,'OUTER',mapPoint);
+      if(state.kind==='tsulaga'&&state.objectType==='profile')appendTsulagaDxf(lines,state.tsulaga,nameOf(dxfLayerHead(1,blankName),null),mapPoint);
       else if(state.objectType==='facade'){
-        const outerPasses=outerContourCutterPasses();
-        if(outerPasses.length)outerPasses.forEach(pass=>appendDxfPath(lines,outerRectPath(0,0,W,H),nameOf('OUTER',pass),mapPoint));else appendDxfPath(lines,outerRectPath(0,0,W,H),'OUTER',mapPoint);
-      }else appendDxfPath(lines,outerRectPath(0,0,W,H),'OUTER',mapPoint);
+        const outerPasses=outerContourCutterPasses(),head=dxfLayerHead(1,blankName);
+        if(outerPasses.length)outerPasses.forEach(pass=>appendDxfPath(lines,outerRectPath(0,0,W,H),nameOf(head,pass),mapPoint));
+        else appendDxfPath(lines,outerRectPath(0,0,W,H),nameOf(head,null),mapPoint);
+      }else appendDxfPath(lines,outerRectPath(0,0,W,H),nameOf(dxfLayerHead(1,blankName),null),mapPoint);
       if(state.objectType==='facade'){
-        state.contours.forEach((contour,index)=>{const path=contourPath(contour),passes=exportContourPasses(contour),head='V'+String(index+2).padStart(2,'0');if(passes.length)passes.forEach(pass=>appendDxfPath(lines,path,nameOf(head,pass),mapPoint));else appendDxfPath(lines,path,nameOf(head,null),mapPoint);});
-        allCustomVectors().forEach(vector=>{
+        state.contours.forEach((contour,index)=>{
+          const path=contourPath(contour),passes=exportContourPasses(contour),head=dxfLayerHead(index+2,contour.name||`Вектор ${index+2}`);
+          if(passes.length)passes.forEach(pass=>appendDxfPath(lines,path,nameOf(head,pass),mapPoint));
+          else appendDxfPath(lines,path,nameOf(head,null),mapPoint);
+        });
+        allCustomVectors().forEach((vector,index)=>{
+          const head=nameOf(dxfLayerHead(state.contours.length+2+index,vector.type==='point'?`Точка ${index+1}`:`Линия ${index+1}`),null);
           if(vector.type==='point'){
             const point=vector.points[0];
-            lines.push('0','CIRCLE','8','VECTORS','10',dxfNumber(point.x),'20',dxfNumber(H-point.y),'30','0','40','4');
-          }else appendDxfPath(lines,customVectorSvgPath(vector),'VECTORS',mapPoint);
+            lines.push('0','CIRCLE','8',head,'10',dxfNumber(point.x),'20',dxfNumber(H-point.y),'30','0','40','4');
+          }else appendDxfPath(lines,customVectorSvgPath(vector),head,mapPoint);
         });
-        state.importedPaths.forEach(item=>{
+        state.importedPaths.forEach((item,index)=>{
           const importedMap=importedMapPoint(item,W,H),importedPoint=point=>{const q=importedMap(point);return{x:q.x,y:H-q.y};};
-          appendDxfPath(lines,item.d,'IMPORTED',importedPoint);
-          if(item.cutter&&item.cutter!=='none'&&importedHasToolpathOffset(item))appendDxfPath(lines,importedToolPath(item,W,H),'IMPORTED_TOOLPATH',point=>({x:point.x,y:H-point.y}));
+          const n=state.contours.length+allCustomVectors().length+2+index;
+          appendDxfPath(lines,item.d,nameOf(dxfLayerHead(n,item.name||`Импорт ${index+1}`),null),importedPoint);
+          if(item.cutter&&item.cutter!=='none'&&importedHasToolpathOffset(item))appendDxfPath(lines,importedToolPath(item,W,H),nameOf(dxfLayerHead(n,`${item.name||'Импорт'} фреза`),null),point=>({x:point.x,y:H-point.y}));
         });
       }else if(state.kind!=='tsulaga'){
-        if(state.objectType==='profile')operationVectorPaths().forEach((path,index)=>{const band=state.profileBands[index],pass=band?{cutter:band.cutter,diameter:Number(band.cutterWidth),depth:Number(band.depth),side:band.mode==='inside'?'inside':band.mode==='outside'?'outside':'on'}:null;appendDxfPath(lines,path,nameOf('V'+String(index+1).padStart(2,'0'),pass),mapPoint);});
-        else operationVectorPaths().forEach((path,index)=>appendDxfPath(lines,path,'PASS_'+(index+1),mapPoint));
+        if(state.objectType==='profile')operationVectorPaths().forEach((path,index)=>{const band=state.profileBands[index],pass=band?{cutter:band.cutter,diameter:Number(band.cutterWidth),depth:Number(band.depth),side:band.mode==='inside'?'inside':band.mode==='outside'?'outside':'on'}:null;appendDxfPath(lines,path,nameOf(dxfLayerHead(index+2,`Профиль ${index+1}`),pass),mapPoint);});
+        else operationVectorPaths().forEach((path,index)=>appendDxfPath(lines,path,nameOf(dxfLayerHead(index+2,`Проход ${index+1}`),null),mapPoint));
       }
     }finally{lastGeometry=previous;}
-    lines.push('0','ENDSEC','0','EOF');return lines.join('\r\n')+'\r\n';
+    lines.push('0','ENDSEC','0','EOF');
+    return sealDxf(lines);
   }
   function exportDxf() {
     stateFromInputs();
@@ -5697,7 +5760,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     const warn=issues.length?` ⚠ Замечание: ${issues[0]}${issues.length>1?` (и ещё ${issues.length-1})`:''}`:'';
     try{
       download(`${state.kind==='tsulaga'?'tsulaga':state.kind==='vitrina'?'vitrina':state.kind==='pilaster'?'pilastra':'fasad'}_${state.width}x${state.height}.dxf`,createDxfExport(),'application/dxf;charset=utf-8');
-      $('footerStatus').textContent='DXF сохранён в мм. Слои названы по действию: V02_OUT_FLAT_W6_Z3 = вектор 2, фреза снаружи, плоская Ø6, глубина 3'+warn;
+      $('footerStatus').textContent='DXF сохранён в мм. Каждый вектор — свой слой ArtCAM: V02_VYBORKA, V03_FREZA_RUCHKI. Импорт: Векторы → Импорт → Сохранить слои'+warn;
     }catch(error){$('footerStatus').textContent='DXF не экспортирован';alert(`Не удалось создать DXF: ${error.message}`);}
   }
   function exportCuttingDxf() {
@@ -5715,9 +5778,9 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
           const local=placement.rotated?{x:item.height-point.y,y:point.x}:point;
           return{x:placement.x+local.x,y:state.sheetHeight-(placement.y+local.y)};
         };
-        if(item.kind==='tsulaga'&&item.tsulaga)appendTsulagaDxf(lines,item.tsulaga,`PART_${partIndex+1}_OUTER`,mapPoint);
-        else appendDxfPath(lines,itemOuterPath(item),`PART_${partIndex+1}_OUTER`,mapPoint);
-        item.contours.forEach((contour,index)=>appendDxfPath(lines,contourPath(contour,1,0,0,bounds(contour.id)),`PART_${partIndex+1}_VECTOR_${index+1}`,mapPoint));
+        if(item.kind==='tsulaga'&&item.tsulaga)appendTsulagaDxf(lines,item.tsulaga,`P${partIndex+1}_${dxfLayerHead(1,'Цулага')}`,mapPoint);
+        else appendDxfPath(lines,itemOuterPath(item),`P${partIndex+1}_${dxfLayerHead(1,item.name||'Основа')}`,mapPoint);
+        item.contours.forEach((contour,index)=>appendDxfPath(lines,contourPath(contour,1,0,0,bounds(contour.id)),`P${partIndex+1}_${dxfLayerHead(index+2,contour.name||`Вектор ${index+2}`)}`,mapPoint));
         lastGeometry={x:0,y:0,scale:1,width:item.width,height:item.height};
         if(item.kind!=='tsulaga')cuttingItemOperationPaths(item).forEach((path,index)=>appendDxfPath(lines,path,`PART_${partIndex+1}_PASS_${index+1}`,mapPoint));
         item.customVectors.forEach(vector=>appendDxfPath(lines,customVectorSvgPath(vector),`PART_${partIndex+1}_DETAIL`,mapPoint));
@@ -5727,7 +5790,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
         });
       });
       lines.push('0','ENDSEC','0','EOF');
-      return lines.join('\r\n')+'\r\n';
+      return sealDxf(lines);
     };
     try{
       const files=[];
@@ -5792,7 +5855,8 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     };
     const addOperation=(info)=>{
       const pass=info.pass,depth=Number(pass.depth),thru=thickness>0&&depth>=thickness-0.001;
-      const layer=uniqueLayer(`OP${pad(++opNo)}_${info.role}_${artcamSlug(cutterLabel(pass.cutter),14)}`,`_W${part(pass.diameter)}_Z${part(depth)}`);
+      const nice=artcamSlug(String(info.title||info.role||'VEKTOR').replace(/вектор\s+/gi,'').replace(/[«»"]/g,''),14);
+      const layer=uniqueLayer(`${pad(++opNo)}_${nice}`,`_W${part(pass.diameter)}_Z${part(depth)}`);
       info.draw(layer);
       operations.push({no:opNo,layer,title:info.title,strategy:info.strategy||strategyFor(pass.cutter,pass,thru),cutter:cutterLabel(pass.cutter),diameter:Number(pass.diameter),depth,stepdown:Number(pass.stepdown)||0,side:sideLabel[pass.side||'on']||sideLabel.on,allowance:Number(pass.allowance)||0,feed:pass.feed==='conventional'?'встречное':'попутное',thru,note:info.note||''});
       return layer;
@@ -5828,8 +5892,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
           if(item.cutter&&item.cutter!=='none'&&Number(item.diameter)>0&&Number(item.depth)>0)addOperation({role:`IMP${pad(index+1)}`,title,pass:{cutter:item.cutter,diameter:item.diameter,depth:item.depth,side:item.side||'on',allowance:item.allowance,feed:item.feed,stepdown:item.stepdown},draw});
           else addGeometry(`IMPORT${pad(index+1)}_${artcamSlug(item.name||'',12)}`,draw);
         });
-        const details=allCustomVectors();
-        if(details.length)addGeometry('DETAIL_VECTORS',layer=>details.forEach(vector=>{
+        allCustomVectors().forEach((vector,index)=>addGeometry(dxfLayerHead(index+1,vector.type==='point'?`Точка ${index+1}`:`Линия ${index+1}`).replace(/^V/,'L'),layer=>{
           if(vector.type==='point'){const point=vector.points[0];lines.push('0','CIRCLE','8',layer,'10',dxfNumber(point.x),'20',dxfNumber(H-point.y),'30','0','40','4');}
           else appendDxfPath(lines,customVectorSvgPath(vector),layer,mapPoint);
         }));
@@ -5848,12 +5911,12 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       }
     }finally{lastGeometry=previous;}
     lines.push('0','ENDSEC','0','EOF');
-    return{dxf:lines.join('\r\n')+'\r\n',operations};
+    return{dxf:sealDxf(lines),operations};
   }
   function artcamPackageTexts(operations) {
     const typeName=typeLabel(state.objectType,state.kind),name=state.name||typeName;
     const num=value=>String(Number(Number(value).toFixed(2))).replace('.',',');
-    const head=[`ФасадЛаб → ArtCAM: пакет для станка`,`Изделие: ${name} (${typeName})`,`Заготовка: ${num(state.width)} × ${num(state.height)} мм, толщина ${num(state.thickness)} мм`,`Единицы: мм. Начало координат в DXF: левый нижний угол заготовки. Z = 0 — верх материала.`,'',`Как использовать:`,`  1. В ArtCAM: Файл → Импорт → Векторные данные (File › Import › Vector Data) — выберите .dxf из этого архива.`,`  2. Слои DXF станут векторными слоями. Название слоя = номер операции, роль, фреза, ширина (W) и глубина (Z) в мм (P — десятичная точка).`,`  3. На каждый слой создайте траекторию по списку ниже. Стратегия — рекомендация, её можно менять.`,''];
+    const head=[`ФасадЛаб → ArtCAM: пакет для станка`,`Изделие: ${name} (${typeName})`,`Заготовка: ${num(state.width)} × ${num(state.height)} мм, толщина ${num(state.thickness)} мм`,`Единицы: мм. Начало координат в DXF: левый нижний угол заготовки. Z = 0 — верх материала.`,'',`Как использовать:`,`  1. В ArtCAM: Файл → Импорт → Векторные данные (File › Import › Vector Data) — выберите .dxf из этого архива.`,`  2. В окне импорта выберите «Сохранить слои» (Preserve layers). Имя слоя — номер и название вектора, затем Ø (W) и глубина (Z): 02_VYBORKA_W12_Z12.`,`  3. На каждый слой создайте траекторию по списку ниже. Стратегия — рекомендация, её можно менять.`,''];
     const blocks=operations.map(op=>[`${op.no}. ${op.title}`,`   Слой DXF: ${op.layer}`,`   Стратегия ArtCAM: ${op.strategy}`,`   Фреза: ${op.cutter} · Ø ${num(op.diameter)} мм`,`   Глубина реза: ${num(op.depth)} мм${op.thru?' (насквозь)':''}${op.stepdown?` · глубина прохода ${num(op.stepdown)} мм (${Math.ceil(op.depth/op.stepdown)} прох.)`:''}`,op.side==='—'?null:`   Сторона: ${op.side}${op.allowance?` · припуск ${num(op.allowance)} мм`:''} · ${op.feed}`,op.note?`   Примечание: ${op.note}`:null,''].filter(item=>item!==null).join('\n'));
     const text='\uFEFF'+head.join('\n')+'\nОперации:\n\n'+(blocks.length?blocks.join('\n'):'Операций с фрезами нет: в DXF только векторы.\n');
     const cell=value=>`"${String(value).replace(/"/g,'""')}"`;
@@ -5877,9 +5940,15 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       $('footerStatus').textContent=`Пакет ArtCAM сохранён: папки «Форматы» (DXF, SVG), «Документы» (${pdfBytes?'PDF, ':''}таблицы, файл фасада для «Стилей»)${mesh?' и «3D» (OBJ, STL, GLB)':meshError?`; 3D не добавлено: ${meshError}`:''}`+warn;
     }catch(error){$('footerStatus').textContent='Пакет ArtCAM не создан';alert(`Не удалось создать пакет ArtCAM: ${error.message}`);}
   }
-  function download(name,content,type) {
-    const link=document.createElement('a'),url=URL.createObjectURL(new Blob([content],{type}));
-    link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  async function download(name,content,type) {
+    const blob=content instanceof Blob?content:new Blob([content],{type:type||'application/octet-stream'});
+    const file=new File([blob],name,{type:blob.type||'application/octet-stream'});
+    if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+      try{await navigator.share({files:[file],title:name});return;}catch(error){if(error&&error.name==='AbortError')return;}
+    }
+    const url=URL.createObjectURL(blob),link=document.createElement('a');
+    link.href=url;link.download=name;document.body.appendChild(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),4000);
   }
   // ---- PDF без печати: страницы рисуются на canvas, JPEG упаковывается в PDF ----
   function pdfInlineSvg(source,maxSide) {
@@ -6828,14 +6897,6 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     snapshot();state.contours=updatedContours;
     renderTemplateButtons();drawView();syncSharpBox(state.contours.find(item=>item.id===contour.id));$('footerStatus').textContent=`Настройки применены к ${contour.name}`;
   }
-  function rustFirstContour() {
-    // Для рустов нужен ближайший к краю фасада (первый по вложенности) вектор,
-    // а не просто первый созданный пользователем контур.
-    return state.contours.filter(item=>item.direction==='in').sort((a,b)=>{
-      const A=getContourBounds(a.id),B=getContourBounds(b.id);
-      return (B.width*B.height)-(A.width*A.height);
-    })[0]||null;
-  }
   function rustLines() {
     if(state.objectType!=='facade'||!state.rust)return [];
     const W=Number(state.width),H=Number(state.height),r=v=>Math.round(v*100)/100,out=[];
@@ -7119,7 +7180,44 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
   }
   // ===== Встроенная ручка: выборка у кромки + радиус по стенке =====
   function closeHandle2(){$('handleOverlay').classList.add('hidden');}
-  const HANDLE_DEFAULTS={edge:'top',variant:'plain',len:100,pos:0,grip:25,depth:12,dia:12,step:40,cutter:'round',cDia:38.1,cDepth:12,shape:'pi',center:25,lead:8,fit:'outer',ovW:35,ovDepth:3,ovExtra:2,ovDia:12,rad:6};
+  const HANDLE_DEFAULTS={edge:'top',variant:'plain',len:100,pos:0,grip:30,depth:18,dia:12,step:40,cutter:'round',cDia:38.1,cDepth:18,shape:'pi',center:22.5,lead:8,fit:'outer',ovW:35,ovDepth:3,ovExtra:2,ovDia:12,rad:6};
+  // Профиль фрезы 30.0277.01 по чертежу сечения ручки: плоское дно, скругление R≈4,2, стенка Ø38,1, закруглённое плечо R≈6,5
+  // (оно формирует подрез под губой), дальше шейка. x — доля радиуса, y — высота над кончиком в радиусах.
+  function handleCutterProfile() {
+    // Контур снят с чертежа сечения ручки (стенка подреза на 41,5 мм от кромки, дно 18 мм): v — от кромки детали, z — вниз от верха
+    const raw=[[35.0,18.07],[36.19,17.79],[37.31,17.37],[38.43,16.53],[39.27,15.69],[39.83,14.85],[40.25,14.0],[40.4,13.0],[40.4,11.0],[40.25,10.2],[40.11,9.8],[39.83,9.38],[39.41,8.54],[38.57,7.7],[37.45,6.86],[36.33,6.02],[34.78,5.18],[33.1,4.34],[31.42,3.5],[30.43,3.08],[30.0,2.8]];
+    const R=19.05,axis=41.5-R,k=11.5/10.4,q=v=>Number((v/R).toFixed(4));
+    const pts=[[0,0]];
+    raw.forEach(p=>{const v=p[0]>30?30+(p[0]-30)*k:30;pts.push([v-axis,18.07-p[1]]);});
+    const top=pts[pts.length-1];
+    pts.push([top[0],22],[0,22]);
+    return pts.map(p=>[q(Math.max(0,p[0])),q(Math.max(0,p[1]))]);
+  }
+  function ensureHandleCutter() {
+    const name='Ручка 30.0277.01 Ø38.1×22';
+    let tool=customCutters.find(item=>item.article==='30.0277.01'||item.name===name);
+    if(tool){
+      if(tool.profileRev!==4||!tool.undercut){tool.profile=handleCutterProfile();tool.profileRev=4;tool.undercut=true;tool.profileHeight=22;tool.profileRadius=19.05;tool.exact=false;tool.approx=true;
+        try{localStorage.setItem('fasadlab-cutters',JSON.stringify(customCutters));}catch(error){}}
+      return tool;
+    }
+    tool={id:Math.max(0,...customCutters.map(item=>item.id))+1,name,shape:'form',width:38.1,profile:handleCutterProfile(),profileRev:4,undercut:true,profileRadius:19.05,profileHeight:22,source:'Чертёж',group:'Ручки',exact:false,approx:true,article:'30.0277.01',shank:8,flutes:2,hand:'RH'};
+    customCutters=[...customCutters,tool];
+    try{localStorage.setItem('fasadlab-cutters',JSON.stringify(customCutters));}catch(error){}
+    return tool;
+  }
+  function handleAuto(grip) {
+    const G=grip>=5?grip:30;
+    return{center:Math.round((G+11.5-19.05)*10)/10,lead:Math.round(Math.min(8,Math.max(3,G*0.35))*10)/10};
+  }
+  function handlePreview() {
+    const h=handleReadForm(),shape={pi:'П-образная',straight:'прямая',trap:'трапеция'}[h.shape]||'П-образная';
+    const bits=h.shape==='straight'
+      ?`ход вдоль на оси ${h.center} мм от края, без ножек`
+      :`заход на ${h.lead} мм от края (внутри выборки ${h.grip} мм) → ось ${h.center} мм → ход вдоль → выход на ${h.lead} мм`;
+    $('handlePreview').textContent=`Выборка ${h.grip} мм от края, глубина ${h.depth} мм. Траектория ${shape}: ${bits}. Фреза Ø ${h.cDia} мм, проход ${h.cDepth} мм.`;
+    try{handleDrawSection();}catch(error){}
+  }
   const HANDLE_FIELDS={edge:'hEdge',variant:'hVariant',len:'hLen',pos:'hPos',grip:'hGrip',depth:'hDepth',dia:'hDia',step:'hStep',cutter:'hEdgeCutter',cDia:'hEdgeDia',cDepth:'hEdgeDepth',shape:'hShape',center:'hCenter',lead:'hLead',fit:'hFit',rad:'hRad',ovW:'hOvW',ovDepth:'hOvDepth',ovExtra:'hOvExtra',ovDia:'hOvDia'};
   function handleWriteForm(h){Object.entries(HANDLE_FIELDS).forEach(([k,id])=>{const e=$(id);e.value=String(h[k]);if(e.tagName==='SELECT'&&e.value!==String(h[k]))e.selectedIndex=0;});handleSyncForm();}
   function handleReadForm(){
@@ -7127,7 +7225,47 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     Object.entries(HANDLE_FIELDS).forEach(([k,id])=>{const e=$(id),def=HANDLE_DEFAULTS[k];if(typeof def==='number'){const v=Number(String(e.value).replace(',','.'));h[k]=e.value!==''&&Number.isFinite(v)?v:def;}else h[k]=e.value;});
     return h;
   }
-  function handleSyncForm(){$('hOverlayBox').classList.toggle('hidden',$('hVariant').value!=='overlay');}
+  // Ранее добавленная приблизительная «Ручка-зацеп» не соответствует фрезе 30.0277.01 — убираем из каталога
+  function dropHookCutter(){
+    const n=customCutters.length;
+    customCutters=customCutters.filter(t=>!(t&&typeof t.name==='string'&&t.name.indexOf('Ручка-зацеп')===0));
+    if(customCutters.length!==n)persistCustomCutters();
+  }
+  // Сечение поперёк ручки: результат обработки, как на чертеже (кромка справа, штриховка — материал)
+  function handleDrawSection(){
+    const svg=$('hSection');if(!svg)return;
+    const h=handleReadForm(),thick=Number(state.thickness)||19;
+    const shape=cutterShape(h.cutter),tool=formTool(shape);
+    const R=h.cDia/2,pr=tool?tool.profile:null;
+    const Vend=Math.max(58,h.center+R+8),f=n=>Number(n.toFixed(2));
+    const X=v=>Vend-v;                       // кромка детали справа (x=Vend)
+    const x0=0,W=Vend+6,zTop=-9,zBot=thick+5,Hh=zBot-zTop;
+    svg.setAttribute('viewBox',`${x0} ${zTop} ${f(W)} ${f(Hh)}`);
+    const hook=pr?[...pr.map(q=>[X(h.center-q[0]*R),h.cDepth-q[1]*R]),...pr.slice().reverse().map(q=>[X(h.center+q[0]*R),h.cDepth-q[1]*R])]:null;
+    const poly=pts=>pts.map(q=>f(q[0])+','+f(q[1])).join(' ');
+    const rect=(xa,za,xb,zb)=>`<rect x="${f(Math.min(xa,xb))}" y="${f(za)}" width="${f(Math.abs(xb-xa))}" height="${f(zb-za)}"/>`;
+    let cuts=rect(X(h.grip),-1,X(-5),Math.min(h.depth,thick));
+    if(h.variant==='overlay')cuts+=rect(X(h.ovW),thick-h.ovDepth,X(-5),thick+1);
+    if(hook)cuts+=`<polygon points="${poly(hook)}"/>`;
+    const sw=.35;
+    // размеры результата
+    let vmax=h.grip;if(pr){pr.forEach(q=>{const z=h.cDepth-q[1]*R;if(z>=0&&z<=thick)vmax=Math.max(vmax,h.center+q[0]*R);});}
+    const under=vmax-h.grip,floor=thick-h.depth;
+    const dim=(xa,xb,z,txt)=>`<line x1="${f(xa)}" y1="${f(z)}" x2="${f(xb)}" y2="${f(z)}" stroke="#444" stroke-width=".2"/><line x1="${f(xa)}" y1="${f(z-1.2)}" x2="${f(xa)}" y2="${f(z+1.2)}" stroke="#444" stroke-width=".2"/><line x1="${f(xb)}" y1="${f(z-1.2)}" x2="${f(xb)}" y2="${f(z+1.2)}" stroke="#444" stroke-width=".2"/><text x="${f((xa+xb)/2)}" y="${f(z-1.4)}" font-size="2.6" text-anchor="middle" fill="#222">${txt}</text>`;
+    const fmt=n=>String(Math.round(n*10)/10).replace('.',',');
+    svg.innerHTML=`<defs><pattern id="hHatch" width="2.2" height="2.2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="2.2" stroke="#555" stroke-width=".25"/></pattern>`
+      +`<mask id="hMask"><rect x="-1" y="${f(zTop-1)}" width="${f(W+2)}" height="${f(Hh+2)}" fill="#fff"/><g fill="#000">${cuts}</g></mask>`
+      +`<clipPath id="hClip"><rect x="0" y="0" width="${f(Vend)}" height="${f(thick)}"/></clipPath></defs>`
+      +`<g mask="url(#hMask)"><rect x="0" y="0" width="${f(Vend)}" height="${f(thick)}" fill="url(#hHatch)"/></g>`
+      +`<rect x="0" y="0" width="${f(Vend)}" height="${f(thick)}" fill="none" stroke="#222" stroke-width="${sw}"/>`
+      +`<g clip-path="url(#hClip)"><g fill="none" stroke="#222" stroke-width="${sw*2}" stroke-linejoin="round">${cuts}</g><g fill="#fbf8f1" stroke="none">${cuts}</g></g>`
+      +dim(X(h.grip),X(0),zTop+4,fmt(h.grip))
+      +(under>0.05?dim(X(vmax),X(h.grip),zTop+4,fmt(under)):'')
+      +`<text x="1.5" y="${f(thick/2+1)}" font-size="2.8" fill="#222">${fmt(thick)}</text>`
+      +(floor>0?`<text x="${f(Vend-1)}" y="${f(thick+3.6)}" font-size="2.6" text-anchor="end" fill="#222">дно ${fmt(floor)}</text>`:'');
+    $('hSectionNote').textContent=hook?`Результат обработки (кромка справа): выборка ${fmt(h.grip)} мм, подрез под губой ${fmt(under)} мм, дно ${fmt(floor)} мм. Фреза ${tool.name}, ось ${fmt(h.center)} мм от кромки, кончик на глубине ${fmt(h.cDepth)} мм. Профиль по чертежу, радиусы приблизительные.`:'Для сечения выберите профильную фрезу (например, 30.0277.01). Круглая и прямая показываются в 3D, но не здесь.';
+  }
+  function handleSyncForm(){$('hOverlayBox').classList.toggle('hidden',$('hVariant').value!=='overlay');handlePreview();handleDrawSection();}
   // Убрать прежнюю ручку (контуры, выборки), чтобы на детали была только одна
   function handleRemoveExisting(){
     const ids=new Set(state.contours.filter(c=>c.handle).map(c=>c.id));
@@ -7143,7 +7281,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
   function addHandle() {
     if(state.objectType!=='facade'||state.kind)return;
     stateFromInputs();
-    const h=handleReadForm();h.shape='pi';
+    const h=handleReadForm();
     const W=Number(state.width),H=Number(state.height),thickness=Number(state.thickness)||19;
     const edge=h.edge,vertical=edge==='left'||edge==='right',along=vertical?H:W,across=vertical?W:H;
     const fail=text=>{$('handleInfo').textContent='⚠ '+text;$('footerStatus').textContent=text;};
@@ -7153,6 +7291,9 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     if(!(h.dia>=2))return fail('Укажите Ø фрезы выборки (от 2 мм).');
     if(!cutterShape(h.cutter))return fail('Выберите фрезу ручки.');
     if(!(h.cDia>=1)||!(h.cDepth>0&&h.cDepth<=thickness))return fail(`Фреза ручки: Ø от 1 мм, глубина от 0 до ${thickness} мм.`);
+    const picked=customCutters.find(item=>`custom:${item.id}`===h.cutter);
+    if(picked&&picked.profileHeight&&h.cDepth>picked.profileHeight+0.05)return fail(`У фрезы «${picked.name}» режущая часть ${picked.profileHeight} мм. Глубина прохода не может быть больше.`);
+    if(h.shape!=='straight'&&!(h.lead>0&&h.lead<h.grip))return fail(`Заход ${h.lead} мм должен быть внутри выборки: больше 0 и меньше ${h.grip} мм от края.`);
     // положение: центр ручки от угла; 0 — по центру кромки; длина 0 — вся кромка
     let len=h.len;const full=!(len>0)||len>=along-1e-9;if(full)len=along;
     let center=h.pos>0?h.pos:along/2;
@@ -7194,14 +7335,14 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
       state.contours=[...state.contours,{...base,id,name:'Накладка сзади',shape:'free',rel:pk2.rel,freeD:pk2.d,cutter:'none',diameter:6,depth:3,overhang:true}];
       state.pockets=[...state.pockets,{parentId:id,islandId:id,regionType:'inside',cutter:'flat',diameter:h.ovDia,depth:h.ovDepth,stepover:Math.max(10,Math.min(100,h.step)),passDepth:Math.min(2,h.ovDepth),back:true,handle:true}];
     }
-    // 3) вектор фрезы ручки: заходит и выходит внутри выборки
-    const vC=h.center;let lead=Math.max(1,h.lead);
-    lead=Math.min(lead,h.grip-1);   // точки входа/выхода — внутри выборки, не за кромкой детали
-    if(!(vC>lead+1e-6)){undoOnce();return fail('Центр фрезы от кромки ('+vC+' мм) должен быть дальше точки захода ('+lead+' мм). Увеличьте центр или уменьшите заход.');}
+    // 3) траектория фрезы: заход внутри выборки, ход вдоль, выход обратно в выборку
+    const vC=h.center;let lead=h.lead;
+    lead=Math.min(lead,h.grip-0.5);
+    if(h.shape!=='straight'&&!(Math.abs(vC-lead)>0.2)){undoOnce();return fail('Ось фрезы и точка захода почти совпали. Разведите их: ось ближе к внутреннему краю выборки, заход ближе к кромке.');}
     const pts=[];
-    if(h.shape==='straight'){pts.push([ua,vC],[ub,vC]);}
+    if(h.shape==='straight')pts.push([ua,vC],[ub,vC]);
     else if(h.shape==='trap'){const dv=vC-lead;pts.push([ua-dv,lead],[ua,vC],[ub,vC],[ub+dv,lead]);}
-    else{pts.push([ua,lead],[ua,vC],[ub,vC],[ub,lead]);}
+    else pts.push([ua,lead],[ua,vC],[ub,vC],[ub,lead]);
     const xy=pts.map(q=>toXY(q[0],q[1])),xs=xy.map(q=>q[0]),ys=xy.map(q=>q[1]);
     const bx0=Math.min(...xs),bx1=Math.max(...xs),by0=Math.min(...ys),by1=Math.max(...ys),bw=bx1-bx0,bh=by1-by0,f=n=>Number(n.toFixed(9));
     const nrm=(v,lo,sz)=>sz>1e-9?f((v-lo)/sz):0;
@@ -7210,7 +7351,7 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     const freeD2=bw<1e-9||bh<1e-9?(bw<1e-9?'M 0 0 L 0 1':'M 0 0 L 1 0'):freeD;
     id=nextContourId++;
     const out=xy.some(q=>q[0]<-1e-6||q[1]<-1e-6||q[0]>W+1e-6||q[1]>H+1e-6);
-    state.contours=[...state.contours,{...base,id,name:nextVectorName(),shape:'free',rel:{x:f(bx0/W),y:f(by0/H),w:f(bw/W),h:f(bh/H)},freeD:freeD2,cutter:h.cutter,diameter:h.cDia,depth:h.cDepth,side:'on',overhang:out}];
+    state.contours=[...state.contours,{...base,id,name:'Фреза ручки',shape:'free',rel:{x:f(bx0/W),y:f(by0/H),w:f(bw/W),h:f(bh/H)},freeD:freeD2,cutter:h.cutter,diameter:h.cDia,depth:h.cDepth,side:'on',overhang:out}];
     state.handle={...h};
     const issues=geometryIssues();
     if(issues.length){undoOnce();return fail('Не получилось: '+issues[0]);}
@@ -7248,12 +7389,13 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     return{cutter,diameter:Number.isFinite(diameter)&&diameter>0?diameter:6,depth:Number.isFinite(depth)&&depth>0?depth:3,regions};
   }
   let rustPickMode=false;
+  function rustRingChoices() {
+    return state.contours.map(item=>getPocketRegion(0,item.id,'ring')).filter(Boolean);
+  }
   function rustActiveRegions() {
     if(!state.rust)return [];
     const list=Array.isArray(state.rust.regions)?state.rust.regions:[];
-    if(list.length)return list;
-    const first=rustFirstContour();
-    return first?[{p:0,i:first.id}]:[];
+    return list.filter(reg=>rustRingChoices().some(region=>region.parentId===reg.p&&region.islandId===reg.i));
   }
   function rustHasRegion(region) {return !!state.rust&&rustActiveRegions().some(r=>r.p===region.parentId&&r.i===region.islandId);}
   function toggleRustRegion(region) {
@@ -7277,21 +7419,24 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     if(document.activeElement!==$('rustDiameter'))$('rustDiameter').value=state.rust.diameter;
     if(document.activeElement!==$('rustDepth'))$('rustDepth').value=state.rust.depth;
     $('rustCutterPreview').innerHTML=cutterSelectionPreview($('rustCutter').value,state.rust.diameter,state.rust.depth);
-    {const regs=rustActiveRegions().map(reg=>{const isl=state.contours.find(item=>item.id===reg.i);if(!isl)return null;const par=reg.p===0?'Фасад':(state.contours.find(item=>item.id===reg.p)?.name||'Вектор');return `${par} → ${isl.name||('Вектор '+(state.contours.indexOf(isl)+2))}`;}).filter(Boolean);
-      $('rustRegionsInfo').textContent=regs.length?`Области рустов: ${regs.join('; ')}`:'Областей нет: создайте вектор «внутрь» или выберите область.';
-      $('rustPick').setAttribute('aria-pressed',String(rustPickMode));$('rustPick').classList.toggle('active',rustPickMode);$('rustPick').textContent=rustPickMode?'Выбор включён — щёлкайте области (нажмите, чтобы закончить)':'Выбрать области на чертеже';
+    {const choices=rustRingChoices(),box=$('rustRegionList');
+      box.innerHTML=choices.length?choices.map(region=>{
+        const on=rustHasRegion(region);
+        return `<button type="button" data-rust-p="${region.parentId}" data-rust-i="${region.islandId}" class="${on?'active':''}">${on?'✓ ':''}${esc(region.outerName)} → ${esc(region.islandName)} <span class="sub">${region.gapWidth} мм</span></button>`;
+      }).join(''):'<div class="notice">Нет промежутка: создайте вектор «внутрь».</div>';
+      const regs=rustActiveRegions().map(reg=>{const region=choices.find(item=>item.parentId===reg.p&&item.islandId===reg.i);return region?`${region.outerName} → ${region.islandName}`:null;}).filter(Boolean);
+      $('rustRegionsInfo').textContent=regs.length?`Сейчас русты: ${regs.join('; ')}`:'Русты ещё никуда не поставлены.';
+      $('rustPick').setAttribute('aria-pressed',String(rustPickMode));$('rustPick').classList.toggle('active',rustPickMode);$('rustPick').textContent=rustPickMode?'Щелчок включён — закройте окно и укажите область':'Щёлкнуть на чертеже';
       $('rustResetRegions').classList.toggle('hidden',!(state.rust.regions&&state.rust.regions.length));}
-    const missing=!rustFirstContour();
-    $('rustInfo').textContent=missing?'Создайте вектор «внутрь» — русты идут до первого вектора.':'Русты идут от четырёх углов фасада до углов первого вектора «внутрь» и сами следуют за ним при изменении отступа. Убрать русты — кнопка ниже.';
+    $('rustInfo').textContent=rustRingChoices().length?'Выберите промежуток в списке или нажмите «Щёлкнуть на чертеже» и укажите область между векторами. Повторное нажатие снимает русты.':'Сначала создайте вектор «внутрь». Русты ставятся в зазор между ним и внешним вектором — из списка или щелчком.';
   }
   function toggleRusts() {
     if(state.objectType!=='facade'){$('footerStatus').textContent='Русты добавляются только на фасад';return;}
     snapshot();
     if(state.rust){state.rust=null;$('footerStatus').textContent='Русты убраны';}
     else{
-      const last=state.contours.length?state.contours.find(item=>item.direction==='in'):null;
       state.rust={cutter:'v90',diameter:6,depth:Math.min(3,Number(state.thickness)||3),regions:[]};
-      $('footerStatus').textContent=last?'Русты добавлены: выберите фрезу и глубину справа':'Русты включены — создайте вектор «внутрь», до него пойдут диагонали';
+      $('footerStatus').textContent=rustRingChoices().length?'Русты включены: выберите промежуток в списке или щёлкните его на чертеже':'Русты включены — создайте вектор «внутрь», затем выберите промежуток';
     }
     renderRustSettings();drawView();
   }
@@ -7906,9 +8051,17 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     }));
   });
   $('hAdd').addEventListener('click',addHandle);
-  $('handleTool').addEventListener('click',()=>{if(state.objectType!=='facade'||state.kind){$('footerStatus').textContent='Встроенная ручка доступна для обычного фасада';return;}handleWriteForm({...HANDLE_DEFAULTS,...(state.handle||{})});$('hEdge').dataset.prev=$('hEdge').value;if(!state.handle){const ed=$('hEdge').value,al=(ed==='left'||ed==='right')?Number(state.height):Number(state.width);$('hPos').value=String(Math.round(al/2*100)/100);}$('handleInfo').textContent=state.handle?'На детали уже есть ручка: «Применить» заменит её.':'';$('handleOverlay').classList.remove('hidden');});
+  $('handleTool').addEventListener('click',()=>{if(state.objectType!=='facade'||state.kind){$('footerStatus').textContent='Встроенная ручка доступна для обычного фасада';return;}const tool=ensureHandleCutter();const base={...HANDLE_DEFAULTS,...(state.handle||{})};if(!state.handle){base.cutter=`custom:${tool.id}`;base.cDia=tool.width;base.depth=base.cDepth=Math.max(1,Math.min(22,(Number(state.thickness)||19)-4));const auto=handleAuto(base.grip);base.center=auto.center;base.lead=auto.lead;}handleWriteForm(base);$('hCenter').dataset.hand=state.handle?'1':'';$('hLead').dataset.hand=state.handle?'1':'';$('hEdge').dataset.prev=$('hEdge').value;if(!state.handle){const ed=$('hEdge').value,al=(ed==='left'||ed==='right')?Number(state.height):Number(state.width);$('hPos').value=String(Math.round(al/2*100)/100);}handlePreview();$('handleInfo').textContent=state.handle?'На детали уже есть ручка: «Применить» заменит её.':'';$('handleOverlay').classList.remove('hidden');});
   $('hVariant').addEventListener('change',handleSyncForm);
-  $('hEdge').addEventListener('change',()=>{const m=e=>(e==='left'||e==='right')?Number(state.height):Number(state.width);const cur=Number($('hPos').value.replace(',','.')),old=$('hEdge').dataset.prev||'top';if(!($('hPos').value!=='')||Math.abs(cur-m(old)/2)<1e-6)$('hPos').value=String(Math.round(m($('hEdge').value)/2*100)/100);$('hEdge').dataset.prev=$('hEdge').value;});$('hRemove').addEventListener('click',removeHandle);
+  $('hEdge').addEventListener('change',()=>{const m=e=>(e==='left'||e==='right')?Number(state.height):Number(state.width);const cur=Number($('hPos').value.replace(',','.')),old=$('hEdge').dataset.prev||'top';if(!($('hPos').value!=='')||Math.abs(cur-m(old)/2)<1e-6)$('hPos').value=String(Math.round(m($('hEdge').value)/2*100)/100);$('hEdge').dataset.prev=$('hEdge').value;handlePreview();});
+  $('hGrip').addEventListener('input',()=>{const grip=Number(String($('hGrip').value).replace(',','.'));if(!(grip>=5)){handlePreview();return;}const auto=handleAuto(grip);if($('hCenter').dataset.hand!=='1')$('hCenter').value=String(auto.center);if($('hLead').dataset.hand!=='1')$('hLead').value=String(auto.lead);handlePreview();});
+  $('hCenter').addEventListener('input',()=>{$('hCenter').dataset.hand='1';handlePreview();});
+  $('hLead').addEventListener('input',()=>{$('hLead').dataset.hand='1';handlePreview();});
+  ['hLen','hPos','hDepth','hDia','hRad','hEdgeDia','hEdgeDepth','hShape','hFit','hVariant'].forEach(id=>$(id).addEventListener('input',handlePreview));
+  $('hShape').addEventListener('change',handlePreview);$('hVariant').addEventListener('change',handlePreview);$('hFit').addEventListener('change',handlePreview);
+  $('hEdgeCutter').addEventListener('change',()=>{const tool=customCutters.find(item=>`custom:${item.id}`===$('hEdgeCutter').value);if(tool){$('hEdgeDia').value=tool.width;if(tool.profileHeight)$('hEdgeDepth').value=Math.min(Number($('hEdgeDepth').value)||12,tool.profileHeight);}handlePreview();});
+  $('hRecalc').addEventListener('click',()=>{const auto=handleAuto(Number(String($('hGrip').value).replace(',','.')));$('hCenter').value=String(auto.center);$('hLead').value=String(auto.lead);$('hCenter').dataset.hand='';$('hLead').dataset.hand='';handlePreview();});
+  $('hRemove').addEventListener('click',removeHandle);
   const closeHandle=()=>$('handleOverlay').classList.add('hidden');
   $('closeHandle').addEventListener('click',closeHandle);$('hCancel').addEventListener('click',closeHandle);
   [['pThrough','through'],['pExtra','extra'],['pBottomOn','bottomOn']].forEach(([id,key])=>$(id).addEventListener('change',event=>{event.stopPropagation();changeKindSettings('pilaster',()=>{state.pilaster[key]=$(id).checked;});}));
@@ -7950,7 +8103,14 @@ body.hide-left.hide-right .app{grid-template-columns:0 minmax(0,1fr) 0!important
     openPanelDlg('sharpCornerPanel','Острые углы');
   });
   $('rustPick').addEventListener('click',()=>{rustPickMode=!rustPickMode;renderRustSettings();if(rustPickMode){activeTool='select';$('footerStatus').textContent='Щёлкайте области между векторами: русты пойдут в углы этих областей';}drawView();});
-  $('rustResetRegions').addEventListener('click',()=>{if(!state.rust)return;snapshot();state.rust={...state.rust,regions:[]};renderRustSettings();drawView();$('footerStatus').textContent='Русты: от фасада до первого вектора';});
+  $('rustResetRegions').addEventListener('click',()=>{if(!state.rust)return;snapshot();state.rust={...state.rust,regions:[]};renderRustSettings();drawView();$('footerStatus').textContent='Выбор рустов снят';});
+  $('rustRegionList').addEventListener('click',event=>{
+    const button=event.target.closest('[data-rust-i]');
+    if(!button||!state.rust)return;
+    const region=getPocketRegion(Number(button.dataset.rustP),Number(button.dataset.rustI),'ring');
+    if(!region){$('footerStatus').textContent='Этот промежуток уже не подходит для рустов';return;}
+    toggleRustRegion(region);
+  });
   ['rustCutter','rustDiameter','rustDepth'].forEach(id=>{
     let armed=true;
     $(id).addEventListener('focus',()=>{armed=true;});
